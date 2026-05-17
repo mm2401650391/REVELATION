@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Night Elf Rose</title>
+    <!--css-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+        body {
+            background: #000000;
+            color: #FFFFFF;
+            font-size: 30px;
+        }
+        .d2 img {
+            float: left;
+            margin-left: 30px;
+            margin-top: 7px;
+            width: 4em;
+            height: 4em;
+        }
+
+        .d2 h2 {
+            font-size: 60px;
+            text-align: center;
+            display：inline-block;
+            width: 65%;
+            margin-top: 20px;
+            padding: 0.5em;
+            margin-left: 2.5em;
+        }
+        .d4 {
+            margin: 0.5em 0em;
+            width: 100%;
+            overflow-x: auto;
+            display: none;
+        }
+        .d4 div {
+            height: 1.2em;
+            width: 40.1em;
+            overflow-x: auto;
+            font-size: 50px;
+        }
+        button {
+            text-align: center;
+            font-size: 40px;
+            display: inline-block;
+            width: 100%;
+        }
+        a {
+            text-decoration: none;
+            color: #FFFFFF;
+            margin: 0 0.3em;
+        }
+
+        .d2 span {
+            color: #8600FF;
+            font-size: 75px;
+            margin-left: 0.3em;
+        }
+        span img {
+            width: 40px;
+        }
+
+        .d2 a {
+            margin: 0;
+        }
+        .txt{
+            text-align: center;
+        }
+        h5{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d2">
+        <a href="../index.html">
+            <img src="../Logo.jpg" />
+        </a>
+        <h2>
+            <span>N</span>ight
+            <span>E</span>lf
+            <span>R</span>ose
+        </h2>
+    </div>
+    <hr />
+    <h5 class="txt">【三线琴演奏代码】</h5>
+    <p class="txt">
+        默认以下曲目为三线琴通用，部分为特定三线琴专用
+    </p>
+    <br />
+    <p>
+      <b>1.如何使用（代码）？</b><br />
+        Ps：装备三线琴-聊天窗口输入代码-回车 <br />
+        <br />
+        <b>2.如何复制（代码）？</b><br />
+        Ps：点开曲目名，长按代码
+    </p>
+    <button onclick="button1()">
+        病名为爱
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div1" class="d4">
+        <div>
+            5kAAiAThAahA2UBMSBTRBhMBwhB3hB+hCBhCEhCHhCLhCOUCSMCWMCdMCgMCjhCnhCthC0hC7hC+hDChDFiDIjDMMDZaDdUDgUDmSDpSDsUDwMD3UD7UECSEESEIUELSETcEWcEdREkREoREsREvREyUE1CE5iE9hFEMFPhFXhFehFhhFkhFnhFrhFvUFyMF2MF9MGBMGEhGHhGKhGNhGQhGUhGXhGahGdhGhhGkiGniGqhGsMG2aG6UG8UHCSHFSHJUHMMHTUHXUHeSHiSHmUHpSHvcHzcH6RICRIGRIJRIMRIQUISiIWiIahIhSIoSI7SI+kJCkJFkJJkJMkJPkJSkJWkJZkJciJghJkUJnhJuiJyiJ2hJ3MJ+KKGJKNEKVSKqkKtkKwkK0kK4kK7kK+kLCkLFkLIkLMiLPhLSSLWCLqELwCL2EL8CL9BL/SMQkMUkMXkMakMekMgkMkkMnkMqiMuhMxUM1hM7iNAiNChNEMNMKNTJNaENjSN4kN8kN/kOCkOGkOJkONkOQkOTkOXkOaiOdhOhSOlMO2SO9UPEhPLMPSkPYkPakPcUPeKPlkPskPukPwRPzSP6SQHSQOSQVSQbRQfMQjSQpUQwhQ3MQ+kREkRHkRJURKKRSkRYkRbkRdRRfSRmSR0SR7SSCSSJRSMMSQSSXUSehSlMSrkSxkS0kS2US4KTAkTGkTIkTLRTOSTUSTiSToSTvST2RT5MT9SUEUULhURMUYkUfkUhkUjUUlKUskUykU1kU3RU6SVBSVPSVVSVcSViRVlMVp
+        </div>
+    </div>
+
+    <button onclick="button2()">
+        打上花火
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div2" class="d4">
+        <div>
+            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
+        </div>
+    </div>
+
+    <button onclick="button3()">
+        副歌
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div3" class="d4">
+        <div>
+            5hAAUAGUAMMASMAYhAeUAvUAyUA4UA+UBBUBEUBHUBKhBRhBUhBkUBrUBwMB3MB9hCDUCTUCWUCcUChSCkUCnSCqUCtSCzSC2MDLMDOMDRMDXMDdhDjhDmMDvMDzMD2kD8hECUEJUEOUEVUEaSEdUEgSEjUEnSEtSEwhFHhFLMFVMFZMFbkFihFoUFuUF0UF6UGASGDUGGSGJUGNhGUhGYSGySG4SG+SHDMHIUHeUHkSHnUHqSHtUHwSH2SH5SIOSIUSIaSIgMIkUI/UJGSJJUJMSJPUJSSJZSJc
+        </div>
+    </div>
+
+    <button onclick="button4()">
+        极乐净土
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div4" class="d4">
+        <div>
+            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
+        </div>
+    </div>
+
+    <button onclick="button5()">
+        九九八十一
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div5" class="d4">
+        <div>
+            5MAAKADMAGhAJUAMhAPUAQSARUAUhAXUAahAdkAghAjkAmhAnUAohArMAuKAxMA0hA3UA6hA9UA+SA/UBChBFUBIhBLUBOhBRKBWhBXUBYSBZMBaKBdMBghBjUBmhBpUBqSBrUBuhBxUB0hB3kB6hB9kCAhCBUCChCFMCIKCLMCOhCRUCUhCXUCYSCZUCcMCfKCiMClKCoMCrMC0MC5CC+BDBCDEBDHEDMEDRCDUBDXCDaCDfBDiCDlCDqBDtCDwEDzKD4CD9EECMEJMEOCETBEWCEZEEcKEfEEiEEnCEqBEtCEwCE1BE4CE7CFABFDEFGCFJMFOKFTMFYMFfMFkCFpBFsCFvBFyEF3EF8CF/BGCCGFCGKBGNCGQCGVBGYCGbEGeKGjCGoEGtMG0MG5CG+BHBCHEEHHKHKEHNEHSCHVBHYCHbCHgBHjCHmCHrBHuEHxCH0MH5KH+MIDSIKRIPMIUMIZKIcMIhKImMIpMIuKIxMI2KI5MI+KJBMJGKJJMJOSJRUJWhJZUJchJhUJkUJphJsEJ3KJ6MJ9KKAhKFUKKSKNUKQhKTkKWMKZhKchKhUKkSKnUKqhKuMKyhK1UK4SK7UK+hLCkLGULJSLMMLPSLSULVSLZhLdULiSLlULohLrkLuMLxhL0hL5UL8SL/UMCSMGUMKUMNSMRUMVUMYSMbUMehMhUMkSMnMMqMMtUMwSMzhM4UM9SNAUNDhNGkNJMNMhNPhNUUNXSNaUNdhNhMNlhNqUNtSNwUNzhN3kN7UN+SOBMOESOHUOKSOOhOSUOXSOaUOdhOgkOjMOmhOphOuUOxSO0UO3SO7UO/UPCSPGUPKUPNSPQUPThPWUPZSPcSPfKPiMPl
+        </div>
+    </div>
+
+    <button onclick="button6()">
+        卡农
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div6" class="d4">
+        <div>
+            5hAAUAaSA0RBOMBoKCCMCcRC2hDQUDqSEEREeME4KFSMFsRGGSGgRGmSGsEGyKG4MHFRHLSHRhHekHrhHxkH3MH9iIDhIJUIPiIVhIbUIhSInRItMIzKI5JI/BJFRJLSJYUJekJkhJqiJtkJwhJ2iJ5kJ8KJ/MKCRKFSKIUKLhKOiKRhKUSKaUKdhKgEKmJKpKKsMKvKKyJK1KK4SK7RK+SLBMLESLKRLNMLQKLWJLZKLcJLfELiJLlKLoMLrRLuSLxML0SL6RL9SMARMGMMJRMMMMPRMSSMVUMYhMbiMekMhkMkhMqiMtkMwhM2iM5kM8KM/MNCRNFSNIUNLhNOiNRhNUSNaUNdhNgENmJNpKNsMNvKNyJN1KN4SN7RN+SOBMOESOKRONMOQKOWJOZKOcJOfEOiJOlKOoMOrROuSOxMO0SO6RO9SPARPGMPJRPMMPPRPSSPVUPYSPbRPeSPk
+        </div>
+    </div>
+
+    <button onclick="button7()">
+        克罗地亚狂想曲
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div7" class="d4">
+        <div>
+            5MAARAeSAgMAiRAnSApMArEAwJAyCA0EA5JA7CA9JBCKBEEBGEBLRBQBBSMBURBZBBbMBdRBnSBpMBrRBwSByhB0MB2EB4JB6CB8ECBJCDMCFCCHJCJKCLECNECSRCXBCZMCbRCgBCiMCkRCpSCrMCthC3MC5RC7SC9MC/hDJMDLRDNSDPMDRMDWKDbMDdRDkSDmMDoRDySD0MD2hEAMECREESEGMEIhESMEUREWSEYMEaMEfKEkMEmREtSEvMExRE7SE9ME/hFJMFLEFNJFPCFRJFbKFdEFfEFkRFpBFrMFtRFyBF0MF2RGABGCMGEhGOMGQEGSKGUCGWJGgKGiEGkEGpRGuBGwMGyRG3BG5MG7RHFBHHMHJEHTMHVRHXBHZMHbEHlMHnRHpBHrMHtMHyKH3MH5RIABICMIERIOBIQMISEIcMIeRIgBIiMIkEIuMIwRIyBI0MI2MI7KJAMJCRJJBJLMJNSJXEJZMJbRJdSJfEJhMJjSJlUJnEJpSJrEJtRJvEJxMJzEJ1RJ3EJ5KJ7MJ9RJ/EKBKKDRKFSKHEKJRKLEKNMKPEKRhKTEKVSKXEKZMKbRKdSKfEKhMKjSKlUKnEKpSKrEKtRKvEKxMKzEK1hK3EK5KK7EK9SK/ELBRLDELFMLHELJhLLELNMLPSLZELbMLdRLfSLhELjMLlSLnULpELrSLtELvRLxELzML1EL3RL5EL7KL9ML/RMBEMDKMFRMHSMJEMLRMNEMPMMREMThMVEMXSMZEMbMMdRMfSMhEMjMMlSMnUMpEMrSMtEMvRMxEMzMM1EM3hM5EM7KM9hM/SNBENDRNFENHMNJENLhNNENPMNRhNbMNdSNfUNhhNjMNlSNnkNpiNrMNthNvMNxUNzMN1SN3MN5UN7KN9RN/SOBUODKOFROHiOJhOLKONUOPKORSOTKOVROXKOZSObJOdMOfROhSOjJOlMOnhOpUOrJOtSOvJOxROzJO1MO3JO5RO7EPASPFRPKMPPhPUMPZhPjMPlSPnUPphPrMPtSPvkPxiPzMP1hP3MP5iP7MP9MP/MQBkQDRQFUQHMQJkQLRQNiQPRQRhQTEQVUQXEQZSQbEQdRQfEQhSQjJQlMQnRQpSQrJQtMQvhQxUQzJQ1SQ3JQ5RQ7JQ9MQ/JRBRRDERFKRHRRJURLKRNRRPURRhRTRRVURXhRZkRbURdhRfkRhRRjERlKRnRRpURrKRtRRvURxhRzRR1UR3hR5kR7UR9hR/kSBMSD
+        </div>
+    </div>
+
+    <button onclick="button8()">
+        芒种
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div8" class="d4">
+        <div>
+            5hAASACUAEMAIMAMMAQhAYkAchAgkAkhAoMAwRA0SA4MA8KBAKBQhBYkBchBgMBkSBoUBwUB0UB4SB8hCASCIMCQECwEC4CC8EDACDEEDIJDQJDYBDcJDgKDkJDoKDwKD4MD8KEAKEEKEIEEMCEQBEkBEoMEsEEwEE4CE8EFACFEEFIJFQJFYBFcJFgSFkSFsRFwMF0KF4BGEMGIKGMKGQMGgMGkMGoSGsMGwKG0hG4MHIKHMMHQKHUkHYKHoKHqKHshHwSH0SH4SH8SIAKIEKIIUIQSIURIYSIcRIgMIoKIsKIwMI0hI4MJEMJIkJQSJUKJgKJiKJkhJoSJsSJwKJ0KJ4hKAUKIhKYSKaUKcMKgMKkMKohKwkK0hK4kK8hLAULIULMSLOULQULUSLWULYhLcKLgKLohLwkL0hL4ML8SMAUMIUMMSMOUMQUMUSMWhMYSMcMMgSMkMMohMwkM0hM4kM8hNAkNIkNMhNOkNQkNUhNWkNYhNcSNgkNoMNwkN0kN4hOAkOIhOYSOcSOgMOoKO8MO+SPASPEKPYMPaSPcSPgKP0MP2SP4SP8hQMSQQSQUMQcEQ8ERECRIERMCRQERUJRcJRkBRoJRsKRwJR0KR8KSEMSIKSMKSQKSUESYCScBSwBS0MS4ES8ETECTIETMCTQETUJTcJTkBToJTsSTwST4RT8MUAKUEBUQMUUKUYKUcMUsMUwMU0SU4MU8KVAhVEMVUKVYMVcKVgkVkKV0KV2KV4hV8SWASWESWISWMKWQKWUUWcSWgRWkSWoRWsMW0KW4KW8MXAhXEMXQMXUkXcSXgKXsKXuKXwhX0SX4SX8KYAKYEhYMUYUhYkSYmUYoMYsMYwMY0hY8kZAhZEkZIhZMUZUUZYSZaUZcUZgSZiUZkhZoKZsKZ0hZ8kaAhaEMaISaMUaUUaYSaaUacUagSaihakSaoMasSawMa0ha8kbAhbEkbIhbMkbUkbYhbakbckbghbikbkhboSbskb0Mb8kcAkcEhcMkcUhckScoScsMc0KdIMdKSdMSdQKdkMdmSdoSdsKeAMeCSeESeIheYSecSegMeo
+        </div>
+    </div>
+
+    <button onclick="button9()">
+        茉莉花
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div9" class="d4">
+        <div>
+            1JAAJAIKAMMAQRAURAYMAcKAgKAoMAsKAwMBAKBGJBIMBQRBURBYMBcKBgKBoMBsKBwKCAKCIKCQMCWKCXJCYKCcMCgRCmMCoJCsKCwJDAEDIJDMKDQMDWKDXJDYEDcCDgEDmCDoBDsCDwJEAEEGCEIJEMEEQJEeKEgMEoREsKEwEFAJFIKFMEFQJFWCFYBFdBGACGIEGQJGdMGgRGkMGoKGsMGw
+        </div>
+    </div>
+
+    <button onclick="button10()">
+        千本樱
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div10" class="d4">
+        <div>
+            6SAASAGRAMSAQSAWRAcSAgSAmRAsSAwhA4SBASBGRBMSBQSBWRBcSBghBoiBwkB4iCAkCESCIRCKSCMRCOiCQkCUSCYRCaSCcRCeiCgkCkSCoRCqSCsRCuhCwUC0hC1UC2SC4RC8iDAkDESDIRDKSDMRDOiDQkDUSDYRDaSDcRDeiDgkDkRDohDsUDwhDyUD0SD2RD4KD8iEAkEESEIREKSEMREOiEQkEUSEYREaSEcREeiEgkEkSEoREqSEsREuhEwUE0hE1UE2SE4RE8SFARFESFGhFISFMhFOiFQiFUkFWRFYhFaKFcRFehFgUFkhFlUFmSFoRFsSFw
+        </div>
+    </div>
+
+    <button onclick="button11()">
+        前奏
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div11" class="d4">
+        <div>
+            5MAARAHSAOSAgRAmMAtKAzMA6EBBMBoRBuSB0SCGRCNMCTKCZMCfMCmSDIUDLhDRhDXhDdkDiUDqSD2UD5hEAUEISELMERMExRE3SE+SFRRFYMFfKFlMFrMFv
+        </div>
+    </div>
+
+    <button onclick="button12()">
+        青花瓷
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div12" class="d4">
+        <div>
+            简短版：<br />            2yAAUAESAIRAMSAQKAURAcSAgUAkSAoRAsyBAUBESBIRBMSBQJBURBcSBgUBkRBoMBsMCARCESCIyCMhCQUCUSCYUCcSCgSCkRCoRCsMC5RC9MDAcDEaDMcDQxDYyDgxDoyD1UD5SD9REASEEKEIREQSEUUEYSEcREgyEsUEwSE1RE5SE9JFARFISFMUFQRFUMFYMFkRFoSFsUFwhF1UF5SF9UGASGESGIRGMRGQJGcxGgRGoRGsMG5 <br />
+            完整版： <br />            2RADMAGhAJMAMMASKAVMAYMAeKAhMAkKAnJAqRAzMA2KA5MA8MBCKBFMBIMBOSBRRBUMBXMBaJBjKBmSBpSBsSByRB1SB4SB+RCBSCEUCHSCKSCNSCTSCWSCZRCcRCfRCiRClRCoMCuSCxRC3RDAMDDKDGMDJMDPKDSMDVMDbKDeMDhKDkJDnJDwKDzSD2UD5UD/SECUEFUELSEORERMEUMEXREgMEjREmSEpREsREvMEyRE1ME7KE+RFBMFEMFHKFKMFNMFTMFWUF9UGASGDRGGSGJKGMRGSSGVUGYSGbRGeUGtUGwSGzRG2SG5JG8RHCSHFUHIRHLMHOMHdRHgSHjUHmhHpUHsSHvUHySH1SH4RH7RH+MINRIQMITMIWRIZMIcRIfSIlUIrSIuSIxUI6UI9SJARJDSJGKJJRJPSJSUJVSJYRJbUJqUJtSJwRJzSJ2JJ5RJ/SKCUKFRKIMKLMKaRKdSKgUKjhKmUKpSKsUKvSKySK1RK4RK7JLBSLERLKRLNMLTRLxML0KL3RL6ML9UMSUMVSMYRMbMMe
+        </div>
+    </div>
+
+    <button onclick="button13()">
+        青鸟
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div13" class="d4">
+        <div>
+            5EADMAGRAJSAMRAYMAhEAzMA2RA5SA8UBISBOUBRhBXEBjMBmRBpSBsRB4MCBMCThCWUCZMCfhCiUClKCrKCxMC3MC6hDMUDYUDkhDqRDtSDwSD8RECKEFMEIKEOEERMEUREgEEvMEyRE1SE4EE7SE+RFBMFHKFKMFNBFTCFWEFZEFfEFiEFlJFoKFrMFuKFxKF3KF6KF9MGARGDSGGRGJEGPMGSRGVSGYEGbSGeRGhMGnKGqMGtBGzCG2EG5EG/EHCEHFJHISHORHUMHXKHaKHdMHjMHmEHvMHyRH1SH4SIKRIQSIWRIZRIfRIiSIlUIoUI6SJARJGMJJMJPSJSUJVhJYMJeSJhUJnhJthJ5kJ8iKChKFEKXMKaRKdSKgRKsMK1ELHMLKRLNSLQULcSLiULlhLrEL3ML6RL9SMARMMMMVMMnhMqUMtMMzhM2UM5KM/KNFMNLMNOMNXhNaUNdMNjhNmUNpKNvKN1MN7MN+MOHhOKUONMOThOWUOZKOfKOlMOrMOuhO0UPAUPMhPSRPVSPYSPkRPqKPtMPwKP2EP5RP8MQOhQRMQXMQaKQgKQmMQpMRBhREMRKMRNKRTKRZMRcRRxSR0MR6SR9USJUSMRSSUSVUShhSkhSnhStSSwSSzUS5hS8ETXMTaRTdSTgRTsMT1EUHMUKRUNSUQUUcSUiUUlhUrEU3MU6RU9SVARVMMVVMVnhVqUVtMVzhV2UV5KV/KWFMWLMWOEWXMWaRWdSWgRWsMW1EXHMXKRXNSXQUXcSXiUXlhXrEX3MX6RX9SYARYMMYVMYnhYqUYtMYzhY2UY5KY/KZFMZLMZOMZXhZaUZdMZjhZmUZpKZvKZ1MZ7MZ+MaHhaKUaNMaThaWUaZKafKalMarMauha0UbAUbMhbSRbVSbYSbkRbqKbtMbwKb2Eb5Mb8KcIRcUScs
+        </div>
+    </div>
+
+    <button onclick="button14()">
+        世末歌者
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div14" class="d4">
+        <div>
+            1KAAhAGUAMSASSAdRAiSAlUAtMAzRA5SA/RBFSBLUBQUBTKBdhBkUBqSBwSB7RCBSCERCLSCRUCXSCdRCiRCmKC6hDBUDHSDNSDYRDeSDhUDqMDxRD3SD9REDSEJUEOUERKEkMErUE0KE9MFCSFLSFVMFb
+        </div>
+    </div>
+
+    <button onclick="button15()">
+        甩葱歌
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div15" class="d4">
+        <div>
+            5MAACACMAGMAKRAOBAQBASMAUMAWMAYMAcBAeRAgKAkKAoKAsRAwMA0MA4MA8MA+EBAMBEMBIRBMBBOBBQMBSMBUMBWMBaBBcEBeEBgEBiCBkBBmBBqRBsBBuMByMB2MB6BB8EB+ECCCCGBCKRCOKCSKCWKCYKCaRCcCCeCCgCCiCCkBCmBCoRCqRCsBCuMCyMC2MC6EC8EDACDEBDIRDMKDQKDUKDYRDaCDcCDeCDgCDiBDkRDoBDsMDuMDwMD0ED2MD6MD+RECBEEBEGMEIMEKMEMMEQBESREUKEYKEcKEgREkMEoMEsMEwMEyEE0ME4ME8RFABFCBFEMFGMFIMFKMFOBFQEFSEFUEFWCFYBFaBFeRFgBFiMFmMFqMFuBFwEFyEF2CF6BF+RGCKGGKGKKGMKGORGQCGSCGUCGWCGYBGaBGcRGeRGgBGiMGmMGqMGuEGwEG0CG4BG8RHAKHEKHIKHMRHOCHQCHSCHUCHWBHYRHcBHgMHiMHkMHoEHqMHuMHwRH0BH2BH4MH6MH8MH+MICBIERIGKIKKIOKISRIWMIaMIeMIiMIkEImMIqMIuRIyBI0BI2MI4MI6MI8MJARJCEJEEJGEJICJKBJMBJQRJSBJUMJYMJcMJgMJiEJkEJoCJsBJwRJ0KJ4KJ8KJ+KKARKCEKEEKICKMBKQRKUKKYKKcKKeKKgRKiEKkEKoCKsBKwEK0EK4CK8BLAELEELIELMELQELUELYELcELeELg
+        </div>
+    </div>
+
+    <button onclick="button16()">
+        天空之城
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div16" class="d4">
+        <div>
+            5JAAKAEMAIKAQMAUSAcKAkBA0BA4JA8EBEJBIMBQEBYBBoBBsCBwBB4CB8MCABCIMCYMCcMCgKCkCCsCCwKC4KDAJDQKDUMDYKDgMDkSDoKDwBEABEEJEIEEQJEUMEcEEkBE0BE4CE8MFEKFIMFQRFYRFcUFkMFoMF4KF8JGAJGEKGIEGQJGYThatGirl
+        </div>
+    </div>
+
+    <button onclick="button17()">
+        童话
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div17" class="d4">
+        <div>
+            5KAAKAIJAPEAXEAnJAuEAyEBDEBKJBREBYJBgEBoCBvBByBB/ECHKCPMCWMClMCsKCwCC8CDEJDMEDUBD6EEBKEIMEQMEfMElKEpCE2CE9JFFEFNJFVEFdCFkBFoCF5EGAMGIMGXBGeBGnRG2BHH
+        </div>
+    </div>
+
+    <button onclick="button18()">
+        亡灵序曲
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div18" class="d4">
+        <div>
+            5MAAMASRAVSAYMAqRAtSAwRBCMBFRBIEBUEBXSBaRBdMBgMBsMBvRByMB1iB4hCKUCNhCQUCiSClUCohC6iDAhDSUDVMDYMDqKDtMDwKECJEFKEIJEUEEaEEgJEmCEsCE4CE+JFEMFKKFQBFiJFoSFuKF0JF6MGAMGSRGVSGYMGqRGtSGwRHCMHFRHIEHUEHXSHaRHdMHgRHyMH1iH4hIKUINhIQUIiSIlUIohI6iJAhJSUJVMJYMJqKJtMJwKKCJKFKKIJKUEKaEKgJKmCKsBLQJLWBLcKLiJLoMLuMMARMDSMGMMYRMbSMeRMwMMzRM2ENCENFSNIRNLMNORNgMNjiNmhN4UN7hN+UOQSOTUOWhOoiOuhPAUPDMPGMPYKPbMPeKPwJPzKP2JQCEQIEQOJQUCQaBQ+JREBRKKRQJRWMRcMRuRRxSR0MSGRSJSSMRSeMShRSkESwESzSS2RS5MS8RTOMTRiTUhTmUTphTsUT+SUBUUEhUWiUchUuUUxMU0MVGKVJMVMKVeJVhKVkJVwEV2EV8JWCCWI
+        </div>
+    </div>
+
+    <button onclick="button19()">
+        新宝岛
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div19" class="d4">
+        <div>
+            5EAAEADEAFEAHBAYKAeKAhJAkEAnBA9KBDKBFJBHEBOMBXEBiCBmCBpCB1CB5BB9ECBECiEClECnBC3KC+KDAJDCEDHBDXKDcKDfJDiEDoMD0ED6CEACECCEMCEPCESBEVBEYKE6KFAKFGKFLKFRKFWRFfRFlSFsKF4KF/KGFJGJEGPEGhBGrEGwBG2EG5CG/EHOBHZBHcBHiBHlKH/KIFKILKIRKIXKIdSIjRIpSIvKI6KJCKJGJJJEJMEJdBJoEJuBJzEJ2CJ7EKPBKbEKeBKkEKoCKtBKzBK5BK8BK/CLBBLEELI
+        </div>
+    </div>
+
+    <button onclick="button20()">
+        学猫叫
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div20" class="d4">
+        <div>
+            5SAAUAGhALKAQSAVhAbhAgUAqSAwUA0kA6kA+kBDkBISBSRBYSBdSBiSBnSBtSByRB7SCARCGSCLRCRMCYKCdMCnKCtKCyKC3MC8MDBMDHKDREDWKDcEDhKDnUDtSDyKEChEJhENhESiEXkEcSEhSEmhErUEx
+        </div>
+    </div>
+
+    <button onclick="button21()">
+        野狼disco
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div21" class="d4">
+        <div>
+            3hAAEAGBAMEASSAeSAkhAqSAwBA2hA8BBCBBOhBUBBaBBghBmBBsBB4BB+SCEMCKMCQKCWMCcMCoSCuhC0EC6BDAEDGSDShDYSDeBDkhDqBDwBD8hECBEIBEOhEUBEaBEmSEsMEyEE+faded5BAABAMBAYEAkMAwMA8MBIKBUEBgEBsEB4ECERCQRCcRCoMC0SDGSDMMDSSDYMDeSDkUDqhDwSD8SECKEIhEOSEySE4SE+RFERFQRFWMFcSFiSF0SF6MGASGGMGMSGSUGYhGeSGqSGwkG2hG8SHgSHmUHshH+hIEhIKhIQhJehJkhJqhJwhK+hLEhLKhLQSLoULrULuUL0hL3UL6SMAhMShMYhMehMkSM8SNCSNIUNLRNOSNahN+hOEhOKhOQSOoMOuKO0SPGkPMkPShPVSPtkPzkP5hP8hQUhQahQghQmSQySQ4MQ+iRBkRZhRfkRlhRrkRxhR3kR9hSDUSJiSMMSYiSehSqMTmiTshT4SUoRUuMU6iVAhVMMWIiWOkWaSXKRXQMXciXihXuSYASYGSYSMYYSYeUYkhYqSY2SY8KZChZISZsSZyRZ+RaQMaWSacSauUa6SbAMbGSbMUbShbYSbkkbqhbwScUUcghc4hc+hdEhdKheGheMheSheY
+        </div>
+    </div>
+
+    <button onclick="button22()">
+        幽寒归处
+        <span><img src="../IMGs/s.jpg" />
+        </span>
+    </button>
+    <div id="div22" class="d4">
+        <div>
+            精简版： <br />
+            6BAABADBAGBAMBAPKASKAYKAbJAeKAhJAkEAnCAqCAzEA2BA5BA/EBICBOJBgKBjMBmMBpMBsMBvMByKB4JB7KB+KCBKCEKCHBCNECQJCTKCWMCZKCcJCfECiCCoBCrSDGSDMRDbRDeSDkKDnKDzMD2MD5MD8MD/RECMEIMEOKERBEgBEjBEmBEsCEyCE4CE7EE+EFEEFHJFKJFQKFWMFZKFcJFfEFiCFoBFrCF0EF3KGDMGJKGMJGPEGSCGYBGb <br />
+            完整版： <br />
+            6BAABADBAGBAMBAPKASKAYKAbJAeKAhJAkEAnCAqCAzEA2BA5BA/EBICBOJBgKBjMBmMBpMBsMBvMByKB4JB7KB+KCBKCEKCHBCNECQJCTKCWMCZKCcJCfECiCCoBCrSDGSDMRDbRDeSDkKDnKDzMD2MD5MD8MD/RECMEIMEOKERBEgBEjBEmBEsCEyCE4CE7EE+EFEEFHJFKJFQKFWMFZKFcJFfEFiCFoBFrCF0EF3KGDMGJKGMJGPEGSCGYBGbBHLBHOBHUKHaKHgKHjJHmJHsEHvCHyCH7EH+BIBBIHEIQCIWJIoKIrMIuMIxMI0MI3MI6KJAJJDKJGSJMBJSEJYJJbKJeMJhKJkJJnEJqCJwBJzSKOSKURKjRKmSKsKKvKK7MK+MLBMLEMLHRLKMLQMLWKLZBLoBLrBLuBL0CL6CMACMDEMGEMMEMPJMSJMYKMeMMhKMkJMnEMqCMwBMzCM8EM/KNLMNRKNUJNXENaCNgBNjKNsSNvUNyKN4UN7hN+UOESOHUOKSOTSOWSOZKOcSOfUOiKOoUOrhOuUO0SO3UO6BPABPDBPGBPMKPSKPYKPbJPeKPhJPkEPnCPqCPwCPzEP2BP5BP/EQICQOJQgKQjMQmMQpMQsMQvMQyMQ1KQ4JQ7KQ+KRBKREKRHKRKKRNERQJRTKRWMRZKRcJRfERiCRoBRrSSGSSMRSbRSeSSkKSnKSzMS2MS5MS8MS/RTCMTIKTOBTgBTjBTmBTsCTyCT4CT7ET+EUEEUHJUKJUQKUWMUZKUcJUfEUiCUoBUrCU0EU3KVDMVJKVMJVPEVSCVYBVbKVkSVnUVqKVwUVzhV2UV8SV/UWCSWLSWRKWUSWXUWaKWgUWjhWmUWsSWvUWySXBKXESXHUXKKXQUXThXWUXcSXfUXiSXrSXxRX0KX3RX6KYAJYDKYGSYhSYkhYnhYqSYtSYwhYzUY2SY5UY8SY/UZCSZFUZISZLSZRSZUhZXhZaSZdSZghZjhZmUZphZsUZvhZyUZ1hZ4UZ7KZ+MaBKaEJaHEaKCaQKaWMaZKacJafEaiCaoKauMaxKa0Ja3Ea6CbAKbGMbJKbMJbPEbSBbYBbeBbkKbnJbwJb2Kb5Eb8CcCCcLEcOBcRBcXEcgCcmJc4Kc7Mc+MdEMdHKdQJdTKdWKdZKdfBdlEdoJdrKduMdxKd0Jd3Ed6CeABeDCeMEePKebMehKekJenEeqCewBezSfmSfsRf7Rf+SgEKgHKgTMgWMgZMgcMgfRgiMgoKguBhABhDBhGBhMChSChYChbEheEhkEhnJhqJhwKh2Mh5Kh8Jh/EiCSiOSiURijRimSisKivKi7Mi+MjBMjEMjHRjKMjQMjWKjZBjoBjrBjuBj0Cj6CkACkDEkGEkMEkPJkSJkYKkeMkhKkkJknEkqCkwBkzCk8Ek/KlLMlRKlUJlXElaClgBljClsElvKl7MmBKmEJmHEmKCmQBmTBnvBn2Bn/KoKJoxEo1Jo7EpHCpSBqECqIEqNBqXBqbEqkCquJrPKrTMrWMriMrkMrmKr9JsBKsGKsRKsTKsWBsvEs1Js6KtDMtMKtVJteEtnCuBBuaBuf <br />
+            禁卫三线琴： <br />
+            6BAABADBAGBAMBAPKASKAYKAbJAeKAhJAkEAnCAqCAzEA2BA5BA/EBICBOJBgKBjMBmMBpMBsMBvMByKB4JB7KB+KCBKCEKCHBCNECQJCTKCWMCZKCcJCfECiCCoBCrSDGSDMRDbRDeSDkKDnKDzMD2MD5MD8MD/RECMEIMEOKERBEgBEjBEmBEsCEyCE4CE7EE+EFEEFHJFKJFQKFWMFYKFcJFfEFiCFoBFrCF0EF3KGDMGJKGMJGPEGSCGYBGbBHLBHOBHUKHaKHgKHjJHmJHsEHvCHyCH7EH+BIBBIHEIQCIWJIoKIrMIuMIxMI0MI3MI6KJAJJDKJGSJMBJSEJYJJbKJeMJhKJkJJnEJqCJwBJzSKOSKURKjRKmSKsKKvKK7MK+MLBMLEMLHRLKMLQKLWBLoBLrBLuBL0CL6CMACMDEMGEMMEMPJMSJMYKMeMMhKMkJMnEMqCMwBMzCM8EM/KNLMNRKNUJNXENaCNgBNjBPABPDBPGBPMKPSKPYKPbJPeKPhJPkEPnCPqCPwCPzEP2BP5BP/EQICQOJQgKQjMQmMQpMQsMQvMQyMQ1KQ4JQ7KQ+KRBKREKRHKRKKRNERQJRTKRWMRZKRcJRfERiCRoBRrSSGSSMRSbRSeSSkKSnKSzMS2MS5MS8MS/RTCMTIMTOKTRBTgBTjBTmBTsCTyCT4CT7ET+EUEEUHJUKJUQKUWMUZKUcJUfEUiCUoBUrCU0EU3KVDMVJKVMJVPEVSCVYBVbUY2SY5UY8SY/UZCSZFUZISZLhZmUZphZsUZvhZyUZ1hZ4UZ7BbYBbeBbkKbnJbwJb2Kb5Eb8CcCCcLEcOBcRBcXEcgCcmJc4Kc7Mc+MdEMdHKdQJdTKdWKdZKdfBdlEdoJdrKduMdxKd0Jd3Ed6CeABeDCeMEePKebMehKekJenEeqCewBezSfmSfsRf7Rf+SgEKgHKgTMgWMgZMgcMgfRgiMgoMguKgxBhABhDBhGBhMChSChYChbEheEhkEhnJhqJhwKh2Mh5Kh8Jh/EiCSiOSiURijRimSisKivKi7Mi+MjBMjEMjHRjKMjQMjWKjZBjoBjrBjuBj0Cj6CkACkDEkGEkMEkPJkSJkYKkeMkhKkkJknEkqCkwBkzCk8Ek/KlLMlRKlUJlXElaClgBljClsElvKl7MmBKmEJmHEmKCmQBmTBnwBn2BoAKoKJoyEo3Jo8EpGCpQBqGCqKEqOBqWBqaEqiCquJrOKrSMrWMrgMriMrkKr+JsCKsGKsRKsTKsWBsuEs2Js+KtGMtOKtWJteEtmCt+BuaBue <br />
+            莲花三线琴： <br />            6MAAMAGKAVKAYJAeEAhBAtJAwJAzJA2JA5KA8JBCEBIBBaBBdBBgBBmCBsCByCB1EB4EB+ECBJCEJCKKCQMCTKCWJCZECcJCiKClJCuKCxKC9MDDKDGJDJEDMJDSKDVUDkhDqSEUUEskFEKFcSF0KGMUGkBG8MHIMHOKHdKHgJHmEHpBH1JH4JH7JH+JIBKIEJIKEIQBIiBIlBIoBIuCI0CI6CI9EJAEJGEJJJJMJJSKJYMJbKJeJJhEJkJJqKJtJJ2KJ5KKFMKLKKOJKREKUJKaKKdSKgKKmSKpUKsKKyUK1hK4UK+SLBULESLNSLQSLTKLWSLZULcKLiULlhLoULuSLxUL0hMGiMJkMMiMPhMSUMVUMehMhiMkhMnUMqSMtMM2RM5SM8RM/MNCSNFSNIRNLSNOUNRSNUMNmRNpSNsRNvMNyKN+MOBROEMOHKOKJOWKOZMOcKOfJOiMOlKOoJOrKOuJOxEO0MPAMPGKPVKPYJPeEPhBPtJPwJPzJP2JP5KP8JQCEQIBQaBQdBQgBQmCQsCQyCQ1EQ4EQ+ERBJREJRKKRQMRTKRWJRZERcJRiKRlJRuKRxKR9MSDKSGJSJESMJSSKSVSSYKSeSShUSkKSqUSthSwUS2SS5US8STFSTLKTOSTRUTUKTaUTdhTgUTmSTpUTsST7KT+SUBUUEKUKUUNhUQUUWSUZUUcSUlSUrRUuKUxRU0KU6JU9KVAKW4MW7KW+JXBEXECXKKXoMXrKXuJXxEX0CX6McgMcmKc1Kc4Jc+EdBBdNJdQJdTJdWJdZKdcJdiEdoCeSCeVEeYEeeJekJeqJetKewKe5Re8RfCMfIMfOKfdKfgJfmEfpBf1Jf4Jf7Jf+JgBKgEJgKEgQBgiBglBgoBguCg0Cg6Cg9EhAEhGEhJJhMJhSKhYMhbKheJhhEhkJhqKhtJh2Kh5KiFMiLKiOJiREiUJiaKidJimKipKi1Mi7Ki+JjBEjECjKBjN <br />
+            无双Prime三线琴： <br />
+            6hAAhAGhAVhAYhAehAhSAtSAwSAzSA2SA5UA8hBCSBISBaSBdSBgSBmSBsSBySB1SB4SB+SCBSCESCKSCQSCTSCWSCZUCcUCihClUCuKCxSC9SDDSDGSDJhDMUDSSDVhHIhHOhHdhHghHmhHpSH1SH4SH7SH+SIBUIEhIKSIQSIiSIlSIoSIuSI0SI6SI9SJASJGSJJSJMSJSSJYSJbSJeSJhUJkUJqhJtUJ2KJ5SKFSKLSKOSKRhKUUKaSKdhPAhPGhPVhPYhPehPhSPtSPwSPzSP2SP5UP8hQCSQISQaSQdSQgSQmSQsSQySQ1SQ4SQ+SRBSRESRKSRQSRTSRWSRZURcURihRlURuKRxSR9SSDSSGSSJhSMUSSSSVSVbSVehVhhVkSVnSVqhVtSWLSWOhWRhWUSWXSWahWdSXrSXuUXxUX0SX3SX6UX9hcghcmhc1hc4hc+hdBSdNSdQSdTSdWSdZidcidfidikdlidohduSd0Sd6Sd9SeASeGSeMSeSSeVSeYSeeSehSekSeqSewSezSe2Se5Ue8UfChfIhfOhfdhfghfmhfpSf1Sf4Sf7Sf+SgBigEigHigKkgNigQhgWSgcSgiSglSgoSguSg0Sg6Sg9ShAShGShJShMShSShYShbSheShhUhkUhqhhtUh2Kh5SiFSiLSiOSiRUiUUiahidUimKipSi1Si7Si+SjBhjEUjKSjN <br />
+            科尔布三线琴： <br />
+            6MAAMAGRAVEAYEAeEAhEAtJAwJAzKA2MA5RA8MBCKBISBaSBdSBgSBmRBsRByRB1MB4MB+MCBKCEKCKJCQJCTJCWJCZKCcKCiMClhCukCxJC9JDDJDGJDJKDMKDSBDVBDkBDwKD8SEISEUSEgMEsBE4BFEBFQKFcSFoSF0SGAMGMMGkMG8RHURHsMIEMIcRI0RJMSJYMNgMNmRN1EN4EN+EOBEONJOQJOTKOWMOZROcMOiKOoCPSCPVEPYEPeJPkJPqKPwKP5RP8RQCSQISQORQdRQgSQmKQpKQ1MQ4MQ7MQ+MRBRREMRKKRQSRiSRlSRoSRuRR0RR6RR9MSAMSGMSJKSMKSSJSYJSbJSeJShKSkKSqBStES2MS5JTFJTLJTOJTRKTUKTaMTdhTmkTpJT1JT7JT+JUBKUEBUKBUN <br />
+            提亚马特三线琴： <br />
+            6JAAJAGJAJJAMKAPKAVBAYMELMERREgEEjEEpEEsEE4JE7JE+JFBJFEJFHJFNBFTSFlSFoSFrSFxRF3RF9RGAMGDMGJMGMKGPKGVJGbJGeJGhJGkKGnKGtMGwEG5MG8JHIJHOJHRJHUKHXKHdBHgMMDMMJRMYEMbEMhEMkEMwJMzJM2JM5JM8JM/JNFBNLSNdSNgSNjSNpRNvRN1RN4MN7MOBMOEKOHKONJOTJOWJOZJOcKOfKOlMOoEOxMO0JPAJPGJPJJPMKPPKPVBPYBPnBPzKP/BQLBQXBQjMQvBQ7BRHBRTKRfBRrBR3BSDMSPMSbMSzRTLRTjMT7MUTRUrRVDSVbMZjMZpRZ4EZ7EaBEaEEaQJaTJaWJaZJacJafJalBarSa9SbASbDSbJRbPRbVRbYMbbMbhMbkKbnKbtJbzJb2Jb5Jb8Kb/KcFMcLMcRRcgEcjEcpEcsEc4Jc7Jc+JdBJdEJdHJdNBdTSdlSdoSdrSdxRd3Rd9ReAMeDMeJMeMKePKeVJebJeeJehJekKenKetBewEe5Me8JfIJfOJfRJfUKfXKfdMfgEfpMfsJf4Jf+JgBJgEKgHBgNBgQ
+        </div>
+    </div>
+
+</body>
+<!--js-->
+<script>
+    function button1() {
+        var div = document.getElementById('div1');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button2() {
+        var div = document.getElementById('div2');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button3() {
+        var div = document.getElementById('div3');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button4() {
+        var div = document.getElementById('div4');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button5() {
+        var div = document.getElementById('div5');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button6() {
+        var div = document.getElementById('div6');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button7() {
+        var div = document.getElementById('div7');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button8() {
+        var div = document.getElementById('div8');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button9() {
+        var div = document.getElementById('div9');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button10() {
+        var div = document.getElementById('div10');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button11() {
+        var div = document.getElementById('div11');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button12() {
+        var div = document.getElementById('div12');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button13() {
+        var div = document.getElementById('div13');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button14() {
+        var div = document.getElementById('div14');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button15() {
+        var div = document.getElementById('div15');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button16() {
+        var div = document.getElementById('div16');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button17() {
+        var div = document.getElementById('div17');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button18() {
+        var div = document.getElementById('div18');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button19() {
+        var div = document.getElementById('div19');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button20() {
+        var div = document.getElementById('div20');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button21() {
+        var div = document.getElementById('div21');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+
+    function button22() {
+        var div = document.getElementById('div22');
+        if (div.style.display == 'block') {
+            div.style.display = 'none'
+        } else {
+            div.style.display = 'block'
+        }
+    }
+</script>
+</html>

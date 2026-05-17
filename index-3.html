@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Bebas Neue', cursive;
+            background-color: #1a1a1a;
+            color: #f5f5dc;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        header {
+            background: url('https://via.placeholder.com/1500x300.png?text=Header+Texture') no-repeat center center/cover;
+            color: #f5f5f5dc;
+            padding: 20px;
+            text-align: center;
+            font-size: 2.5em;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 2px solid #f5f5dc;
+        }
+        #typing {
+            font-size: 1em;
+            margin-top: 10px;
+            min-height: 1.2em;
+            display: inline-block;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        #typing:empty::before {
+            content: "\200b";
+        }
+        #cursor {
+            font-weight: bold;
+            color: #f5f5dc;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { color: transparent; }
+            50% { color: #f5f5dc; }
+        }
+
+        /* 主体内容 */
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #282c34;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #1a1a1a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f5f5dc;
+            position: relative;
+        }
+        .section h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #f5f5dc;
+            text-align: center;
+        }
+        .section a {
+            display: inline-block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #00ff80;
+            font-weight: bold;
+        }
+        .section a:hover {
+            text-decoration: underline;
+        }
+        .research {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+        }
+        .research-item {
+            text-align: center;
+            background: #282c34;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f5f5dc;
+            position: relative;
+        }
+        .research-item::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 50%;
+            height: 50%;
+            background: rgba(0, 255, 128, 0.2);
+            z-index: -1;
+            transform: rotate(45deg);
+        }
+        .research-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .research-item p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .research-item span {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .research-item progress {
+            width: 100%;
+            height: 20px;
+            margin-top: 5px;
+        }
+        .points-info {
+            margin-top: 10px;
+        }
+        .library-links {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .library-links a {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #00ff80;
+            color: #1a1a1a;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .library-links a:hover {
+            background-color: #00e676;
+        }
+
+        /* 怪异点样式 - 保留图片球体 */
+        .weird-point {
+            position: fixed;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background-image: url('Logo.jpg');
+            background-size: 100%;
+            border: 3px solid #f5f5dc;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            text-align: center;
+            line-height: 300px;
+            font-size: 2em;
+            color: #1a1a1a;
+            cursor: grab;
+            z-index: 9999;
+            user-select: none;
+            touch-action: none;
+            will-change: transform;
+        }
+        .weird-point:active {
+            cursor: grabbing;
+        }
+
+        /* "沃肥？狗都不玩" 文字波浪动画 */
+        .header-blink {
+            display: inline-block;
+            font-size: 1em;
+        }
+        .header-blink span {
+            opacity: 0;
+            transition: opacity 0.3s ease, text-shadow 0.3s ease;
+            text-shadow: none;
+        }
+        .header-blink span.active {
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(245, 245, 220, 0.8),
+                         0 0 20px rgba(245, 245, 220, 0.5),
+                         0 0 30px rgba(245, 245, 220, 0.3);
+        }
+    </style>
+    <base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <header class="header">
+        <span class="header-blink" id="headerText">沃肥？狗都不玩</span><br>
+        <h1 id="typing"></h1>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>材料征集</h2>
+            <a href="IMGs/imgs.html">查看全部</a>
+        </section>
+
+        <section class="section">
+            <h2>联盟公告</h2>
+            <ul>
+                <li>研究界面已完成</li>
+                <li>积分界面已完成</li>
+                <li>活动界面已完成</li>
+                <li>演奏代码已完成</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>联盟活动</h2>
+            无活动进行中，
+            <a href="MJ/G3.html">点我</a>查看往期活动
+        </section>
+
+        <section class="section">
+            <h2>联盟积分制</h2>
+            <div class="points-info">
+                <p>1.维护关闭中.....</p>
+            </div>
+            <div class="library-links">
+                <a href="MJ/G1.html">积分查询</a>
+                <a href="MJ/G1-1.html">兑换宝库</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>联盟资料库</h2>
+            <div class="library-links">
+                <a href="#">促销代码</a>
+                <a href="#">掉落获取</a>
+                <a href="X/X3.html">演奏代码</a>
+                <a href="#">美术画廊</a>
+                <a href="#">杂项合集</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 怪异点 - 图片球体 -->
+    <div class="weird-point" id="physicsBall"></div>
+
+    <script>
+        // ========== 打字机效果 ==========
+        const texts = ["REVELATION", "天启 联盟"];
+        const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57", "#ff9ff3", "#54a0ff"];
+        const shadows = [
+            "2px 2px 4px rgba(255, 0, 0, 0.4)",
+            "2px 2px 8px rgba(78, 205, 196, 0.5)",
+            "0 0 10px rgba(69, 183, 209, 0.6)",
+            "3px 3px 0px rgba(0, 0, 0, 0.8)",
+            "-2px -2px 4px rgba(254, 202, 87, 0.4)",
+            "0 4px 6px rgba(255, 159, 243, 0.5)",
+            "1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 15px rgba(84, 160, 255, 0.6)"
+        ];
+        let index = 0, isTyping = true, cursor = 0;
+
+        function typeEffect() {
+            const textElement = document.getElementById("typing");
+            const currentText = texts[index];
+            if (cursor === 0 && isTyping) {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                textElement.style.color = randomColor;
+                textElement.style.textShadow = shadows[Math.floor(Math.random() * shadows.length)];
+            }
+            if (isTyping) {
+                if (cursor < currentText.length) {
+                    textElement.textContent += currentText.charAt(cursor);
+                    cursor++;
+                } else {
+                    cursor = 0; isTyping = false;
+                    setTimeout(typeEffect, 1500); return;
+                }
+            } else {
+                if (textElement.textContent.length > 0) {
+                    textElement.textContent = textElement.textContent.slice(0, -1);
+                } else {
+                    isTyping = true;
+                    index = (index + 1) % texts.length;
+                    typeEffect(); return;
+                }
+            }
+            setTimeout(typeEffect, isTyping ? 100 : 100);
+        }
+        typeEffect();
+
+        // ========== 文字波浪动画 ==========
+        function initHeaderBlink() {
+            const headerText = document.getElementById('headerText');
+            const text = headerText.textContent;
+            headerText.innerHTML = '';
+            const spans = [];
+            for (let i = 0; i < text.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = text[i];
+                headerText.appendChild(span);
+                spans.push(span);
+            }
+            const waveLength = 3;
+            let position = -waveLength;
+            let phase = 0;
+
+            function animate() {
+                if (phase === 0) {
+                    for (let i = 0; i < spans.length; i++) spans[i].classList.remove('active');
+                    for (let i = 0; i < waveLength; i++) {
+                        let idx = position + i;
+                        if (idx >= 0 && idx < spans.length) spans[idx].classList.add('active');
+                    }
+                    position++;
+                    if (position > spans.length) { phase = 1; setTimeout(animate, 100); return; }
+                    setTimeout(animate, 150);
+                } else if (phase === 1) {
+                    phase = 2; position = spans.length - 1; animate();
+                } else if (phase === 2) {
+                    if (position >= 0) {
+                        spans[position].classList.remove('active');
+                        position--;
+                        setTimeout(animate, 120);
+                    } else {
+                        phase = 0; position = -waveLength;
+                        setTimeout(animate, 100);
+                    }
+                }
+            }
+            animate();
+        }
+        initHeaderBlink();
+
+        // ========== 物理球系统（图片球体） ==========
+        (function() {
+            const ball = document.getElementById('physicsBall');
+            const ballSize = 150;
+            const gravity = 0.6;
+            const friction = 0.985;
+            const bounce = 0.65;
+            const stopThreshold = 0.3;
+            const rotationSpeedFactor = 1.5;
+        
+            let x = window.innerWidth / 2 - ballSize / 2;
+            let y = -ballSize;
+            let vx = 0;
+            let vy = 0;
+            let rotation = 0;
+            let isDragging = false;
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
+            let lastMouseX = 0;
+            let lastMouseY = 0;
+            let lastTime = performance.now();
+            let animId = null;
+        
+            // 以屏幕（视口）为边界
+            function getBounds() {
+                return {
+                    w: window.innerWidth,
+                    h: window.innerHeight
+                };
+            }
+        
+            function update() {
+                if (isDragging) {
+                    animId = requestAnimationFrame(update);
+                    return;
+                }
+        
+                const bounds = getBounds();
+                const now = performance.now();
+                const dt = Math.min((now - lastTime) / 16.67, 3);
+                lastTime = now;
+        
+                vy += gravity * dt;
+                vx *= Math.pow(friction, dt);
+                vy *= Math.pow(friction, dt);
+        
+                x += vx * dt;
+                y += vy * dt;
+        
+                // 左右边界
+                if (x <= 0) {
+                    x = 0;
+                    vx = Math.abs(vx) * bounce;
+                } else if (x + ballSize >= bounds.w) {
+                    x = bounds.w - ballSize;
+                    vx = -Math.abs(vx) * bounce;
+                }
+        
+                // 上下边界（以屏幕为界）
+                if (y <= 0) {
+                    y = 0;
+                    vy = Math.abs(vy) * bounce;
+                } else if (y + ballSize >= bounds.h) {
+                    y = bounds.h - ballSize;
+                    vy = -Math.abs(vy) * bounce;
+                    if (Math.abs(vy) < stopThreshold * 3) vy = 0;
+                }
+        
+                const speed = Math.sqrt(vx * vx + vy * vy);
+                if (speed > stopThreshold) {
+                    rotation += vx * rotationSpeedFactor * dt;
+                }
+        
+                ball.style.left = x + 'px';
+                ball.style.top = y + 'px';
+                ball.style.transform = 'rotate(' + rotation + 'deg)';
+        
+                // 静止判断
+                if (speed < stopThreshold && !isDragging && Math.abs(vy) < stopThreshold && y + ballSize >= bounds.h - 3) {
+                    vx = 0; vy = 0;
+                    ball.style.transform = 'rotate(' + rotation + 'deg)';
+                    animId = null;
+                    return;
+                }
+        
+                animId = requestAnimationFrame(update);
+            }
+        
+            function startPhysics() {
+                if (!animId) {
+                    lastTime = performance.now();
+                    animId = requestAnimationFrame(update);
+                }
+            }
+        
+            function onDown(e) {
+                e.preventDefault();
+                isDragging = true;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                dragOffsetX = clientX - x;
+                dragOffsetY = clientY - y;
+                lastMouseX = clientX;
+                lastMouseY = clientY;
+                vx = 0; vy = 0;
+            }
+        
+            function onMove(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                const bounds = getBounds();
+                x = Math.max(0, Math.min(bounds.w - ballSize, clientX - dragOffsetX));
+                y = Math.max(0, Math.min(bounds.h - ballSize, clientY - dragOffsetY));
+                vx = (clientX - lastMouseX) * 0.6;
+                vy = (clientY - lastMouseY) * 0.6;
+                lastMouseX = clientX;
+                lastMouseY = clientY;
+                ball.style.left = x + 'px';
+                ball.style.top = y + 'px';
+            }
+        
+            function onUp(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                startPhysics();
+            }
+        
+            ball.addEventListener('mousedown', onDown);
+            ball.addEventListener('touchstart', onDown, { passive: false });
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('touchmove', onMove, { passive: false });
+            window.addEventListener('mouseup', onUp);
+            window.addEventListener('touchend', onUp);
+        
+            window.addEventListener('resize', () => {
+                const bounds = getBounds();
+                x = Math.min(x, bounds.w - ballSize);
+                y = Math.min(y, bounds.h - ballSize);
+            });
+        
+            // 初始化
+            ball.style.left = x + 'px';
+            ball.style.top = y + 'px';
+            ball.style.transform = 'rotate(0deg)';
+            startPhysics();
+        })();
+    </script>
+</body>
+</html>
