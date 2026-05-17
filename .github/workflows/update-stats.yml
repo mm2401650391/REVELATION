@@ -1,0 +1,34 @@
+name: Update GA4 Stats
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'    # 每6小时运行
+  workflow_dispatch:          # 允许手动触发
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Fetch GA4 data
+        run: |
+          curl -s "https://script.google.com/macros/s/AKfycbyAJURQX5vadpUCc3MvokBpnDNktIvutnV_qeRIDzx1JzAzWpWzycwWXf0zoeyHD7tVeg/exec" > stats.json
+          
+      - name: Check if data changed
+        id: check
+        run: |
+          git diff --quiet stats.json || echo "changed=true" >> $GITHUB_OUTPUT
+          
+      - name: Commit and push if changed
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stats.json
+          git commit -m "Update stats: $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
