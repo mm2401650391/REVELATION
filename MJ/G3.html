@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            color: #e0e0e0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            padding: 2vw;
+            font-size: 1.2vw;
+        }
+
+        /* Logo区域 - 参考G2的.d2样式 */
+        .d2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            padding: 2vw 0;
+            margin-bottom: 2vw;
+            position: relative;
+        }
+
+        .d2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../IMGs/01.jpg') center/cover no-repeat;
+            opacity: 0.4;
+            border-radius: 20px;
+            z-index: 0;
+        }
+
+        .d2 > a {
+            position: absolute;
+            left: 2vw;
+            z-index: 1;
+        }
+
+        .d2 > h2 {
+            position: relative;
+            z-index: 1;
+            font-size: 4vw;
+            color: #FF9800;
+            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
+            letter-spacing: 0.1em;
+            text-align: center;
+            line-height: 1;
+            min-width: 12em;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .d2 a img {
+            width: 5vw;
+            height: 5vw;
+            object-fit: cover;
+            border-radius: 12px;
+            filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .d2 a img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
+            margin: 2vw 0;
+        }
+
+        /* 表格区域 - 玻璃拟态风格 */
+        .atxt-0 {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2vw;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        table:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(128, 255, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(128, 255, 0, 0.1);
+        }
+
+        caption {
+            caption-side: top;
+            font-weight: bold;
+            margin: 1vw 0 1.5vw;
+            font-size: 2vw;
+            color: #80FF00;
+            text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
+            letter-spacing: 0.1em;
+        }
+
+        thead {
+            background: rgba(128, 255, 0, 0.08);
+        }
+
+        th {
+            padding: 1.5vw 2vw;
+            text-align: center;
+            font-size: 1.5vw;
+            color: #FF9800;
+            text-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
+            border-bottom: 1px solid rgba(128, 255, 0, 0.2);
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1.5vw 2vw;
+            text-align: center;
+            font-size: 1.3vw;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        tbody tr:hover td {
+            color: #ffffff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        td a {
+            color: #376CFF;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.3vw 1vw;
+            border-radius: 8px;
+        }
+
+        td a:hover {
+            color: #008DFF;
+            text-shadow: 0 0 10px rgba(0, 141, 255, 0.5);
+            background: rgba(0, 141, 255, 0.1);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1000px) {
+            body {
+                padding: 3vw;
+                font-size: 2vw;
+            }
+
+            .d2 a img {
+                width: 8vw;
+                height: 8vw;
+            }
+
+            .d2 h2 {
+                font-size: 6vw;
+            }
+
+            caption {
+                font-size: 3.5vw;
+            }
+
+            th {
+                font-size: 2.5vw;
+                padding: 2vw;
+            }
+
+            td {
+                font-size: 2vw;
+                padding: 2vw;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .d2 {
+                flex-direction: column;
+                gap: 1vw;
+            }
+
+            .d2 a img {
+                width: 12vw;
+                height: 12vw;
+            }
+
+            .d2 h2 {
+                font-size: 7vw;
+            }
+
+            caption {
+                font-size: 5vw;
+            }
+
+            th {
+                font-size: 3.5vw;
+                padding: 3vw 1vw;
+            }
+
+            td {
+                font-size: 3vw;
+                padding: 3vw 1vw;
+            }
+
+            table {
+                border-radius: 12px;
+            }
+        }
+    </style>
+    <base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <div class="d2">
+        <a href="../index.html">
+            <img src="../Logo.jpg" alt="Logo">
+        </a>
+        <h2 id="typing"></h2>
+    </div>
+    <hr />
+
+    <div class="atxt-0">
+        <table>
+            <caption>
+                氏族活动（含进行中）
+            </caption>
+            <thead>
+                <tr>
+                    <th>期序号</th>
+                    <th class="ta1">第一名</th>
+                    <th class="ta2">第二名</th>
+                    <th class="ta3">第三名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="">暂无记录</a>
+                    </td>
+                    <td class="ta1">无</td>
+                    <td class="ta2">无</td>
+                    <td class="ta3">无</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const texts = ["REVELATION", "天启 联盟"];
+        let index = 0;
+        let isTyping = true;
+        let cursor = 0;
+        let blinkInterval;
+
+        function initBlink() {
+            blinkInterval = setInterval(() => {
+                const cursorElement = document.getElementById("cursor");
+                if (cursorElement) {
+                    cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+                }
+            }, 500);
+        }
+
+        function stopBlink() {
+            clearInterval(blinkInterval);
+        }
+
+        function addCursor() {
+            const cursorElement = document.createElement("span");
+            cursorElement.id = "cursor";
+            cursorElement.textContent = "|";
+            cursorElement.style.visibility = "visible";
+            document.getElementById("typing").appendChild(cursorElement);
+            initBlink();
+        }
+
+        function removeCursor() {
+            const cursorElement = document.getElementById("cursor");
+            if (cursorElement) {
+                stopBlink();
+                cursorElement.remove();
+            }
+        }
+
+        function typeEffect() {
+            const textElement = document.getElementById("typing");
+            const currentText = texts[index];
+            if (isTyping) {
+                if (cursor < currentText.length) {
+                    textElement.textContent += currentText.charAt(cursor);
+                    cursor++;
+                } else {
+                    addCursor();
+                    setTimeout(() => {
+                        isTyping = false;
+                        cursor = 0;
+                        setTimeout(() => {
+                            removeCursor();
+                            typeEffect();
+                        }, 1500);
+                        return;
+                    }, 300);
+                    return;
+                }
+            } else {
+                if (textElement.textContent.length > 1) {
+                    textElement.textContent = textElement.textContent.slice(0, -1);
+                } else {
+                    textElement.textContent = "\u200b";
+                    isTyping = true;
+                    index = (index + 1) % texts.length;
+                    removeCursor();
+                    setTimeout(typeEffect, 400);
+                    return;
+                }
+            }
+            setTimeout(typeEffect, isTyping ? 100 : 100);
+        }
+
+        typeEffect();
+    </script>
+</body>
+</html>

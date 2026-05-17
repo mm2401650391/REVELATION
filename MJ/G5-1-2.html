@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            color: #e0e0e0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            padding: 2vw;
+        }
+
+        /* Logo区域 - 参考G2 */
+        .d2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            padding: 2vw 0;
+            margin-bottom: 2vw;
+            position: relative;
+        }
+
+        .d2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../IMGs/01.jpg') center/cover no-repeat;
+            opacity: 0.4;
+            border-radius: 20px;
+            z-index: 0;
+        }
+
+        .d2 > a {
+            position: absolute;
+            left: 2vw;
+            z-index: 1;
+        }
+
+        .d2 > h2 {
+            position: relative;
+            z-index: 1;
+            font-size: 4vw;
+            color: #FF9800;
+            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
+            letter-spacing: 0.1em;
+            text-align: center;
+            line-height: 1;
+            min-width: 12em;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .d2 a img {
+            width: 5vw;
+            height: 5vw;
+            object-fit: cover;
+            border-radius: 12px;
+            filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .d2 a img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
+            margin: 2vw 0;
+        }
+
+        /* 导航区域 - 参考G2 */
+        .d3 {
+            text-align: center;
+            margin-bottom: 1.5vw;
+        }
+
+        .d3 div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1vw;
+        }
+
+        .d3 a {
+            text-decoration: none;
+            color: #b0b0b0;
+            font-size: 1.5vw;
+            padding: 0.5vw 2vw;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5vw;
+        }
+
+        .d3 a:hover {
+            color: #ffffff;
+            border-color: #008DFF;
+            box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
+        }
+
+        .d3 a.a {
+            color: #FF0E00;
+            border: 1px solid #FF0E00;
+            background: rgba(255, 14, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
+        }
+
+        .d3 a.b {
+            color: #376CFF;
+            border: 1px solid rgba(55, 108, 255, 0.3);
+        }
+
+        .d3 a.b:hover {
+            background: rgba(55, 108, 255, 0.1);
+            box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
+        }
+
+        .d3 a img {
+            width: 2vw;
+            height: 2vw;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        /* 说明文字 */
+        .atxt {
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1vw 2vw;
+        }
+
+        .atxt h3 {
+            font-size: 1.5vw;
+            color: #a0a0a0;
+            line-height: 2;
+            margin-bottom: 1vw;
+            padding: 1vw;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .atxt p {
+            font-size: 1.3vw;
+            color: #b0b0b0;
+            margin-bottom: 1vw;
+        }
+
+        .atxt p span {
+            color: #248BFF;
+            text-shadow: 0 0 8px rgba(36, 139, 255, 0.4);
+        }
+
+        /* 商品网格 */
+        .d4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2vw;
+            padding: 2vw;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 商品卡片 - 玻璃拟态 */
+        .d5 {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5vw;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1vw;
+        }
+
+        .d5:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(128, 255, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .d5 > img {
+            width: 60%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .d5:hover > img {
+            transform: scale(1.05);
+        }
+
+        .d5 > h4 {
+            font-size: 1.8vw;
+            color: #FF9800;
+            text-shadow: 0 0 15px rgba(255, 152, 0, 0.3);
+            letter-spacing: 0.05em;
+        }
+
+        .d5 > h4 span {
+            color: #248BFF;
+            text-shadow: 0 0 10px rgba(36, 139, 255, 0.4);
+        }
+
+        /* 部件网格 - 2x2布局 */
+        .parts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8vw;
+            width: 100%;
+            margin-top: 0.5vw;
+        }
+
+        .part-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1vw;
+            transition: all 0.3s ease;
+        }
+
+        .part-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .part-item h4 {
+            font-size: 1.2vw;
+            color: #e0e0e0;
+            margin-bottom: 0.3vw;
+        }
+
+        .part-item .status {
+            font-size: 1vw;
+            margin-bottom: 0.3vw;
+            font-weight: bold;
+        }
+
+        .part-item .status.h1 {
+            color: #FF1D24;
+            text-shadow: 0 0 8px rgba(255, 29, 36, 0.4);
+        }
+
+        .part-item .status.h2 {
+            color: #1BFF53;
+            text-shadow: 0 0 8px rgba(27, 255, 83, 0.4);
+        }
+
+        .part-item .price {
+            font-size: 1.1vw;
+            color: #FF9800;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 152, 0, 0.3);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1000px) {
+            body {
+                padding: 3vw;
+            }
+
+            .d2 a img {
+                width: 8vw;
+                height: 8vw;
+            }
+
+            .d2 h2 {
+                font-size: 6vw;
+            }
+
+            .d3 a {
+                font-size: 2.5vw;
+                padding: 1vw 3vw;
+            }
+
+            .d3 a img {
+                width: 3vw;
+                height: 3vw;
+            }
+
+            .atxt h3 {
+                font-size: 2.2vw;
+            }
+
+            .atxt p {
+                font-size: 2vw;
+            }
+
+            .d4 {
+                grid-template-columns: 1fr;
+                gap: 3vw;
+            }
+
+            .d5 > h4 {
+                font-size: 3vw;
+            }
+
+            .part-item h4 {
+                font-size: 2.2vw;
+            }
+
+            .part-item .status {
+                font-size: 2vw;
+            }
+
+            .part-item .price {
+                font-size: 2.2vw;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .d2 {
+                flex-direction: column;
+                gap: 1vw;
+            }
+
+            .d2 a img {
+                width: 12vw;
+                height: 12vw;
+            }
+
+            .d2 h2 {
+                font-size: 7vw;
+            }
+
+            .d3 div {
+                flex-direction: column;
+                gap: 1.5vw;
+            }
+
+            .d3 a {
+                font-size: 3.5vw;
+                width: 80%;
+            }
+
+            .atxt h3 {
+                font-size: 3.5vw;
+            }
+
+            .atxt p {
+                font-size: 3vw;
+            }
+
+            .d5 {
+                padding: 3vw;
+            }
+
+            .d5 > img {
+                width: 70%;
+            }
+
+            .d5 > h4 {
+                font-size: 4vw;
+            }
+
+            .part-item {
+                padding: 2vw;
+            }
+
+            .part-item h4 {
+                font-size: 3vw;
+            }
+
+            .part-item .status {
+                font-size: 2.8vw;
+            }
+
+            .part-item .price {
+                font-size: 3vw;
+            }
+        }
+    </style>
+    <base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <div class="d2">
+        <a href="../index.html">
+            <img src="../Logo.jpg" alt="Logo">
+        </a>
+        <h2 id="typing"></h2>
+    </div>
+
+    <hr />
+
+    <div class="d3">
+        <div>
+            <a href="G1-1.html">积分查询</a>
+            <a class="a">❀积分兑换❀</a>
+        </div>
+    </div>
+
+    <div class="d3">
+        <div>
+            <a href="G5-1-1.html" target="_self">Cv宝库</a>
+            <a class="b">
+                <img src="IMG/Cv/2.jpg" alt="">Prime宝库<img src="IMG/Cv/2.jpg" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="atxt">
+        <h3>兑换请群聊@cvbdf，可兑换单个部件</h3>
+        <p><span>蓝字</span>军械需要档案页该军械未被点亮且整套起兑换！</p>
+    </div>
+
+    <div class="d4">
+        <!-- Wisp Prime -->
+        <div class="d5">
+            <img src="IMG/Prime/2/A2.png" alt="Wisp Prime">
+            <h4>Wisp Prime</h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Frost Prime -->
+        <div class="d5">
+            <img src="IMG/Prime/R/B3.png" alt="Frost Prime">
+            <h4><span>Frost Prime</span></h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hildryn Prime -->
+        <div class="d5">
+            <img src="IMG/Prime/R/A5.png" alt="Hildryn Prime">
+            <h4><span>Hildryn Prime</span></h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rhino Prime -->
+        <div class="d5">
+            <img src="IMG/Prime/R/A1.png" alt="Rhino Prime">
+            <h4><span>Rhino Prime</span></h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［--］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nidus Prime -->
+        <div class="d5">
+            <img src="IMG/Prime/R/B1.png" alt="Nidus Prime">
+            <h4>Nidus Prime</h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wukong Prime -->
+        <div class="d5">
+            <img src="IMG/Cv/C7.jpg" alt="Wukong Prime">
+            <h4>Wukong Prime</h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Garuda Prime -->
+        <div class="d5">
+            <img src="IMG/Cv/C5.jpg" alt="Garuda Prime">
+            <h4>Garuda Prime</h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Baruuk Prime -->
+        <div class="d5">
+            <img src="IMG/Cv/C4.jpg" alt="Baruuk Prime">
+            <h4>Baruuk Prime</h4>
+            <div class="parts-grid">
+                <div class="part-item">
+                    <h4>【头部】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【机体】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">30 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【系统】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">10 Prime</div>
+                </div>
+                <div class="part-item">
+                    <h4>【蓝图】</h4>
+                    <div class="status h2">［待售］</div>
+                    <div class="price">100 Prime</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const texts = ["REVELATION", "Cv积分系统"];
+        let index = 0;
+        let isTyping = true;
+        let cursor = 0;
+        let blinkInterval;
+
+        function initBlink() {
+            blinkInterval = setInterval(() => {
+                const cursorElement = document.getElementById("cursor");
+                if (cursorElement) {
+                    cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+                }
+            }, 500);
+        }
+
+        function stopBlink() {
+            clearInterval(blinkInterval);
+        }
+
+        function addCursor() {
+            const cursorElement = document.createElement("span");
+            cursorElement.id = "cursor";
+            cursorElement.textContent = "|";
+            cursorElement.style.visibility = "visible";
+            document.getElementById("typing").appendChild(cursorElement);
+            initBlink();
+        }
+
+        function removeCursor() {
+            const cursorElement = document.getElementById("cursor");
+            if (cursorElement) {
+                stopBlink();
+                cursorElement.remove();
+            }
+        }
+
+        function typeEffect() {
+            const textElement = document.getElementById("typing");
+            const currentText = texts[index];
+            if (isTyping) {
+                if (cursor < currentText.length) {
+                    textElement.textContent += currentText.charAt(cursor);
+                    cursor++;
+                } else {
+                    addCursor();
+                    setTimeout(() => {
+                        isTyping = false;
+                        cursor = 0;
+                        setTimeout(() => {
+                            removeCursor();
+                            typeEffect();
+                        }, 1500);
+                        return;
+                    }, 300);
+                    return;
+                }
+            } else {
+                if (textElement.textContent.length > 1) {
+                    textElement.textContent = textElement.textContent.slice(0, -1);
+                } else {
+                    textElement.textContent = "\u200b";
+                    isTyping = true;
+                    index = (index + 1) % texts.length;
+                    removeCursor();
+                    setTimeout(typeEffect, 400);
+                    return;
+                }
+            }
+            setTimeout(typeEffect, isTyping ? 100 : 100);
+        }
+
+        typeEffect();
+    </script>
+</body>
+</html>

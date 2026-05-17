@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>REVELATION</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+				color: #e0e0e0;
+				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+				min-height: 100vh;
+				padding: 2vw;
+			}
+
+			/* Logo区域 */
+			.d2 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 2vw;
+				padding: 2vw 0;
+				margin-bottom: 2vw;
+				position: relative;
+			}
+
+			.d2::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: url('../IMGs/01.jpg') center/cover no-repeat;
+				opacity: 0.4;
+				border-radius: 20px;
+				z-index: 0;
+			}
+
+			.d2>a {
+				position: absolute;
+				left: 2vw;
+				z-index: 1;
+			}
+
+			.d2>h2 {
+				position: relative;
+				z-index: 1;
+
+
+			}
+
+			.d2 a img {
+				width: 5vw;
+				height: 5vw;
+				object-fit: cover;
+				border-radius: 12px;
+				filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
+				transition: transform 0.3s ease;
+			}
+
+			.d2 a img:hover {
+				transform: scale(1.1) rotate(5deg);
+			}
+
+			.d2 h2 {
+				font-size: 4vw;
+				color: #FF9800;
+				text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
+				letter-spacing: 0.1em;
+				text-align: center;
+				line-height: 1;
+				min-width: 12em;
+				white-space: nowrap;
+				display: inline-block;
+			}
+
+			/* 导航区域 */
+			.d3 {
+				text-align: center;
+				margin-bottom: 1.5vw;
+			}
+
+			.d3 div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 1vw;
+			}
+
+			.d3 a {
+				text-decoration: none;
+				color: #b0b0b0;
+				font-size: 1.5vw;
+				padding: 0.5vw 2vw;
+				border-radius: 30px;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				transition: all 0.3s ease;
+				display: inline-block;
+			}
+
+			.d3 a:hover {
+				color: #ffffff;
+				border-color: #008DFF;
+				box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
+			}
+
+			.d3 a.a {
+				color: #FF0E00;
+				border: 1px solid #FF0E00;
+				background: rgba(255, 14, 0, 0.1);
+				box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
+			}
+
+			.d3 a.b {
+				color: #376CFF;
+				border: 1px solid rgba(55, 108, 255, 0.3);
+			}
+
+			.d3 a.b:hover {
+				background: rgba(55, 108, 255, 0.1);
+				box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
+			}
+
+			hr {
+				border: none;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
+				margin: 2vw 0;
+			}
+
+			/* 说明文字 */
+			.atxt h3 {
+				text-align: center;
+				font-size: 1.2vw;
+				color: #a0a0a0;
+				line-height: 2;
+				margin-bottom: 2vw;
+				padding: 1vw;
+				background: rgba(255, 255, 255, 0.02);
+				border-radius: 15px;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+			}
+
+			/* 折叠按钮 */
+			button {
+				display: block;
+				width: 80%;
+				max-width: 600px;
+				margin: 1vw auto;
+				padding: 1vw 2vw;
+				font-size: 1.8vw;
+				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+				color: #ffffff;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 15px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				outline: none;
+				letter-spacing: 0.1em;
+			}
+
+			button:hover {
+				background: rgba(0, 141, 255, 0.1);
+				border-color: #008DFF;
+				box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
+				transform: translateY(-2px);
+			}
+
+			button:active {
+				transform: translateY(0);
+			}
+
+			/* 商品网格 */
+			.d4 {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				gap: 2vw;
+				padding: 2vw;
+				max-width: 1400px;
+				margin: 0 auto;
+			}
+
+			                .d4 > div {
+			                    background: rgba(255, 255, 255, 0.03);
+			                    border: 1px solid rgba(255, 255, 255, 0.1);
+			                    border-radius: 20px;
+			                    padding: 1.5vw;
+			                    text-align: center;
+			                    font-size: 1.2vw;
+			                    transition: all 0.3s ease;
+			                    display: flex;
+			                    flex-direction: column;
+			                    align-items: center;
+			                    justify-content: center;  /* 新增：垂直居中 */
+			                    gap: 0.8vw;
+			                    min-height: 320px;
+			                }
+
+			/* 跨两列的商品 */
+			.d4>div.col-2 {
+				grid-column: span 2;
+				max-width: 600px;
+				margin: 0 auto;
+				width: 100%;
+			}
+			
+			        /* 跨列商品图片更大 */
+			        .d4 > div.col-2 img {
+			            width: 90%;
+			            max-width: 300px;
+			        }
+
+			@media (max-width: 600px) {
+				.d4>div.col-2 {
+					grid-column: span 1;
+					max-width: 100%;
+				}
+			}
+
+			/* 新增：库存量和价格容器 */
+			.d4>div .info-bar {
+				margin-top: auto;
+				padding-top: 0.5vw;
+				display: flex;
+				flex-direction: column;
+				/* 修改：垂直排列 */
+				align-items: center;
+				/* 修改：居中对齐 */
+				width: 100%;
+				gap: 0.3vw;
+				/* 修改：调整行间距 */
+			}
+
+			/* 军械部件：四个信息块 2×2 网格布局 */
+			.d4>div .parts-info {
+				margin-top: auto;
+				padding-top: 0.5vw;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 0.5vw;
+				width: 100%;
+			}
+
+			.d4>div .parts-info .info-bar {
+				margin-top: 0;
+				padding: 0.4vw 0.6vw;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				gap: 0.2vw;
+				background: rgba(255, 255, 255, 0.03);
+				border: 1px solid rgba(255, 255, 255, 0.08);
+				border-radius: 8px;
+			}
+
+			.d4>div .parts-info .info-bar span:first-child {
+				font-size: 0.9em;
+				color: #b0b0b0;
+			}
+
+			.d4>div .parts-info .info-bar .price {
+				font-size: 0.85em;
+			}
+
+
+			.d4>div .info-bar span:first-child {
+				color: inherit;
+				font-size: inherit;
+			}
+
+			.d4>div .info-bar .price {
+				color: #FF9800;
+				font-weight: bold;
+				text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+				font-size: inherit;
+			}
+
+			.d4>div:hover {
+				background: rgba(255, 255, 255, 0.06);
+				border-color: rgba(128, 255, 0, 0.3);
+				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+				transform: translateY(-5px);
+			}
+
+			        .d4 > div img {
+			            width: 80%;
+			            max-width: 200px;
+			            height: auto;
+			            border-radius: 12px;
+			            transition: transform 0.3s ease;
+			            margin: auto;  /* 新增：在 flex 容器中自动居中 */
+			            object-fit: contain;
+			        }
+
+			.d4>div:hover img {
+				transform: scale(1.05);
+			}
+
+			.d4>div br:first-of-type {
+				display: none;
+			}
+
+			/* 子标题 */
+			.atxt h4 {
+				text-align: center;
+				font-size: 2vw;
+				color: #80FF00;
+				text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
+				margin: 2vw 0 1vw;
+				letter-spacing: 0.1em;
+			}
+
+			/* 隐藏区域 */
+			#div1,
+			#div2,
+			#div3,
+			#div4,
+			#div4-mod,#div2-mod,
+			#div5 {
+				display: none;
+			}
+
+			/* 响应式 */
+			@media (max-width: 1000px) {
+				body {
+					padding: 3vw;
+				}
+
+				.d2 a img {
+					width: 8vw;
+					height: 8vw;
+				}
+
+				.d2 h2 {
+					font-size: 6vw;
+				}
+
+				.d3 a {
+					font-size: 2.5vw;
+					padding: 1vw 3vw;
+				}
+
+				.atxt h3 {
+					font-size: 2vw;
+				}
+
+				button {
+					font-size: 3vw;
+					width: 90%;
+				}
+
+				.d4 {
+					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+					gap: 3vw;
+				}
+
+				.d4>div {
+					background: rgba(255, 255, 255, 0.03);
+					border: 1px solid rgba(255, 255, 255, 0.1);
+					border-radius: 20px;
+					padding: 1.5vw;
+					text-align: center;
+					font-size: 1.2vw;
+					transition: all 0.3s ease;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					gap: 0.8vw;
+					min-height: 320px;
+				}
+
+				/* 新增：库存量和价格容器 */
+				.d4>div .info-bar {
+					margin-top: auto;
+					padding-top: 0.5vw;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					width: 100%;
+					gap: 1vw;
+				}
+
+				.d4>div .parts-info {
+					gap: 1vw;
+				}
+
+				.d4>div .info-bar span:first-child {
+					color: inherit;
+					/* 保持原库存量颜色 */
+					font-size: inherit;
+					/* 保持原字体大小 */
+				}
+
+				.d4>div .info-bar .price {
+					color: #FF9800;
+					font-weight: bold;
+					text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+					font-size: inherit;
+					/* 保持原字体大小 */
+				}
+
+				.atxt h4 {
+					font-size: 3.5vw;
+				}
+
+				.d4>div .parts-info {
+					gap: 1vw;
+					padding-top: 1vw;
+				}
+
+				.d4>div .parts-info .info-bar {
+					padding: 1vw;
+				}
+				
+				.d4 > div.col-2 img {
+				    width: 85%;
+				    max-width: 250px;
+					margin: auto;
+					            object-fit: contain;
+				}
+			}
+
+			@media (max-width: 600px) {
+				.d2 {
+					flex-direction: column;
+					gap: 1vw;
+				}
+
+				.d2 a img {
+					width: 12vw;
+					height: 12vw;
+				}
+
+				.d2 h2 {
+					font-size: 7vw;
+				}
+
+				.d3 div {
+					flex-direction: column;
+					gap: 1.5vw;
+				}
+
+				.d3 a {
+					font-size: 3.5vw;
+					width: 80%;
+				}
+
+				button {
+					font-size: 4vw;
+				}
+
+				.d4 {
+					grid-template-columns: 1fr;
+				}
+
+				.d4>div {
+					font-size: 3.5vw;
+				}
+
+				.d4>div .parts-info {
+					grid-template-columns: 1fr 1fr;
+					gap: 2vw;
+				}
+				            .d4 > div.col-2 img {
+				                width: 80%;
+				                max-width: 200px;
+				            }
+			}
+		</style>
+		<base target="_blank">
+	<base target="_blank">
+</head>
+	<body>
+		<div class="d2">
+			<a href="../index.html">
+				<img src="../Logo.jpg" alt="Logo">
+			</a>
+			<h2 id="typing"></h2>
+		</div>
+
+		<hr />
+
+		<div class="d3">
+			<div>
+				<a href="G1.html">积分查询</a>
+				<a class="a">❀积分兑换❀</a>
+			</div>
+		</div>
+
+		<div class="d3">
+			<div>
+				<a class="b">☞Rout宝库☜</a>
+				<a href="G2-2.html" target="_self">Prime宝库</a>
+			</div>
+		</div>
+
+		<div class="atxt">
+			<h3>
+				兑换请在群聊@群主，并说明兑换奖项，所有奖励等级均为零<br>
+				<!--0-15段为原积分价，16段及之后的每5段所需积分量翻0.75倍<br>
+            原积分量 × 段位倍数（上限3倍）= 最终所需积分量-->
+			</h3>
+
+			<button onclick="button1()" id="bu1">MOD奖池</button>
+			<div id="div1" class="d4">
+				<div class="col-2">
+					<span>布莱顿裂罅</span>
+					<img src="IMG/Rout/1/01.jpg" alt="布莱顿裂罅">
+					<div class="info-bar">
+						<span>触发+暴伤+弹容</span>
+						<span class="price">［250 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>近战裂罅</span>
+					<img src="IMG/Rout/1/02.jpg" alt="近战裂罅">
+					<div class="info-bar">
+						<span>库存量：6</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>手枪裂罅</span>
+					<img src="IMG/Rout/1/02.jpg" alt="手枪裂罅">
+					<div class="info-bar">
+						<span>库存量：6</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>终劫怪奇</span>
+					<img src="IMG/Rout/1/03.jpg" alt="终劫怪奇">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［50 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>生长怪奇</span>
+					<img src="IMG/Rout/1/04.jpg" alt="生长怪奇">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［25 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>观众怪奇</span>
+					<img src="IMG/Rout/1/05.jpg" alt="观众怪奇">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［90 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>Lohk颂歌</span>
+					<img src="IMG/Rout/1/06.jpg" alt="Lohk颂歌">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［30 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>镀层 致死加速</span>
+					<img src="IMG/Rout/1/07.jpg" alt="镀层 致死加速">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>镀层液压准心</span>
+					<img src="IMG/Rout/1/08.jpg" alt="镀层液压准心">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>中空子弹</span>
+					<img src="IMG/Rout/1/09.jpg" alt="中空子弹">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>乏能迅敏</span>
+					<img src="IMG/Rout/1/10.jpg" alt="乏能迅敏">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>冰风暴</span>
+					<img src="IMG/Rout/1/11.jpg" alt="冰风暴">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>致命洪流</span>
+					<img src="IMG/Rout/1/12.jpg" alt="致命洪流">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>致命效率</span>
+					<img src="IMG/Rout/1/13.jpg" alt="致命效率">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>咬碎</span>
+					<img src="IMG/Rout/1/14.jpg" alt="咬碎">
+					<div class="info-bar">
+						<span>库存量：2</span>
+						<span class="price">［70 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>失效保险</span>
+					<img src="IMG/Rout/1/15.jpg" alt="失效保险">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>溜之大吉</span>
+					<img src="IMG/Rout/1/16.jpg" alt="溜之大吉">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>氩晶瞄具</span>
+					<img src="IMG/Rout/1/17.jpg" alt="氩晶瞄具">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>视野之外</span>
+					<img src="IMG/Rout/1/18.jpg" alt="视野之外">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［10 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>超越推进</span>
+					<img src="IMG/Rout/1/19.jpg" alt="超越推进">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>覆壳弹药</span>
+					<img src="IMG/Rout/1/20.jpg" alt="覆壳弹药">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［50 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>预言神密</span>
+					<img src="IMG/Rout/1/21.jpg" alt="预言神密">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［25 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>弹指瞬技</span>
+					<img src="IMG/Rout/1/22.jpg" alt="弹指瞬技">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="atxt">
+			<button onclick="button2()" id="bu2">赋能奖池</button>
+			<div id="div2" class="d4">
+				<div>
+					<span>主要·毒侵</span>
+					<img src="IMG/Rout/2/02.jpg" alt="主要·毒侵">
+					<div class="info-bar">
+						<span>库存量：10</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>主要·准星</span>
+					<img src="IMG/Rout/2/03.jpg" alt="主要·准星">
+					<div class="info-bar">
+						<span>库存量：6</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>次要·筑垒</span>
+					<img src="IMG/Rout/2/04.jpg" alt="次要·筑垒">
+					<div class="info-bar">
+						<span>库存量：10</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>永恒·流转</span>
+					<img src="IMG/Rout/2/05.jpg" alt="永恒·流转">
+					<div class="info-bar">
+						<span>库存量：9</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>蜕化·升腾</span>
+					<img src="IMG/Rout/2/07.jpg" alt="蜕化·升腾">
+					<div class="info-bar">
+						<span>库存量：2</span>
+						<span class="price">［5 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·保卫者</span>
+					<img src="IMG/Rout/2/08.jpg" alt="赋能·保卫者">
+					<div class="info-bar">
+						<span>库存量：4</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·奇袭</span>
+					<img src="IMG/Rout/2/09.jpg" alt="赋能·奇袭">
+					<div class="info-bar">
+						<span>库存量：3</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·影袭</span>
+					<img src="IMG/Rout/2/10.jpg" alt="赋能·影袭">
+					<div class="info-bar">
+						<span>库存量：5</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·愤怒</span>
+					<img src="IMG/Rout/2/11.jpg" alt="蜕化·升腾">
+					<div class="info-bar">
+						<span>库存量：4</span>
+						<span class="price">［5 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·激励</span>
+					<img src="IMG/Rout/2/12.jpg" alt="赋能·激励">
+					<div class="info-bar">
+						<span>库存量：7</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·精确</span>
+					<img src="IMG/Rout/2/13.jpg" alt="赋能·精确">
+					<div class="info-bar">
+						<span>库存量：4</span>
+						<span class="price">［4 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>赋能·黩武</span>
+					<img src="IMG/Rout/2/14.jpg" alt="赋能·黩武">
+					<div class="info-bar">
+						<span>库存量：3</span>
+						<span class="price">［4 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>近战·无畏</span>
+					<img src="IMG/Rout/2/15.jpg" alt="近战·无畏">
+					<div class="info-bar">
+						<span>库存量：16</span>
+						<span class="price">［3 Rout］</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="div2-mod">
+				<h4>满级赋能</h4>
+				<div class="d4">
+					<div>
+						<span>近战·渐强</span>
+						<img src="IMG/Rout/2/01.jpg" alt="近战·渐强">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［140 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>主要·毒侵</span>
+						<img src="IMG/Rout/2/02.jpg" alt="主要·毒侵">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［65 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>主要·准星</span>
+						<img src="IMG/Rout/2/03.jpg" alt="主要·准星">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［55 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>次要·筑垒</span>
+						<img src="IMG/Rout/2/04.jpg" alt="次要·筑垒">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［50 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>永恒·流转</span>
+						<img src="IMG/Rout/2/05.jpg" alt="永恒·流转">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［45 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>赋能·暴虐</span>
+						<img src="IMG/Rout/2/06.jpg" alt="赋能·暴虐">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［45 Rout］</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<button onclick="button3()" id="bu3">阿耶檀识</button>
+		<div id="div3" class="d4">
+			<div>
+				<span>Anasa 塑像</span>
+				<img src="IMG/Rout/3/01.jpg" alt="Anasa塑像">
+				<div class="info-bar">
+					<span>库存量：15</span>
+					<span class="price">［18 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Ayr 塑像</span>
+				<img src="IMG/Rout/3/02.jpg" alt="Ayr 塑像">
+				<div class="info-bar">
+					<span>库存量：9</span>
+					<span class="price">［10 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Kitha 塑像</span>
+				<img src="IMG/Rout/3/03.jpg" alt="Kitha 塑像">
+				<div class="info-bar">
+					<span>库存量：2</span>
+					<span class="price">［27 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Orta 塑像</span>
+				<img src="IMG/Rout/3/04.jpg" alt="Orta 塑像">
+				<div class="info-bar">
+					<span>库存量：24</span>
+					<span class="price">［12 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Piv 塑像</span>
+				<img src="IMG/Rout/3/05.jpg" alt="Piv 塑像">
+				<div class="info-bar">
+					<span>库存量：11</span>
+					<span class="price">［10 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Sah 塑像</span>
+				<img src="IMG/Rout/3/06.jpg" alt="Sah 塑像">
+				<div class="info-bar">
+					<span>库存量：11</span>
+					<span class="price">［10 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Valana 塑像</span>
+				<img src="IMG/Rout/3/07.jpg" alt="Valana 塑像">
+				<div class="info-bar">
+					<span>库存量：18</span>
+					<span class="price">［10 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>Vaya 塑像</span>
+				<img src="IMG/Rout/3/08.jpg" alt="Vaya 塑像">
+				<div class="info-bar">
+					<span>库存量：6</span>
+					<span class="price">［12 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>琥珀星</span>
+				<img src="IMG/Rout/3/09.jpg" alt="琥珀星">
+				<div class="info-bar">
+					<span>库存量：189</span>
+					<span class="price">［3 Rout］</span>
+				</div>
+			</div>
+			<div>
+				<span>青蓝星</span>
+				<img src="IMG/Rout/3/10.jpg" alt="青蓝星">
+				<div class="info-bar">
+					<span>库存量：313</span>
+					<span class="price">［1 Rout］</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="atxt">
+			<button onclick="button4()" id="bu4">杂项分类</button>
+			<div id="div4" class="d4">
+				<div>
+					<span>SCIMITAR</span>
+					<img src="IMG/Rout/4/01.jpg" alt="SCIMITAR">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［23 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>星察</span>
+					<img src="IMG/Rout/4/02.jpg" alt="星察">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［27 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>任意枢议武器</span>
+					<img id="image1" src="IMG/Rout/4/1/B1-1.png" alt="任意枢议武器">
+					<div class="info-bar">
+						<span>占位符</span>
+						<span class="price">［占位符］</span>
+					</div>
+				</div>
+				<div>
+					<span>任意终极武器</span>
+					<img id="image2" src="IMG/Rout/4/1/B2-1.png" alt="任意终极武器">
+					<div class="info-bar">
+						<span>占位符</span>
+						<span class="price">［占位符］</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="div4-mod">
+				<h4>殁世机甲专属</h4>
+				<div class="d4">
+					<div>
+						<span>虚空锐将</span>
+						<img src="IMG/Rout/4/03.jpg" alt="虚空锐将">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［75 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>殁世机甲 推进器</span>
+						<img src="IMG/Rout/4/04.jpg" alt="殁世机甲推进器">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［22 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>殁世机甲 震波</span>
+						<img src="IMG/Rout/4/05.jpg" alt="殁世机甲震波">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［20 Rout］</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 新增：军械部件折叠按钮 -->
+			<button onclick="button5()" id="bu5">军械部件</button>
+			<div id="div5" class="d4">
+				<div>
+					<span>光谱切割器·破坏者</span>
+					<img src="IMG/Rout/5/01.jpg" alt="光谱切割器·破坏者">
+					<div class="info-bar">
+						<span>蓝图：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>机体：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪管：1</span>
+						<span class="price">［12 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>握柄：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>嫣红·潘塔</span>
+					<img src="IMG/Rout/5/02.jpg" alt="嫣红·潘塔">
+					<div class="info-bar">
+						<span>蓝图：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪管：1</span>
+						<span class="price">［25 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪机：1</span>
+						<span class="price">［25 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪托：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>布莱顿·破坏者</span>
+					<img src="IMG/Rout/5/03.jpg" alt="布莱顿·破坏者">
+					<div class="info-bar">
+						<span>蓝图：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪管：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪机：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪托：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>德拉·破坏者</span>
+					<img src="IMG/Rout/5/04.jpg" alt="德拉·破坏者">
+					<div class="info-bar">
+						<span>蓝图：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪管：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪机：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪托：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>恶狼战锤</span>
+					<img src="IMG/Rout/5/05.jpg" alt="恶狼战锤">
+					<div class="info-bar">
+						<span>蓝图：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>锤头：1</span>
+						<span class="price">［25 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>马达：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>握柄：2</span>
+						<span class="price">［25 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>拉托·破坏者</span>
+					<img src="IMG/Rout/5/06.jpg" alt="拉托·破坏者">
+					<div class="info-bar">
+						<span>蓝图：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪管：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪机：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span></span>
+						<span class="price"></span>
+					</div>
+				</div>
+				<div>
+					<span>暮斩</span>
+					<img src="IMG/Rout/5/07.jpg" alt="暮斩">
+					<div class="info-bar">
+						<span>刀刃：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>握柄：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span></span>
+						<span class="price"></span>
+					</div>
+					<div class="info-bar">
+						<span></span>
+						<span class="price"></span>
+					</div>
+				</div>
+				<div>
+					<span>舍杜</span>
+					<img src="IMG/Rout/5/08.jpg" alt="舍杜">
+					<div class="info-bar">
+						<span>机体：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪管：1</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>枪机：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>握柄：2</span>
+						<span class="price">［15 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>鹦鹉螺</span>
+					<img src="IMG/Rout/5/09.jpg" alt="鹦鹉螺">
+					<div class="info-bar">
+						<span>蓝图：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>头部：0</span>
+						<span class="price">［00 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>外壳：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+					<div class="info-bar">
+						<span>系统：1</span>
+						<span class="price">［17 Rout］</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function button1() {
+				var div1 = document.getElementById('div1');
+				var bu1 = document.getElementById('bu1');
+				if (div1.style.display == 'grid') {
+					div1.style.display = 'none';
+					bu1.innerText = "MOD奖池";
+				} else {
+					div1.style.display = 'grid';
+					bu1.innerText = "☃ MOD奖池 ☃";
+				}
+			}
+
+					function button2() {
+						var div2 = document.getElementById('div2');
+						var div2mod = document.getElementById('div2-mod');
+						var bu2 = document.getElementById('bu2');
+						if (div2.style.display == 'grid') {
+							div2.style.display = 'none';
+							div2mod.style.display = 'none';
+							bu2.innerText = "赋能奖池";
+						} else {
+							div2.style.display = 'grid';
+							div2mod.style.display = 'block';
+							bu2.innerText = "☃ 赋能奖池 ☃";
+						}
+					}
+
+			function button3() {
+				var div3 = document.getElementById('div3');
+				var bu3 = document.getElementById('bu3');
+				if (div3.style.display == 'grid') {
+					div3.style.display = 'none';
+					bu3.innerText = "阿耶檀识";
+				} else {
+					div3.style.display = 'grid';
+					bu3.innerText = "☃ 阿耶檀识 ☃";
+				}
+			}
+
+			function button4() {
+				var div4 = document.getElementById('div4');
+				var div4mod = document.getElementById('div4-mod');
+				var bu4 = document.getElementById('bu4');
+				if (div4.style.display == 'grid') {
+					div4.style.display = 'none';
+					div4mod.style.display = 'none';
+					bu4.innerText = "杂项分类";
+				} else {
+					div4.style.display = 'grid';
+					div4mod.style.display = 'block';
+					bu4.innerText = "☃ 杂项分类 ☃";
+				}
+			}
+
+
+
+			function button5() {
+				var div5 = document.getElementById('div5');
+				var bu5 = document.getElementById('bu5');
+				if (div5.style.display == 'grid') {
+					div5.style.display = 'none';
+					bu5.innerText = "军械部件";
+				} else {
+					div5.style.display = 'grid';
+					bu5.innerText = "☃ 军械部件 ☃";
+				}
+			}
+
+			// 图片轮播		
+
+			// 图片轮播
+			var images1 = [
+				'IMG/Rout/4/1/B1-1.png',
+				'IMG/Rout/4/1/B1-2.png',
+				'IMG/Rout/4/1/B1-3.png',
+			];
+			var index1 = 0;
+			setInterval(function() {
+				var imgElement = document.getElementById('image1');
+				imgElement.src = images1[index1];
+				index1 = (index1 + 1) % images1.length;
+			}, 200);
+
+			var images2 = [
+				'IMG/Rout/4/1/B2-1.png',
+				'IMG/Rout/4/1/B2-2.png',
+				'IMG/Rout/4/1/B2-3.png',
+			];
+			var index2 = 0;
+			setInterval(function() {
+				var imgElement = document.getElementById('image2');
+				imgElement.src = images2[index2];
+				index2 = (index2 + 1) % images2.length;
+			}, 200);
+
+			// 打字机效果
+			const texts = ["REVELATION", "联盟积分系统"];
+			let index = 0;
+			let isTyping = true;
+			let cursor = 0;
+			let blinkInterval;
+
+			function initBlink() {
+				blinkInterval = setInterval(() => {
+					const cursorElement = document.getElementById("cursor");
+					if (cursorElement) {
+						cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+					}
+				}, 500);
+			}
+
+			function stopBlink() {
+				clearInterval(blinkInterval);
+			}
+
+			function addCursor() {
+				const cursorElement = document.createElement("span");
+				cursorElement.id = "cursor";
+				cursorElement.textContent = "|";
+				cursorElement.style.visibility = "visible";
+				document.getElementById("typing").appendChild(cursorElement);
+				initBlink();
+			}
+
+			function removeCursor() {
+				const cursorElement = document.getElementById("cursor");
+				if (cursorElement) {
+					stopBlink();
+					cursorElement.remove();
+				}
+			}
+
+			function typeEffect() {
+				const textElement = document.getElementById("typing");
+				const currentText = texts[index];
+				if (isTyping) {
+					if (cursor < currentText.length) {
+						textElement.textContent += currentText.charAt(cursor);
+						cursor++;
+					} else {
+						addCursor();
+						setTimeout(() => {
+							isTyping = false;
+							cursor = 0;
+							setTimeout(() => {
+								removeCursor();
+								typeEffect();
+							}, 1500);
+							return;
+						}, 300);
+						return;
+					}
+				} else {
+					// 修改回删逻辑：保留一个零宽空格防止容器塌陷
+					if (textElement.textContent.length > 1) {
+						textElement.textContent = textElement.textContent.slice(0, -1);
+					} else {
+						textElement.textContent = "\u200b"; // 零宽空格，占位但不可见
+						isTyping = true;
+						index = (index + 1) % texts.length;
+						removeCursor();
+						setTimeout(typeEffect, 400);
+						return;
+					}
+				}
+				setTimeout(typeEffect, isTyping ? 100 : 100);
+			}
+
+			typeEffect();
+		</script>
+	</body>
+</html>
