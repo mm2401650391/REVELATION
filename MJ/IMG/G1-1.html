@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION</title>
+ <style>
+     * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+     }
+ 
+     body {
+         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+         color: #e0e0e0;
+         font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+         min-height: 100vh;
+         padding: 2vw;
+     }
+ 
+     /* Logo区域 - 使用flex布局精确对齐 */
+     .Logo {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 2vw 0;
+         margin-bottom: 2vw;
+         gap: 1.5vw;
+     }
+ 
+     .Logo img {
+         width: 5vw;
+         height: 5vw;
+         object-fit: cover;
+         flex-shrink: 0;
+         filter: drop-shadow(0 0 10px rgba(0, 141, 255, 0.5));
+         transition: transform 0.3s ease;
+     }
+ 
+     .Logo img:hover {
+         transform: scale(1.1) rotate(5deg);
+     }
+ 
+     .Logo a {
+         font-size: 5vw;
+         color: #ffffff;
+         text-shadow: 0 0 20px rgba(0, 141, 255, 0.6), 0 0 40px rgba(0, 141, 255, 0.3);
+         text-decoration: none;
+         letter-spacing: 0.1em;
+         transition: all 0.3s ease;
+         line-height: 1;
+     }
+ 
+     .Logo a:hover {
+         color: #008DFF;
+         text-shadow: 0 0 30px rgba(0, 141, 255, 0.8);
+     }
+ 
+     /* 主容器 */
+     .div2 {
+         max-width: 1200px;
+         margin: 0 auto;
+         background: rgba(255, 255, 255, 0.03);
+         border: 1px solid rgba(255, 255, 255, 0.1);
+         border-radius: 20px;
+         padding: 3vw;
+         backdrop-filter: blur(10px);
+         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+     }
+ 
+     /* 标题区域 */
+     .header-section {
+         text-align: center;
+         margin-bottom: 2vw;
+     }
+ 
+     .header-section h2 {
+         font-size: 2.5vw;
+         font-weight: 400;
+         letter-spacing: 0.15em;
+     }
+ 
+     .header-section h2 span {
+         border: 2px solid #008DFF;
+         border-radius: 60px 0px;
+         display: inline-block;
+         color: #FFA100;
+         padding: 0.3vw 1.5vw;
+         margin-right: 1vw;
+         background: rgba(0, 141, 255, 0.1);
+         box-shadow: 0 0 15px rgba(0, 141, 255, 0.2);
+     }
+ 
+     /* 导航标签 */
+     .d2 {
+         text-align: center;
+         margin-bottom: 2vw;
+     }
+ 
+     .nav-tabs {
+         margin-bottom: 1vw;
+     }
+ 
+     .nav-tabs a, .nav-sub a {
+         display: inline-block;
+         text-decoration: none;
+         font-size: 1.5vw;
+         padding: 0.5vw 2vw;
+         margin: 0 0.5vw;
+         border-radius: 30px;
+         transition: all 0.3s ease;
+     }
+ 
+     .nav-tabs a {
+         color: #b0b0b0;
+         border: 1px solid rgba(255, 255, 255, 0.2);
+     }
+ 
+     .nav-tabs a:hover {
+         color: #ffffff;
+         border-color: #008DFF;
+         box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
+     }
+ 
+     .nav-tabs a.active {
+         color: #FF0E00;
+         border: 1px solid #FF0E00;
+         background: rgba(255, 14, 0, 0.1);
+         box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
+     }
+ 
+     .nav-sub a {
+         color: #4B81FF;
+         border: 1px solid rgba(75, 129, 255, 0.3);
+     }
+ 
+     .nav-sub a:hover {
+         background: rgba(75, 129, 255, 0.1);
+         box-shadow: 0 0 15px rgba(75, 129, 255, 0.3);
+     }
+ 
+     /* 搜索区域 */
+     .search-section {
+         text-align: center;
+         margin: 2vw 0;
+     }
+ 
+     .search-section input {
+         width: 50%;
+         max-width: 400px;
+         height: 3vw;
+         min-height: 40px;
+         font-size: 1.2vw;
+         border-radius: 30px;
+         text-align: center;
+         background: rgba(255, 255, 255, 0.05);
+         border: 1px solid rgba(255, 255, 255, 0.2);
+         color: #ffffff;
+         outline: none;
+         transition: all 0.3s ease;
+     }
+ 
+     .search-section input::placeholder {
+         color: #666;
+     }
+ 
+     .search-section input:focus {
+         border-color: #008DFF;
+         box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
+         background: rgba(255, 255, 255, 0.08);
+     }
+ 
+     /* 表格区域 */
+     .table-wrapper {
+         overflow-x: auto;
+         border-radius: 15px;
+         border: 1px solid rgba(128, 255, 0, 0.2);
+     }
+ 
+     table {
+         width: 100%;
+         border-collapse: collapse;
+     }
+ 
+     caption {
+         caption-side: top;
+         font-weight: bold;
+         font-size: 1.3vw;
+         padding: 1vw;
+         color: #80FF00;
+         letter-spacing: 0.1em;
+         text-shadow: 0 0 10px rgba(128, 255, 0, 0.3);
+     }
+ 
+     thead th {
+         background: rgba(128, 255, 0, 0.08);
+         color: #ffffff;
+         font-size: 1.3vw;
+         padding: 1.2vw;
+         border: 1px solid rgba(128, 255, 0, 0.3);
+         text-transform: uppercase;
+         letter-spacing: 0.05em;
+     }
+ 
+     thead th:first-child {
+         border-radius: 15px 0 0 0;
+     }
+ 
+     thead th:last-child {
+         border-radius: 0 15px 0 0;
+     }
+ 
+     tbody td {
+         padding: 1.2vw;
+         text-align: center;
+         border: 1px solid rgba(128, 255, 0, 0.15);
+         font-size: 1.2vw;
+         transition: background 0.3s ease;
+     }
+ 
+     tbody tr:hover td {
+         background: rgba(255, 255, 255, 0.03);
+     }
+ 
+     tbody tr:nth-child(even) td {
+         background: rgba(255, 255, 255, 0.02);
+     }
+ 
+     .empty-row td {
+         color: #666;
+         font-style: italic;
+         padding: 3vw;
+     }
+ 
+     /* 列颜色 */
+     .ta1 { color: #005BFF; text-shadow: 0 0 8px rgba(0, 91, 255, 0.4); }
+     .ta2 { color: #A7D531; text-shadow: 0 0 8px rgba(167, 213, 49, 0.4); }
+     .ta3 { color: #FF0005; text-shadow: 0 0 8px rgba(255, 0, 5, 0.4); }
+ 
+     /* 响应式 */
+     @media (max-width: 1000px) {
+         body {
+             padding: 3vw;
+         }
+ 
+         .Logo {
+             gap: 2vw;
+         }
+ 
+         .Logo a {
+             font-size: 7vw;
+         }
+ 
+         .Logo img {
+             width: 7vw;
+             height: 7vw;
+         }
+ 
+         .div2 {
+             padding: 4vw;
+         }
+ 
+         .header-section h2 {
+             font-size: 4vw;
+         }
+ 
+         .header-section h2 span {
+             font-size: 3.5vw;
+         }
+ 
+         .nav-tabs a, .nav-sub a {
+             font-size: 2.5vw;
+             padding: 1vw 3vw;
+         }
+ 
+         .search-section input {
+             width: 80%;
+             font-size: 2.5vw;
+         }
+ 
+         thead th, tbody td {
+             font-size: 2vw;
+             padding: 2vw 1vw;
+         }
+ 
+         caption {
+             font-size: 2.5vw;
+         }
+     }
+ 
+     @media (max-width: 600px) {
+         .Logo a {
+             font-size: 8vw;
+         }
+ 
+         .Logo img {
+             width: 10vw;
+             height: 10vw;
+         }
+ 
+         .header-section h2 {
+             font-size: 5vw;
+         }
+ 
+         .nav-tabs a, .nav-sub a {
+             font-size: 3vw;
+             display: block;
+             margin: 1vw auto;
+             width: fit-content;
+         }
+     }
+ </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="Logo">
+        <img src="../Logo.jpg" alt="Logo">
+        <a href="../index.html">REVELATION</a>
+        <img src="../Logo.jpg" alt="Logo">
+    </div>
+
+    <div class="div2">
+        <div class="header-section">
+            <h2><span>积分制</span>查询系统</h2>
+        </div>
+
+        <div class="d2">
+           <div class="nav-tabs">
+               <a href="G1.html" target="_self">
+                   联盟积分制</a>
+               <a class="atxt active">
+                   ❀Cv积分制❀
+               </a>
+           </div>
+            <div class="nav-sub">
+                <a href="G5-1-1.html">☃Cv积分宝库☃</a>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="输入ID搜索成员...">
+        </div>
+
+        <div class="table-wrapper">
+            <table id="dataList">
+                <caption>找不到? 试试搜索吧</caption>
+                <thead>
+                    <tr>
+                        <th>游戏ID</th>
+                        <th class="ta1">Rout</th>
+                        <th class="ta2">Prime</th>
+                        <th class="ta3">置换券</th>
+                    </tr>
+                </thead>
+                <tbody>
+					<tr>
+					    <td colspan="4">A</td>
+					</tr>
+					
+					<tr>
+					    <td>aaaa</td>
+					    <td class="ta1">
+					        0</td>
+					    <td class="ta3">
+					        0</td>
+						<td class="ta3">
+						    0</td>
+					</tr>
+					
+					
+					
+					
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    let filter = this.value.toUpperCase().trim();
+    let table = document.getElementById("dataList");
+    let rows = table.querySelectorAll('tbody tr');  // 查所有 tbody 里的 tr
+    let hasVisible = false;
+
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].classList.contains('empty-row')) continue;
+
+        let txtValue = rows[i].textContent || rows[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            rows[i].style.display = "";
+            hasVisible = true;
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+
+    // 处理"未找到"提示行（放到第一个 tbody 里）
+    let firstTbody = table.querySelector('tbody');
+    let emptyRow = firstTbody.querySelector('.empty-row');
+    if (!hasVisible && filter !== '') {
+        if (!emptyRow) {
+            emptyRow = document.createElement('tr');
+            emptyRow.className = 'empty-row';
+            emptyRow.innerHTML = '<td colspan="4">未找到匹配的成员</td>';
+            firstTbody.appendChild(emptyRow);
+        } else {
+            emptyRow.style.display = '';
+        }
+    } else if (emptyRow) {
+        emptyRow.style.display = 'none';
+    }
+});
+    </script>
+</body>
+</html>
