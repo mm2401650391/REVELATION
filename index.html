@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Redirect</title>
 		<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
 	<script>
@@ -13,28 +10,288 @@
 	
 	  gtag('config', 'G-1B3TNTK43W');
 	</script>
+    
+    <!-- 百度统计 -->
     <script>
-        
-        window.onload = function() {
-            
-            const pages = [
-                "index-1.html", 
-                "index-2.html", 
-                "index-3.html" 
-            ];
-
-            
-            const randomIndex = Math.floor(Math.random() * pages.length);
-
-            
-            const randomPage = pages[randomIndex];
-
-            
-            window.location.href = randomPage;
-        };
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea6aa3bdc07e193fb3691a1791f238af";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
     </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机跳转 - 5秒后跳转</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        /* 跳转区域 */
+        .redirect-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+            margin-bottom: 30px;
+        }
+        .redirect-box h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .countdown {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 15px 0;
+        }
+        .target-page {
+            color: #888;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .manual-jump {
+            margin-top: 15px;
+        }
+        .manual-jump a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        /* 数据看板区域 */
+        .dashboard {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .dashboard h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .period-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 6px 16px;
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            background: white;
+            color: #667eea;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: 12px;
+            padding: 20px 10px;
+            text-align: center;
+        }
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #667eea;
+            line-height: 1;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .loading, .error {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+        .error {
+            color: #e74c3c;
+            background: #fdf0f0;
+            border-radius: 10px;
+        }
+        .update-time {
+            text-align: center;
+            color: #aaa;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1>～你干嘛～哎呦～</h1>
+
+    <!-- 跳转区域 -->
+    <div class="redirect-box">
+        <h1>🎲 随机跳转中...</h1>
+        <div class="countdown" id="countdown">5</div>
+        <p>秒后自动跳转</p>
+        <div class="target-page">
+            目标页面：<span id="targetPage">-</span>
+        </div>
+        <div class="manual-jump">
+            <a href="#" id="manualLink">👉 立即跳转</a>
+        </div>
+    </div>
+
+    <!-- 数据看板区域 -->
+    <div class="dashboard">
+        <h2>📊 网站数据看板</h2>
+        <p class="subtitle">数据来源：Google Analytics</p>
+        
+        <div class="period-tabs">
+            <button class="tab active" onclick="switchPeriod('7')">近7天</button>
+            <button class="tab" onclick="switchPeriod('30')">近30天</button>
+        </div>
+
+        <div id="statsContainer">
+            <div class="loading">正在加载数据...</div>
+        </div>
+        
+        <p class="update-time" id="updateTime"></p>
+    </div>
+
+    <script>
+        // ========== 跳转功能 ==========
+        const pages = [
+            "index-1.html", 
+            "index-2.html", 
+            "index-3.html" 
+        ];
+
+        const randomIndex = Math.floor(Math.random() * pages.length);
+        const targetPage = pages[randomIndex];
+
+        document.getElementById('targetPage').textContent = targetPage;
+        document.getElementById('manualLink').href = targetPage;
+
+        let countdown = 20;
+        const countdownEl = document.getElementById('countdown');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = targetPage;
+            }
+        }, 1000);
+
+        // ========== 数据看板功能 ==========
+        let currentData = null;
+        let currentPeriod = '7';
+
+        async function loadData() {
+            const container = document.getElementById('statsContainer');
+            container.innerHTML = '<div class="loading">正在加载数据...</div>';
+            
+            try {
+                // 读取本地 stats.json 文件（GitHub Actions 定时更新）
+                const response = await fetch('./stats.json?t=' + Date.now());
+                
+                if (!response.ok) {
+                    throw new Error('数据文件不存在');
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentData = result.data;
+                    renderStats(currentPeriod);
+                    document.getElementById('updateTime').textContent = 
+                        '数据更新时间：' + new Date().toLocaleString('zh-CN');
+                } else {
+                    throw new Error(result.error || '数据格式错误');
+                }
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error">
+                        <p>❌ 加载失败</p>
+                        <p style="font-size:12px;margin-top:8px">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderStats(period) {
+            if (!currentData) return;
+            
+            const data = period === '7' ? currentData.last7days : currentData.last30days;
+            const container = document.getElementById('statsContainer');
+            
+            const stats = [
+                { icon: '👁️', value: data.pageViews || '-', label: '浏览量' },
+                { icon: '👥', value: data.users || '-', label: '用户数' },
+                { icon: '✨', value: data.newUsers || '-', label: '新用户' },
+                { icon: '💬', value: data.sessions || '-', label: '会话数' },
+                { icon: '⏱️', value: data.avgDuration || '-', label: '平均停留' },
+                { icon: '📉', value: data.bounceRate || '-', label: '跳出率' },
+            ];
+            
+            container.innerHTML = `
+                <div class="stats-grid">
+                    ${stats.map(s => `
+                        <div class="stat-card">
+                            <div class="stat-icon">${s.icon}</div>
+                            <div class="stat-number">${s.value}</div>
+                            <div class="stat-label">${s.label}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function switchPeriod(days) {
+            currentPeriod = days;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderStats(days);
+        }
+
+        // 页面加载时获取数据
+        loadData();
+    </script>
 </body>
 </html>
