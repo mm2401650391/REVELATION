@@ -28,7 +28,7 @@
             padding: 2vw;
         }
 
-        /* Logo区域 - 使用flex布局精确对齐 */
+        
         .Logo {
             display: flex;
             align-items: center;
@@ -66,7 +66,7 @@
             text-shadow: 0 0 30px rgba(0, 141, 255, 0.8);
         }
 
-        /* 主容器 */
+        
         .div2 {
             max-width: 1200px;
             margin: 0 auto;
@@ -78,7 +78,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        /* 标题区域 */
+        
         .header-section {
             text-align: center;
             margin-bottom: 2vw;
@@ -101,7 +101,7 @@
             box-shadow: 0 0 15px rgba(0, 141, 255, 0.2);
         }
 
-        /* 导航标签 */
+        
         .d2 {
             text-align: center;
             margin-bottom: 2vw;
@@ -149,7 +149,7 @@
             box-shadow: 0 0 15px rgba(75, 129, 255, 0.3);
         }
 
-        /* 搜索区域 */
+        
         .search-section {
             text-align: center;
             margin: 2vw 0;
@@ -180,7 +180,7 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* 表格区域 */
+        
         .table-wrapper {
             overflow-x: auto;
             border-radius: 15px;
@@ -242,7 +242,7 @@
             padding: 3vw;
         }
 
-        /* 列颜色 */
+        
         .ta1 { color: #005BFF; text-shadow: 0 0 8px rgba(0, 91, 255, 0.4); }
         .ta2 { color: #FF0005; text-shadow: 0 0 8px rgba(255, 0, 5, 0.4);}
         .ta3 { color: #FF0005; text-shadow: 0 0 8px rgba(255, 0, 5, 0.4); }
@@ -319,7 +319,22 @@
                 width: fit-content;
             }
         }
+
+        
+        .id-cell {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .id-icon {
+            height: 1em;
+            width: auto;
+            vertical-align: middle;
+            display: inline-block;
+        }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -359,28 +374,30 @@
                         <th class="ta3">置换券</th>
                     </tr>
                 </thead>
-				<tr>
+				
 					<tr>
 					    <td colspan="4">A</td>
 					</tr>
-				    <td>angel_JIANG</td>
+				<tr>
+				    <td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">angel_JIANG</span></td>
 				    <td class="ta1">
 				        40</td>
 				    <td class="ta3">
 				        0</td>
 				    <td class="ta3">
 				        0</td>
-					</tr>
-					</tr>
-						<td>Astranoctis</td>
+				</tr>
+				<tr>
+						<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">Astranoctis</span></td>
 						<td class="ta1">
 						    15</td>
 						<td class="ta3">
 						    0</td>
 						<td class="ta3">
 						    0</td>
-					</tr>		
-						<td>Amnesia</td>
+				</tr>
+				<tr>
+						<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">Amnesia</span></td>
 						<td class="ta1">
 						    15</td>
 						<td class="ta3">
@@ -389,11 +406,16 @@
 						    0</td>	
 				</tr>
 				
+				
 				<tr>
-					<tr>
-					    <td colspan="4">C</td>
-					</tr>
-                    <td>cunyu150</td>
+				    <td colspan="4">B</td>
+				</tr>
+				
+				<tr>
+					   <td colspan="4">C</td>
+				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">cunyu150</span></td>
                     <td class="ta1">
                         25</td>
                     <td class="ta3">
@@ -401,11 +423,25 @@
                     <td class="ta3">
                         0</td>
 				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">CrazyAshRing</span></td>
+				    <td class="ta1">
+				        0</td>
+				    <td class="ta3">
+				        1</td>
+				    <td class="ta3">
+				        0</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">D</td>
+				</tr>
+				
                 <tr>
 					<tr>
 					    <td colspan="4">E</td>
 					</tr>
-                    <td>errorInfo</td>
+                    <td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">errorInfo</span></td>
                     <td class="ta1">
                         100</td>
                     <td class="ta3">
@@ -415,10 +451,23 @@
 				</tr>
 				
 				<tr>
+				    <td colspan="4">F</td>
+				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">FengXiansenPrime</span></td>
+					<td class="ta1">
+					    0</td>
+					<td class="ta3">
+					    1</td>
+					<td class="ta3">
+					    0</td>
+				</tr>
+				
+				<tr>
 				    <td colspan="4">G</td>
 				</tr>
 				<tr>		
-					<td>GUDAYU09</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">GUDAYU09</span></td>
 					<td class="ta1">
 					    25</td>
 					<td class="ta3">
@@ -428,10 +477,14 @@
 				</tr>
 				
 				<tr>
+				    <td colspan="4">H</td>
+				</tr>
+				
+				<tr>
 				    <td colspan="4">I</td>
 				</tr>
 				<tr>	
-					<td>icedust2</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">icedust2</span></td>
 					<td class="ta1">
 					    115</td>
 					<td class="ta3">
@@ -441,10 +494,24 @@
                 </tr>
 				
 				<tr>
+				    <td colspan="4">J</td>
+				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">juyaprime</span></td>
+					<td class="ta1">
+					    0</td>
+					<td class="ta3">
+					    1</td>
+					<td class="ta3">
+					    0</td>
+				</tr>
+				
+				
+				<tr>
 				    <td colspan="4">K</td>
 				</tr>
 				<tr>		
-					<td>kingProtea333</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">kingProtea333</span></td>
 					<td class="ta1">
 					    50</td>
 					<td class="ta3">
@@ -457,7 +524,7 @@
 				    <td colspan="4">L</td>
 				</tr>
 				<tr>		
-					<td>luohuangling</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">luohuangling</span></td>
 					<td class="ta1">
 					    50</td>
 					<td class="ta3">
@@ -466,7 +533,7 @@
 					    0</td>
 				</tr>
 				<tr>		
-					<td>Leelili</td>
+					<td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">Leelili</span></td>
 					<td class="ta1">
 					    150</td>
 					<td class="ta3">
@@ -475,9 +542,18 @@
 					    0</td>
 				</tr>
 				<tr>
-					<td>loney47</td>
+					<td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">loney47</span></td>
 					<td class="ta1">
-					    40</td>
+					    92</td>
+					<td class="ta3">
+					    0</td>
+					<td class="ta3">
+					    0</td>
+				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">Leelili</span></td>
+					<td class="ta1">
+					    22</td>
 					<td class="ta3">
 					    0</td>
 					<td class="ta3">
@@ -488,7 +564,7 @@
 				    <td colspan="4">M</td>
 				</tr>
 				<tr>		
-					<td>Mmeng-xin</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">Mmeng-xin</span></td>
 					<td class="ta1">
 					    65</td>
 					<td class="ta3">
@@ -496,12 +572,74 @@
 					<td class="ta3">
 					    0</td>
 				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">muhter</span></td>
+					<td class="ta1">
+					    0</td>
+					<td class="ta3">
+					    1</td>
+					<td class="ta3">
+					    0</td>
+				</tr>
+					
+				<tr>
+				    <td colspan="4">N</td>
+				</tr>	
+				
+				<tr>
+				    <td colspan="4">O</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">P</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">Q</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">R</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">S</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">T</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">U</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">V</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">W</td>
+				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/2.jpg" class="id-icon" alt="">weiyubai</span></td>
+					<td class="ta1">
+					    37</td>
+					<td class="ta3">
+					    0</td>
+					<td class="ta3">
+					    0</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">X</td>
+				</tr>
 					
 				<tr>
 				    <td colspan="4">Y</td>
 				</tr>
 				<tr>			
-					<td>yimeng8349</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">yimeng8349</span></td>
 					<td class="ta1">
 					    50</td>
 					<td class="ta3">
@@ -510,7 +648,7 @@
 					    0</td>
 				</tr>
 				<tr>
-					<td>yumeng77</td>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">yumeng77</span></td>
 					<td class="ta1">
 					    50</td>
 					<td class="ta3">
@@ -519,6 +657,22 @@
 					    0</td>
 				</tr>
 				
+				<tr>
+				    <td colspan="4">Z</td>
+				</tr>
+				
+				<tr>
+				    <td colspan="4">#</td>
+				</tr>
+				<tr>
+					<td><span class="id-cell"><img src="img/1.jpg" class="id-icon" alt="">2583348797</span></td>
+					<td class="ta1">
+					    0</td>
+					<td class="ta3">
+					    1</td>
+					<td class="ta3">
+					    0</td>
+				</tr>
             </table>
         </div>
     </div>
@@ -527,7 +681,7 @@
     document.getElementById('searchInput').addEventListener('input', function() {
         let filter = this.value.toUpperCase().trim();
         let table = document.getElementById("dataList");
-        let rows = table.querySelectorAll('tbody tr');  // 查所有 tbody 里的 tr
+        let rows = table.querySelectorAll('tbody tr');  
         let hasVisible = false;
     
         for (let i = 0; i < rows.length; i++) {
@@ -542,7 +696,7 @@
             }
         }
     
-        // 处理"未找到"提示行（放到第一个 tbody 里）
+        
         let firstTbody = table.querySelector('tbody');
         let emptyRow = firstTbody.querySelector('.empty-row');
         if (!hasVisible && filter !== '') {
