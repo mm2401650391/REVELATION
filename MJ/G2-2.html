@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-1B3TNTK43W');
+	</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            color: #e0e0e0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            padding: 2vw;
+        }
+
+        /* Logo区域 */
+                .d2 {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 2vw;
+                    padding: 2vw 0;
+                    margin-bottom: 2vw;
+                    position: relative;
+                }
+        
+                .d2::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: url('../IMGs/01.jpg') center/cover no-repeat;
+                    opacity: 0.4;
+                    border-radius: 20px;
+                    z-index: 0;
+                }
+        
+                .d2 > a {
+                    position: absolute;
+                    left: 2vw;
+                    z-index: 1;
+                }
+        
+                .d2 > h2 {
+                    position: relative;
+                    z-index: 1;
+					
+
+                }
+        
+                .d2 a img {
+                    width: 5vw;
+                    height: 5vw;
+                    object-fit: cover;
+                    border-radius: 12px;
+                    filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
+                    transition: transform 0.3s ease;
+                }
+
+        .d2 a img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .d2 h2 {
+            font-size: 4vw;
+            color: #FF9800;
+            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
+            letter-spacing: 0.1em;
+            text-align: center;
+            line-height: 1;
+			min-width: 12em; 
+			white-space: nowrap;
+			display: inline-block;
+        }
+
+        .d3 {
+            text-align: center;
+            margin-bottom: 1.5vw;
+        }
+
+        .d3 div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1vw;
+        }
+
+        .d3 a {
+            text-decoration: none;
+            color: #b0b0b0;
+            font-size: 1.5vw;
+            padding: 0.5vw 2vw;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .d3 a:hover {
+            color: #ffffff;
+            border-color: #008DFF;
+            box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
+        }
+
+        .d3 a.a {
+            color: #FF0E00;
+            border: 1px solid #FF0E00;
+            background: rgba(255, 14, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
+        }
+
+        .d3 a.b {
+            color: #376CFF;
+            border: 1px solid rgba(55, 108, 255, 0.3);
+        }
+
+        .d3 a.b:hover {
+            background: rgba(55, 108, 255, 0.1);
+            box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
+            margin: 2vw 0;
+        }
+
+        /* 说明文字 */
+        .atxt h3 {
+            text-align: center;
+            font-size: 1.2vw;
+            color: #a0a0a0;
+            line-height: 2;
+            margin-bottom: 2vw;
+            padding: 1vw;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 折叠按钮 */
+        button {
+            display: block;
+            width: 80%;
+            max-width: 600px;
+            margin: 1vw auto;
+            padding: 1vw 2vw;
+            font-size: 1.8vw;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            letter-spacing: 0.1em;
+        }
+
+        button:hover {
+            background: rgba(0, 141, 255, 0.1);
+            border-color: #008DFF;
+            box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* 商品网格 */
+        .d4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2vw;
+            padding: 2vw;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+		.d4 h4 {
+		    grid-column: 1 / -1;  /* 让 h4 独占一整行 */
+		    width: 100%;
+		}
+
+                .d4 > div {
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 20px;
+                    padding: 1.5vw;
+                    text-align: center;
+                    font-size: 1.2vw;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 0.8vw;
+                    min-height: 320px;
+                }
+        
+        /* 新增：库存量和价格容器 */
+        .d4 > div .info-bar {
+            margin-top: auto;
+            padding-top: 0.5vw;
+            display: flex;
+            flex-direction: column;  /* 修改：垂直排列 */
+            align-items: center;     /* 修改：居中对齐 */
+            width: 100%;
+            gap: 0.3vw;              /* 修改：调整行间距 */
+        }
+
+        .d4 > div .info-bar span:first-child {
+            color: inherit;
+            font-size: inherit;
+        }
+
+        .d4 > div .info-bar .price {
+            color: #FF9800;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+            font-size: inherit;
+        }
+
+        .d4 > div:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(128, 255, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .d4 > div img {
+            width: 80%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .d4 > div:hover img {
+            transform: scale(1.05);
+        }
+
+        .d4 > div br:first-of-type {
+            display: none;
+        }
+
+        /* 子标题 */
+        .atxt h4 {
+            text-align: center;
+            font-size: 2vw;
+            color: #80FF00;
+            text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
+            margin: 2vw 0 1vw;
+            letter-spacing: 0.1em;
+        }
+
+        /* 隐藏区域 */
+        #div1, #div2, #div3, #div4, #div4-mod {
+            display: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1000px) {
+            body {
+                padding: 3vw;
+            }
+
+            .d2 a img {
+                width: 8vw;
+                height: 8vw;
+            }
+
+            .d2 h2 {
+                font-size: 6vw;
+            }
+
+            .d3 a {
+                font-size: 2.5vw;
+                padding: 1vw 3vw;
+            }
+
+            .atxt h3 {
+                font-size: 2vw;
+            }
+
+            button {
+                font-size: 3vw;
+                width: 90%;
+            }
+
+            .d4 {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 3vw;
+            }
+
+                    .d4 > div {
+                        background: rgba(255, 255, 255, 0.03);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-radius: 20px;
+                        padding: 1.5vw;
+                        text-align: center;
+                        font-size: 1.2vw;
+                        transition: all 0.3s ease;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 0.8vw;
+                        min-height: 320px;
+                    }
+            
+                    /* 新增：库存量和价格容器 */
+                    .d4 > div .info-bar {
+                        margin-top: auto;
+                        padding-top: 0.5vw;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+                        gap: 1vw;
+                    }
+            
+                    .d4 > div .info-bar span:first-child {
+                        color: inherit;  /* 保持原库存量颜色 */
+                        font-size: inherit;  /* 保持原字体大小 */
+                    }
+            
+                    .d4 > div .info-bar .price {
+                        color: #FF9800;
+                        font-weight: bold;
+                        text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+                        font-size: inherit;  /* 保持原字体大小 */
+                    }
+
+            .atxt h4 {
+                font-size: 3.5vw;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .d2 {
+                flex-direction: column;
+                gap: 1vw;
+            }
+
+            .d2 a img {
+                width: 12vw;
+                height: 12vw;
+            }
+
+            .d2 h2 {
+                font-size: 7vw;
+            }
+
+            .d3 div {
+                flex-direction: column;
+                gap: 1.5vw;
+            }
+
+            .d3 a {
+                font-size: 3.5vw;
+                width: 80%;
+            }
+
+            button {
+                font-size: 4vw;
+            }
+
+            .d4 {
+                grid-template-columns: 1fr;
+            }
+
+            .d4 > div {
+                font-size: 3.5vw;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="d2">
+        <a href="../index.html">
+            <img src="../Logo.jpg" alt="Logo">
+        </a>
+        <h2 id="typing"></h2>
+    </div>
+
+    <hr />
+
+    <div class="d3">
+        <div>
+            <a href="G1.html">积分查询</a>
+            <a class="a">❀积分兑换❀</a>
+        </div>
+    </div>
+
+    <div class="d3">
+        <div>
+            <a href="G2.html" target="_self">☞Rout宝库☜</a>
+            <a class="b">Prime宝库</a>
+        </div>
+    </div>
+
+    <div class="atxt">
+        <h3>
+            兑换请在群聊@群主，并说明兑换奖项，所有奖励等级均为零
+        </h3>
+
+        <button onclick="button1()" id="bu1">PrimeMOD</button>
+        <div id="div1" class="d4">
+            <div>
+                <span>［占位符］</span>
+                <img src="IMG/Prime/1/A1.png" alt="热病打击 Prime">
+                <div class="info-bar">
+                    <span>［占位符］</span>
+                    <span class="price">［占位符］</span>
+                </div>
+            </div>
+            <div>
+                <span>［占位符］</span>
+                <img src="IMG/Prime/1/A2.png" alt="双重弹头 Prime">
+                <div class="info-bar">
+                    <span>［占位符］</span>
+                    <span class="price">［［占位符］］</span>
+                </div>
+            </div>
+            <div>
+                <span>［占位符］</span>
+                <img src="IMG/Prime/1/A3.png" alt="急冻控场 Prime">
+                <div class="info-bar">
+                    <span>［占位符］</span>
+                    <span class="price">［占位符］</span>
+                </div>
+            </div>
+            <div>
+                <span>［占位符］</span>
+                <img src="IMG/Prime/1/B1.png" alt="手枪精通 Prime">
+                <div class="info-bar">
+                    <span>［占位符］</span>
+                    <span class="price">［占位符］</span>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <button onclick="button2()" id="bu2">Prime军械</button>
+    <div id="div2" class="d4">
+        <div>
+            <span>［占位符］</span>
+            <img src="IMG/Prime/2/A1.png" alt="Sevagoth Prime">
+            <div class="info-bar">
+                <span>［占位符］</span>
+                <span class="price">［占位符］</span>
+            </div>
+        </div>
+        <div>
+            <span>［占位符］</span>
+            <img src="IMG/Prime/2/A2.png" alt="Wisp Prime">
+            <div class="info-bar">
+				<span>［占位符］</span>
+                <span class="price">［占位符］</span>
+            </div>
+        </div>
+        <div>
+            <span>［占位符］</span>
+            <img src="IMG/Prime/2/A3.png" alt="Volt Prime">
+            <div class="info-bar">
+                <span>［占位符］</span>
+                <span class="price">［占位符］</span>
+            </div>
+        </div>
+        <div>
+            <span>［占位符］</span>
+            <img src="IMG/Prime/2/B1.png" alt="军扇 Prime">
+            <div class="info-bar">
+                <span>［占位符］</span>
+                <span class="price">［占位符］</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="atxt">
+        <button onclick="button4()" id="bu4">赞助奖池</button>
+        <div id="div4" class="d4">
+           <h4>由"Skulajj"赞助</h4>
+            <div>
+                <span>白金*100</span>
+                <img src="IMG\Prime\G.jpg" alt="Rhino Prime">
+                <div class="info-bar">
+                    <span>库存量：800</span>
+                    <span class="price">［Prime*10］</span>
+                </div>
+            </div>
+       <!-- <div>
+                <span>Nyx Prime</span>
+                <img src="IMG/Prime/R/A2.png" alt="Nyx Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*5］</span>
+                </div>
+            </div>
+            <div>
+                <span>Gauss Prime</span>
+                <img src="IMG/Prime/R/A3.png" alt="Gauss Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*1.5］</span>
+                </div>
+            </div>
+            <div>
+                <span>Mag Prime</span>
+                <img src="IMG/Prime/R/A4.png" alt="Mag Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*4.75］</span>
+                </div>
+            </div>
+            <div>
+                <span>Hildryn Prime</span>
+                <img src="IMG/Prime/R/A5.png" alt="Hildryn Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*1.25］</span>
+                </div>
+            </div>
+
+            <h4>由"Jessie66"赞助</h4>
+            <div>
+                <span>Nidus Prime</span>
+                <img src="IMG/Prime/R/B1.png" alt="Nidus Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*1.85］</span>
+                </div>
+            </div>
+            <div>
+                <span>Khora Prime</span>
+                <img src="IMG/Prime/R/B2.png" alt="Khora Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*1.35］</span>
+                </div>
+            </div>
+            <div>
+                <span>Frost Prime</span>
+                <img src="IMG/Prime/R/B3.png" alt="Frost Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*2］</span>
+                </div>
+            </div>
+
+            <h4>由"saya99999"赞助</h4>
+            <div>
+                <span>Xaku Prime</span>
+                <img src="IMG/Prime/R/C1.png" alt="Xaku Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*3.75］</span>
+                </div>
+            </div>
+            <div>
+                <span>Nyx Prime</span>
+                <img src="IMG/Prime/R/A2.png" alt="Nyx Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*5］</span>
+                </div>
+            </div>
+            <div>
+                <span>Protea Prime</span>
+                <img src="IMG/Prime/R/C3.png" alt="Protea Prime">
+                <div class="info-bar">
+                    <span>库存量：充足</span>
+                    <span class="price">［Prime*2.25］</span>
+                </div>
+            </div>-->
+        </div>
+    </div>
+
+    <script>
+        function button1() {
+            var div1 = document.getElementById('div1');
+            var bu1 = document.getElementById('bu1');
+            if (div1.style.display == 'grid') {
+                div1.style.display = 'none';
+                bu1.innerText = "PrimeMOD";
+            } else {
+                div1.style.display = 'grid';
+                bu1.innerText = "☃ PrimeMOD ☃";
+            }
+        }
+
+        function button2() {
+            var div2 = document.getElementById('div2');
+            var bu2 = document.getElementById('bu2');
+            if (div2.style.display == 'grid') {
+                div2.style.display = 'none';
+                bu2.innerText = "Prime军械";
+            } else {
+                div2.style.display = 'grid';
+                bu2.innerText = "☃ Prime军械 ☃";
+            }
+        }
+
+        function button3() {
+            var div3 = document.getElementById('div3');
+            var bu3 = document.getElementById('bu3');
+            if (div3.style.display == 'grid') {
+                div3.style.display = 'none';
+                bu3.innerText = "赞助奖池";
+            } else {
+                div3.style.display = 'grid';
+                bu3.innerText = "☃ 赞助奖池 ☃";
+            }
+        }
+
+       function button4() {
+                    var div4 = document.getElementById('div4');
+                    var div4mod = document.getElementById('div4-mod');
+                    var bu4 = document.getElementById('bu4');
+                    if (div4.style.display == 'grid') {
+                        div4.style.display = 'none';
+                        div4mod.style.display = 'none';
+                        bu4.innerText = "赞助奖池";
+                    } else {
+                        div4.style.display = 'grid';
+                        div4mod.style.display = 'block';
+                        bu4.innerText = "☃ 赞助奖池 ☃";
+                    }
+                }
+
+        // 图片轮播
+        var images1 = [
+            'IMG/Rout/R/B1-1.png',
+            'IMG/Rout/R/B1-2.png',
+            'IMG/Rout/R/B1-3.png',
+        ];
+        var index1 = 0;
+        setInterval(function() {
+            var imgElement = document.getElementById('image1');
+            imgElement.src = images1[index1];
+            index1 = (index1 + 1) % images1.length;
+        }, 2000);
+
+        var images2 = [
+            'IMG/Rout/R/B2-1.png',
+            'IMG/Rout/R/B2-2.png',
+            'IMG/Rout/R/B2-3.png',
+        ];
+        var index2 = 0;
+        setInterval(function() {
+            var imgElement = document.getElementById('image2');
+            imgElement.src = images2[index2];
+            index2 = (index2 + 1) % images2.length;
+        }, 2000);
+
+        // 打字机效果
+        const texts = ["REVELATION", "联盟积分系统"];
+        let index = 0;
+        let isTyping = true;
+        let cursor = 0;
+        let blinkInterval;
+
+        function initBlink() {
+            blinkInterval = setInterval(() => {
+                const cursorElement = document.getElementById("cursor");
+                if (cursorElement) {
+                    cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+                }
+            }, 500);
+        }
+
+        function stopBlink() {
+            clearInterval(blinkInterval);
+        }
+
+        function addCursor() {
+            const cursorElement = document.createElement("span");
+            cursorElement.id = "cursor";
+            cursorElement.textContent = "|";
+            cursorElement.style.visibility = "visible";
+            document.getElementById("typing").appendChild(cursorElement);
+            initBlink();
+        }
+
+        function removeCursor() {
+            const cursorElement = document.getElementById("cursor");
+            if (cursorElement) {
+                stopBlink();
+                cursorElement.remove();
+            }
+        }
+
+        function typeEffect() {
+            const textElement = document.getElementById("typing");
+            const currentText = texts[index];
+            if (isTyping) {
+                if (cursor < currentText.length) {
+                    textElement.textContent += currentText.charAt(cursor);
+                    cursor++;
+                } else {
+                    addCursor();
+                    setTimeout(() => {
+                        isTyping = false;
+                        cursor = 0;
+                        setTimeout(() => {
+                            removeCursor();
+                            typeEffect();
+                        }, 1500);
+                        return;
+                    }, 300);
+                    return;
+                }
+            } else {
+                if (textElement.textContent.length > 1) {
+                    textElement.textContent = textElement.textContent.slice(0, -1);
+                } else {
+                    textElement.textContent = "\u200b"; 
+                    isTyping = true;
+                    index = (index + 1) % texts.length;
+                    removeCursor();
+                    setTimeout(typeEffect, 400);
+                    return;
+                }
+            }
+            setTimeout(typeEffect, isTyping ? 100 : 100);
+        }
+
+        typeEffect();
+    </script>
+</body>
+</html>
