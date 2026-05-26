@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REVELATION</title>
-		<!-- Google tag (gtag.js) -->
+	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
@@ -13,17 +10,9 @@
 	
 	  gtag('config', 'G-1B3TNTK43W');
 	</script>
-	<!-- 百度统计 -->
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?ea6aa3bdc07e193fb3691a1791f238af";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-
-	</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION</title>
     <style>
         /* 基础样式 */
         * {
@@ -145,7 +134,24 @@
         .library-links a:hover {
             background-color: #0056b3;
         }
+    
+        /* Warframe 周期样式 */
+        .wf-card { background: #111118; border: 1px solid #1a1a2e; border-radius: 12px; padding: 20px; }
+        .wf-card-title { color: #00d4ff; font-size: 18px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #1a1a2e; }
+        .wf-item { background: #0d0d14; border-radius: 8px; padding: 12px; margin-bottom: 10px; border-left: 3px solid #00d4ff; }
+        .wf-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .wf-item-name { color: #fff; font-weight: bold; font-size: 14px; }
+        .wf-item-time { color: #ffaa00; font-size: 12px; background: #221a00; padding: 2px 8px; border-radius: 4px; }
+        .wf-item-info { color: #888; font-size: 13px; }
+        .wf-item-info.expiring { color: #ff4444; }
+        .wf-item-info.expired { color: #ff6666; }
+        .wf-loading { text-align: center; color: #888; padding: 40px; }
+        .wf-error { background: #331111; border: 1px solid #ff4444; color: #ff6666; padding: 15px; border-radius: 8px; }
+        .wf-refresh-btn { width: 50px; height: 50px; border-radius: 50%; background: #00d4ff; border: none; color: #000; font-size: 20px; cursor: pointer; margin-top: 15px; }
+        .wf-update-time { text-align: center; color: #555; font-size: 12px; margin-top: 10px; }
+        .wf-h1 { text-align: center; color: #00d4ff; margin-bottom: 15px; font-size: 20px; }
     </style>
+<base target="_blank">
 </head>
 <body>
     <header class="header">
@@ -175,14 +181,11 @@
         </section>
 
         <section class="section">
-            <h2>联盟公告</h2>
-            <ul>
-                <li>研究界面已完成</li>
-                <li>积分界面已完成</li>
-                <li>活动界面已完成</li>
-                <li>演奏代码已完成</li>
-
-            </ul>
+            <h2>🌐 周期状态</h2>
+            <h1 class="wf-h1">测试中...</h1>
+            <div id="app"><div class="wf-loading">加载中...</div></div>
+            <div class="wf-update-time" id="updateTime"></div>
+            <div style="text-align: center;"><button class="wf-refresh-btn" onclick="loadData()">🔄</button></div>
         </section>
 
         <section class="section">
@@ -203,7 +206,7 @@
             </div>
             <div class="library-links">
                 <a href="MJ/G1.html">积分查询</a>
-                <a href="MJ/G1-1.html">兑换宝库</a>
+                <a href="MJ/G2.html">兑换宝库</a>
             </div>
         </section>
 
@@ -271,5 +274,154 @@
         
         typeEffect();
     </script>
-</body>
+<script>
+        const API_BASE = 'https://www.rln1.xyz/api/warframe?endpoint=';
+        let countdownInterval = null;
+
+        function getTime(data) {
+            if (!data) return '?';
+            if (data.timeLeft) return data.timeLeft;
+            if (data.eta) return data.eta;
+            if (data.etaString) return data.etaString;
+
+            if (data.expiry) {
+                const now = Date.now();
+                const expiry = Date.parse(data.expiry);
+                const diff = expiry - now;
+
+                if (diff > 0) {
+                    const hours = Math.floor(diff / 3600000);
+                    const mins = Math.floor((diff % 3600000) / 60000);
+                    const secs = Math.floor((diff % 60000) / 1000);
+
+                    if (hours > 0) return hours + 'h ' + mins + 'm ' + secs + 's';
+                    if (mins > 0) return mins + 'm ' + secs + 's';
+                    return secs + 's';
+                }
+                return 'expired';  // 标记为过期，不是显示文字
+            }
+            return '?';
+        }
+
+        // 启动倒计时
+        function startCountdown() {
+            // 清除旧的定时器
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                const elements = document.querySelectorAll('[data-expiry]');
+                let hasExpired = false;
+
+                elements.forEach(el => {
+                    const expiry = el.getAttribute('data-expiry');
+                    if (!expiry) return;
+
+                    const now = Date.now();
+                    const expiryTime = Date.parse(expiry);
+                    const diff = expiryTime - now;
+
+                    if (diff > 0) {
+                        // 正常倒计时
+                        const hours = Math.floor(diff / 3600000);
+                        const mins = Math.floor((diff % 3600000) / 60000);
+                        const secs = Math.floor((diff % 60000) / 1000);
+
+                        let text;
+                        if (hours > 0) text = hours + 'h ' + mins + 'm ' + secs + 's';
+                        else if (mins > 0) text = mins + 'm ' + secs + 's';
+                        else text = secs + 's';
+
+                        el.textContent = '剩余: ' + text;
+
+                        
+                        if (diff < 60000) {
+                            el.classList.add('expiring');
+                        } else {
+                            el.classList.remove('expiring');
+                        }
+                        el.classList.remove('expired');
+                    } else {
+                        // 已过期
+                        el.textContent = '剩余: 状态轮换中...';
+                        el.classList.add('expired');
+                        el.classList.remove('expiring');
+                        hasExpired = true;
+                    }
+                });
+
+                // 如果有状态过期的，自动刷新数据
+                if (hasExpired) {
+                    console.log('检测到状态过期，自动刷新...');
+                    loadData();
+                }
+            }, 1000);
+        }
+
+        async function loadData() {
+            try {
+                const [earth, cetus, vallis, cambion, zariman] = await Promise.all([
+                    fetch(API_BASE + 'earthCycle').then(r => r.json()),
+                    fetch(API_BASE + 'cetusCycle').then(r => r.json()),
+                    fetch(API_BASE + 'vallisCycle').then(r => r.json()),
+                    fetch(API_BASE + 'cambionCycle').then(r => r.json()),
+                    fetch(API_BASE + 'zarimanCycle').then(r => r.json()),
+
+                ]);
+
+                const cycles = [
+                    { name: '🌍 地球', data: earth, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
+                    { name: '🌙 希图斯', data: cetus, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
+                    { name: '❄️ 福尔图娜', data: vallis, stateKey: 'isWarm', dayText: '温暖', nightText: '寒冷' },
+                    { name: '🦠 火卫二', data: cambion, stateKey: 'active', dayText: 'Fass', nightText: 'Vome' },
+                    { name: '🌌 扎里曼', data: zariman, stateKey: 'isCorpus', dayText: 'Corpus占领', nightText: 'Grineer占领' }
+                ];
+
+                let html = '';
+                cycles.forEach(c => {
+                    if (!c.data) return;
+                    let state, color;
+
+                    if (c.name === '🦠 火卫二') {
+                        state = c.data.state || 'Fass';
+                        color = state === 'fass' ? '#ff4444' : '#4488ff';
+                    } else if (c.name === '🌌 扎里曼') {
+                        state = c.data.state || 'Unknown';
+                        color = state.toLowerCase().includes('corpus') ? '#4488ff' : '#ff4444';
+                    } else {
+                        const isDay = c.data[c.stateKey];
+                        state = isDay ? c.dayText : c.nightText;
+                        color = isDay ? '#ffaa00' : '#4488ff';
+                    }
+
+                    const timeStr = getTime(c.data);
+                    const isExpired = timeStr === 'expired';
+                    const displayTime = isExpired ? '状态轮换中...' : timeStr;
+
+                    html += `
+                        <div class="wf-item" style="border-left-color: ${color};">
+                            <div class="wf-item-header">
+                                <span class="wf-item-name">${c.name}</span>
+                                <span class="wf-item-time" style="color:${color}; background: ${color}22;">${state}</span>
+                            </div>
+                            <div class="item-info ${isExpired ? 'expired' : ''}" data-expiry="${c.data.expiry || ''}">
+                                剩余: ${displayTime}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('app').innerHTML = '<div class="wf-card"><div class="wf-card-title">星球周期</div>' + html + '</div>';
+                document.getElementById('updateTime').textContent = '更新: ' + new Date().toLocaleString('zh-CN');
+
+                // 重新启动倒计时
+                startCountdown();
+            } catch (err) {
+                document.getElementById('app').innerHTML = '<div class="wf-error">❌ ' + err.message + '</div>';
+            }
+        }
+
+        loadData();
+        // 每2分钟也刷新一次数据（防止倒计时漂移）
+        setInterval(loadData, 120000);
+    </script></body>
 </html>
