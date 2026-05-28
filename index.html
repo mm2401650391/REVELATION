@@ -147,6 +147,14 @@
             padding: 30px;
             color: #888;
         }
+		
+		.period-info {
+		    text-align: center;
+		    color: #888;
+		    font-size: 13px;
+		    margin-bottom: 20px;
+		}
+		
         .error {
             color: #e74c3c;
             background: #fdf0f0;
@@ -181,8 +189,7 @@
         <p class="subtitle">数据来源：Google Analytics</p>
         
         <div class="period-tabs">
-            <button class="tab active" onclick="switchPeriod('7')">近7天</button>
-            <button class="tab" onclick="switchPeriod('30')">近30天</button>
+            <p class="period-info" id="periodInfo">统计起始：2026.5.18</p>
         </div>
 
         <div id="statsContainer">
@@ -258,16 +265,25 @@
         function renderStats(period) {
             if (!currentData) return;
             
-            const data = period === '7' ? currentData.last7days : currentData.last30days;
+            const data = currentData.allTime || {};
             const container = document.getElementById('statsContainer');
+            
+            // 计算网站运行天数
+            const startDate = new Date('2024-01-01'); // 改成你的实际上线日期
+            const today = new Date();
+            const runDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            
+            // 更新统计起始日期显示
+            const startStr = startDate.toISOString().split('T')[0];
+            document.getElementById('periodInfo').textContent = '统计起始：' + startStr + '（已运行 ' + runDays + ' 天）';
             
             const stats = [
                 { icon: '👁️', value: data.pageViews || '-', label: '浏览量' },
                 { icon: '👥', value: data.users || '-', label: '用户数' },
-                { icon: '✨', value: data.newUsers || '-', label: '新用户' },
                 { icon: '💬', value: data.sessions || '-', label: '会话数' },
                 { icon: '⏱️', value: data.avgDuration || '-', label: '平均停留' },
                 { icon: '📉', value: data.bounceRate || '-', label: '跳出率' },
+                { icon: '📅', value: runDays + ' 天', label: '运行天数' },
             ];
             
             container.innerHTML = `
@@ -283,15 +299,9 @@
             `;
         }
 
-        function switchPeriod(days) {
-            currentPeriod = days;
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            renderStats(days);
-        }
+        
 
-        // 页面加载时获取数据
-        loadData();
+        
     </script>
 </body>
 </html>
