@@ -213,7 +213,7 @@
         document.getElementById('targetPage').textContent = targetPage;
         document.getElementById('manualLink').href = targetPage;
 
-        let countdown = 30;
+        let countdown = 60;
         const countdownEl = document.getElementById('countdown');
         
         const timer = setInterval(() => {
@@ -231,28 +231,38 @@
         let currentPeriod = '7';
 
         async function loadData() {
+            console.log('[Debug] loadData 开始执行');
             const container = document.getElementById('statsContainer');
             container.innerHTML = '<div class="loading">正在加载数据...</div>';
             
             try {
-                // 读取本地 stats.json 文件（GitHub Actions 定时更新）
-                const response = await fetch('./stats.json?t=' + Date.now());
+                const url = './stats.json?t=' + Date.now();
+                console.log('[Debug] fetch URL:', url);
+                
+                const response = await fetch(url);
+                console.log('[Debug] fetch 响应:', response.status, response.ok);
                 
                 if (!response.ok) {
-                    throw new Error('数据文件不存在');
+                    throw new Error('数据文件不存在 (' + response.status + ')');
                 }
                 
                 const result = await response.json();
+                console.log('[Debug] JSON 结果:', result);
                 
                 if (result.success) {
                     currentData = result.data;
-                    renderStats(currentPeriod);
+                    console.log('[Debug] currentData 已设置');
+                    
+                    renderStats('all');
+                    console.log('[Debug] renderStats 执行完成');
+                    
                     document.getElementById('updateTime').textContent = 
                         '数据更新时间：' + new Date().toLocaleString('zh-CN');
                 } else {
                     throw new Error(result.error || '数据格式错误');
                 }
             } catch (error) {
+                console.error('[Debug] 捕获错误:', error);
                 container.innerHTML = `
                     <div class="error">
                         <p>❌ 加载失败</p>
@@ -309,6 +319,8 @@
                 </div>
             `;
         }
+		 console.log('[Debug] 准备调用 loadData');
+		        loadData();
     </script>
 </body>
 </html>
