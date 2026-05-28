@@ -213,7 +213,7 @@
         document.getElementById('targetPage').textContent = targetPage;
         document.getElementById('manualLink').href = targetPage;
 
-        let countdown = 60;
+        let countdown = 8;
         const countdownEl = document.getElementById('countdown');
         
         const timer = setInterval(() => {
@@ -264,17 +264,37 @@
         function renderStats() {
             if (!currentData) return;
             
-            // 直接读 allTime 累计数据（由 Apps Script 查询自定义日期范围返回）
-            const data = currentData.allTime || {};
+            const d7 = currentData.last7days || {};
+            const d30 = currentData.last30days || {};
+            
+            const safeParse = (str) => {
+                if (!str) return 0;
+                return parseInt(String(str).replace(/,/g, '')) || 0;
+            };
+            
+            const data = {
+                pageViews: (safeParse(d7.pageViews) + safeParse(d30.pageViews)).toLocaleString(),
+                users: d30.users || d7.users || '-',  
+                sessions: (safeParse(d7.sessions) + safeParse(d30.sessions)).toLocaleString(),
+                avgDuration: d30.avgDuration || d7.avgDuration || '-',
+                bounceRate: d30.bounceRate || d7.bounceRate || '-'
+            };
             
             const container = document.getElementById('statsContainer');
             
+            const startDate = new Date('2026-05-18');
+            const today = new Date();
+            const runDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            
+            const startStr = startDate.toISOString().split('T')[0];
+            document.getElementById('periodInfo').textContent = '统计起始：' + startStr + '（已运行 ' + runDays + ' 天）';
+            
             const stats = [
-                { icon: '👁️', value: data.pageViews || '-', label: '浏览量' },
-                { icon: '👥', value: data.users || '-', label: '用户数' },
-                { icon: '💬', value: data.sessions || '-', label: '会话数' },
-                { icon: '⏱️', value: data.avgDuration || '-', label: '平均停留' },
-                { icon: '📉', value: data.bounceRate || '-', label: '跳出率' },
+                { icon: '👁️', value: data.pageViews, label: '浏览量' },
+                { icon: '👥', value: data.users, label: '用户数' },
+                { icon: '💬', value: data.sessions, label: '会话数' },
+                { icon: '⏱️', value: data.avgDuration, label: '平均停留' },
+                { icon: '📉', value: data.bounceRate, label: '跳出率' },
             ];
             
             container.innerHTML = `
