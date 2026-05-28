@@ -189,7 +189,7 @@
         <p class="subtitle">数据来源：Google Analytics</p>
         
         <div class="period-tabs">
-            <p class="period-info" id="periodInfo">统计起始：2026.5.18</p>
+            <p class="period-info" id="periodInfo">统计起始：2026-5-18</p>
         </div>
 
         <div id="statsContainer">
@@ -265,24 +265,35 @@
         function renderStats(period) {
             if (!currentData) return;
             
-            const data = currentData.allTime || {};
+            // 从 last7days 和 last30days 累加得到累计数据
+            const d7 = currentData.last7days || {};
+            const d30 = currentData.last30days || {};
+            
+            const data = {
+                pageViews: (parseInt(d7.pageViews || 0) + parseInt(d30.pageViews || 0)).toLocaleString(),
+                users: d30.users || d7.users || '-',  
+                sessions: (parseInt(d7.sessions || 0) + parseInt(d30.sessions || 0)).toLocaleString(),
+                avgDuration: d30.avgDuration || d7.avgDuration || '-',
+                bounceRate: d30.bounceRate || d7.bounceRate || '-'
+            };
+            
             const container = document.getElementById('statsContainer');
             
-            // 计算网站运行天数
-            const startDate = new Date('2024-01-01'); // 改成你的实际上线日期
+            // 运行天数
+            const startDate = new Date('2026-5-18'); // 
             const today = new Date();
             const runDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
             
-            // 更新统计起始日期显示
+            // 更新统计
             const startStr = startDate.toISOString().split('T')[0];
             document.getElementById('periodInfo').textContent = '统计起始：' + startStr + '（已运行 ' + runDays + ' 天）';
             
             const stats = [
-                { icon: '👁️', value: data.pageViews || '-', label: '浏览量' },
-                { icon: '👥', value: data.users || '-', label: '用户数' },
-                { icon: '💬', value: data.sessions || '-', label: '会话数' },
-                { icon: '⏱️', value: data.avgDuration || '-', label: '平均停留' },
-                { icon: '📉', value: data.bounceRate || '-', label: '跳出率' },
+                { icon: '👁️', value: data.pageViews, label: '浏览量' },
+                { icon: '👥', value: data.users, label: '用户数' },
+                { icon: '💬', value: data.sessions, label: '会话数' },
+                { icon: '⏱️', value: data.avgDuration, label: '平均停留' },
+                { icon: '📉', value: data.bounceRate, label: '跳出率' },
                 { icon: '📅', value: runDays + ' 天', label: '运行天数' },
             ];
             
@@ -298,10 +309,6 @@
                 </div>
             `;
         }
-
-        
-
-        
     </script>
 </body>
 </html>
