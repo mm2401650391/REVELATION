@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION/材料征集</title>
+    <style>
+
+/* ===== G2 头部样式 ===== */
+/* Logo区域 */
+			.d2 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 2vw;
+				padding: 2vw 0;
+				margin-bottom: 2vw;
+				position: relative;
+			}
+
+			.d2::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: url('../IMGs/01.jpg') center/cover no-repeat;
+				opacity: 0.4;
+				border-radius: 20px;
+				z-index: 0;
+			}
+
+			.d2>a {
+				position: absolute;
+				left: 2vw;
+				z-index: 1;
+			}
+
+			.d2>h2 {
+				position: relative;
+				z-index: 1;
+
+
+			}
+
+			.d2 a img {
+				width: 5vw;
+				height: 5vw;
+				object-fit: cover;
+				border-radius: 12px;
+				filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
+				transition: transform 0.3s ease;
+			}
+
+			.d2 a img:hover {
+				transform: scale(1.1) rotate(5deg);
+			}
+
+			.d2 h2 {
+				font-size: 4vw;
+				color: #FF9800;
+				text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
+				letter-spacing: 0.1em;
+				text-align: center;
+				line-height: 1;
+				min-width: 12em;
+				white-space: nowrap;
+				display: inline-block;
+			}
+
+			/* 导航区域 */
+			.d3 {
+				text-align: center;
+				margin-bottom: 1.5vw;
+			}
+
+			.d3 div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 1vw;
+			}
+
+			.d3 a {
+				text-decoration: none;
+				color: #b0b0b0;
+				font-size: 1.5vw;
+				padding: 0.5vw 2vw;
+				border-radius: 30px;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				transition: all 0.3s ease;
+				display: inline-block;
+			}
+
+			.d3 a:hover {
+				color: #ffffff;
+				border-color: #008DFF;
+				box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
+			}
+
+			.d3 a.a {
+				color: #FF0E00;
+				border: 1px solid #FF0E00;
+				background: rgba(255, 14, 0, 0.1);
+				box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
+			}
+
+			.d3 a.b {
+				color: #376CFF;
+				border: 1px solid rgba(55, 108, 255, 0.3);
+			}
+
+			.d3 a.b:hover {
+				background: rgba(55, 108, 255, 0.1);
+				box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
+			}
+
+			hr {
+				border: none;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
+				margin: 2vw 0;
+			}
+
+			/* 说明文字 */
+			.atxt h3 {
+				text-align: center;
+				font-size: 1.2vw;
+				color: #a0a0a0;
+				line-height: 2;
+				margin-bottom: 2vw;
+				padding: 1vw;
+				background: rgba(255, 255, 255, 0.02);
+				border-radius: 15px;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+			}
+
+			
+/* ===== 征集活动样式 ===== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            color: #a0a0a0;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(79, 195, 247, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title .icon {
+            font-size: 1.2em;
+        }
+
+        .clan-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4fc3f7;
+        }
+
+        .clan-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .clan-name {
+            font-size: 1.2em;
+            color: #ffd700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clan-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            overflow: hidden;
+        }
+
+        .steps {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .steps li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .steps li::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 22px;
+            height: 22px;
+            background: #4fc3f7;
+            color: #1a1a2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .warning-icon {
+            color: #ffc107;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            color: #ffc107;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .key {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            color: #4fc3f7;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(79, 195, 247, 0.1);
+            color: #4fc3f7;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .reward-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+        }
+
+        .reward-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin: 2px;
+        }
+
+        .reward-icon {
+            font-size: 1.1em;
+        }
+
+        .note {
+            margin-top: 15px;
+            padding: 12px 16px;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            color: #81c784;
+            font-size: 0.95em;
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .number-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            th, td {
+                padding: 10px 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+		<div class="d2">
+			<a href="../index.html">
+				<img src="../Logo.jpg" alt="Logo">
+			</a>
+			<h2 id="typing"></h2>
+		</div>
+
+		<hr />
+
+		
+    <div class="container">
+        <div class="header">
+            <h1><img src="IMG/G3-1.jpg" alt="样本突变原" style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 0.3em;"> 样本突变原 征集活动</h1>
+            <p class="subtitle">活动期间向指定氏族捐献目标资源，即可兑换丰厚奖励</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="icon">📋</span> 征集说明</h2>
+            <p>在活动进行期间，向<img src="IMG/1.jpg" alt="NIGHT ELF ROSE" style="width: 1.2em; height: 1.2em; vertical-align: middle; margin: 0 0.2em;">
+			NIGHT ELF ROSE 氏族捐献
+			<img src="IMG/G3-1.jpg" alt="样本突变原" style="width: 1.2em; height: 1.2em; vertical-align: middle; margin: 0 0.2em;">
+			样本突变原
+			<img src="IMG/G3-1.jpg" alt="样本突变原" style="width: 1.2em; height: 1.2em; vertical-align: middle; margin: 0 0.2em;">
+			，即可根据捐献数量兑换相应奖励。</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="icon">🏛️</span> 捐献方式</h2>
+
+            <div class="clan-card">
+                <div class="clan-name">
+                   <img src="IMG/1.jpg" alt="NIGHT ELF ROSE" class="clan-avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    NIGHT ELF ROSE 氏族
+                </div>
+                <ol class="steps">
+                    <li data-step="1">进入氏族道场 → 按 <span class="key">Esc/Q</span> → 快速移动至保管库 → 与保管库互动 → 选择目标资源及数量 → 提供</li>
+                </ol>
+                <div class="warning">
+                    <span class="warning-icon">⚠️</span>
+                    <span class="warning-text">捐献前，请先通过<strong> 氏族群聊 联系群主 </strong>核实库存数量，再完成捐献并<strong>截图留存</strong>。</span>
+                </div>
+            </div>
+
+            <div class="clan-card">
+                <div class="clan-name">
+                    <img src="IMG/2.jpg" alt="The temptation of Go HM" class="clan-avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    The temptation of Go HM 氏族
+                </div>
+                <ol class="steps">
+                    <li data-step="1">进入氏族道场 → 按 <span class="key">Esc/Q</span> → 快速移动至保管库 → 与保管库互动 → 选择向联盟氏族捐献资源 →  选择<img src="IMG/1.jpg" alt="NIGHT ELF ROSE" class="clan-avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                    NIGHT ELF ROSE 氏族 → 选择目标资源及数量 → 提供</li>
+                </ol>
+                <div class="warning">
+                    <span class="warning-icon">⚠️</span>
+                    <span class="warning-text">捐献前，请先通过<strong> 联盟群聊 联系群主 </strong>核实库存数量，再完成捐献并<strong>截图留存</strong>。</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="icon">📊</span> 征集要求</h2>
+            <table>
+                <tr>
+                    <th>项目</th>
+                    <th>要求</th>
+                </tr>
+                <tr>
+                    <td>征集总量</td>
+                    <td><span class="number-badge">2,000</span> 个</td>
+                </tr>
+                <tr>
+                    <td>单次最低捐献</td>
+                    <td><span class="number-badge">100</span> 个</td>
+                </tr>
+                <tr>
+                    <td>递增单位</td>
+                    <td><span class="number-badge">10</span> 个（如 110、120、130……）</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><span class="icon">🎁</span> 奖励兑换</h2>
+            <table class="reward-table">
+                <tr>
+                    <th>捐献数量</th>
+                    <th>可选奖励（三选一）</th>
+                </tr>
+                <tr>
+                    <td>每 <span class="highlight">10</span> 个</td>
+                    <td>
+                        <span class="reward-item"><span class="reward-icon">💎</span> 1 白金</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>每 <span class="highlight">10</span> 个</td>
+                    <td>
+                        <span class="reward-item"><span class="reward-icon">⭐</span> 0.1 积分（Rout）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>每 <span class="highlight">10</span> 个</td>
+                    <td>
+                        <span class="reward-item"><span class="reward-icon">👑</span> 0.1 积分（Prime）</span>
+                    </td>
+                </tr>
+            </table>
+            <div class="note">
+                <strong>💡 兑换说明：</strong>
+				<br>三种奖励方式任选其一，按对应比例换算。例如捐献 100 个资源，可选择兑换 1 白金、或 0.1 Rout 积分、或 0.1 Prime 积分。
+            </div>
+        </div>
+    </div>
+
+		<script>
+			// 打字机效果
+						const texts = ["REVELATION", "天启 联盟"];
+						let index = 0;
+						let isTyping = true;
+						let cursor = 0;
+						let blinkInterval;
+			
+						function initBlink() {
+							blinkInterval = setInterval(() => {
+								const cursorElement = document.getElementById("cursor");
+								if (cursorElement) {
+									cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+								}
+							}, 500);
+						}
+			
+						function stopBlink() {
+							clearInterval(blinkInterval);
+						}
+			
+						function addCursor() {
+							const cursorElement = document.createElement("span");
+							cursorElement.id = "cursor";
+							cursorElement.textContent = "|";
+							cursorElement.style.visibility = "visible";
+							document.getElementById("typing").appendChild(cursorElement);
+							initBlink();
+						}
+			
+						function removeCursor() {
+							const cursorElement = document.getElementById("cursor");
+							if (cursorElement) {
+								stopBlink();
+								cursorElement.remove();
+							}
+						}
+			
+						function typeEffect() {
+							const textElement = document.getElementById("typing");
+							const currentText = texts[index];
+							if (isTyping) {
+								if (cursor < currentText.length) {
+									textElement.textContent += currentText.charAt(cursor);
+									cursor++;
+								} else {
+									addCursor();
+									setTimeout(() => {
+										isTyping = false;
+										cursor = 0;
+										setTimeout(() => {
+											removeCursor();
+											typeEffect();
+										}, 1500);
+										return;
+									}, 300);
+									return;
+								}
+							} else {
+								// 修改回删逻辑：保留一个零宽空格防止容器塌陷
+								if (textElement.textContent.length > 1) {
+									textElement.textContent = textElement.textContent.slice(0, -1);
+								} else {
+									textElement.textContent = "\u200b"; // 零宽空格，占位但不可见
+									isTyping = true;
+									index = (index + 1) % texts.length;
+									removeCursor();
+									setTimeout(typeEffect, 400);
+									return;
+								}
+							}
+							setTimeout(typeEffect, isTyping ? 100 : 100);
+						}
+						
+						typeEffect();					
+		</script>
+</body>
+</html>
