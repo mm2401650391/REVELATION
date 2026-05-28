@@ -231,38 +231,27 @@
         let currentPeriod = '7';
 
         async function loadData() {
-            console.log('[Debug] loadData 开始执行');
             const container = document.getElementById('statsContainer');
             container.innerHTML = '<div class="loading">正在加载数据...</div>';
             
             try {
-                const url = './stats.json?t=' + Date.now();
-                console.log('[Debug] fetch URL:', url);
-                
-                const response = await fetch(url);
-                console.log('[Debug] fetch 响应:', response.status, response.ok);
+                const response = await fetch('./stats.json?t=' + Date.now());
                 
                 if (!response.ok) {
                     throw new Error('数据文件不存在 (' + response.status + ')');
                 }
                 
                 const result = await response.json();
-                console.log('[Debug] JSON 结果:', result);
                 
                 if (result.success) {
                     currentData = result.data;
-                    console.log('[Debug] currentData 已设置');
-                    
                     renderStats('all');
-                    console.log('[Debug] renderStats 执行完成');
-                    
                     document.getElementById('updateTime').textContent = 
                         '数据更新时间：' + new Date().toLocaleString('zh-CN');
                 } else {
                     throw new Error(result.error || '数据格式错误');
                 }
             } catch (error) {
-                console.error('[Debug] 捕获错误:', error);
                 container.innerHTML = `
                     <div class="error">
                         <p>❌ 加载失败</p>
@@ -272,39 +261,20 @@
             }
         }
 
-        function renderStats(period) {
+        function renderStats() {
             if (!currentData) return;
             
-            // 从 last7days 和 last30days 累加得到累计数据
-            const d7 = currentData.last7days || {};
-            const d30 = currentData.last30days || {};
-            
-            const data = {
-                pageViews: (parseInt(d7.pageViews || 0) + parseInt(d30.pageViews || 0)).toLocaleString(),
-                users: d30.users || d7.users || '-',  
-                sessions: (parseInt(d7.sessions || 0) + parseInt(d30.sessions || 0)).toLocaleString(),
-                avgDuration: d30.avgDuration || d7.avgDuration || '-',
-                bounceRate: d30.bounceRate || d7.bounceRate || '-'
-            };
+            // 直接读 allTime 累计数据（由 Apps Script 查询自定义日期范围返回）
+            const data = currentData.allTime || {};
             
             const container = document.getElementById('statsContainer');
             
-            // 运行天数
-            const startDate = new Date('2026-05-18'); // 
-            const today = new Date();
-            const runDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-            
-            // 更新统计
-            const startStr = startDate.toISOString().split('T')[0];
-            document.getElementById('periodInfo').textContent = '统计起始：' + startStr + '（已运行 ' + runDays + ' 天）';
-            
             const stats = [
-                { icon: '👁️', value: data.pageViews, label: '浏览量' },
-                { icon: '👥', value: data.users, label: '用户数' },
-                { icon: '💬', value: data.sessions, label: '会话数' },
-                { icon: '⏱️', value: data.avgDuration, label: '平均停留' },
-                { icon: '📉', value: data.bounceRate, label: '跳出率' },
-                { icon: '📅', value: runDays + ' 天', label: '运行天数' },
+                { icon: '👁️', value: data.pageViews || '-', label: '浏览量' },
+                { icon: '👥', value: data.users || '-', label: '用户数' },
+                { icon: '💬', value: data.sessions || '-', label: '会话数' },
+                { icon: '⏱️', value: data.avgDuration || '-', label: '平均停留' },
+                { icon: '📉', value: data.bounceRate || '-', label: '跳出率' },
             ];
             
             container.innerHTML = `
@@ -319,7 +289,7 @@
                 </div>
             `;
         }
-		 console.log('[Debug] 准备调用 loadData');
+		 
 		        loadData();
     </script>
 </body>
