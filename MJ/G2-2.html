@@ -1,686 +1,1317 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	
-	  gtag('config', 'G-1B3TNTK43W');
-	</script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REVELATION/兑换宝库</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
 
-        body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
-            color: #e0e0e0;
-            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-            min-height: 100vh;
-            padding: 2vw;
-        }
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
 
-        /* Logo区域 */
-                .d2 {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 2vw;
-                    padding: 2vw 0;
-                    margin-bottom: 2vw;
-                    position: relative;
-                }
-        
-                .d2::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background: url('../IMGs/01.jpg') center/cover no-repeat;
-                    opacity: 0.4;
-                    border-radius: 20px;
-                    z-index: 0;
-                }
-        
-                .d2 > a {
-                    position: absolute;
-                    left: 2vw;
-                    z-index: 1;
-                }
-        
-                .d2 > h2 {
-                    position: relative;
-                    z-index: 1;
-					
+			gtag('config', 'G-1B3TNTK43W');
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>REVELATION/兑换宝库</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
 
-                }
-        
-                .d2 a img {
-                    width: 5vw;
-                    height: 5vw;
-                    object-fit: cover;
-                    border-radius: 12px;
-                    filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
-                    transition: transform 0.3s ease;
-                }
+			body {
+				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+				color: #e0e0e0;
+				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+				min-height: 100vh;
+				padding: 2vw;
+			}
 
-        .d2 a img:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
+			/* Logo区域 */
+			.d2 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 2vw;
+				padding: 2vw 0;
+				margin-bottom: 2vw;
+				position: relative;
+			}
 
-        .d2 h2 {
-            font-size: 4vw;
-            color: #FF9800;
-            text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
-            letter-spacing: 0.1em;
-            text-align: center;
-            line-height: 1;
-			min-width: 12em; 
-			white-space: nowrap;
-			display: inline-block;
-        }
+			.d2::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: url('../IMGs/01.jpg') center/cover no-repeat;
+				opacity: 0.4;
+				border-radius: 20px;
+				z-index: 0;
+			}
 
-        .d3 {
-            text-align: center;
-            margin-bottom: 1.5vw;
-        }
+			.d2>a {
+				position: absolute;
+				left: 2vw;
+				z-index: 1;
+			}
 
-        .d3 div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1vw;
-        }
+			.d2>h2 {
+				position: relative;
+				z-index: 1;
 
-        .d3 a {
-            text-decoration: none;
-            color: #b0b0b0;
-            font-size: 1.5vw;
-            padding: 0.5vw 2vw;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
 
-        .d3 a:hover {
-            color: #ffffff;
-            border-color: #008DFF;
-            box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
-        }
+			}
 
-        .d3 a.a {
-            color: #FF0E00;
-            border: 1px solid #FF0E00;
-            background: rgba(255, 14, 0, 0.1);
-            box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
-        }
+			.d2 a img {
+				width: 5vw;
+				height: 5vw;
+				object-fit: cover;
+				border-radius: 12px;
+				filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
+				transition: transform 0.3s ease;
+			}
 
-        .d3 a.b {
-            color: #376CFF;
-            border: 1px solid rgba(55, 108, 255, 0.3);
-        }
+			.d2 a img:hover {
+				transform: scale(1.1) rotate(5deg);
+			}
 
-        .d3 a.b:hover {
-            background: rgba(55, 108, 255, 0.1);
-            box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
-        }
+			.d2 h2 {
+				font-size: 4vw;
+				color: #FF9800;
+				text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
+				letter-spacing: 0.1em;
+				text-align: center;
+				line-height: 1;
+				min-width: 12em;
+				white-space: nowrap;
+				display: inline-block;
+			}
 
-        hr {
-            border: none;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
-            margin: 2vw 0;
-        }
+			.d3 {
+				text-align: center;
+				margin-bottom: 1.5vw;
+			}
 
-        /* 说明文字 */
-        .atxt h3 {
-            text-align: center;
-            font-size: 1.2vw;
-            color: #a0a0a0;
-            line-height: 2;
-            margin-bottom: 2vw;
-            padding: 1vw;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+			.d3 div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 1vw;
+			}
 
-        /* 折叠按钮 */
-        button {
-            display: block;
-            width: 80%;
-            max-width: 600px;
-            margin: 1vw auto;
-            padding: 1vw 2vw;
-            font-size: 1.8vw;
-            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            outline: none;
-            letter-spacing: 0.1em;
-        }
+			.d3 a {
+				text-decoration: none;
+				color: #b0b0b0;
+				font-size: 1.5vw;
+				padding: 0.5vw 2vw;
+				border-radius: 30px;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				transition: all 0.3s ease;
+				display: inline-block;
+			}
 
-        button:hover {
-            background: rgba(0, 141, 255, 0.1);
-            border-color: #008DFF;
-            box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
-            transform: translateY(-2px);
-        }
+			.d3 a:hover {
+				color: #ffffff;
+				border-color: #008DFF;
+				box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
+			}
 
-        button:active {
-            transform: translateY(0);
-        }
+			.d3 a.a {
+				color: #FF0E00;
+				border: 1px solid #FF0E00;
+				background: rgba(255, 14, 0, 0.1);
+				box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
+			}
 
-        /* 商品网格 */
-        .d4 {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2vw;
-            padding: 2vw;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-		.d4 h4 {
-		    grid-column: 1 / -1;  /* 让 h4 独占一整行 */
-		    width: 100%;
-		}
+			.d3 a.b {
+				color: #376CFF;
+				border: 1px solid rgba(55, 108, 255, 0.3);
+			}
 
-                .d4 > div {
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 20px;
-                    padding: 1.5vw;
-                    text-align: center;
-                    font-size: 1.2vw;
-                    transition: all 0.3s ease;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 0.8vw;
-                    min-height: 320px;
-                }
-        
-        /* 新增：库存量和价格容器 */
-        .d4 > div .info-bar {
-            margin-top: auto;
-            padding-top: 0.5vw;
-            display: flex;
-            flex-direction: column;  /* 修改：垂直排列 */
-            align-items: center;     /* 修改：居中对齐 */
-            width: 100%;
-            gap: 0.3vw;              /* 修改：调整行间距 */
-        }
+			.d3 a.b:hover {
+				background: rgba(55, 108, 255, 0.1);
+				box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
+			}
 
-        .d4 > div .info-bar span:first-child {
-            color: inherit;
-            font-size: inherit;
-        }
+			hr {
+				border: none;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
+				margin: 2vw 0;
+			}
 
-        .d4 > div .info-bar .price {
-            color: #FF9800;
-            font-weight: bold;
-            text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
-            font-size: inherit;
-        }
+			/* 说明 */
+			.atxt h3 {
+				text-align: center;
+				font-size: 1.2vw;
+				color: #a0a0a0;
+				line-height: 2;
+				margin-bottom: 2vw;
+				padding: 1vw;
+				background: rgba(255, 255, 255, 0.02);
+				border-radius: 15px;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+			}
 
-        .d4 > div:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(128, 255, 0, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            transform: translateY(-5px);
-        }
+			/* 折叠按钮 */
+			button {
+				display: block;
+				width: 80%;
+				max-width: 600px;
+				margin: 1vw auto;
+				padding: 1vw 2vw;
+				font-size: 1.8vw;
+				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+				color: #ffffff;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 15px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				outline: none;
+				letter-spacing: 0.1em;
+			}
 
-        .d4 > div img {
-            width: 80%;
-            max-width: 200px;
-            height: auto;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
+			button:hover {
+				background: rgba(0, 141, 255, 0.1);
+				border-color: #008DFF;
+				box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
+				transform: translateY(-2px);
+			}
 
-        .d4 > div:hover img {
-            transform: scale(1.05);
-        }
+			button:active {
+				transform: translateY(0);
+			}
 
-        .d4 > div br:first-of-type {
-            display: none;
-        }
+			/* 商品网格 */
+			.d4 {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				gap: 2vw;
+				padding: 2vw;
+				max-width: 1400px;
+				margin: 0 auto;
+			}
 
-        /* 子标题 */
-        .atxt h4 {
-            text-align: center;
-            font-size: 2vw;
-            color: #80FF00;
-            text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
-            margin: 2vw 0 1vw;
-            letter-spacing: 0.1em;
-        }
+			.d4 h4 {
+				grid-column: 1 / -1;
+				width: 100%;
+			}
 
-        /* 隐藏区域 */
-        #div1, #div2, #div3, #div4, #div4-mod,#div1-mod1,#div1-mod2 {
-            display: none;
-        }
+			.d4>div {
+				background: rgba(255, 255, 255, 0.03);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 20px;
+				padding: 1.5vw;
+				text-align: center;
+				font-size: 1.2vw;
+				transition: all 0.3s ease;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.8vw;
+				min-height: 320px;
+			}
 
-        /* 响应式 */
-        @media (max-width: 1000px) {
-            body {
-                padding: 3vw;
-            }
+			/* 新增：库存量和价格容器 */
+			.d4>div .info-bar {
+				margin-top: auto;
+				padding-top: 0.5vw;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 100%;
+				gap: 0.3vw;
+			}
 
-            .d2 a img {
-                width: 8vw;
-                height: 8vw;
-            }
+			.d4>div .info-bar span:first-child {
+				color: inherit;
+				font-size: inherit;
+			}
 
-            .d2 h2 {
-                font-size: 6vw;
-            }
+			.d4>div .info-bar .price {
+				color: #FF9800;
+				font-weight: bold;
+				text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+				font-size: inherit;
+			}
 
-            .d3 a {
-                font-size: 2.5vw;
-                padding: 1vw 3vw;
-            }
+			.d4>div:hover {
+				background: rgba(255, 255, 255, 0.06);
+				border-color: rgba(128, 255, 0, 0.3);
+				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+				transform: translateY(-5px);
+			}
 
-            .atxt h3 {
-                font-size: 2vw;
-            }
+			/* ========== 动态边框特效 - errorInfo赞助物品 ========== */
 
-            button {
-                font-size: 3vw;
-                width: 90%;
-            }
+			/* 基础发光层 */
+			.d4>div.ember-border,
+			.d4>div.rhino-border,
+			.d4>div.valkyr-border,
+			.d4>div.vauban-border {
+				position: relative;
+				overflow: visible;
+			}
 
-            .d4 {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 3vw;
-            }
+			/* 伪元素 - 外层光晕 */
+			.d4>div.ember-border::before,
+			.d4>div.rhino-border::before,
+			.d4>div.valkyr-border::before,
+			.d4>div.vauban-border::before {
+				content: '';
+				position: absolute;
+				top: -4px;
+				left: -4px;
+				right: -4px;
+				bottom: -4px;
+				border-radius: 24px;
+				z-index: -1;
+				opacity: 0.8;
+				pointer-events: none;
+			}
 
-                    .d4 > div {
-                        background: rgba(255, 255, 255, 0.03);
-                        border: 1px solid rgba(255, 255, 255, 0.1);
-                        border-radius: 20px;
-                        padding: 1.5vw;
-                        text-align: center;
-                        font-size: 1.2vw;
-                        transition: all 0.3s ease;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 0.8vw;
-                        min-height: 320px;
-                    }
-            
-                    /* 新增：库存量和价格容器 */
-                    .d4 > div .info-bar {
-                        margin-top: auto;
-                        padding-top: 0.5vw;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        width: 100%;
-                        gap: 1vw;
-                    }
-            
-                    .d4 > div .info-bar span:first-child {
-                        color: inherit;  /* 保持原库存量颜色 */
-                        font-size: inherit;  /* 保持原字体大小 */
-                    }
-            
-                    .d4 > div .info-bar .price {
-                        color: #FF9800;
-                        font-weight: bold;
-                        text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
-                        font-size: inherit;  /* 保持原字体大小 */
-                    }
+			/* ===== EMBER 传家宝 — 熔岩火山之火 ===== */
+			.d4>div.ember-border {
+				border: 2px solid #FF3300;
+				box-shadow:
+					0 0 30px rgba(255, 51, 0, 0.9),
+					0 0 60px rgba(255, 100, 0, 0.6),
+					0 0 100px rgba(255, 69, 0, 0.4),
+					0 0 150px rgba(139, 0, 0, 0.2),
+					inset 0 0 25px rgba(255, 51, 0, 0.4);
+				animation: lavaPulse 2s ease-in-out infinite alternate;
+			}
 
-            .atxt h4 {
-                font-size: 3.5vw;
-            }
-        }
+			/* 熔岩流动层 */
+			.d4>div.ember-border::before {
+				content: '';
+				position: absolute;
+				top: -8px;
+				left: -8px;
+				right: -8px;
+				bottom: -8px;
+				border-radius: 28px;
+				z-index: -1;
+				pointer-events: none;
+				background:
+					/* 熔岩裂缝 — 顶部 */
+					linear-gradient(90deg,
+					transparent 0%,
+					rgba(255, 69, 0, 0.6) 15%,
+					rgba(255, 140, 0, 0.8) 25%,
+					rgba(255, 69, 0, 0.6) 35%,
+					transparent 45%,
+					transparent 55%,
+					rgba(255, 80, 0, 0.5) 65%,
+					rgba(255, 120, 0, 0.7) 75%,
+					rgba(255, 80, 0, 0.5) 85%,
+					transparent 100%),
+					/* 熔岩裂缝 — 左侧 */
+					linear-gradient(0deg,
+					transparent 0%,
+					rgba(255, 69, 0, 0.5) 20%,
+					rgba(255, 140, 0, 0.7) 30%,
+					rgba(255, 69, 0, 0.5) 40%,
+					transparent 50%);
+				background-size: 200% 100%, 100% 200%;
+				animation: lavaFlow 3s linear infinite;
+				opacity: 0.7;
+			}
 
-        @media (max-width: 600px) {
-            .d2 {
-                flex-direction: column;
-                gap: 1vw;
-            }
+			/* 火山喷发粒子层 */
+			.d4>div.ember-border::after {
+				content: '';
+				position: absolute;
+				top: -20px;
+				left: -20px;
+				right: -20px;
+				bottom: -20px;
+				border-radius: 40px;
+				z-index: -2;
+				pointer-events: none;
+				background:
+					/* 顶部火山喷发 — 主焰柱 */
+					radial-gradient(ellipse 50% 60% at 50% 0%,
+					rgba(255, 80, 0, 0.9) 0%,
+					rgba(255, 140, 0, 0.7) 20%,
+					rgba(255, 69, 0, 0.5) 40%,
+					rgba(139, 0, 0, 0.3) 60%,
+					transparent 80%),
+					/* 顶部左侧喷发 */
+					radial-gradient(ellipse 35% 45% at 25% 5%,
+					rgba(255, 60, 0, 0.7) 0%,
+					rgba(255, 100, 0, 0.5) 25%,
+					transparent 55%),
+					/* 顶部右侧喷发 */
+					radial-gradient(ellipse 35% 45% at 75% 5%,
+					rgba(255, 100, 0, 0.7) 0%,
+					rgba(255, 140, 0, 0.5) 25%,
+					transparent 55%),
+					/* 底部熔岩池 */
+					radial-gradient(ellipse 60% 40% at 50% 100%,
+					rgba(139, 0, 0, 0.6) 0%,
+					rgba(255, 69, 0, 0.4) 30%,
+					transparent 60%),
+					/* 左侧岩浆流 */
+					radial-gradient(ellipse 30% 50% at 0% 50%,
+					rgba(255, 69, 0, 0.5) 0%,
+					rgba(139, 0, 0, 0.3) 40%,
+					transparent 70%),
+					/* 右侧岩浆流 */
+					radial-gradient(ellipse 30% 50% at 100% 50%,
+					rgba(255, 69, 0, 0.5) 0%,
+					rgba(139, 0, 0, 0.3) 40%,
+					transparent 70%),
+					/* 四角火山灰 */
+					radial-gradient(circle at 15% 15%, rgba(255, 100, 0, 0.4) 0%, transparent 25%),
+					radial-gradient(circle at 85% 15%, rgba(255, 80, 0, 0.4) 0%, transparent 25%),
+					radial-gradient(circle at 15% 85%, rgba(139, 0, 0, 0.3) 0%, transparent 25%),
+					radial-gradient(circle at 85% 85%, rgba(139, 0, 0, 0.3) 0%, transparent 25%);
+				animation: volcanoErupt 2.5s ease-in-out infinite alternate;
+			}
 
-            .d2 a img {
-                width: 12vw;
-                height: 12vw;
-            }
+			@keyframes lavaPulse {
+				0% {
+					box-shadow: 0 0 20px rgba(255, 51, 0, 0.6), 0 0 40px rgba(255, 100, 0, 0.3), 0 0 60px rgba(139, 0, 0, 0.2), inset 0 0 15px rgba(255, 51, 0, 0.2);
+					border-color: #FF6347;
+				}
 
-            .d2 h2 {
-                font-size: 7vw;
-            }
+				100% {
+					box-shadow: 0 0 50px rgba(255, 51, 0, 1), 0 0 100px rgba(255, 100, 0, 0.8), 0 0 150px rgba(255, 69, 0, 0.5), 0 0 200px rgba(139, 0, 0, 0.3), inset 0 0 40px rgba(255, 51, 0, 0.6);
+					border-color: #FF2200;
+				}
+			}
 
-            .d3 div {
-                flex-direction: column;
-                gap: 1.5vw;
-            }
+			@keyframes lavaFlow {
+				0% {
+					background-position: 0% 0%, 0% 0%;
+				}
 
-            .d3 a {
-                font-size: 3.5vw;
-                width: 80%;
-            }
+				50% {
+					background-position: 100% 0%, 0% 100%;
+				}
 
-            button {
-                font-size: 4vw;
-            }
+				100% {
+					background-position: 200% 0%, 0% 200%;
+				}
+			}
 
-            .d4 {
-                grid-template-columns: 1fr;
-            }
+			@keyframes volcanoErupt {
+				0% {
+					transform: scale(0.9) translateY(5px);
+					opacity: 0.5;
+					filter: blur(2px);
+				}
 
-            .d4 > div {
-                font-size: 3.5vw;
-            }
-        }
-		
-		.id-icon {
-		    height: 1em;
-		    width: auto;
-		    vertical-align: middle;
-		    display: inline-block;
-		}
-    </style>
-<base target="_blank">
-</head>
-<body>
-    <div class="d2">
-        <a href="../index.html">
-            <img src="../Logo.jpg" alt="Logo">
-        </a>
-        <h2 id="typing"></h2>
-    </div>
+				30% {
+					transform: scale(1.0) translateY(-2px);
+					opacity: 0.75;
+				}
 
-    <hr />
+				60% {
+					transform: scale(1.05) translateY(2px);
+					opacity: 0.85;
+				}
 
-    <div class="d3">
-        <div>
-            <a href="G1.html">积分查询</a>
-            <a class="a">❀积分兑换❀</a>
-        </div>
-    </div>
+				100% {
+					transform: scale(1.15) translateY(-8px);
+					opacity: 1;
+					filter: blur(4px);
+				}
+			}
 
-    <div class="d3">
-        <div>
-            <a href="G2.html" target="_self">☞Rout宝库☜</a>
-            <a class="b">Prime宝库</a>
-        </div>
-    </div>
+			/* ===== RHINO 传家宝 — 黑白金 ===== */
+			.d4>div.rhino-border {
+				border: 4px solid #F0C850;
+				box-shadow:
+					0 0 30px rgba(240, 200, 80, 0.7),
+					0 0 70px rgba(240, 200, 80, 0.45),
+					0 0 120px rgba(240, 200, 80, 0.25),
+					0 0 180px rgba(240, 200, 80, 0.1),
+					inset 0 0 25px rgba(240, 200, 80, 0.15);
+				background: linear-gradient(145deg,
+					rgba(8, 8, 8, 0.97) 0%,
+					rgba(22, 22, 22, 0.92) 25%,
+					rgba(12, 12, 12, 0.97) 50%,
+					rgba(28, 28, 28, 0.92) 75%,
+					rgba(8, 8, 8, 0.97) 100%);
+				position: relative;
+				animation: armorSettle 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			}
 
-    <div class="atxt">
-        <h3>
-            兑换请在群聊@群主，并说明兑换奖项，所有奖励等级均为零
-        </h3>
+			/* 外层白金装甲框 */
+			.d4>div.rhino-border::before {
+				content: '';
+				position: absolute;
+				top: -8px;
+				left: -8px;
+				right: -8px;
+				bottom: -8px;
+				border-radius: 28px;
+				z-index: -1;
+				pointer-events: none;
+				border: 3px solid rgba(240, 200, 80, 0.7);
+				background: linear-gradient(145deg,
+					rgba(240, 200, 80, 0.2) 0%,
+					rgba(255, 255, 255, 0.08) 20%,
+					transparent 40%,
+					rgba(255, 255, 255, 0.08) 60%,
+					rgba(240, 200, 80, 0.2) 100%);
+				box-shadow:
+					inset 0 0 40px rgba(0, 0, 0, 0.7),
+					0 0 60px rgba(240, 200, 80, 0.3);
+			}
 
-        <button onclick="button1()" id="bu1">PrimeMOD</button>
-        <div id="div1" class="d4">
-            <div>
-                <span>霰弹扩充 Prime</span>
-                <img src="IMG/Prime/1/01.jpg" alt="路径错误">
-                <div class="info-bar">
-                    <span>库存量：1</span>
-                    <span class="price">［Prime*5］</span>
-                </div>
-            </div>
-            <div>
-                <span>恶毒弹匣 Prime</span>
-                <img src="IMG/Prime/1/02.jpg" alt="路径错误">
-                <div class="info-bar">
-                    <span>库存量：1</span>
-                    <span class="price">［Prime*4.5］</span>
-                </div>
-            </div>
+			/* 装甲接缝与金色铆钉*/
+			.d4>div.rhino-border::after {
+				content: '';
+				position: absolute;
+				top: -16px;
+				left: -16px;
+				right: -16px;
+				bottom: -16px;
+				border-radius: 36px;
+				z-index: -2;
+				pointer-events: none;
+				background:
+					/* 金色接缝线 — 顶部 */
+					linear-gradient(90deg,
+					transparent 6%,
+					rgba(240, 200, 80, 0.5) 6%,
+					rgba(240, 200, 80, 0.5) 10%,
+					transparent 10%,
+					transparent 90%,
+					rgba(240, 200, 80, 0.5) 90%,
+					rgba(240, 200, 80, 0.5) 94%,
+					transparent 94%),
+					/* 金色接缝线 — 左侧 */
+					linear-gradient(0deg,
+					transparent 6%,
+					rgba(240, 200, 80, 0.5) 6%,
+					rgba(240, 200, 80, 0.5) 10%,
+					transparent 10%,
+					transparent 90%,
+					rgba(240, 200, 80, 0.5) 90%,
+					rgba(240, 200, 80, 0.5) 94%,
+					transparent 94%),
+					/* 四角金色铆钉 */
+					radial-gradient(circle at 10% 10%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+					radial-gradient(circle at 90% 10%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+					radial-gradient(circle at 10% 90%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+					radial-gradient(circle at 90% 90%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+					/* 白色高光边缘 */
+					radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 45%),
+					radial-gradient(ellipse at 50% 100%, rgba(255, 255, 255, 0.08) 0%, transparent 45%);
+			}
+
+			@keyframes armorSettle {
+				0% {
+					transform: scale(1.03);
+				}
+
+				30% {
+					transform: scale(1.015);
+				}
+
+				60% {
+					transform: scale(1.005);
+				}
+
+				100% {
+					transform: scale(1);
+				}
+			}
+
+
+			/* ===== VALKYR 传家宝 — 辉煌的野性===== */
+			.d4>div.valkyr-border {
+				border: 3px solid #9B59B6;
+				box-shadow:
+					0 0 25px rgba(155, 89, 182, 0.7),
+					0 0 50px rgba(142, 68, 173, 0.5),
+					0 0 80px rgba(108, 52, 131, 0.35),
+					0 0 120px rgba(74, 35, 90, 0.2),
+					inset 0 0 20px rgba(155, 89, 182, 0.25);
+				background: linear-gradient(145deg,
+					rgba(20, 10, 25, 0.95) 0%,
+					rgba(45, 20, 55, 0.9) 30%,
+					rgba(30, 15, 40, 0.95) 50%,
+					rgba(40, 20, 50, 0.9) 70%,
+					rgba(20, 10, 25, 0.95) 100%);
+				position: relative;
+				animation: wildAwaken 2.5s ease-out;
+			}
+
+			/* 野性光环层 */
+			.d4>div.valkyr-border::before {
+				content: '';
+				position: absolute;
+				top: -8px;
+				left: -8px;
+				right: -8px;
+				bottom: -8px;
+				border-radius: 28px;
+				z-index: -1;
+				pointer-events: none;
+				border: 2px solid rgba(155, 89, 182, 0.4);
+				background:
+					/* 紫色能量脉动 */
+					radial-gradient(ellipse 70% 50% at 50% 50%,
+					rgba(155, 89, 182, 0.2) 0%,
+					transparent 60%),
+					/* 挣脱的裂痕 — 左上 */
+					linear-gradient(135deg,
+					transparent 45%,
+					rgba(142, 68, 173, 0.5) 48%,
+					rgba(155, 89, 182, 0.7) 50%,
+					rgba(142, 68, 173, 0.5) 52%,
+					transparent 55%),
+					/* 挣脱的裂痕 — 右下 */
+					linear-gradient(315deg,
+					transparent 45%,
+					rgba(142, 68, 173, 0.5) 48%,
+					rgba(155, 89, 182, 0.7) 50%,
+					rgba(142, 68, 173, 0.5) 52%,
+					transparent 55%);
+				animation: wildPulse 3.5s ease-in-out infinite;
+			}
+
+			/* 向外撕裂 */
+			.d4>div.valkyr-border::after {
+				content: '';
+				position: absolute;
+				top: -18px;
+				left: -18px;
+				right: -18px;
+				bottom: -18px;
+				border-radius: 38px;
+				z-index: -2;
+				pointer-events: none;
+				background:
+					/* 顶部 — 女武神之翼 */
+					radial-gradient(ellipse 40% 50% at 20% 10%,
+					rgba(155, 89, 182, 0.6) 0%,
+					rgba(142, 68, 173, 0.4) 30%,
+					transparent 55%),
+					radial-gradient(ellipse 40% 50% at 80% 10%,
+					rgba(155, 89, 182, 0.6) 0%,
+					rgba(142, 68, 173, 0.4) 30%,
+					transparent 55%),
+					/* 左侧 — 爪痕撕裂 */
+					radial-gradient(ellipse 30% 60% at 5% 50%,
+					rgba(142, 68, 173, 0.5) 0%,
+					rgba(108, 52, 131, 0.4) 40%,
+					transparent 70%),
+					/* 右侧 — 爪痕撕裂 */
+					radial-gradient(ellipse 30% 60% at 95% 50%,
+					rgba(142, 68, 173, 0.5) 0%,
+					rgba(108, 52, 131, 0.4) 40%,
+					transparent 70%),
+					/* 底部 — 野性余烬 */
+					radial-gradient(ellipse 60% 35% at 50% 95%,
+					rgba(108, 52, 131, 0.5) 0%,
+					rgba(142, 68, 173, 0.3) 40%,
+					transparent 65%),
+					/* 四角 — 挣脱的锁链碎片 */
+					radial-gradient(circle at 12% 12%, rgba(155, 89, 182, 0.4) 0%, transparent 20%),
+					radial-gradient(circle at 88% 12%, rgba(155, 89, 182, 0.4) 0%, transparent 20%),
+					radial-gradient(circle at 12% 88%, rgba(142, 68, 173, 0.4) 0%, transparent 20%),
+					radial-gradient(circle at 88% 88%, rgba(142, 68, 173, 0.4) 0%, transparent 20%);
+				animation: berserkerClaw 4s ease-in-out infinite alternate;
+			}
+
+			@keyframes wildAwaken {
+				0% {
+					transform: scale(0.98);
+					opacity: 0.8;
+					filter: brightness(0.7);
+				}
+
+				50% {
+					transform: scale(1.01);
+					filter: brightness(1.1);
+				}
+
+				100% {
+					transform: scale(1);
+					opacity: 1;
+					filter: brightness(1);
+				}
+			}
+
+			@keyframes wildPulse {
+
+				0%,
+				100% {
+					opacity: 0.6;
+					transform: scale(1);
+				}
+
+				50% {
+					opacity: 0.9;
+					transform: scale(1.03);
+				}
+			}
+
+			@keyframes berserkerClaw {
+				0% {
+					transform: scale(0.95) rotate(-1deg);
+					opacity: 0.5;
+					filter: blur(1px);
+				}
+
+				30% {
+					transform: scale(1.02) rotate(1deg);
+					opacity: 0.75;
+				}
+
+				60% {
+					transform: scale(1.05) rotate(-0.5deg);
+					opacity: 0.85;
+				}
+
+				100% {
+					transform: scale(1.1) rotate(0deg);
+					opacity: 1;
+					filter: blur(2px);
+				}
+			}
+
+			/* ===== VAUBAN 传家宝 — 天才战术家===== */
+			.d4>div.vauban-border {
+				border: 3px solid #00B4D8;
+				box-shadow:
+					0 0 20px rgba(0, 180, 216, 0.6),
+					0 0 50px rgba(0, 150, 199, 0.4),
+					0 0 90px rgba(0, 119, 182, 0.25),
+					0 0 140px rgba(3, 4, 94, 0.15),
+					inset 0 0 20px rgba(0, 180, 216, 0.15);
+				background: linear-gradient(145deg,
+					rgba(10, 15, 20, 0.95) 0%,
+					rgba(20, 30, 40, 0.9) 25%,
+					rgba(15, 25, 35, 0.95) 50%,
+					rgba(25, 35, 45, 0.9) 75%,
+					rgba(10, 15, 20, 0.95) 100%);
+				position: relative;
+				animation: tacticalDeploy 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			}
+
+			/* 战术网格层 */
+			.d4>div.vauban-border::before {
+				content: '';
+				position: absolute;
+				top: -8px;
+				left: -8px;
+				right: -8px;
+				bottom: -8px;
+				border-radius: 28px;
+				z-index: -1;
+				pointer-events: none;
+				border: 2px solid rgba(0, 180, 216, 0.4);
+				background:
+					/* 战术网格线 */
+					linear-gradient(90deg,
+					transparent 0%,
+					rgba(0, 180, 216, 0.1) 10%,
+					transparent 10.5%,
+					transparent 20%,
+					rgba(0, 180, 216, 0.1) 20%,
+					transparent 20.5%,
+					transparent 30%,
+					rgba(0, 180, 216, 0.1) 30%,
+					transparent 30.5%,
+					transparent 40%,
+					rgba(0, 180, 216, 0.1) 40%,
+					transparent 40.5%,
+					transparent 50%,
+					rgba(0, 180, 216, 0.1) 50%,
+					transparent 50.5%,
+					transparent 60%,
+					rgba(0, 180, 216, 0.1) 60%,
+					transparent 60.5%,
+					transparent 70%,
+					rgba(0, 180, 216, 0.1) 70%,
+					transparent 70.5%,
+					transparent 80%,
+					rgba(0, 180, 216, 0.1) 80%,
+					transparent 80.5%,
+					transparent 90%,
+					rgba(0, 180, 216, 0.1) 90%,
+					transparent 90.5%),
+					linear-gradient(0deg,
+					transparent 0%,
+					rgba(0, 180, 216, 0.1) 10%,
+					transparent 10.5%,
+					transparent 20%,
+					rgba(0, 180, 216, 0.1) 20%,
+					transparent 20.5%,
+					transparent 30%,
+					rgba(0, 180, 216, 0.1) 30%,
+					transparent 30.5%,
+					transparent 40%,
+					rgba(0, 180, 216, 0.1) 40%,
+					transparent 40.5%,
+					transparent 50%,
+					rgba(0, 180, 216, 0.1) 50%,
+					transparent 50.5%,
+					transparent 60%,
+					rgba(0, 180, 216, 0.1) 60%,
+					transparent 60.5%,
+					transparent 70%,
+					rgba(0, 180, 216, 0.1) 70%,
+					transparent 70.5%,
+					transparent 80%,
+					rgba(0, 180, 216, 0.1) 80%,
+					transparent 80.5%,
+					transparent 90%,
+					rgba(0, 180, 216, 0.1) 90%,
+					transparent 90.5%);
+				box-shadow:
+					inset 0 0 30px rgba(0, 0, 0, 0.6),
+					0 0 40px rgba(0, 180, 216, 0.2);
+				animation: gridPulse 5s ease-in-out infinite;
+			}
+
+			/* 陷阱节点与能量流 */
+			.d4>div.vauban-border::after {
+				content: '';
+				position: absolute;
+				top: -16px;
+				left: -16px;
+				right: -16px;
+				bottom: -16px;
+				border-radius: 36px;
+				z-index: -2;
+				pointer-events: none;
+				background:
+					/* 顶部 — 战术天线/传感器 */
+					radial-gradient(ellipse 30% 40% at 30% 8%,
+					rgba(0, 180, 216, 0.5) 0%,
+					rgba(0, 150, 199, 0.3) 30%,
+					transparent 55%),
+					radial-gradient(ellipse 30% 40% at 70% 8%,
+					rgba(0, 180, 216, 0.5) 0%,
+					rgba(0, 150, 199, 0.3) 30%,
+					transparent 55%),
+					/* 四角 — 陷阱节点 */
+					radial-gradient(circle at 12% 12%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+					radial-gradient(circle at 88% 12%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+					radial-gradient(circle at 12% 88%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+					radial-gradient(circle at 88% 88%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+					/* 边缘 — 能量流 */
+					radial-gradient(ellipse 50% 30% at 50% 0%, rgba(0, 180, 216, 0.2) 0%, transparent 50%),
+					radial-gradient(ellipse 50% 30% at 50% 100%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+					radial-gradient(ellipse 30% 50% at 0% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+					radial-gradient(ellipse 30% 50% at 100% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%);
+				animation: nodeActivate 4s ease-in-out infinite alternate;
+			}
+
+			@keyframes tacticalDeploy {
+				0% {
+					transform: scale(1.02);
+					opacity: 0.9;
+					filter: brightness(0.8);
+				}
+
+				50% {
+					transform: scale(1.005);
+					filter: brightness(1.05);
+				}
+
+				100% {
+					transform: scale(1);
+					opacity: 1;
+					filter: brightness(1);
+				}
+			}
+
+			@keyframes gridPulse {
+
+				0%,
+				100% {
+					opacity: 0.5;
+					transform: scale(1);
+				}
+
+				50% {
+					opacity: 0.8;
+					transform: scale(1.02);
+				}
+			}
+
+			@keyframes nodeActivate {
+				0% {
+					transform: scale(0.95);
+					opacity: 0.5;
+					filter: blur(1px);
+				}
+
+				30% {
+					transform: scale(1.0);
+					opacity: 0.7;
+				}
+
+				60% {
+					transform: scale(1.03);
+					opacity: 0.85;
+				}
+
+				100% {
+					transform: scale(1.08);
+					opacity: 1;
+					filter: blur(2px);
+				}
+			}
+
+			.d4>div img {
+				width: 80%;
+				max-width: 200px;
+				height: auto;
+				border-radius: 12px;
+				transition: transform 0.3s ease;
+			}
+
+			.d4>div:hover img {
+				transform: scale(1.05);
+			}
+
+			.d4>div br:first-of-type {
+				display: none;
+			}
+
+			/* 子标题 */
+			.atxt h4 {
+				text-align: center;
+				font-size: 2vw;
+				color: #80FF00;
+				text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
+				margin: 2vw 0 1vw;
+				letter-spacing: 0.1em;
+			}
+
+			/* 隐藏区域 */
+			#div1,
+			#div2,
+			#div3,
+			#div4,
+			#div4-mod,
+			#div1-mod1,
+			#div1-mod2 {
+				display: none;
+			}
+
+			/* 响应式 */
+			@media (max-width: 1000px) {
+				body {
+					padding: 3vw;
+				}
+
+				.d2 a img {
+					width: 8vw;
+					height: 8vw;
+				}
+
+				.d2 h2 {
+					font-size: 6vw;
+				}
+
+				.d3 a {
+					font-size: 2.5vw;
+					padding: 1vw 3vw;
+				}
+
+				.atxt h3 {
+					font-size: 2vw;
+				}
+
+				button {
+					font-size: 3vw;
+					width: 90%;
+				}
+
+				.d4 {
+					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+					gap: 3vw;
+				}
+
+				.d4>div {
+					background: rgba(255, 255, 255, 0.03);
+					border: 1px solid rgba(255, 255, 255, 0.1);
+					border-radius: 20px;
+					padding: 1.5vw;
+					text-align: center;
+					font-size: 1.2vw;
+					transition: all 0.3s ease;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					gap: 0.8vw;
+					min-height: 320px;
+				}
+
+				/* 新增：库存量和价格容器 */
+				.d4>div .info-bar {
+					margin-top: auto;
+					padding-top: 0.5vw;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					width: 100%;
+					gap: 1vw;
+				}
+
+				.d4>div .info-bar span:first-child {
+					color: inherit;
+					font-size: inherit;
+				}
+
+				.d4>div .info-bar .price {
+					color: #FF9800;
+					font-weight: bold;
+					text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+					font-size: inherit;
+				}
+
+				.atxt h4 {
+					font-size: 3.5vw;
+				}
+			}
+
+			@media (max-width: 600px) {
+				.d2 {
+					flex-direction: column;
+					gap: 1vw;
+				}
+
+				.d2 a img {
+					width: 12vw;
+					height: 12vw;
+				}
+
+				.d2 h2 {
+					font-size: 7vw;
+				}
+
+				.d3 div {
+					flex-direction: column;
+					gap: 1.5vw;
+				}
+
+				.d3 a {
+					font-size: 3.5vw;
+					width: 80%;
+				}
+
+				button {
+					font-size: 4vw;
+				}
+
+				.d4 {
+					grid-template-columns: 1fr;
+				}
+
+				.d4>div {
+					font-size: 3.5vw;
+				}
+			}
+
+			.id-icon {
+				height: 1em;
+				width: auto;
+				vertical-align: middle;
+				display: inline-block;
+			}
+		</style>
+		<base target="_blank">
+	</head>
+	<body>
+		<div class="d2">
+			<a href="../index.html">
+				<img src="../Logo.jpg" alt="Logo">
+			</a>
+			<h2 id="typing"></h2>
+		</div>
+
+		<hr />
+
+		<div class="d3">
 			<div>
-			    <span>制衡 Prime</span>
-			    <img src="IMG/Prime/1/03.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*9.5］</span>
-			    </div>
+				<a href="G1.html">积分查询</a>
+				<a class="a">❀积分兑换❀</a>
 			</div>
+		</div>
+
+		<div class="d3">
 			<div>
-			    <span>猛烈爆发 Prime</span>
-			    <img src="IMG/Prime/1/04.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*6］</span>
-			    </div>
+				<a href="G2.html" target="_self">☞Rout宝库☜</a>
+				<a class="b">Prime宝库</a>
 			</div>
-			<div>
-			    <span>抵近射击 Prime</span>
-			    <img src="IMG/Prime/1/05.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*4.5］</span>
-			    </div>
+		</div>
+
+		<div class="atxt">
+			<h3>
+				兑换请在群聊@群主，并说明兑换奖项，所有奖励等级均为零
+			</h3>
+
+			<button onclick="button1()" id="bu1">PrimeMOD</button>
+			<div id="div1" class="d4">
+				<div>
+					<span>霰弹扩充 Prime</span>
+					<img src="IMG/Prime/1/01.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*5］</span>
+					</div>
+				</div>
+				<div>
+					<span>恶毒弹匣 Prime</span>
+					<img src="IMG/Prime/1/02.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*4.5］</span>
+					</div>
+				</div>
+				<div>
+					<span>制衡 Prime</span>
+					<img src="IMG/Prime/1/03.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*9.5］</span>
+					</div>
+				</div>
+				<div>
+					<span>猛烈爆发 Prime</span>
+					<img src="IMG/Prime/1/04.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*6］</span>
+					</div>
+				</div>
+				<div>
+					<span>抵近射击 Prime</span>
+					<img src="IMG/Prime/1/05.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*4.5］</span>
+					</div>
+				</div>
+				<div>
+					<span>火焰装填 Prime</span>
+					<img src="IMG/Prime/1/06.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*5］</span>
+					</div>
+				</div>
+				<div>
+					<span>串联弹匣 Prime</span>
+					<img src="IMG/Prime/1/07.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*4］</span>
+					</div>
+				</div>
+				<div>
+					<span>领袖 Prime</span>
+					<img src="IMG/Prime/1/08.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*3］</span>
+					</div>
+				</div>
+				<div>
+					<span>非晶变压器 Prime</span>
+					<img src="IMG/Prime/1/09.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*5.5］</span>
+					</div>
+				</div>
+				<div>
+					<span>急冻控场 Prime</span>
+					<img src="IMG/Prime/1/10.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*5］</span>
+					</div>
+				</div>
+				<div>
+					<span>致命效率 Prime</span>
+					<img src="IMG/Prime/1/11.jpg" alt="路径错误">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*5］</span>
+					</div>
+				</div>
 			</div>
-			<div>
-			    <span>火焰装填 Prime</span>
-			    <img src="IMG/Prime/1/06.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*5］</span>
-			    </div>
-			</div>
-			<div>
-			    <span>串联弹匣 Prime</span>
-			    <img src="IMG/Prime/1/07.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*4］</span>
-			    </div>
-			</div>
-			<div>
-			    <span>领袖 Prime</span>
-			    <img src="IMG/Prime/1/08.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*3］</span>
-			    </div>
-			</div>
-			<div>
-			    <span>非晶变压器 Prime</span>
-			    <img src="IMG/Prime/1/09.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*5.5］</span>
-			    </div>
-			</div>
-			<div>
-			    <span>急冻控场 Prime</span>
-			    <img src="IMG/Prime/1/10.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*5］</span>
-			    </div>
-			</div>
-			<div>
-			    <span>致命效率 Prime</span>
-			    <img src="IMG/Prime/1/11.jpg" alt="路径错误">
-			    <div class="info-bar">
-			        <span>库存量：1</span>
-			        <span class="price">［Prime*5］</span>
-			    </div>
-			</div>
-			</div>
-			
+
 			<div id="div1-mod1">
-					<h4>毁灭派系 系列</h4>
-					<div class="d4">
-						<div>
-						    <span>毁灭Grineer Prime</span>
-						    <img src="IMG/Prime/1/21.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*5］</span>
-						    </div>
+				<h4>毁灭派系 系列</h4>
+				<div class="d4">
+					<div>
+						<span>毁灭Grineer Prime</span>
+						<img src="IMG/Prime/1/21.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*5］</span>
 						</div>
-						<div>
-						    <span>毁灭Corpus Prime</span>
-						    <img src="IMG/Prime/1/22.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*5.5］</span>
-						    </div>
+					</div>
+					<div>
+						<span>毁灭Corpus Prime</span>
+						<img src="IMG/Prime/1/22.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*5.5］</span>
 						</div>
-						<div>
-						    <span>毁灭Infested Prime</span>
-						    <img src="IMG/Prime/1/23.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*3］</span>
-						    </div>
+					</div>
+					<div>
+						<span>毁灭Infested Prime</span>
+						<img src="IMG/Prime/1/23.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*3］</span>
 						</div>
-						<div>
-						    <span>毁灭奥罗金 Prime</span>
-						    <img src="IMG/Prime/1/24.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*4.5］</span>
-						    </div>
+					</div>
+					<div>
+						<span>毁灭奥罗金 Prime</span>
+						<img src="IMG/Prime/1/24.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*4.5］</span>
 						</div>
-						<div>
-						    <span>毁灭低语者 Prime</span>
-						    <img src="IMG/Prime/1/25.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*3］</span>
-						    </div>
+					</div>
+					<div>
+						<span>毁灭低语者 Prime</span>
+						<img src="IMG/Prime/1/25.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*3］</span>
 						</div>
 					</div>
 				</div>
-			
+			</div>
+
 			<div id="div1-mod2">
-					<h4>灭亡派系 系列</h4>
-					<div class="d4">
-						<div>
-						    <span>灭亡Grineer Prime</span>
-						    <img src="IMG/Prime/1/31.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*4］</span>
-						    </div>
+				<h4>灭亡派系 系列</h4>
+				<div class="d4">
+					<div>
+						<span>灭亡Grineer Prime</span>
+						<img src="IMG/Prime/1/31.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*4］</span>
 						</div>
-						<div>
-						    <span>灭亡Corpus Prime</span>
-						    <img src="IMG/Prime/1/32.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*3.5］</span>
-						    </div>
+					</div>
+					<div>
+						<span>灭亡Corpus Prime</span>
+						<img src="IMG/Prime/1/32.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*3.5］</span>
 						</div>
-						<div>
-						    <span>灭亡奥罗金 Prime</span>
-						    <img src="IMG/Prime/1/33.jpg" alt="路径错误">
-						    <div class="info-bar">
-						        <span>库存量：1</span>
-						        <span class="price">［Prime*6］</span>
-						    </div>
+					</div>
+					<div>
+						<span>灭亡奥罗金 Prime</span>
+						<img src="IMG/Prime/1/33.jpg" alt="路径错误">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［Prime*6］</span>
 						</div>
 					</div>
 				</div>
+			</div>
 		</div>
-	
 
-    <button onclick="button2()" id="bu2">Prime军械</button>
-    <div id="div2" class="d4">
-        <div>
-            <span>塞多 Prime</span>
-            <img src="IMG/Prime/2/01.jpg" alt="路径错误">
-            <div class="info-bar">
-                <span>库存量：1</span>
-                <span class="price">［Prime*2.5］</span>
-            </div>
-        </div>
-        <div>
-            <span>瓦德雅 Prime</span>
-            <img src="IMG/Prime/2/02.jpg" alt="路径错误">
-            <div class="info-bar">
-                <span>库存量：1</span>
-                <span class="price">［Prime*2.2］</span>
-            </div>
-        </div>
-		<div>
-		    <span>葬铭 Prime</span>
-		    <img src="IMG/Prime/2/03.jpg" alt="路径错误">
-		    <div class="info-bar">
-		        <span>库存量：1</span>
-		        <span class="price">［Prime*1.7］</span>
-		    </div>
-		</div>
-		<div>
-		    <span>逐电 Prime</span>
-		    <img src="IMG/Prime/2/04.jpg" alt="路径错误">
-		    <div class="info-bar">
-		        <span>库存量：1</span>
-		        <span class="price">［Prime*1.7］</span>
-		    </div>
-		</div>
-		<div>
-		    <span>野马 Prime</span>
-		    <img src="IMG/Prime/2/05.jpg" alt="路径错误">
-		    <div class="info-bar">
-		        <span>库存量：1</span>
-		        <span class="price">［Prime*1.5］</span>
-		    </div>
-		</div>
-        
-    </div>
 
-    <div class="atxt">
-        <button onclick="button4()" id="bu4">赞助奖池</button>
-        <div id="div4" class="d4">
-           <h4>由"<img src="img/1.jpg" class="id-icon" alt=""> Skulajj"赞助</span></h4>
-            <div>
-                <span>白金*100</span>
-                <img src="IMG\Prime\R\G1.jpg" alt="白金">
-                <div class="info-bar">
-                    <span>库存量：800</span>
-                    <span class="price">［Prime*10］</span>
-                </div>
-            </div>
-			
-			<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> FengXiansenPrime"赞助</h4>
-         <div>
-             <span>Nekros Prime</span>
-             <img src="IMG\Prime\R\G2.jpg" alt="Nekros Prime">
-             <div class="info-bar">
-                 <span>库存量：1</span>
-                 <span class="price">［Prime*9］</span>
-             </div>
-		</div>
-			 
-			<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> errorInfo"赞助</h4>
+		<button onclick="button2()" id="bu2">Prime军械</button>
+		<div id="div2" class="d4">
 			<div>
-			        <span>任选 传家宝</span>
-			        <img id="image1" src="IMG\Prime\R\EMBER.jpg" alt="传家宝">
-			        <div class="info-bar">
-			            <span>库存量：3</span>
-			            <span class="price">［Prime*40］</span>
-			        </div>
-			    </div> 
-         </div>
-		 
-		 
-     <!--       <div>
+				<span>塞多 Prime</span>
+				<img src="IMG/Prime/2/01.jpg" alt="路径错误">
+				<div class="info-bar">
+					<span>库存量：1</span>
+					<span class="price">［Prime*2.5］</span>
+				</div>
+			</div>
+			<div>
+				<span>瓦德雅 Prime</span>
+				<img src="IMG/Prime/2/02.jpg" alt="路径错误">
+				<div class="info-bar">
+					<span>库存量：1</span>
+					<span class="price">［Prime*2.2］</span>
+				</div>
+			</div>
+			<div>
+				<span>葬铭 Prime</span>
+				<img src="IMG/Prime/2/03.jpg" alt="路径错误">
+				<div class="info-bar">
+					<span>库存量：1</span>
+					<span class="price">［Prime*1.7］</span>
+				</div>
+			</div>
+			<div>
+				<span>逐电 Prime</span>
+				<img src="IMG/Prime/2/04.jpg" alt="路径错误">
+				<div class="info-bar">
+					<span>库存量：1</span>
+					<span class="price">［Prime*1.7］</span>
+				</div>
+			</div>
+			<div>
+				<span>野马 Prime</span>
+				<img src="IMG/Prime/2/05.jpg" alt="路径错误">
+				<div class="info-bar">
+					<span>库存量：1</span>
+					<span class="price">［Prime*1.5］</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="atxt">
+			<button onclick="button4()" id="bu4">赞助奖池</button>
+			<div id="div4" class="d4">
+				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> Skulajj"赞助</span></h4>
+				<div>
+					<span>白金*100</span>
+					<img src="IMG\Prime\R\G1.jpg" alt="白金">
+					<div class="info-bar">
+						<span>库存量：800</span>
+						<span class="price">［Prime*10］</span>
+					</div>
+				</div>
+
+				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> FengXiansenPrime"赞助</h4>
+				<div>
+					<span>Nekros Prime</span>
+					<img src="IMG\Prime\R\G2.jpg" alt="Nekros Prime">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*9］</span>
+					</div>
+				</div>
+
+				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> errorInfo"赞助</h4>
+				<div id="ember-card">
+					<span>任选 传家宝</span>
+					<img id="image1" src="IMG\Prime\R\EMBER.jpg" alt="传家宝">
+					<div class="info-bar">
+						<span>库存量：3</span>
+						<span class="price">［Prime*40］</span>
+					</div>
+				</div>
+			</div>
+
+
+			<!--       <div>
                 <span>Mag Prime</span>
                 <img src="IMG/Prime/R/A4.jpg" alt="Mag Prime">
                 <div class="info-bar">
@@ -748,168 +1379,185 @@
                     <span class="price">［Prime*2.25］</span>
                 </div>
             </div>-->
-        </div>
-    </div>
+		</div>
+		</div>
 
-    <script>
-        function button1() {
-            var div1 = document.getElementById('div1');
-			var div1mod1 = document.getElementById('div1-mod1');
-			var div1mod2 = document.getElementById('div1-mod2');
-            var bu1 = document.getElementById('bu1');
-            if (div1.style.display == 'grid') {
-                div1.style.display = 'none';
-				div1mod1.style.display = 'none';
-				div1mod2.style.display = 'none';
-                bu1.innerText = "PrimeMOD";
-            } else {
-                div1.style.display = 'grid';
-				div1mod1.style.display = 'block';
-				div1mod2.style.display = 'block';
-                bu1.innerText = "☃ PrimeMOD ☃";
-            }
-        }
+		<script>
+			function button1() {
+				var div1 = document.getElementById('div1');
+				var div1mod1 = document.getElementById('div1-mod1');
+				var div1mod2 = document.getElementById('div1-mod2');
+				var bu1 = document.getElementById('bu1');
+				if (div1.style.display == 'grid') {
+					div1.style.display = 'none';
+					div1mod1.style.display = 'none';
+					div1mod2.style.display = 'none';
+					bu1.innerText = "PrimeMOD";
+				} else {
+					div1.style.display = 'grid';
+					div1mod1.style.display = 'block';
+					div1mod2.style.display = 'block';
+					bu1.innerText = "☃ PrimeMOD ☃";
+				}
+			}
 
-        function button2() {
-            var div2 = document.getElementById('div2');
-            var bu2 = document.getElementById('bu2');
-            if (div2.style.display == 'grid') {
-                div2.style.display = 'none';
-                bu2.innerText = "Prime军械";
-            } else {
-                div2.style.display = 'grid';
-                bu2.innerText = "☃ Prime军械 ☃";
-            }
-        }
+			function button2() {
+				var div2 = document.getElementById('div2');
+				var bu2 = document.getElementById('bu2');
+				if (div2.style.display == 'grid') {
+					div2.style.display = 'none';
+					bu2.innerText = "Prime军械";
+				} else {
+					div2.style.display = 'grid';
+					bu2.innerText = "☃ Prime军械 ☃";
+				}
+			}
 
-        function button3() {
-            var div3 = document.getElementById('div3');
-            var bu3 = document.getElementById('bu3');
-            if (div3.style.display == 'grid') {
-                div3.style.display = 'none';
-                bu3.innerText = "赞助奖池";
-            } else {
-                div3.style.display = 'grid';
-                bu3.innerText = "☃ 赞助奖池 ☃";
-            }
-        }
+			function button3() {
+				var div3 = document.getElementById('div3');
+				var bu3 = document.getElementById('bu3');
+				if (div3.style.display == 'grid') {
+					div3.style.display = 'none';
+					bu3.innerText = "赞助奖池";
+				} else {
+					div3.style.display = 'grid';
+					bu3.innerText = "☃ 赞助奖池 ☃";
+				}
+			}
 
-       function button4() {
-                    var div4 = document.getElementById('div4');
-                    var div4mod = document.getElementById('div4-mod');
-                    var bu4 = document.getElementById('bu4');
-                    if (div4.style.display == 'grid') {
-                        div4.style.display = 'none';
-                        div4mod.style.display = 'none';
-                        bu4.innerText = "赞助奖池";
-                    } else {
-                        div4.style.display = 'grid';
-                        div4mod.style.display = 'block';
-                        bu4.innerText = "☃ 赞助奖池 ☃";
-                    }
-                }
+			function button4() {
+				var div4 = document.getElementById('div4');
+				var div4mod = document.getElementById('div4-mod');
+				var bu4 = document.getElementById('bu4');
+				if (div4.style.display == 'grid') {
+					div4.style.display = 'none';
+					div4mod.style.display = 'none';
+					bu4.innerText = "赞助奖池";
+				} else {
+					div4.style.display = 'grid';
+					div4mod.style.display = 'block';
+					bu4.innerText = "☃ 赞助奖池 ☃";
+				}
+			}
 
-        // 图片轮播
-        var images1 = [
-            'IMG/Prime/R/EMBER.jpg',
-            'IMG/Prime/R/RHINO.jpg',
-            'IMG/Prime/R/Valkyr.jpg',
-			'IMG/Prime/R/VAUBAN.jpg',
-        ];
-        var index1 = 0;
-        setInterval(function() {
-            var imgElement = document.getElementById('image1');
-            imgElement.src = images1[index1];
-            index1 = (index1 + 1) % images1.length;
-        }, 1500);
+			// 图片轮播
+			var images1 = [
+				'IMG/Prime/R/EMBER.jpg',
+				'IMG/Prime/R/RHINO.jpg',
+				'IMG/Prime/R/Valkyr.jpg',
+				'IMG/Prime/R/VAUBAN.jpg',
+			];
+			var index1 = 0;
+			setInterval(function() {
+				var imgElement = document.getElementById('image1');
+				var cardElement = document.getElementById('ember-card');
+				imgElement.src = images1[index1];
 
-        var images2 = [
-            'IMG/Rout/R/B2-1.jpg',
-            'IMG/Rout/R/B2-2.jpg',
-            'IMG/Rout/R/B2-3.jpg',
-        ];
-        var index2 = 0;
-        setInterval(function() {
-            var imgElement = document.getElementById('image2');
-            imgElement.src = images2[index2];
-            index2 = (index2 + 1) % images2.length;
-        }, 2000);
+				// 移除旧边框类
+				if (cardElement) {
+					cardElement.classList.remove('ember-border', 'rhino-border', 'valkyr-border', 'vauban-border');
 
-        // 打字机效果
-        const texts = ["REVELATION", "天启 联盟"];
-        let index = 0;
-        let isTyping = true;
-        let cursor = 0;
-        let blinkInterval;
+					// 根据图片添加对应边框
+					var currentImg = images1[index1];
+					if (currentImg.includes('EMBER')) {
+						cardElement.classList.add('ember-border');
+					} else if (currentImg.includes('RHINO')) {
+						cardElement.classList.add('rhino-border');
+					} else if (currentImg.includes('Valkyr')) {
+						cardElement.classList.add('valkyr-border');
+					} else if (currentImg.includes('VAUBAN')) {
+						cardElement.classList.add('vauban-border');
+					}
+				}
 
-        function initBlink() {
-            blinkInterval = setInterval(() => {
-                const cursorElement = document.getElementById("cursor");
-                if (cursorElement) {
-                    cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
-                }
-            }, 500);
-        }
+				index1 = (index1 + 1) % images1.length;
+			}, 2600);
 
-        function stopBlink() {
-            clearInterval(blinkInterval);
-        }
+			var images2 = [
+				'IMG/Rout/R/B2-1.jpg',
+				'IMG/Rout/R/B2-2.jpg',
+				'IMG/Rout/R/B2-3.jpg',
+			];
+			var index2 = 0;
+			setInterval(function() {
+				var imgElement = document.getElementById('image2');
+				imgElement.src = images2[index2];
+				index2 = (index2 + 1) % images2.length;
+			}, 2000);
 
-        function addCursor() {
-            const cursorElement = document.createElement("span");
-            cursorElement.id = "cursor";
-            cursorElement.textContent = "|";
-            cursorElement.style.visibility = "visible";
-            document.getElementById("typing").appendChild(cursorElement);
-            initBlink();
-        }
+			// 打字机效果
+			const texts = ["REVELATION", "天启 联盟"];
+			let index = 0;
+			let isTyping = true;
+			let cursor = 0;
+			let blinkInterval;
 
-        function removeCursor() {
-            const cursorElement = document.getElementById("cursor");
-            if (cursorElement) {
-                stopBlink();
-                cursorElement.remove();
-            }
-        }
+			function initBlink() {
+				blinkInterval = setInterval(() => {
+					const cursorElement = document.getElementById("cursor");
+					if (cursorElement) {
+						cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+					}
+				}, 500);
+			}
 
-        function typeEffect() {
-            const textElement = document.getElementById("typing");
-            const currentText = texts[index];
-            if (isTyping) {
-                if (cursor < currentText.length) {
-                    textElement.textContent += currentText.charAt(cursor);
-                    cursor++;
-                } else {
-                    addCursor();
-                    setTimeout(() => {
-                        isTyping = false;
-                        cursor = 0;
-                        setTimeout(() => {
-                            removeCursor();
-                            typeEffect();
-                        }, 1500);
-                        return;
-                    }, 300);
-                    return;
-                }
-            } else {
-                if (textElement.textContent.length > 1) {
-                    textElement.textContent = textElement.textContent.slice(0, -1);
-                } else {
-                    textElement.textContent = "\u200b"; 
-                    isTyping = true;
-                    index = (index + 1) % texts.length;
-                    removeCursor();
-                    setTimeout(typeEffect, 400);
-                    return;
-                }
-            }
-            setTimeout(typeEffect, isTyping ? 100 : 100);
-        }
+			function stopBlink() {
+				clearInterval(blinkInterval);
+			}
 
-        typeEffect();
-		
-		
-    </script>
-</body>
+			function addCursor() {
+				const cursorElement = document.createElement("span");
+				cursorElement.id = "cursor";
+				cursorElement.textContent = "|";
+				cursorElement.style.visibility = "visible";
+				document.getElementById("typing").appendChild(cursorElement);
+				initBlink();
+			}
+
+			function removeCursor() {
+				const cursorElement = document.getElementById("cursor");
+				if (cursorElement) {
+					stopBlink();
+					cursorElement.remove();
+				}
+			}
+
+			function typeEffect() {
+				const textElement = document.getElementById("typing");
+				const currentText = texts[index];
+				if (isTyping) {
+					if (cursor < currentText.length) {
+						textElement.textContent += currentText.charAt(cursor);
+						cursor++;
+					} else {
+						addCursor();
+						setTimeout(() => {
+							isTyping = false;
+							cursor = 0;
+							setTimeout(() => {
+								removeCursor();
+								typeEffect();
+							}, 1500);
+							return;
+						}, 300);
+						return;
+					}
+				} else {
+					if (textElement.textContent.length > 1) {
+						textElement.textContent = textElement.textContent.slice(0, -1);
+					} else {
+						textElement.textContent = "\u200b";
+						isTyping = true;
+						index = (index + 1) % texts.length;
+						removeCursor();
+						setTimeout(typeEffect, 400);
+						return;
+					}
+				}
+				setTimeout(typeEffect, isTyping ? 100 : 100);
+			}
+
+			typeEffect();
+		</script>
+	</body>
 </html>
