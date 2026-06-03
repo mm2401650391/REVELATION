@@ -1,240 +1,791 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	
-	  gtag('config', 'G-1B3TNTK43W');
-	</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1B3TNTK43W');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REVELATION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* 基础样式 */
+        /* ========== GRINEER 风格基础样式 ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body {
-            font-family: 'Bebas Neue', cursive;
-            background-color: #1a1a1a; /* 深色背景 */
-            color: #f5f5dc; /* 象牙白文字 */
-            line-height: 1.6;
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
+
+        body {
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+            background-color: #0d0d0d;
+            color: #d4d0c8;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 裂纹纹理背景 */
+        .crack-bg {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            contain: strict;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(139, 0, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(139, 0, 0, 0.06) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.03"/></svg>');
+            background-size: cover, cover, 200px 200px;
+        }
+
+        /* 能量脉冲层 */
+        .energy-pulse {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            contain: strict;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(255, 68, 68, 0.03) 0%, transparent 60%);
+            animation: energyPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes energyPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* 内容层 */
+        body > *:not(.crack-bg):not(.energy-pulse):not(.data-fragments):not(.glitch-overlay) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== HEADER 区域 - Grineer 风格 ========== */
         header {
-            background: url('https://via.placeholder.com/1500x300.png?text=Header+Texture') no-repeat center center/cover;
+            background: linear-gradient(180deg, rgba(20, 0, 0, 0.95) 0%, rgba(30, 5, 5, 0.85) 50%, rgba(15, 0, 0, 0.9) 100%);
             color: #f5f5dc;
-            padding: 20px;
+            padding: 35px 20px;
             text-align: center;
-            font-size: 2.5em;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-bottom: 3px solid #8b0000;
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.3), inset 0 1px 0 rgba(255, 68, 68, 0.1);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 5% 100%, 0 85%);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff4444, #8b0000, #ff4444, transparent);
+            animation: headerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Grineer 标志装饰 */
+        .grineer-deco {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            opacity: 0.25;
+            background: url('IMGs/index2.jpg') no-repeat center;
+            background-size: contain;
+            filter: hue-rotate(-30deg) saturate(2) drop-shadow(0 0 8px rgba(255, 68, 68, 0.4));
+            animation: grineerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes grineerPulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.08); }
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #8b0000;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.4), inset 0 0 10px rgba(255, 68, 68, 0.2);
+            position: relative;
+            z-index: 2;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        #typing {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            margin-top: 15px;
+            min-height: 1.2em;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+        }
+
+        #cursor {
+            font-weight: bold;
+            color: #ff4444;
+            animation: blink 1s step-end infinite;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.8);
+        }
+
+        #typing:empty::before {
+            content: "\200b";
+        }
+
+        @keyframes blink {
+            from, to { color: transparent; }
+            50% { color: #ff4444; }
+        }
+
+        /* ========== 主体内容 ========== */
+        main {
+            padding: 25px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, rgba(20, 10, 10, 0.9), rgba(15, 5, 5, 0.85));
+            padding: 25px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-left: 4px solid #8b0000;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.6), 
+                inset 0 1px 0 rgba(255, 68, 68, 0.05),
+                0 0 30px rgba(139, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 2% 100%, 0 95%);
         }
-        header::before {
+
+        .section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
-        .logo {
-            width: 100px;
-            height: auto;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            border: 2px solid #f5f5dc;
-        }
-        #typing {
-            font-size: 1em; /* 调整字体大小 */
-            margin-top: 10px;
-        }
-        #cursor {
-            font-weight: bold;
-            color: #f5f5dc;
-            animation: blink 1s step-end infinite;
-			transition: color 0.3s ease;  /* 颜色渐变过渡，更平滑 */
-			transition: color 0.3s ease, text-shadow 0.3s ease;  /* 阴影也加过渡 */
-			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);  /* 基础阴影：右下偏移、模糊、半透明黑 */
-        }
-		
-		#typing:empty::before {
-		    content: "\200b";  
-		}
-		
-        @keyframes blink {
-            from, to {
-                color: transparent;
-            }
-            50% {
-                color: #f5f5dc;
-            }
+            height: 1px;
+            background: linear-gradient(90deg, #8b0000, #ff4444, #8b0000, transparent);
+            opacity: 0.6;
         }
 
-        /* 主体内容 */
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #282c34;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
+        .section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, transparent 50%, rgba(139, 0, 0, 0.1) 50%);
+            pointer-events: none;
         }
-        .section {
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            background: #1a1a1a;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 2px solid #f5f5dc; /* 轻微边框 */
-            position: relative;
+
+        .section:hover {
+            border-color: rgba(139, 0, 0, 0.6);
+            box-shadow: 
+                0 4px 30px rgba(139, 0, 0, 0.2), 
+                inset 0 1px 0 rgba(255, 68, 68, 0.1),
+                0 0 40px rgba(139, 0, 0, 0.15);
+            transform: translateY(-2px);
         }
+
         .section h2 {
-            font-size: 1.2em; /* 调整字体大小 */
-            margin-bottom: 10px;
-            color: #f5f5dc;
-            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 2px;
         }
+
+        .section h2::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            transform: rotate(45deg);
+            box-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+            animation: diamondPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes diamondPulse {
+            0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.7; }
+            50% { transform: rotate(45deg) scale(1.3); opacity: 1; }
+        }
+
         .section a {
             display: inline-block;
             margin-bottom: 10px;
             text-decoration: none;
-            color: #00ff80;
-            font-weight: bold;
+            color: #ffaa00;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
+
         .section a:hover {
-            text-decoration: underline;
+            color: #ff4444;
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+            transform: translateX(8px);
         }
+
+        .section a::before {
+            content: '▸ ';
+            color: #8b0000;
+        }
+
         .research {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 调整卡片宽度 */
+            display: flex;
+            justify-content: space-between;
             gap: 20px;
         }
+
         .research-item {
+            flex: 1;
             text-align: center;
-            background: #282c34;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid #f5f5dc; /* 细边框 */
-            position: relative;
         }
-        .research-item::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            width: 50%;
-            height: 50%;
-            background: rgba(0, 255, 128, 0.2);
-            z-index: -1;
-            transform: rotate(45deg);
-        }
+
         .research-item img {
             width: 100%;
             height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
         }
+
         .research-item p {
             font-size: 1em;
             margin: 5px 0;
         }
+
         .research-item span {
             font-size: 0.9em;
             color: #666;
         }
+
         .research-item progress {
             width: 100%;
             height: 20px;
             margin-top: 5px;
+            accent-color: #8b0000;
         }
+
         .points-info {
             margin-top: 10px;
         }
+
         .library-links {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
+            gap: 12px;
         }
+
         .library-links a {
             margin: 5px;
-            padding: 5px 10px;
-            background-color: #00ff80;
-            color: #1a1a1a;
-            border-radius: 4px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(139, 0, 0, 0.05));
+            color: #ffaa00;
+            border-radius: 2px;
             text-decoration: none;
-            font-weight: bold;
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
         }
+
         .library-links a:hover {
-            background-color: #00e676;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.4), rgba(139, 0, 0, 0.1));
+            border-color: #ff4444;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+            transform: translateY(-2px);
+            color: #ff4444;
         }
-		
-		/* Warframe 周期样式 */
-		.wf-card { background: #111118; border: 1px solid #1a1a2e; border-radius: 12px; padding: 20px; }
-		.wf-card-title { color: #00d4ff; font-size: 18px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #1a1a2e; }
-		.wf-item { background: #0d0d14; border-radius: 8px; padding: 12px; margin-bottom: 10px; border-left: 3px solid #00d4ff; }
-		.wf-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-		.wf-item-name { color: #fff; font-weight: bold; font-size: 14px; }
-		.wf-item-time { color: #ffaa00; font-size: 12px; background: #221a00; padding: 2px 8px; border-radius: 4px; }
-		.wf-item-info { color: #888; font-size: 13px; }
-		.wf-item-info.expiring { color: #ff4444; }
-		.wf-item-info.expired { color: #ff6666; }
-		.wf-loading { text-align: center; color: #888; padding: 40px; }
-		.wf-error { background: #331111; border: 1px solid #ff4444; color: #ff6666; padding: 15px; border-radius: 8px; }
-		.wf-refresh-btn { width: 50px; height: 50px; border-radius: 50%; background: #00d4ff; border: none; color: #000; font-size: 20px; cursor: pointer; margin-top: 15px; }
-		.wf-update-time { text-align: center; color: #555; font-size: 12px; margin-top: 10px; }
-		.wf-h1 { text-align: center; color: #00d4ff; margin-bottom: 15px; font-size: 20px; }
+
+        .library-links a::before {
+            content: none;
+        }
+
+        /* ========== Warframe 周期样式 - Grineer 风格 ========== */
+        .wf-card {
+            background: linear-gradient(135deg, rgba(20, 10, 10, 0.95), rgba(15, 5, 5, 0.9));
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(139, 0, 0, 0.05);
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 2% 100%, 0 95%);
+        }
+
+        .wf-card-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff6b6b;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .wf-item {
+            background: linear-gradient(90deg, rgba(25, 10, 10, 0.9), rgba(20, 8, 8, 0.8));
+            border-radius: 2px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #8b0000;
+            border-right: 1px solid rgba(139, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .wf-item:hover {
+            background: linear-gradient(90deg, rgba(35, 15, 15, 0.9), rgba(25, 10, 10, 0.8));
+            border-left-width: 5px;
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.2);
+        }
+
+        .wf-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .wf-item-name {
+            color: #d4d0c8;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .wf-item-time {
+            color: #ffaa00;
+            font-size: 12px;
+            background: rgba(139, 0, 0, 0.15);
+            padding: 3px 10px;
+            border-radius: 2px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            font-weight: 600;
+        }
+
+        .wf-item-info {
+            color: #888;
+            font-size: 13px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .wf-item-info.expiring {
+            color: #ff4444;
+            text-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
+            animation: alertPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes alertPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .wf-item-info.expired {
+            color: #ff6666;
+        }
+
+        .wf-loading {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .wf-error {
+            background: rgba(40, 10, 10, 0.9);
+            border: 1px solid #ff4444;
+            color: #ff6666;
+            padding: 15px;
+            border-radius: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .wf-refresh-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, #8b0000, #5c0000);
+            border: 2px solid rgba(139, 0, 0, 0.5);
+            color: #ffaa00;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+        }
+
+        .wf-refresh-btn:hover {
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 0 0 25px rgba(139, 0, 0, 0.5);
+            background: linear-gradient(135deg, #a00000, #700000);
+        }
+
+        .wf-update-time {
+            text-align: center;
+            color: #444;
+            font-size: 12px;
+            margin-top: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .wf-h1 {
+            text-align: center;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+        }
+
+        /* 材料征集区域 Grineer 风格 */
+        .collection-card {
+            background: linear-gradient(135deg, rgba(40, 10, 10, 0.9), rgba(25, 5, 5, 0.85));
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            border-left: 4px solid #ff4444;
+        }
+
+        .collection-card h2 {
+            color: #ff4444;
+        }
+
+        .collection-card h2::before {
+            background: #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
+        }
+
+        /* ========== 数据碎片装饰 ========== */
+        .data-fragments {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            contain: strict;
+        }
+
+        .fragment {
+            position: absolute;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            color: rgba(255, 68, 68, 0.35);
+            white-space: nowrap;
+            animation: fragmentFloat linear infinite;
+            text-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        @keyframes fragmentFloat {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            5% { opacity: 0.5; transform: translateY(5vh) rotate(45deg) scale(1); }
+            95% { opacity: 0.5; transform: translateY(85vh) rotate(315deg) scale(1); }
+            100% { transform: translateY(90vh) rotate(360deg) scale(0.8); opacity: 0; }
+        }
+
+        /* ========== 故障效果层 ========== */
+        .glitch-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: 0;
+            overflow: hidden;
+            contain: strict;
+            background: 
+                linear-gradient(
+                    transparent 50%,
+                    rgba(255, 68, 68, 0.06) 50%
+                ),
+                linear-gradient(
+                    90deg,
+                    transparent 48%,
+                    rgba(255, 68, 68, 0.04) 49%,
+                    rgba(255, 68, 68, 0.04) 51%,
+                    transparent 52%
+                );
+            background-size: 100% 6px, 8px 100%;
+            animation: glitchScan 6s linear infinite;
+        }
+
+        @keyframes glitchScan {
+            0%, 85%, 100% { opacity: 0; }
+            86% { opacity: 0.5; }
+            87% { opacity: 0; }
+            88% { opacity: 0.4; }
+            89% { opacity: 0; }
+            93% { opacity: 0.6; }
+            94% { opacity: 0; }
+            95% { opacity: 0.3; }
+            96% { opacity: 0; }
+        }
+
+        /* ========== 底部 Grineer 标志 ========== */
+        .footer-grineer {
+            text-align: center;
+            padding: 40px 20px 20px;
+            position: relative;
+        }
+
+        .footer-grineer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #8b0000, transparent);
+        }
+
+        .footer-grineer img {
+            width: 50px;
+            height: auto;
+            opacity: 0.4;
+            filter: hue-rotate(-30deg) saturate(2) drop-shadow(0 0 8px rgba(139, 0, 0, 0.3));
+            animation: grineerFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes grineerFloat {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-8px) rotate(5deg); }
+        }
+
+        .footer-text {
+            color: #333;
+            font-size: 0.8em;
+            margin-top: 12px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* 系统警告边框 */
+        .system-alert-border {
+            position: fixed !important;
+            top: 10px !important;
+            left: 10px !important;
+            width: calc(100vw - 20px) !important;
+            height: calc(100vh - 20px) !important;
+            border: 1px solid rgba(255, 68, 68, 0.15);
+            z-index: 9997;
+            pointer-events: none;
+            animation: alertBorder 4s ease-in-out infinite;
+            box-sizing: border-box;
+            contain: strict;
+        }
+
+        @keyframes alertBorder {
+            0%, 100% { border-color: rgba(255, 68, 68, 0.1); box-shadow: inset 0 0 20px rgba(255, 68, 68, 0.02); }
+            50% { border-color: rgba(255, 68, 68, 0.3); box-shadow: inset 0 0 30px rgba(255, 68, 68, 0.05); }
+        }
+
+        /* 能量波纹 */
+        .energy-ripple-container {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            contain: strict;
+        }
+
+        .energy-ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin-left: -50px;
+            margin-top: -50px;
+            border: 2px solid rgba(255, 68, 68, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rippleExpand 6s ease-out infinite;
+        }
+
+        .energy-ripple:nth-child(2) { animation-delay: 2s; }
+        .energy-ripple:nth-child(3) { animation-delay: 4s; }
+
+        @keyframes rippleExpand {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(8); opacity: 0; }
+        }
+
+        /* 垂直能量条 */
+        .energy-bar-container {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            contain: strict;
+        }
+
+        .energy-bar {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100vh;
+            background: linear-gradient(180deg, transparent, rgba(255, 68, 68, 0.3), transparent);
+            animation: energyBarMove 5s linear infinite;
+        }
+
+        .energy-bar-left { left: 5%; animation-delay: 0s; }
+        .energy-bar-right { right: 5%; animation-delay: 2.5s; }
+
+        @keyframes energyBarMove {
+            0% { transform: translateY(-100%); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .grineer-deco { display: none; }
+            #typing { font-size: 1.4em; letter-spacing: 2px; }
+            .section { padding: 15px; }
+            header { clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 5% 100%, 0 90%); }
+        }
     </style>
+    <base target="_blank">
+<base target="_blank">
 </head>
 <body>
+    <!-- 裂纹纹理背景 -->
+    <div class="crack-bg"></div>
+
+    <!-- 能量脉冲层 -->
+    <div class="energy-pulse"></div>
+
+    <!-- 数据碎片 -->
+    <div class="data-fragments" id="dataFragments"></div>
+
+    
+    <!-- 系统警告边框 -->
+    <div class="system-alert-border"></div>
+
+    <!-- 能量波纹 -->
+    <div class="energy-ripple-container">
+        <div class="energy-ripple"></div>
+        <div class="energy-ripple"></div>
+        <div class="energy-ripple"></div>
+    </div>
+
+    <!-- 垂直能量条 -->
+    <div class="energy-bar-container">
+        <div class="energy-bar energy-bar-left"></div>
+        <div class="energy-bar energy-bar-right"></div>
+    </div>
+    <!-- 故障效果 -->
+    <div class="glitch-overlay"></div>
+
     <header class="header">
+        <!-- Grineer 标志装饰 -->
+        <div class="grineer-deco"></div>
+
         <img src="Logo.jpg" alt="Logo" class="logo">
         <h1 id="typing"></h1>
     </header>
 
     <main>
- <section class="section">
-     <h2>材料征集</h2>
-     <p style="font-size: 0.9em; margin-bottom: 10px;">当前征集：
- 	<img src="Mj/IMG/G3-1.jpg" alt="样本突变原" style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 0.3em;">
- 	<strong style="color: #ff6b6b;">样本突变原</strong>
- 	<img src="Mj/IMG/G3-1.jpg" alt="样本突变原" style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 0.3em;">
- 	</p>
-     
-     <div style="border-left: 4px solid #ff6b6b; padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
-         <p style="font-weight: bold; margin-bottom: 8px;">📋 征集要求</p>
-         <ul style="list-style: none; padding-left: 0; font-size: 0.95em; line-height: 1.8;">
-             <li>🔹 征集总量：<strong>1000/2000</strong> 个</li>
-             <li>🔹 单次最低捐献：<strong>100</strong> 个</li>
-         </ul>
-     </div>
-         
-     <div style="border-left: 4px solid #4ecdc4; padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
-         <p style="font-weight: bold; margin-bottom: 8px;">🎁 征集奖励（三选一）</p>
-         <p style="font-size: 0.9em; margin-bottom: 8px;">按 <strong>10:1</strong> 比例换算，三种方式任选其一：</p>
-         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-             <span style="background: #fff3cd; color: black; padding: 6px 12px; border-radius: 6px; font-size: 0.9em;">💎 <strong>1 白金</strong> / 10个</span>
-             <span style="background: #d1ecf1; color: black; padding: 6px 12px; border-radius: 6px; font-size: 0.9em;">⭐ <strong>0.1 Rout 积分</strong> / 10个</span>
-             <span style="background: #d4edda; color: black; padding: 6px 12px; border-radius: 6px; font-size: 0.9em;">👑 <strong>0.1 Prime 积分</strong> / 10个</span>
-         </div>
-         <p style="font-size: 0.85em; margin-top: 8px;">* 例：捐献 500 个 = 50 白金 或 50 Rout 积分 或 5 Prime 积分</p>
-     </div>
-         
-     <a href="MJ/G3-1.html">查看当前征集详情 →</a>
- </section>
+        <!-- 材料征集 -->
+        <section class="section collection-card">
+            <h2>⚔️ 材料征集</h2>
+            <p style="color: #888; font-size: 0.9em; margin-bottom: 10px;">当前征集：
+               
+                <strong style="color: #ff4444;">无进行中...</strong>
+               
+            </p>
+<!--
+            <div style="background: rgba(139, 0, 0, 0.08); border-left: 3px solid #ff4444; padding: 12px; margin-bottom: 12px; border-radius: 0 4px 4px 0;">
+                <p style="font-weight: bold; margin-bottom: 8px; color: #ff6b6b; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">📋 征集要求</p>
+                <ul style="list-style: none; padding-left: 0; font-size: 0.95em; line-height: 1.8;">
+                    <li>🔹 征集总量：<strong style="color: #ffaa00;">1000/2000</strong> 个</li>
+                    <li>🔹 单次最低捐献：<strong style="color: #ffaa00;">100</strong> 个</li>
+                </ul>
+            </div>
 
+            <div style="background: rgba(139, 0, 0, 0.05); border-left: 3px solid #ffaa00; padding: 12px; margin-bottom: 12px; border-radius: 0 4px 4px 0;">
+                <p style="font-weight: bold; margin-bottom: 8px; color: #ffaa00; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">🎁 征集奖励（三选一）</p>
+                <p style="font-size: 0.9em; color: #777; margin-bottom: 8px;">按 <strong style="color: #ffaa00;">10:1</strong> 比例换算，三种方式任选其一：</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <span style="background: rgba(139, 0, 0, 0.15); padding: 6px 12px; border-radius: 2px; font-size: 0.9em; color: #ffaa00; border: 1px solid rgba(139, 0, 0, 0.3); font-weight: 600;">💎 <strong>1 白金</strong> / 10个</span>
+                    <span style="background: rgba(139, 0, 0, 0.1); padding: 6px 12px; border-radius: 2px; font-size: 0.9em; color: #ff6b6b; border: 1px solid rgba(139, 0, 0, 0.2); font-weight: 600;">⭐ <strong>0.1 Rout 积分</strong> / 10个</span>
+                    <span style="background: rgba(139, 0, 0, 0.1); padding: 6px 12px; border-radius: 2px; font-size: 0.9em; color: #ff9ff3; border: 1px solid rgba(139, 0, 0, 0.2); font-weight: 600;">👑 <strong>0.1 Prime 积分</strong> / 10个</span>
+                </div>
+                <p style="font-size: 0.85em; color: #555; margin-top: 8px;">* 例：捐献 500 个 = 50 白金 或 50 Rout 积分 或 5 Prime 积分</p>
+            </div>-->
+
+            <a href="MJ/G3-1.html">查看上期征集详情 →</a>
+        </section>
+
+        <!-- 周期状态 -->
         <section class="section">
             <h2>🌐 周期状态</h2>
             <h1 class="wf-h1">测试中...</h1>
@@ -243,20 +794,16 @@
             <div style="text-align: center;"><button class="wf-refresh-btn" onclick="loadData()">🔄</button></div>
         </section>
 
+        <!-- 联盟活动 -->
         <section class="section">
-            <h2>联盟活动</h2>
-            <!--进行中→
-            <a href="MJ/G3/004.html">
-                【004：新鲜血液】</a>
-            <br>-->
-            无活动进行中，
-            <a href="MJ/G3.html">
-                点我</a>
-                查看往期活动
+            <h2>🛡️ 联盟活动</h2>
+            <p style="color: #666;">无活动进行中，</p>
+            <a href="MJ/G3.html">点我查看往期活动 →</a>
         </section>
 
+        <!-- 联盟积分制 -->
         <section class="section">
-            <h2>联盟积分制</h2>
+            <h2>💠 联盟积分制</h2>
             <div class="points-info">
             </div>
             <div class="library-links">
@@ -265,8 +812,9 @@
             </div>
         </section>
 
+        <!-- 联盟资料库 -->
         <section class="section">
-            <h2>联盟资料库</h2>
+            <h2>📚 联盟资料库</h2>
             <div class="library-links">
                 <a href="#">促销代码</a>
                 <a href="#">掉落获取</a>
@@ -277,34 +825,39 @@
         </section>
     </main>
 
+    <!-- 底部 Grineer 装饰 -->
+    <div class="footer-grineer">
+        <img src="IMGs/index2.jpg" alt="Grineer">
+        <p class="footer-text">REVELATION 天启联盟</p>
+    </div>
+
+    <!-- ========== 打字机效果 ========== -->
     <script>
         const texts = ["REVELATION", "天启 联盟"];
-        const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57", "#ff9ff3", "#54a0ff"];
+        const colors = ["#ff4444", "#ff6b6b", "#ffaa00", "#8b0000", "#ff9ff3", "#ff4500", "#dc143c"];
         let index = 0;
         let isTyping = true;
         let cursor = 0;
-		const shadows = [
-		    "2px 2px 4px rgba(255, 0, 0, 0.4)",      /* 红色阴影 */
-		    "2px 2px 8px rgba(78, 205, 196, 0.5)",   /* 青色发光 */
-		    "0 0 10px rgba(69, 183, 209, 0.6)",      /* 蓝色光晕 */
-		    "3px 3px 0px rgba(0, 0, 0, 0.8)",        /* 硬边投影 */
-		    "-2px -2px 4px rgba(254, 202, 87, 0.4)", /* 左上黄色 */
-		    "0 4px 6px rgba(255, 159, 243, 0.5)",    /* 粉色下沉 */
-		    "1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 15px rgba(84, 160, 255, 0.6)"  /* 双层：实影+光晕 */
-		];
-		
+        const shadows = [
+            "2px 2px 4px rgba(139, 0, 0, 0.6)",
+            "0 0 15px rgba(255, 68, 68, 0.6)",
+            "0 0 20px rgba(255, 170, 0, 0.5)",
+            "3px 3px 0px rgba(0, 0, 0, 0.9)",
+            "0 0 25px rgba(139, 0, 0, 0.4), 0 0 50px rgba(255, 68, 68, 0.2)",
+            "2px 2px 8px rgba(255, 69, 0, 0.5)",
+            "0 0 30px rgba(220, 20, 60, 0.4)"
+        ];
+
         function typeEffect() {
             const textElement = document.getElementById("typing");
             const currentText = texts[index];
-			
-			// 每次切换文本时随机换颜色
-			if (cursor === 0 && isTyping) {
-			    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-			    textElement.style.color = randomColor;
-				textElement.style.textShadow = shadows[Math.floor(Math.random() * shadows.length)];
-			}
-			
-			
+
+            if (cursor === 0 && isTyping) {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                textElement.style.color = randomColor;
+                textElement.style.textShadow = shadows[Math.floor(Math.random() * shadows.length)];
+            }
+
             if (isTyping) {
                 if (cursor < currentText.length) {
                     textElement.textContent += currentText.charAt(cursor);
@@ -329,156 +882,178 @@
         }
 
         typeEffect();
-		
-		
-		
-		const API_BASE = 'https://www.rln1.xyz/api/warframe?endpoint=';
-		let countdownInterval = null;
-		
-		function getTime(data) {
-		    if (!data) return '?';
-		    if (data.timeLeft) return data.timeLeft;
-		    if (data.eta) return data.eta;
-		    if (data.etaString) return data.etaString;
-		
-		    if (data.expiry) {
-		        const now = Date.now();
-		        const expiry = Date.parse(data.expiry);
-		        const diff = expiry - now;
-		
-		        if (diff > 0) {
-		            const hours = Math.floor(diff / 3600000);
-		            const mins = Math.floor((diff % 3600000) / 60000);
-		            const secs = Math.floor((diff % 60000) / 1000);
-		
-		            if (hours > 0) return hours + 'h ' + mins + 'm ' + secs + 's';
-		            if (mins > 0) return mins + 'm ' + secs + 's';
-		            return secs + 's';
-		        }
-		        return 'expired';  // 标记为过期，不是显示文字
-		    }
-		    return '?';
-		}
-		
-		// 启动倒计时
-		function startCountdown() {
-		    // 清除旧的定时器
-		    if (countdownInterval) clearInterval(countdownInterval);
-		
-		    countdownInterval = setInterval(() => {
-		        const elements = document.querySelectorAll('[data-expiry]');
-		        let hasExpired = false;
-		
-		        elements.forEach(el => {
-		            const expiry = el.getAttribute('data-expiry');
-		            if (!expiry) return;
-		
-		            const now = Date.now();
-		            const expiryTime = Date.parse(expiry);
-		            const diff = expiryTime - now;
-		
-		            if (diff > 0) {
-		                // 正常倒计时
-		                const hours = Math.floor(diff / 3600000);
-		                const mins = Math.floor((diff % 3600000) / 60000);
-		                const secs = Math.floor((diff % 60000) / 1000);
-		
-		                let text;
-		                if (hours > 0) text = hours + 'h ' + mins + 'm ' + secs + 's';
-		                else if (mins > 0) text = mins + 'm ' + secs + 's';
-		                else text = secs + 's';
-		
-		                el.textContent = '剩余: ' + text;
-		
-		                
-		                if (diff < 60000) {
-		                    el.classList.add('expiring');
-		                } else {
-		                    el.classList.remove('expiring');
-		                }
-		                el.classList.remove('expired');
-		            } else {
-		                // 已过期
-		                el.textContent = '剩余: 状态轮换中...';
-		                el.classList.add('expired');
-		                el.classList.remove('expiring');
-		                hasExpired = true;
-		            }
-		        });
-		
-		        // 如果有状态过期的，自动刷新数据
-		        if (hasExpired) {
-		            console.log('检测到状态过期，自动刷新...');
-		            loadData();
-		        }
-		    }, 1000);
-		}
-		
-		async function loadData() {
-		    try {
-		        const [earth, cetus, vallis, cambion, zariman] = await Promise.all([
-		            fetch(API_BASE + 'earthCycle').then(r => r.json()),
-		            fetch(API_BASE + 'cetusCycle').then(r => r.json()),
-		            fetch(API_BASE + 'vallisCycle').then(r => r.json()),
-		            fetch(API_BASE + 'cambionCycle').then(r => r.json()),
-		            fetch(API_BASE + 'zarimanCycle').then(r => r.json())
-		        ]);
-		
-		        const cycles = [
-		            { name: '🌍 地球', data: earth, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
-		            { name: '🌙 希图斯', data: cetus, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
-		            { name: '❄️ 福尔图娜', data: vallis, stateKey: 'isWarm', dayText: '温暖', nightText: '寒冷' },
-		            { name: '🦠 火卫二', data: cambion, stateKey: 'active', dayText: 'Fass', nightText: 'Vome' },
-		            { name: '🌌 扎里曼', data: zariman, stateKey: 'isCorpus', dayText: 'Corpus占领', nightText: 'Grineer占领' }
-		        ];
-		
-		        let html = '';
-		        cycles.forEach(c => {
-		            if (!c.data) return;
-		            let state, color;
-		
-		            if (c.name === '🦠 火卫二') {
-		                state = c.data.state || 'Fass';
-		                color = state === 'fass' ? '#ff4444' : '#4488ff';
-		            } else if (c.name === '🌌 扎里曼') {
-		                state = c.data.state || 'Unknown';
-		                color = state.toLowerCase().includes('corpus') ? '#4488ff' : '#ff4444';
-		            } else {
-		                const isDay = c.data[c.stateKey];
-		                state = isDay ? c.dayText : c.nightText;
-		                color = isDay ? '#ffaa00' : '#4488ff';
-		            }
-		
-		            const timeStr = getTime(c.data);
-		            const isExpired = timeStr === 'expired';
-		            const displayTime = isExpired ? '状态轮换中...' : timeStr;
-		
-		            html += `
-		                <div class="wf-item" style="border-left-color: ${color};">
-		                    <div class="wf-item-header">
-		                        <span class="wf-item-name">${c.name}</span>
-		                        <span class="wf-item-time" style="color:${color}; background: ${color}22;">${state}</span>
-		                    </div>
-		                    <div class="wf-item-info ${isExpired ? 'expired' : ''}" data-expiry="${c.data.expiry || ''}">
-		                        剩余: ${displayTime}
-		                    </div>
-		                </div>
-		            `;
-		        });
-		
-		        document.getElementById('app').innerHTML = '<div class="wf-card"><div class="wf-card-title">星球周期</div>' + html + '</div>';
-		        document.getElementById('updateTime').textContent = '更新: ' + new Date().toLocaleString('zh-CN');
-		
-		        // 重新启动倒计时
-		        startCountdown();
-		    } catch (err) {
-		        document.getElementById('app').innerHTML = '<div class="wf-error">❌ ' + err.message + '</div>';
-		    }
-		}
-		
-		loadData();
-		// 每2分钟也刷新一次数据（防止倒计时漂移）
-		setInterval(loadData, 120000);
+    </script>
+
+    <!-- ========== 数据碎片生成 ========== -->
+    <script>
+        const fragmentContainer = document.getElementById('dataFragments');
+        const fragmentTexts = ['GRINEER', 'TENNO', 'VOID', 'OROKIN', 'SENTIENT', 'INFESTED', 'CORPUS', 'FASS', 'VOME', 'LOTUS', 'REVELATION', 'SYSTEM', 'ALERT', 'MISSION', 'REWARD'];
+
+        function createFragment() {
+            const fragment = document.createElement('div');
+            fragment.className = 'fragment';
+            fragment.textContent = fragmentTexts[Math.floor(Math.random() * fragmentTexts.length)];
+            fragment.style.left = Math.random() * 100 + '%';
+            fragment.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            fragment.style.animationDelay = Math.random() * 5 + 's';
+            fragment.style.fontSize = (Math.random() * 6 + 8) + 'px';
+            fragmentContainer.appendChild(fragment);
+
+            setTimeout(() => {
+                fragment.remove();
+            }, 20000);
+        }
+
+        // 初始创建一批
+        for (let i = 0; i < 12; i++) {
+            setTimeout(createFragment, i * 400);
+        }
+
+        // 持续生成
+        setInterval(createFragment, 2500);
+    </script>
+
+    <!-- ========== Warframe API 周期数据 ========== -->
+    <script>
+        const API_BASE = 'https://www.rln1.xyz/api/warframe?endpoint=';
+        let countdownInterval = null;
+
+        function getTime(data) {
+            if (!data) return '?';
+            if (data.timeLeft) return data.timeLeft;
+            if (data.eta) return data.eta;
+            if (data.etaString) return data.etaString;
+
+            if (data.expiry) {
+                const now = Date.now();
+                const expiry = Date.parse(data.expiry);
+                const diff = expiry - now;
+
+                if (diff > 0) {
+                    const hours = Math.floor(diff / 3600000);
+                    const mins = Math.floor((diff % 3600000) / 60000);
+                    const secs = Math.floor((diff % 60000) / 1000);
+
+                    if (hours > 0) return hours + 'h ' + mins + 'm ' + secs + 's';
+                    if (mins > 0) return mins + 'm ' + secs + 's';
+                    return secs + 's';
+                }
+                return 'expired';
+            }
+            return '?';
+        }
+
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                const elements = document.querySelectorAll('[data-expiry]');
+                let hasExpired = false;
+
+                elements.forEach(el => {
+                    const expiry = el.getAttribute('data-expiry');
+                    if (!expiry) return;
+
+                    const now = Date.now();
+                    const expiryTime = Date.parse(expiry);
+                    const diff = expiryTime - now;
+
+                    if (diff > 0) {
+                        const hours = Math.floor(diff / 3600000);
+                        const mins = Math.floor((diff % 3600000) / 60000);
+                        const secs = Math.floor((diff % 60000) / 1000);
+
+                        let text;
+                        if (hours > 0) text = hours + 'h ' + mins + 'm ' + secs + 's';
+                        else if (mins > 0) text = mins + 'm ' + secs + 's';
+                        else text = secs + 's';
+
+                        el.textContent = '剩余: ' + text;
+
+                        if (diff < 60000) {
+                            el.classList.add('expiring');
+                        } else {
+                            el.classList.remove('expiring');
+                        }
+                        el.classList.remove('expired');
+                    } else {
+                        el.textContent = '剩余: 状态轮换中...';
+                        el.classList.add('expired');
+                        el.classList.remove('expiring');
+                        hasExpired = true;
+                    }
+                });
+
+                if (hasExpired) {
+                    console.log('检测到状态过期，自动刷新...');
+                    loadData();
+                }
+            }, 1000);
+        }
+
+        async function loadData() {
+            try {
+                const [earth, cetus, vallis, cambion, zariman] = await Promise.all([
+                    fetch(API_BASE + 'earthCycle').then(r => r.json()),
+                    fetch(API_BASE + 'cetusCycle').then(r => r.json()),
+                    fetch(API_BASE + 'vallisCycle').then(r => r.json()),
+                    fetch(API_BASE + 'cambionCycle').then(r => r.json()),
+                    fetch(API_BASE + 'zarimanCycle').then(r => r.json())
+                ]);
+
+                const cycles = [
+                    { name: '🌍 地球', data: earth, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
+                    { name: '🌙 希图斯', data: cetus, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
+                    { name: '❄️ 福尔图娜', data: vallis, stateKey: 'isWarm', dayText: '温暖', nightText: '寒冷' },
+                    { name: '🦠 火卫二', data: cambion, stateKey: 'active', dayText: 'Fass', nightText: 'Vome' },
+                    { name: '🌌 扎里曼', data: zariman, stateKey: 'isCorpus', dayText: 'Corpus占领', nightText: 'Grineer占领' }
+                ];
+
+                let html = '';
+                cycles.forEach(c => {
+                    if (!c.data) return;
+                    let state, color;
+
+                    if (c.name === '🦠 火卫二') {
+                        state = c.data.state || 'Fass';
+                        color = state === 'fass' ? '#ff4444' : '#4488ff';
+                    } else if (c.name === '🌌 扎里曼') {
+                        state = c.data.state || 'Unknown';
+                        color = state.toLowerCase().includes('corpus') ? '#4488ff' : '#ff4444';
+                    } else {
+                        const isDay = c.data[c.stateKey];
+                        state = isDay ? c.dayText : c.nightText;
+                        color = isDay ? '#ffaa00' : '#4488ff';
+                    }
+
+                    const timeStr = getTime(c.data);
+                    const isExpired = timeStr === 'expired';
+                    const displayTime = isExpired ? '状态轮换中...' : timeStr;
+
+                    html += `
+                        <div class="wf-item" style="border-left-color: ${color};">
+                            <div class="wf-item-header">
+                                <span class="wf-item-name">${c.name}</span>
+                                <span class="wf-item-time" style="color:${color}; background: ${color}22;">${state}</span>
+                            </div>
+                            <div class="wf-item-info ${isExpired ? 'expired' : ''}" data-expiry="${c.data.expiry || ''}">
+                                剩余: ${displayTime}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('app').innerHTML = '<div class="wf-card"><div class="wf-card-title">星球周期</div>' + html + '</div>';
+                document.getElementById('updateTime').textContent = '更新: ' + new Date().toLocaleString('zh-CN');
+
+                startCountdown();
+            } catch (err) {
+                document.getElementById('app').innerHTML = '<div class="wf-error">❌ ' + err.message + '</div>';
+            }
+        }
+
+        loadData();
+        setInterval(loadData, 120000);
     </script>
 </body>
 </html>
