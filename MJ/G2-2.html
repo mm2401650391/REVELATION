@@ -189,6 +189,23 @@
 			button:active {
 				transform: translateY(0);
 			}
+			/* 按钮内的图标样式 */
+			button .btn-icon {
+			    width: 1.5em;
+			    height: 1.5em;
+			    vertical-align: middle;
+			    margin: 0 0.3em;
+			    filter: drop-shadow(0 0 5px rgba(128, 255, 0, 0.5));
+			    transition: transform 0.3s ease;
+			}
+			
+			button:hover .btn-icon {
+			    transform: scale(1.2) rotate(15deg);
+			}
+			
+			button .btn-text {
+			    vertical-align: middle;
+			}
 
 			/* 商品网格 */
 			.d4 {
@@ -1061,14 +1078,18 @@
 				兑换请在群聊@群主，并说明兑换奖项，所有奖励等级均为零
 			</h3>
 
-			<button onclick="button1()" id="bu1">PrimeMOD</button>
+			<button onclick="button1()" id="bu1">
+				<img src="IMG/Prime/1.JPG" class="btn-icon" style="display:none;" alt="❄">
+				<span class="btn-text">PrimeMOD</span>
+				<img src="IMG/Prime/1.JPG" class="btn-icon" style="display:none;" alt="❄">
+			</button>
 			<div id="div1" class="d4">
 				<div>
 					<span>霰弹扩充 Prime</span>
 					<img src="IMG/Prime/1/01.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5］</span>
+						<span class="price">［Prime*7］</span>
 					</div>
 				</div>
 				<div>
@@ -1076,7 +1097,7 @@
 					<img src="IMG/Prime/1/02.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4.5］</span>
+						<span class="price">［Prime*6.5］</span>
 					</div>
 				</div>
 				<div>
@@ -1084,7 +1105,7 @@
 					<img src="IMG/Prime/1/03.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*9.5］</span>
+						<span class="price">［Prime*10］</span>
 					</div>
 				</div>
 				<div>
@@ -1092,7 +1113,7 @@
 					<img src="IMG/Prime/1/04.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*6］</span>
+						<span class="price">［Prime*7］</span>
 					</div>
 				</div>
 				<div>
@@ -1100,7 +1121,7 @@
 					<img src="IMG/Prime/1/05.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4.5］</span>
+						<span class="price">［Prime*5.5］</span>
 					</div>
 				</div>
 				<div>
@@ -1116,7 +1137,7 @@
 					<img src="IMG/Prime/1/07.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4］</span>
+						<span class="price">［Prime*4.5］</span>
 					</div>
 				</div>
 				<div>
@@ -1124,7 +1145,7 @@
 					<img src="IMG/Prime/1/08.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*3］</span>
+						<span class="price">［Prime*4］</span>
 					</div>
 				</div>
 				<div>
@@ -1132,7 +1153,7 @@
 					<img src="IMG/Prime/1/09.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5.5］</span>
+						<span class="price">［Prime*6］</span>
 					</div>
 				</div>
 				<div>
@@ -1140,7 +1161,7 @@
 					<img src="IMG/Prime/1/10.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5］</span>
+						<span class="price">［Prime*5.5］</span>
 					</div>
 				</div>
 				<div>
@@ -1231,8 +1252,20 @@
 		</div>
 
 
-		<button onclick="button2()" id="bu2">Prime军械</button>
+		<button onclick="button2()" id="bu2">
+			<img src="IMG/Prime/2.JPG" class="btn-icon" style="display:none;" alt="❄">
+			<span class="btn-text">Prime军械</span>
+			<img src="IMG/Prime/2.JPG" class="btn-icon" style="display:none;" alt="❄">
+			</button>
 		<div id="div2" class="d4">
+			<div>
+				<span>Gyre Prime</span>
+				<img src="IMG/Prime/2/00.jpg" alt="路径错误">
+				<div class="info-bar">
+					<span>库存量：1</span>
+					<span class="price">［Prime*4.5］</span>
+				</div>
+			</div>
 			<div>
 				<span>塞多 Prime</span>
 				<img src="IMG/Prime/2/01.jpg" alt="路径错误">
@@ -1265,19 +1298,15 @@
 					<span class="price">［Prime*1.7］</span>
 				</div>
 			</div>
-			<div>
-				<span>野马 Prime</span>
-				<img src="IMG/Prime/2/05.jpg" alt="路径错误">
-				<div class="info-bar">
-					<span>库存量：1</span>
-					<span class="price">［Prime*1.5］</span>
-				</div>
-			</div>
-
 		</div>
-
+	</div>
+	
 		<div class="atxt">
-			<button onclick="button4()" id="bu4">赞助奖池</button>
+			<button onclick="button4()" id="bu4">
+				<img src="IMG/Prime/3.jpg" class="btn-icon" style="display:none;" alt="❄">
+				<span class="btn-text">赞助奖池</span>
+				<img src="IMG/Prime/3.jpg" class="btn-icon" style="display:none;" alt="❄">
+				</button>
 			<div id="div4" class="d4">
 				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> Skulajj"赞助</span></h4>
 				<div>
@@ -1299,6 +1328,32 @@
 					</div>
 				</div>
 
+				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> icedust2"赞助</h4>
+				<div>
+					<span>Gauss Prime</span>
+					<img src="IMG\Prime\R\G3-1.jpg" alt="Nekros Prime">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*4］</span>
+					</div>
+				</div>
+				<div>
+					<span>Grendel Prime</span>
+					<img src="IMG\Prime\R\G3-2.jpg" alt="Nekros Prime">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*4］</span>
+					</div>
+				</div>
+				<div>
+					<span>Mesa Prime</span>
+					<img src="IMG\Prime\R\G3-3.jpg" alt="Nekros Prime">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［Prime*6］</span>
+					</div>
+				</div>
+
 				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> errorInfo"赞助</h4>
 				<div id="ember-card">
 					<span>任选 传家宝</span>
@@ -1307,7 +1362,7 @@
 						<span>库存量：3</span>
 						<span class="price">［Prime*40］</span>
 					</div>
-				</div>
+				</div>		
 			</div>
 
 
@@ -1380,7 +1435,6 @@
                 </div>
             </div>-->
 		</div>
-		</div>
 
 		<script>
 			function button1() {
@@ -1388,55 +1442,51 @@
 				var div1mod1 = document.getElementById('div1-mod1');
 				var div1mod2 = document.getElementById('div1-mod2');
 				var bu1 = document.getElementById('bu1');
+				var icons = bu1.querySelectorAll('.btn-icon');
 				if (div1.style.display == 'grid') {
 					div1.style.display = 'none';
 					div1mod1.style.display = 'none';
 					div1mod2.style.display = 'none';
-					bu1.innerText = "PrimeMOD";
+					bu1.querySelector('.btn-text').innerText = "PrimeMOD";
+					icons.forEach(function(icon) { icon.style.display = 'none'; });
+					
 				} else {
 					div1.style.display = 'grid';
 					div1mod1.style.display = 'block';
 					div1mod2.style.display = 'block';
-					bu1.innerText = "☃ PrimeMOD ☃";
+					bu1.querySelector('.btn-text').innerText = "PrimeMOD";
+					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 				}
 			}
 
 			function button2() {
 				var div2 = document.getElementById('div2');
 				var bu2 = document.getElementById('bu2');
+				var icons = bu2.querySelectorAll('.btn-icon');
 				if (div2.style.display == 'grid') {
 					div2.style.display = 'none';
-					bu2.innerText = "Prime军械";
+					bu2.querySelector('.btn-text').innerText = "Prime军械";
+					icons.forEach(function(icon) { icon.style.display = 'none'; });
 				} else {
 					div2.style.display = 'grid';
-					bu2.innerText = "☃ Prime军械 ☃";
+					bu2.querySelector('.btn-text').innerText = "Prime军械";
+					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 				}
 			}
 
-			function button3() {
-				var div3 = document.getElementById('div3');
-				var bu3 = document.getElementById('bu3');
-				if (div3.style.display == 'grid') {
-					div3.style.display = 'none';
-					bu3.innerText = "赞助奖池";
-				} else {
-					div3.style.display = 'grid';
-					bu3.innerText = "☃ 赞助奖池 ☃";
-				}
-			}
 
 			function button4() {
 				var div4 = document.getElementById('div4');
-				var div4mod = document.getElementById('div4-mod');
 				var bu4 = document.getElementById('bu4');
+				 var icons = bu4.querySelectorAll('.btn-icon');
 				if (div4.style.display == 'grid') {
 					div4.style.display = 'none';
-					div4mod.style.display = 'none';
-					bu4.innerText = "赞助奖池";
+					bu4.querySelector('.btn-text').innerText = "赞助奖池";
+					icons.forEach(function(icon) { icon.style.display = 'none'; });
 				} else {
 					div4.style.display = 'grid';
-					div4mod.style.display = 'block';
-					bu4.innerText = "☃ 赞助奖池 ☃";
+					bu4.querySelector('.btn-text').innerText = "赞助奖池";
+					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 				}
 			}
 

@@ -187,6 +187,24 @@
 			button:active {
 				transform: translateY(0);
 			}
+			
+			/* 按钮内的图标样式 */
+			button .btn-icon {
+			    width: 1.5em;
+			    height: 1.5em;
+			    vertical-align: middle;
+			    margin: 0 0.3em;
+			    filter: drop-shadow(0 0 5px rgba(128, 255, 0, 0.5));
+			    transition: transform 0.3s ease;
+			}
+			
+			button:hover .btn-icon {
+			    transform: scale(1.2) rotate(15deg);
+			}
+			
+			button .btn-text {
+			    vertical-align: middle;
+			}
 
 			/* 商品网格 */
 			.d4 {
@@ -333,7 +351,7 @@
 			#div2,
 			#div3,
 			#div4,
-			#div4-mod,#div2-mod,
+			#div4-mod,#div2-mod,#div1-mod1,#div1-mod2,#div1-mod3,#div1-mod4,
 			#div5 {
 				display: none;
 			}
@@ -519,302 +537,406 @@
             原积分量 × 段位倍数（上限3倍）= 最终所需积分量-->
 			</h3>
 
-			<button onclick="button1()" id="bu1">MOD奖池</button>
+			<button onclick="button1()" id="bu1">
+				<img src="IMG/Rout/1.JPG" class="btn-icon" style="display:none; alt="❄">
+				<span class="btn-text">MOD奖池</span>
+				<img src="IMG/Rout/1.JPG" class="btn-icon" style="display:none; alt="❄">
+			</button>
 			<div id="div1" class="d4">
 				<div class="col-2">
-					<span>布莱顿裂罅</span>
+					<span>压制者裂罅</span>
 					<img src="IMG/Rout/1/01.jpg" alt="布莱顿裂罅">
 					<div class="info-bar">
-						<span>触发+暴伤+弹容</span>
-						<span class="price">［250 Rout］</span>
+						<span>暴伤+毒素+基伤-切割</span>
+						<span class="price">［150 Rout］</span>
 					</div>
 				</div>
 				<div>
 					<span>近战裂罅</span>
 					<img src="IMG/Rout/1/02.jpg" alt="近战裂罅">
 					<div class="info-bar">
-						<span>库存量：6</span>
-						<span class="price">［15 Rout］</span>
+						<span>一组起兑</span>
+						<span class="price">［72 Rout］</span>
 					</div>
 				</div>
 				<div>
-					<span>手枪裂罅</span>
-					<img src="IMG/Rout/1/02.jpg" alt="手枪裂罅">
-					<div class="info-bar">
-						<span>库存量：6</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>终劫怪奇</span>
-					<img src="IMG/Rout/1/03.jpg" alt="终劫怪奇">
+					<span>传说核心</span>
+					<img src="IMG/Rout/1/03.jpg" alt="手枪裂罅">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［50 Rout］</span>
+						<span class="price">［95 Rout］</span>
 					</div>
 				</div>
-				<div>
-					<span>生长怪奇</span>
-					<img src="IMG/Rout/1/04.jpg" alt="生长怪奇">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［25 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>观众怪奇</span>
-					<img src="IMG/Rout/1/05.jpg" alt="观众怪奇">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［90 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>Lohk颂歌</span>
-					<img src="IMG/Rout/1/06.jpg" alt="Lohk颂歌">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［30 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>镀层 致死加速</span>
-					<img src="IMG/Rout/1/07.jpg" alt="镀层 致死加速">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>镀层液压准心</span>
-					<img src="IMG/Rout/1/08.jpg" alt="镀层液压准心">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>中空子弹</span>
-					<img src="IMG/Rout/1/09.jpg" alt="中空子弹">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>乏能迅敏</span>
-					<img src="IMG/Rout/1/10.jpg" alt="乏能迅敏">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>冰风暴</span>
-					<img src="IMG/Rout/1/11.jpg" alt="冰风暴">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>致命洪流</span>
-					<img src="IMG/Rout/1/12.jpg" alt="致命洪流">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>致命效率</span>
-					<img src="IMG/Rout/1/13.jpg" alt="致命效率">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>咬碎</span>
-					<img src="IMG/Rout/1/14.jpg" alt="咬碎">
-					<div class="info-bar">
-						<span>库存量：2</span>
-						<span class="price">［70 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>失效保险</span>
-					<img src="IMG/Rout/1/15.jpg" alt="失效保险">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>溜之大吉</span>
-					<img src="IMG/Rout/1/16.jpg" alt="溜之大吉">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>氩晶瞄具</span>
-					<img src="IMG/Rout/1/17.jpg" alt="氩晶瞄具">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>视野之外</span>
-					<img src="IMG/Rout/1/18.jpg" alt="视野之外">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［10 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>超越推进</span>
-					<img src="IMG/Rout/1/19.jpg" alt="超越推进">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>覆壳弹药</span>
-					<img src="IMG/Rout/1/20.jpg" alt="覆壳弹药">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［50 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>预言神密</span>
-					<img src="IMG/Rout/1/21.jpg" alt="预言神密">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［25 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>弹指瞬技</span>
-					<img src="IMG/Rout/1/22.jpg" alt="弹指瞬技">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
+		</div>
+		
+		<div id="div1-mod1">
+			<h4>光环 MOD</h4>
+		<div class="d4">
+		<div>
+			<span>钢铁充能</span>
+			<img src="IMG/Rout/1/T1/01.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
 			</div>
 		</div>
+		<div>
+			<span>电磁脉冲场</span>
+			<img src="IMG/Rout/1/T1/02.jpg" alt="生长怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>召唤师之怒</span>
+			<img src="IMG/Rout/1/T1/03.jpg" alt="观众怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>空气动力</span>
+			<img src="IMG/Rout/1/T1/04.jpg" alt="Lohk颂歌">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>战斗教条</span>
+			<img src="IMG/Rout/1/T1/05.jpg" alt="镀层 致死加速">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>机甲强化</span>
+			<img src="IMG/Rout/1/T1/06.jpg" alt="镀层液压准心">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［18 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>能量调谐矩阵</span>
+			<img src="IMG/Rout/1/T1/07.jpg" alt="中空子弹">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>铁甲矩阵</span>
+			<img src="IMG/Rout/1/T1/08.jpg" alt="乏能迅敏">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<div id="div1-mod2">
+			<h4>噩梦 MOD</h4>
+		<div class="d4">
+		<div>
+			<span>冰风暴</span>
+			<img src="IMG/Rout/1/T2/01.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：9</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>慑人神速</span>
+			<img src="IMG/Rout/1/T2/02.jpg" alt="生长怪奇">
+			<div class="info-bar">
+				<span>库存量：7</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>野火</span>
+			<img src="IMG/Rout/1/T2/03.jpg" alt="观众怪奇">
+			<div class="info-bar">
+				<span>库存量：12</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>加速冲击</span>
+			<img src="IMG/Rout/1/T2/04.jpg" alt="Lohk颂歌">
+			<div class="info-bar">
+				<span>库存量：11</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>激冷装填</span>
+			<img src="IMG/Rout/1/T2/05.jpg" alt="镀层 致死加速">
+			<div class="info-bar">
+				<span>库存量：17</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>漂移接触</span>
+			<img src="IMG/Rout/1/T2/06.jpg" alt="镀层液压准心">
+			<div class="info-bar">
+				<span>库存量：11</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>狂暴追猎</span>
+			<img src="IMG/Rout/1/T2/07.jpg" alt="中空子弹">
+			<div class="info-bar">
+				<span>库存量：10</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>灵活装甲</span>
+			<img src="IMG/Rout/1/T2/08.jpg" alt="乏能迅敏">
+			<div class="info-bar">
+				<span>库存量：4</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>撕裂</span>
+			<img src="IMG/Rout/1/T2/07.jpg" alt="冰风暴">
+			<div class="info-bar">
+				<span>库存量：7</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>撕裂打击</span>
+			<img src="IMG/Rout/1/T2/10.jpg" alt="致命洪流">
+			<div class="info-bar">
+				<span>库存量：5</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>不屈不挠</span>
+			<img src="IMG/Rout/1/T2/11.jpg" alt="致命效率">
+			<div class="info-bar">
+				<span>库存量：9</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>流线外形</span>
+			<img src="IMG/Rout/1/T2/12.jpg" alt="咬碎">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>动物本能</span>
+			<img src="IMG/Rout/1/T2/13.jpg" alt="观众怪奇">
+			<div class="info-bar">
+				<span>库存量：5</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>活力</span>
+			<img src="IMG/Rout/1/T2/14.jpg" alt="Lohk颂歌">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［12 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>致命洪流</span>
+			<img src="IMG/Rout/1/T2/15.jpg" alt="镀层 致死加速">
+			<div class="info-bar">
+				<span>库存量：3</span>
+				<span class="price">［22 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>聚焦能量</span>
+			<img src="IMG/Rout/1/T2/16.jpg" alt="镀层液压准心">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［10 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>百折不挠</span>
+			<img src="IMG/Rout/1/T2/17.jpg" alt="中空子弹">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>	
+	</div>
+</div>
+
+		<div id="div1-mod3">
+			<h4>堕落 MOD</h4>
+		<div class="d4">
+		<div>
+			<span>弹指瞬技</span>
+			<img src="IMG/Rout/1/T3/01.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［20 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>过度延展</span>
+			<img src="IMG/Rout/1/T3/02.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［25 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>重口径</span>
+			<img src="IMG/Rout/1/T3/03.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>关键延迟</span>
+			<img src="IMG/Rout/1/T3/04.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［18 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>腐败弹匣</span>
+			<img src="IMG/Rout/1/T3/05.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：4</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>耗竭装填</span>
+			<img src="IMG/Rout/1/T3/06.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>降速暴击</span>
+			<img src="IMG/Rout/1/T3/07.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：3</span>
+				<span class="price">［16 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>污秽弹药</span>
+			<img src="IMG/Rout/1/T3/08.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+	<div>
+			<span>过载弹匣</span>
+			<img src="IMG/Rout/1/T3/09.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：3</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+	<div>
+			<span>重装火力</span>
+			<img src="IMG/Rout/1/T3/10.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+	<div>
+			<span>空尖弹</span>
+			<img src="IMG/Rout/1/T3/11.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+	</div>
+	<div>
+			<span>乏能迅敏</span>
+			<img src="IMG/Rout/1/T3/12.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［18 Rout］</span>
+			</div>
+		</div>
+	<div>
+			<span>感染弹匣</span>
+			<img src="IMG/Rout/1/T3/13.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：2</span>
+				<span class="price">［15 Rout］</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<div id="div1-mod4">
+			<h4>灭骸之刃 MOD</h4>
+		<div class="d4">
+		<div>
+			<span>Khra</span>
+			<img src="IMG/Rout/1/T4/01.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［18 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>Lohk</span>
+			<img src="IMG/Rout/1/T4/02.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［18 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>Xata</span>
+			<img src="IMG/Rout/1/T4/03.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［18 Rout］</span>
+			</div>
+		</div>
+		<div>
+			<span>溜之大吉</span>
+			<img src="IMG/Rout/1/T4/04.jpg" alt="终劫怪奇">
+			<div class="info-bar">
+				<span>库存量：1</span>
+				<span class="price">［13 Rout］</span>
+			</div>
+		</div>
+	</div>
+</div>
 
 		<div class="atxt">
-			<button onclick="button2()" id="bu2">赋能奖池</button>
+			<button onclick="button2()" id="bu2">
+			    <img src="IMG/Rout/2.JPG" class="btn-icon" style="display:none; alt="❄">
+			    <span class="btn-text">赋能奖池</span>
+			    <img src="IMG/Rout/2.JPG" class="btn-icon" style="display:none; alt="❄">
+			</button>
 			<div id="div2" class="d4">
-				<div>
-					<span>主要·毒侵</span>
-					<img src="IMG/Rout/2/02.jpg" alt="主要·毒侵">
-					<div class="info-bar">
-						<span>库存量：10</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>主要·准星</span>
-					<img src="IMG/Rout/2/03.jpg" alt="主要·准星">
-					<div class="info-bar">
-						<span>库存量：6</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>次要·筑垒</span>
-					<img src="IMG/Rout/2/04.jpg" alt="次要·筑垒">
-					<div class="info-bar">
-						<span>库存量：10</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>永恒·流转</span>
-					<img src="IMG/Rout/2/05.jpg" alt="永恒·流转">
-					<div class="info-bar">
-						<span>库存量：9</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>蜕化·升腾</span>
-					<img src="IMG/Rout/2/07.jpg" alt="蜕化·升腾">
-					<div class="info-bar">
-						<span>库存量：2</span>
-						<span class="price">［5 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·保卫者</span>
-					<img src="IMG/Rout/2/08.jpg" alt="赋能·保卫者">
-					<div class="info-bar">
-						<span>库存量：4</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·奇袭</span>
-					<img src="IMG/Rout/2/09.jpg" alt="赋能·奇袭">
-					<div class="info-bar">
-						<span>库存量：3</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·影袭</span>
-					<img src="IMG/Rout/2/10.jpg" alt="赋能·影袭">
-					<div class="info-bar">
-						<span>库存量：5</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·愤怒</span>
-					<img src="IMG/Rout/2/11.jpg" alt="蜕化·升腾">
-					<div class="info-bar">
-						<span>库存量：4</span>
-						<span class="price">［5 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·激励</span>
-					<img src="IMG/Rout/2/12.jpg" alt="赋能·激励">
-					<div class="info-bar">
-						<span>库存量：7</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·精确</span>
-					<img src="IMG/Rout/2/13.jpg" alt="赋能·精确">
-					<div class="info-bar">
-						<span>库存量：4</span>
-						<span class="price">［4 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>赋能·黩武</span>
-					<img src="IMG/Rout/2/14.jpg" alt="赋能·黩武">
-					<div class="info-bar">
-						<span>库存量：3</span>
-						<span class="price">［4 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>近战·无畏</span>
-					<img src="IMG/Rout/2/15.jpg" alt="近战·无畏">
-					<div class="info-bar">
-						<span>库存量：16</span>
-						<span class="price">［3 Rout］</span>
-					</div>
-				</div>
+				
 			</div>
 
 			<div id="div2-mod">
@@ -825,7 +947,7 @@
 						<img src="IMG/Rout/2/01.jpg" alt="近战·渐强">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［140 Rout］</span>
+							<span class="price">［150 Rout］</span>
 						</div>
 					</div>
 					<div>
@@ -833,7 +955,7 @@
 						<img src="IMG/Rout/2/02.jpg" alt="主要·毒侵">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［65 Rout］</span>
+							<span class="price">［70 Rout］</span>
 						</div>
 					</div>
 					<div>
@@ -841,7 +963,7 @@
 						<img src="IMG/Rout/2/03.jpg" alt="主要·准星">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［55 Rout］</span>
+							<span class="price">［65 Rout］</span>
 						</div>
 					</div>
 					<div>
@@ -849,7 +971,7 @@
 						<img src="IMG/Rout/2/04.jpg" alt="次要·筑垒">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［50 Rout］</span>
+							<span class="price">［45 Rout］</span>
 						</div>
 					</div>
 					<div>
@@ -868,10 +990,30 @@
 							<span class="price">［45 Rout］</span>
 						</div>
 					</div>
+					<div>
+						<span>赋能·保卫者</span>
+						<img src="IMG/Rout/2/07.jpg" alt="赋能·暴虐">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［80 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>赋能·冰暴</span>
+						<img src="IMG/Rout/2/08.jpg" alt="赋能·暴虐">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［50 Rout］</span>
+						</div>
+					</div>
 				</div>
 			</div>
 
-		<button onclick="button3()" id="bu3">阿耶檀识</button>
+		<button onclick="button3()" id="bu3">
+		    <img src="IMG/Rout/3.JPG" class="btn-icon" style="display:none; alt="❄">
+		    <span class="btn-text">阿耶檀识</span>
+		    <img src="IMG/Rout/3.JPG" class="btn-icon" style="display:none; alt="❄">
+		</button>
 		<div id="div3" class="d4">
 			<div>
 				<span>Anasa 塑像</span>
@@ -956,14 +1098,18 @@
 		</div>
 
 		<div class="atxt">
-			<button onclick="button4()" id="bu4">杂项分类</button>
+			<button onclick="button4()" id="bu4">
+			    <img src="IMG/Rout/4-1.JPG" class="btn-icon" style="display:none; alt="❄">
+			    <span class="btn-text">杂项分类</span>
+			    <img src="IMG/Rout/4-2.JPG" class="btn-icon" style="display:none; alt="❄">
+			</button>
 			<div id="div4" class="d4">
 				<div>
 					<span>SCIMITAR</span>
 					<img src="IMG/Rout/4/01.jpg" alt="SCIMITAR">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［23 Rout］</span>
+						<span class="price">［25 Rout］</span>
 					</div>
 				</div>
 				<div>
@@ -971,25 +1117,41 @@
 					<img src="IMG/Rout/4/02.jpg" alt="星察">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［27 Rout］</span>
+						<span class="price">［28 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>冷冻光束步枪·破坏者</span>
+					<img src="IMG/Rout/4/03.jpg" alt="星察">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［95 Rout］</span>
+					</div>
+				</div>
+				<div>
+					<span>圣洁·执法者</span>
+					<img src="IMG/Rout/4/04.jpg" alt="星察">
+					<div class="info-bar">
+						<span>库存量：1</span>
+						<span class="price">［40 Rout］</span>
 					</div>
 				</div>
 				<div>
 					<span>任意枢议武器</span>
 					<img id="image1" src="IMG/Rout/4/1/B1-1.png" alt="任意枢议武器">
 					<div class="info-bar">
-						<span>占位符</span>
-						<span class="price">［占位符］</span>
+						<span>库存量：1</span>
+						<span class="price">［40 Rout］</span>
 					</div>
 				</div>
-				<div>
+			<!--<div>
 					<span>任意终极武器</span>
 					<img id="image2" src="IMG/Rout/4/1/B2-1.png" alt="任意终极武器">
 					<div class="info-bar">
 						<span>占位符</span>
 						<span class="price">［占位符］</span>
 					</div>
-				</div>
+				</div>-->
 			</div>
 
 			<div id="div4-mod">
@@ -997,15 +1159,15 @@
 				<div class="d4">
 					<div>
 						<span>虚空锐将</span>
-						<img src="IMG/Rout/4/03.jpg" alt="虚空锐将">
+						<img src="IMG/Rout/4/10.jpg" alt="虚空锐将">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［75 Rout］</span>
+							<span class="price">［70 Rout］</span>
 						</div>
 					</div>
 					<div>
 						<span>殁世机甲 推进器</span>
-						<img src="IMG/Rout/4/04.jpg" alt="殁世机甲推进器">
+						<img src="IMG/Rout/4/11.jpg" alt="殁世机甲推进器">
 						<div class="info-bar">
 							<span>库存量：2</span>
 							<span class="price">［22 Rout］</span>
@@ -1013,7 +1175,7 @@
 					</div>
 					<div>
 						<span>殁世机甲 震波</span>
-						<img src="IMG/Rout/4/05.jpg" alt="殁世机甲震波">
+						<img src="IMG/Rout/4/12.jpg" alt="殁世机甲震波">
 						<div class="info-bar">
 							<span>库存量：1</span>
 							<span class="price">［20 Rout］</span>
@@ -1022,7 +1184,11 @@
 				</div>
 			</div>
 			<!-- 新增：军械部件折叠按钮 -->
-			<button onclick="button5()" id="bu5">军械部件</button>
+			<button onclick="button5()" id="bu5">
+			    <img src="IMG/Rout/5-1.JPG" class="btn-icon" style="display:none; alt="❄">
+			    <span class="btn-text">军械部件</span>
+			    <img src="IMG/Rout/5-2.JPG" class="btn-icon" style="display:none; alt="❄">
+			</button>
 			<div id="div5" class="d4">
 				<div>
 					<span>光谱切割器·破坏者</span>
@@ -1145,19 +1311,19 @@
 					</div>
 				</div>
 				<div>
-					<span>暮斩</span>
+					<span>Mantis</span>
 					<img src="IMG/Rout/5/07.jpg" alt="暮斩">
 					<div class="info-bar">
-						<span>刀刃：0</span>
+						<span>机身：0</span>
 						<span class="price">［00 Rout］</span>
 					</div>
 					<div class="info-bar">
-						<span>握柄：1</span>
-						<span class="price">［17 Rout］</span>
+						<span>引擎：1</span>
+						<span class="price">［12 Rout］</span>
 					</div>
 					<div class="info-bar">
-						<span></span>
-						<span class="price"></span>
+						<span>飞航系统：1</span>
+						<span class="price">［12 Rout］</span>
 					</div>
 					<div class="info-bar">
 						<span></span>
@@ -1209,71 +1375,97 @@
 
 		<script>
 			function button1() {
-				var div1 = document.getElementById('div1');
-				var bu1 = document.getElementById('bu1');
-				if (div1.style.display == 'grid') {
-					div1.style.display = 'none';
-					bu1.innerText = "MOD奖池";
-				} else {
-					div1.style.display = 'grid';
-					bu1.innerText = "☃ MOD奖池 ☃";
-				}
+			    var div1 = document.getElementById('div1');
+			    var bu1 = document.getElementById('bu1');
+			    var div1mod1 = document.getElementById('div1-mod1');
+			    var div1mod2 = document.getElementById('div1-mod2');
+			    var div1mod3 = document.getElementById('div1-mod3');
+			    var div1mod4 = document.getElementById('div1-mod4');
+			    var icons = bu1.querySelectorAll('.btn-icon');
+			    if (div1.style.display == 'grid') {
+			        div1.style.display = 'none';
+			        div1mod1.style.display = 'none';
+			        div1mod2.style.display = 'none';
+			        div1mod3.style.display = 'none';
+			        div1mod4.style.display = 'none';
+			        bu1.querySelector('.btn-text').innerText = "MOD奖池";
+			        icons.forEach(function(icon) { icon.style.display = 'none'; });
+			    } else {
+			        div1.style.display = 'grid';
+			        div1mod1.style.display = 'block';
+			        div1mod2.style.display = 'block';
+			        div1mod3.style.display = 'block';
+			        div1mod4.style.display = 'block';
+			        bu1.querySelector('.btn-text').innerText = "MOD奖池";
+			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
+			    }
 			}
 
 					function button2() {
-						var div2 = document.getElementById('div2');
-						var div2mod = document.getElementById('div2-mod');
-						var bu2 = document.getElementById('bu2');
-						if (div2.style.display == 'grid') {
-							div2.style.display = 'none';
-							div2mod.style.display = 'none';
-							bu2.innerText = "赋能奖池";
-						} else {
-							div2.style.display = 'grid';
-							div2mod.style.display = 'block';
-							bu2.innerText = "☃ 赋能奖池 ☃";
-						}
+					    var div2 = document.getElementById('div2');
+					    var div2mod = document.getElementById('div2-mod');
+					    var bu2 = document.getElementById('bu2');
+					    var icons = bu2.querySelectorAll('.btn-icon');
+					    if (div2.style.display == 'grid') {
+					        div2.style.display = 'none';
+					        div2mod.style.display = 'none';
+					        bu2.querySelector('.btn-text').innerText = "赋能奖池";
+					        icons.forEach(function(icon) { icon.style.display = 'none'; });
+					    } else {
+					        div2.style.display = 'grid';
+					        div2mod.style.display = 'block';
+					        bu2.querySelector('.btn-text').innerText = "赋能奖池";
+					        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
+					    }
 					}
 
 			function button3() {
-				var div3 = document.getElementById('div3');
-				var bu3 = document.getElementById('bu3');
-				if (div3.style.display == 'grid') {
-					div3.style.display = 'none';
-					bu3.innerText = "阿耶檀识";
-				} else {
-					div3.style.display = 'grid';
-					bu3.innerText = "☃ 阿耶檀识 ☃";
-				}
+			    var div3 = document.getElementById('div3');
+			    var bu3 = document.getElementById('bu3');
+			    var icons = bu3.querySelectorAll('.btn-icon');
+			    if (div3.style.display == 'grid') {
+			        div3.style.display = 'none';
+			        bu3.querySelector('.btn-text').innerText = "阿耶檀识";
+			        icons.forEach(function(icon) { icon.style.display = 'none'; });
+			    } else {
+			        div3.style.display = 'grid';
+			        bu3.querySelector('.btn-text').innerText = "阿耶檀识";
+			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
+			    }
 			}
 
 			function button4() {
-				var div4 = document.getElementById('div4');
-				var div4mod = document.getElementById('div4-mod');
-				var bu4 = document.getElementById('bu4');
-				if (div4.style.display == 'grid') {
-					div4.style.display = 'none';
-					div4mod.style.display = 'none';
-					bu4.innerText = "杂项分类";
-				} else {
-					div4.style.display = 'grid';
-					div4mod.style.display = 'block';
-					bu4.innerText = "☃ 杂项分类 ☃";
-				}
+			    var div4 = document.getElementById('div4');
+			    var div4mod = document.getElementById('div4-mod');
+			    var bu4 = document.getElementById('bu4');
+			    var icons = bu4.querySelectorAll('.btn-icon');
+			    if (div4.style.display == 'grid') {
+			        div4.style.display = 'none';
+			        div4mod.style.display = 'none';
+			        bu4.querySelector('.btn-text').innerText = "杂项分类";
+			        icons.forEach(function(icon) { icon.style.display = 'none'; });
+			    } else {
+			        div4.style.display = 'grid';
+			        div4mod.style.display = 'block';
+			        bu4.querySelector('.btn-text').innerText = "杂项分类";
+			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
+			    }
 			}
 
 
-
 			function button5() {
-				var div5 = document.getElementById('div5');
-				var bu5 = document.getElementById('bu5');
-				if (div5.style.display == 'grid') {
-					div5.style.display = 'none';
-					bu5.innerText = "军械部件";
-				} else {
-					div5.style.display = 'grid';
-					bu5.innerText = "☃ 军械部件 ☃";
-				}
+			    var div5 = document.getElementById('div5');
+			    var bu5 = document.getElementById('bu5');
+			    var icons = bu5.querySelectorAll('.btn-icon');
+			    if (div5.style.display == 'grid') {
+			        div5.style.display = 'none';
+			        bu5.querySelector('.btn-text').innerText = "军械部件";
+			        icons.forEach(function(icon) { icon.style.display = 'none'; });
+			    } else {
+			        div5.style.display = 'grid';
+			        bu5.querySelector('.btn-text').innerText = "军械部件";
+			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
+			    }
 			}
 
 			// 图片轮播		
