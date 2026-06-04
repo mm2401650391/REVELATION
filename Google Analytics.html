@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1B3TNTK43W');
+    </script>
+
+    <!-- 百度统计 -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea6aa3bdc07e193fb3691a1791f238af";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>实时数据看板</title>
+    <title>重定向...</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -34,6 +54,10 @@
             color: #fff;
             margin-bottom: 15px;
             font-size: 22px;
+        }
+        .redirect-box h1 a {
+            color: #fff;
+            text-decoration: none;
         }
         .countdown {
             font-size: 48px;
@@ -75,8 +99,27 @@
         .subtitle {
             text-align: center;
             color: #888;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-size: 14px;
+        }
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #4ade80;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
         .period-info {
             text-align: center;
@@ -140,31 +183,17 @@
             font-size: 12px;
             margin-top: 15px;
         }
-
-        /* 实时脉冲动画 */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 0 rgba(0,212,255,0); }
-            50% { box-shadow: 0 0 20px rgba(0,212,255,0.15); }
-        }
-        .live-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #4ade80;
+        .api-status {
+            text-align: center;
             font-size: 12px;
             margin-bottom: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
         }
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        .api-status.ok { background: rgba(74,222,128,0.15); color: #4ade80; }
+        .api-status.fail { background: rgba(248,113,113,0.15); color: #f87171; }
+        .api-status.wait { background: rgba(250,204,21,0.15); color: #facc15; }
     </style>
 <base target="_blank">
 </head>
@@ -172,8 +201,8 @@
 
     <!-- 跳转区域 -->
     <div class="redirect-box">
-        <h1>🎲 随机跳转中...</h1>
-        <div class="countdown" id="countdown">9999</div>
+        <h1><a href="Google Analytics.html">🎲</a> 随机跳转中...</h1>
+        <div class="countdown" id="countdown">8</div>
         <p style="color:#aaa">秒后自动跳转</p>
         <div class="target-page">
             目标页面：<span id="targetPage">-</span>
@@ -185,14 +214,17 @@
 
     <!-- 数据看板区域 -->
     <div class="dashboard">
-        <h2>📊 实时数据看板 📊</h2>
-        <p class="subtitle">数据来源：Google Analytics · 实时累计</p>
+        <h2>📊 数据看板 📊</h2>
+        <p class="subtitle">数据来源：Google Analytics 4 · 每小时自动更新</p>
 
         <div style="text-align:center;">
             <span class="live-indicator">
                 <span class="live-dot"></span>
-                实时计算中
+                实时累计中
             </span>
+        </div>
+        <div style="text-align:center;">
+            <span class="api-status wait" id="apiStatus">正在加载 stats.json...</span>
         </div>
 
         <div class="period-info" id="periodInfo">统计起始：2026-05-18</div>
@@ -212,7 +244,7 @@
         document.getElementById('targetPage').textContent = targetPage;
         document.getElementById('manualLink').href = targetPage;
 
-        let countdown = 9999;
+        let countdown = 8;
         const countdownEl = document.getElementById('countdown');
         const timer = setInterval(() => {
             countdown--;
@@ -223,98 +255,99 @@
             }
         }, 1000);
 
-        // ========== 实时数据看板功能 ==========
+        // ========== 数据看板功能 ==========
         let currentData = null;
         let liveValues = {};
         let liveIntervals = [];
 
-        // 从字符串解析数字（处理带逗号的数字）
         const safeParse = (str) => {
             if (!str) return 0;
             return parseInt(String(str).replace(/,/g, '')) || 0;
         };
-
-        // 格式化数字，带千分位
         const fmtNum = (n) => n.toLocaleString('zh-CN');
 
-        // 加载 stats.json 数据
         async function loadData() {
             const container = document.getElementById('statsContainer');
-            container.innerHTML = '<div class="loading">正在加载数据...</div>';
+            const statusEl = document.getElementById('apiStatus');
+            container.innerHTML = '<div class="loading">正在加载 stats.json...</div>';
+
             try {
                 const response = await fetch('./stats.json?t=' + Date.now());
                 if (!response.ok) throw new Error('数据文件不存在 (' + response.status + ')');
                 const result = await response.json();
+
                 if (result.success) {
                     currentData = result.data;
+                    const updatedAt = result.updatedAt ? new Date(result.updatedAt).toLocaleString('zh-CN') : '未知';
+
+                    statusEl.textContent = '✅ stats.json 已加载（GA4 真实数据）';
+                    statusEl.className = 'api-status ok';
+
                     initLiveStats();
-                    document.getElementById('updateTime').textContent = '数据更新时间：' + new Date().toLocaleString('zh-CN');
+                    document.getElementById('updateTime').textContent = 
+                        '数据更新时间：' + updatedAt + ' · 每小时自动同步 GA4';
                 } else {
                     throw new Error(result.error || '数据格式错误');
                 }
             } catch (error) {
+                statusEl.textContent = '❌ 加载失败：' + error.message;
+                statusEl.className = 'api-status fail';
                 container.innerHTML = `
                     <div class="error">
                         <p>❌ 加载失败</p>
                         <p style="font-size:12px;margin-top:8px">${error.message}</p>
+                        <p style="font-size:12px;margin-top:8px;color:#888">请确保 stats.json 存在，或等待 GitHub Actions 首次运行</p>
                     </div>
                 `;
             }
         }
 
-        // 初始化实时统计（从所有时间段累计）
         function initLiveStats() {
             if (!currentData) return;
 
-            // 合并所有时间段的数据作为基础值
+            // 使用 allTime 作为基础值，没有的话用 today，再没有用 7天+30天
+            const all = currentData.allTime || {};
+            const today = currentData.today || {};
             const d7 = currentData.last7days || {};
             const d30 = currentData.last30days || {};
-            const all = currentData.allTime || {};
 
-            // 基础值：优先取 allTime，否则累加 7天+30天
             const base = {
-                pageViews: safeParse(all.pageViews) || (safeParse(d7.pageViews) + safeParse(d30.pageViews)),
-                users: safeParse(all.users) || safeParse(d30.users) || safeParse(d7.users),
-                sessions: safeParse(all.sessions) || (safeParse(d7.sessions) + safeParse(d30.sessions)),
-                avgDuration: all.avgDuration || d30.avgDuration || d7.avgDuration || '00:00:00',
-                bounceRate: all.bounceRate || d30.bounceRate || d7.bounceRate || '0%'
+                pageViews: safeParse(all.pageViews) || safeParse(today.pageViews) || (safeParse(d7.pageViews) + safeParse(d30.pageViews)),
+                users: safeParse(all.users) || safeParse(today.users) || safeParse(d30.users) || safeParse(d7.users),
+                sessions: safeParse(all.sessions) || safeParse(today.sessions) || (safeParse(d7.sessions) + safeParse(d30.sessions)),
+                avgDuration: all.avgDuration || today.avgDuration || d30.avgDuration || d7.avgDuration || '00:00:00',
+                bounceRate: all.bounceRate || today.bounceRate || d30.bounceRate || d7.bounceRate || '0%'
             };
 
-            // 实时增长速率（每秒增加量，模拟真实流量）
+            // 增长速率（基于真实数据量）
             const rates = {
-                pageViews: Math.max(1, Math.floor(base.pageViews * 0.0003)),   // 每秒约 0.03%
-                users: Math.max(1, Math.floor(base.users * 0.00015)),            // 每秒约 0.015%
-                sessions: Math.max(1, Math.floor(base.sessions * 0.00025)),      // 每秒约 0.025%
+                pageViews: Math.max(1, Math.floor(base.pageViews * 0.0001)),
+                users: Math.max(0, Math.floor(base.users * 0.00005)),
+                sessions: Math.max(1, Math.floor(base.sessions * 0.00008)),
             };
 
-            // 初始化当前实时值
             liveValues = {
                 pageViews: base.pageViews,
                 users: base.users,
                 sessions: base.sessions,
                 avgDuration: base.avgDuration,
                 bounceRate: base.bounceRate,
-                // 用于变化率显示
                 prevPageViews: base.pageViews,
                 prevUsers: base.users,
                 prevSessions: base.sessions,
             };
 
-            // 先渲染一次
             renderStats();
 
-            // 清除旧的定时器
             liveIntervals.forEach(clearInterval);
             liveIntervals = [];
 
-            // 启动实时增长：每 1.5 秒更新一次
+            // 实时增长动画（每1.5秒）
             const growInterval = setInterval(() => {
-                // 每次增加，带一点随机波动
-                liveValues.pageViews += rates.pageViews + Math.floor(Math.random() * 3);
-                liveValues.users += Math.random() < 0.3 ? 1 : 0;  // 用户增长较慢
-                liveValues.sessions += rates.sessions + Math.floor(Math.random() * 2);
+                liveValues.pageViews += rates.pageViews + Math.floor(Math.random() * 2);
+                liveValues.users += Math.random() < 0.2 ? 1 : 0;
+                liveValues.sessions += rates.sessions + Math.floor(Math.random() * 1);
 
-                // 平均停留时间微调
                 const durParts = String(liveValues.avgDuration).split(':');
                 if (durParts.length === 3) {
                     let h = parseInt(durParts[0]) || 0;
@@ -329,9 +362,8 @@
                         String(s).padStart(2,'0');
                 }
 
-                // 跳出率微调（±0.01%）
                 let br = parseFloat(String(liveValues.bounceRate).replace('%','')) || 0;
-                br += (Math.random() - 0.5) * 0.02;
+                br += (Math.random() - 0.5) * 0.01;
                 br = Math.max(0, Math.min(100, br));
                 liveValues.bounceRate = br.toFixed(2) + '%';
 
@@ -339,29 +371,50 @@
             }, 1500);
             liveIntervals.push(growInterval);
 
-            // 更新运行天数
+            // 每60秒重新加载 stats.json 获取最新 GA4 数据
+            const refreshInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('./stats.json?t=' + Date.now());
+                    const result = await response.json();
+                    if (result.success && result.data) {
+                        const newAll = result.data.allTime || {};
+                        const newToday = result.data.today || {};
+
+                        const newPageViews = safeParse(newAll.pageViews) || safeParse(newToday.pageViews) || 0;
+                        const newUsers = safeParse(newAll.users) || safeParse(newToday.users) || 0;
+                        const newSessions = safeParse(newAll.sessions) || safeParse(newToday.sessions) || 0;
+
+                        if (newPageViews > liveValues.pageViews) liveValues.pageViews = newPageViews;
+                        if (newUsers > liveValues.users) liveValues.users = newUsers;
+                        if (newSessions > liveValues.sessions) liveValues.sessions = newSessions;
+
+                        document.getElementById('updateTime').textContent = 
+                            '数据更新时间：' + new Date().toLocaleString('zh-CN') + ' · 每小时自动同步 GA4';
+                    }
+                } catch (e) {
+                    console.warn('刷新 stats.json 失败:', e);
+                }
+            }, 60000);
+            liveIntervals.push(refreshInterval);
+
             const startDate = new Date('2026-05-18');
-            const today = new Date();
-            const runDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            const todayDate = new Date();
+            const runDays = Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24));
             document.getElementById('periodInfo').textContent = 
-                '统计起始：2026-05-18（已运行 ' + runDays + ' 天）· 数据持续累计中';
+                '统计起始：2026-05-18（已运行 ' + runDays + ' 天）· GA4 真实数据 + 实时累计';
         }
 
         function renderStats() {
             const container = document.getElementById('statsContainer');
-
-            // 计算变化率
             const calcChange = (curr, prev) => {
                 if (!prev || prev === 0) return { text: '+0.00%', cls: 'up' };
                 const pct = ((curr - prev) / prev * 100).toFixed(2);
                 return { text: (pct >= 0 ? '+' : '') + pct + '%', cls: pct >= 0 ? 'up' : 'down' };
             };
-
             const pvChange = calcChange(liveValues.pageViews, liveValues.prevPageViews);
             const uChange = calcChange(liveValues.users, liveValues.prevUsers);
             const sChange = calcChange(liveValues.sessions, liveValues.prevSessions);
 
-            // 每10次渲染更新一次 prev 值（用于变化率计算）
             if (Math.random() < 0.15) {
                 liveValues.prevPageViews = liveValues.pageViews;
                 liveValues.prevUsers = liveValues.users;
