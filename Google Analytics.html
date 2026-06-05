@@ -250,7 +250,7 @@
 
                     renderStats(result.data);
                     document.getElementById('updateTime').textContent = 
-                        '数据更新时间：' + updatedAt + ' · 每5分钟同步 GA4';
+                        '数据更新时间：' + updatedAt;
                 } else {
                     throw new Error(result.error || '数据格式错误');
                 }
