@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-		<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	
-	  gtag('config', 'G-1B3TNTK43W');
-	</script>
-    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1B3TNTK43W');
+    </script>
+
     <!-- 百度统计 -->
     <script>
     var _hmt = _hmt || [];
@@ -21,7 +20,7 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>重定向...</title>
@@ -37,7 +36,7 @@
             flex-direction: column;
             padding: 20px;
         }
-        
+
         /* 跳转区域 */
         .redirect-box {
             background: white;
@@ -53,6 +52,13 @@
             color: #333;
             margin-bottom: 15px;
             font-size: 22px;
+        }
+        .redirect-box h1 a {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block;
+            animation: bounce 1s infinite;
         }
         .countdown {
             font-size: 48px;
@@ -73,7 +79,7 @@
             text-decoration: none;
             font-size: 14px;
         }
-        
+
         /* 数据看板区域 */
         .dashboard {
             background: white;
@@ -92,69 +98,75 @@
         .subtitle {
             text-align: center;
             color: #888;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-size: 14px;
         }
-        .period-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #22c55e;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .period-info {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
             margin-bottom: 20px;
-        }
-        .tab {
-            padding: 6px 16px;
-            border: 2px solid #667eea;
-            border-radius: 20px;
-            background: white;
-            color: #667eea;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        .tab.active {
-            background: #667eea;
-            color: white;
         }
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
         }
         .stat-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-            border-radius: 12px;
-            padding: 20px 10px;
+            border-radius: 16px;
+            padding: 24px 10px;
             text-align: center;
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
         }
         .stat-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
         .stat-number {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             color: #667eea;
             line-height: 1;
+            font-variant-numeric: tabular-nums;
         }
         .stat-label {
             color: #666;
             font-size: 12px;
-            margin-top: 5px;
+            margin-top: 8px;
+        }
+        .stat-sub {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
         }
         .loading, .error {
             text-align: center;
             padding: 30px;
             color: #888;
         }
-		
-		.period-info {
-		    text-align: center;
-		    color: #888;
-		    font-size: 13px;
-		    margin-bottom: 20px;
-		}
-		
         .error {
             color: #e74c3c;
             background: #fdf0f0;
@@ -166,7 +178,13 @@
             font-size: 12px;
             margin-top: 15px;
         }
+		
+		@keyframes bounce {
+		    0%, 100% { transform: translateY(0); }
+		    50% { transform: translateY(-8px); }
+		}
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -176,7 +194,7 @@
         <div class="countdown" id="countdown">8</div>
         <p>秒后自动跳转</p>
         <div class="target-page">
-            目标页面：<span id="targetPage">-</span>
+            跳转目标：<span id="targetPage">-</span>
         </div>
         <div class="manual-jump">
             <a href="#" id="manualLink">👉 立即跳转</a>
@@ -187,67 +205,60 @@
     <div class="dashboard">
         <h2>📊 数据看板 📊</h2>
         <p class="subtitle">数据来源：Google Analytics</p>
-        
-        <div class="period-tabs">
-            <p class="period-info" id="periodInfo">统计起始：2026-05-18</p>
+
+        <div style="text-align:center;">
+            <span class="live-indicator">
+                <span class="live-dot"></span>
+                数据同步中
+            </span>
         </div>
+
+        <div class="period-info" id="periodInfo">统计起始：2026-05-17</div>
 
         <div id="statsContainer">
             <div class="loading">正在加载数据...</div>
         </div>
-        
+
         <p class="update-time" id="updateTime"></p>
     </div>
 
     <script>
         // ========== 跳转功能 ==========
-        const pages = [
-            "index-1.html", 
-            "index-2.html", 
-            "index-3.html" 
-        ];
-
+        const pages = ["index-1.html", "index-2.html", "index-3.html"];
         const randomIndex = Math.floor(Math.random() * pages.length);
         const targetPage = pages[randomIndex];
-
         document.getElementById('targetPage').textContent = targetPage;
         document.getElementById('manualLink').href = targetPage;
 
         let countdown = 8;
         const countdownEl = document.getElementById('countdown');
-        
         const timer = setInterval(() => {
             countdown--;
             countdownEl.textContent = countdown;
-            
             if (countdown <= 0) {
                 clearInterval(timer);
                 window.location.href = targetPage;
             }
         }, 1000);
 
-        // ========== 数据看板功能 ==========
-        let currentData = null;
-        let currentPeriod = '7';
-
+        // ========== 数据看板功能==========
         async function loadData() {
             const container = document.getElementById('statsContainer');
-            container.innerHTML = '<div class="loading">正在加载数据...</div>';
-            
+            const statusEl = document.getElementById('apiStatus');
+            container.innerHTML = '<div class="loading">正在加载 stats.json...</div>';
+
             try {
                 const response = await fetch('./stats.json?t=' + Date.now());
-                
-                if (!response.ok) {
-                    throw new Error('数据文件不存在 (' + response.status + ')');
-                }
-                
+                if (!response.ok) throw new Error('数据文件不存在 (' + response.status + ')');
                 const result = await response.json();
-                
+
                 if (result.success) {
-                    currentData = result.data;
-                    renderStats('all');
+                    const updatedAt = result.updatedAt ? new Date(result.updatedAt).toLocaleString('zh-CN') : '未知';
+
+
+                    renderStats(result.data);
                     document.getElementById('updateTime').textContent = 
-                        '数据更新时间：' + new Date().toLocaleString('zh-CN');
+                        '数据更新时间：' + updatedAt;
                 } else {
                     throw new Error(result.error || '数据格式错误');
                 }
@@ -256,61 +267,95 @@
                     <div class="error">
                         <p>❌ 加载失败</p>
                         <p style="font-size:12px;margin-top:8px">${error.message}</p>
+                        <p style="font-size:12px;margin-top:8px;color:#888">请确保 stats.json 存在，或等待 GitHub Actions 首次运行</p>
                     </div>
                 `;
             }
         }
 
-        function renderStats() {
-            if (!currentData) return;
-            
-            const d7 = currentData.last7days || {};
-            const d30 = currentData.last30days || {};
-            
-            const safeParse = (str) => {
-                if (!str) return 0;
-                return parseInt(String(str).replace(/,/g, '')) || 0;
-            };
-            
-            const data = {
-                pageViews: (safeParse(d7.pageViews) + safeParse(d30.pageViews)).toLocaleString(),
-                users: d30.users || d7.users || '-',  
-                sessions: (safeParse(d7.sessions) + safeParse(d30.sessions)).toLocaleString(),
-                avgDuration: d30.avgDuration || d7.avgDuration || '-',
-                bounceRate: d30.bounceRate || d7.bounceRate || '-'
-            };
-            
-            const container = document.getElementById('statsContainer');
-            
-            const startDate = new Date('2026-05-18');
-            const today = new Date();
-            const runDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-            
-            const startStr = startDate.toISOString().split('T')[0];
-            document.getElementById('periodInfo').textContent = '统计起始：' + startStr + '（已运行 ' + runDays + ' 天）';
-            
-            const stats = [
-                { icon: '👁️', value: data.pageViews, label: '浏览量' },
-                { icon: '👥', value: data.users, label: '用户数' },
-                { icon: '💬', value: data.sessions, label: '会话数' },
-                { icon: '⏱️', value: data.avgDuration, label: '平均停留' },
-                { icon: '📉', value: data.bounceRate, label: '跳出率' },
-            ];
-            
-            container.innerHTML = `
-                <div class="stats-grid">
-                    ${stats.map(s => `
-                        <div class="stat-card">
-                            <div class="stat-icon">${s.icon}</div>
-                            <div class="stat-number">${s.value}</div>
-                            <div class="stat-label">${s.label}</div>
-                        </div>
-                    `).join('')}
+function renderStats(data) {
+    const container = document.getElementById('statsContainer');
+    
+    const all = data.allTime || {};
+    const today = data.today || {};
+    const d7 = data.last7days || {};
+    const d30 = data.last30days || {};
+    
+    const safeParse = (str) => {
+        if (str === undefined || str === null || str === '') return 0;
+        const cleaned = String(str).replace(/,/g, '').replace(/%/g, '');
+        const num = parseInt(cleaned);
+        return isNaN(num) ? 0 : num;
+    };
+    
+    const startDate = new Date('2026-05-17');
+    const todayDate = new Date();
+    const runDays = Math.max(1, Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24)));
+    
+    // 累计总量
+    const pageViews = safeParse(all.pageViews) > 0 ? safeParse(all.pageViews) : safeParse(d7.pageViews);
+    const users = safeParse(all.users) > 0 ? safeParse(all.users) : safeParse(d7.users);
+    const sessions = safeParse(all.sessions) > 0 ? safeParse(all.sessions) : safeParse(d7.sessions);
+    
+    // 今日新增
+    const todayPV = safeParse(today.pageViews);
+    const todayUsers = safeParse(today.users);
+    const todaySessions = safeParse(today.sessions);
+    
+    const stats = [
+        { 
+            icon: '👁️', 
+            value: pageViews.toLocaleString('zh-CN'), 
+            label: '累计浏览量',
+            sub: todayPV > 0 ? ('今日 +' + todayPV.toLocaleString('zh-CN')) : '今日暂无数据'
+        },
+        { 
+            icon: '👥', 
+            value: users.toLocaleString('zh-CN'), 
+            label: '累计用户数',
+            sub: todayUsers > 0 ? ('今日 +' + todayUsers.toLocaleString('zh-CN')) : '今日暂无数据'
+        },
+        { 
+            icon: '💬', 
+            value: sessions.toLocaleString('zh-CN'), 
+            label: '累计会话数',
+            sub: todaySessions > 0 ? ('今日 +' + todaySessions.toLocaleString('zh-CN')) : '今日暂无数据'
+        },
+        { 
+            icon: '⏱️', 
+            value: all.avgDuration || d7.avgDuration || d30.avgDuration || '-', 
+            label: '平均停留',
+            sub: '全站平均'
+        },
+        { 
+            icon: '📉', 
+            value: all.bounceRate || d7.bounceRate || d30.bounceRate || '-', 
+            label: '跳出率',
+            sub: '全站平均'
+        },
+    ];
+
+    container.innerHTML = `
+        <div class="stats-grid">
+            ${stats.map(s => `
+                <div class="stat-card">
+                    <div class="stat-icon">${s.icon}</div>
+                    <div class="stat-number">${s.value}</div>
+                    <div class="stat-label">${s.label}</div>
+                    <div class="stat-sub">${s.sub}</div>
                 </div>
-            `;
-        }
-		 
-		        loadData();
+            `).join('')}
+        </div>
+    `;
+    
+    document.getElementById('periodInfo').textContent = 
+        '统计起始：2026-05-17（已运行 ' + runDays + ' 天）';
+}
+        // 初始加载
+        loadData();
+
+        // 每5分钟自动刷新一次（和 GitHub Actions 同步）
+        setInterval(loadData, 5 * 60 * 1000);
     </script>
 </body>
 </html>
