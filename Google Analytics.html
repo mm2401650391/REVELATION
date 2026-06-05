@@ -247,7 +247,7 @@
             }
         }, 1000);
 
-        // ========== 数据看板功能（纯真实数据，无动画）==========
+        // ========== 数据看板功能（纯真实数据）==========
         async function loadData() {
             const container = document.getElementById('statsContainer');
             const statusEl = document.getElementById('apiStatus');
@@ -291,13 +291,14 @@
             const d7 = data.last7days || {};
             const d30 = data.last30days || {};
 
-            // 计算每日平均值（用于显示"今日新增"）
+            // 计算每日平均值
             const startDate = new Date('2026-05-18');
             const today = new Date();
             const runDays = Math.max(1, Math.floor((today - startDate) / (1000 * 60 * 60 * 24)));
 
+            // 安全解析数字（处理字符串和数字）
             const safeParse = (str) => {
-                if (!str) return 0;
+                if (str === undefined || str === null || str === '') return 0;
                 return parseInt(String(str).replace(/,/g, '')) || 0;
             };
 
@@ -313,21 +314,21 @@
             const stats = [
                 { 
                     icon: '👁️', 
-                    value: pageViews.toLocaleString('zh-CN'), 
+                    value: pageViews > 0 ? pageViews.toLocaleString('zh-CN') : (safeParse(d7.pageViews) + safeParse(d30.pageViews)).toLocaleString('zh-CN'), 
                     label: '累计浏览量',
-                    sub: '日均 +' + avgDailyPV.toLocaleString('zh-CN')
+                    sub: '日均 +' + (pageViews > 0 ? avgDailyPV : 0).toLocaleString('zh-CN')
                 },
                 { 
                     icon: '👥', 
-                    value: users.toLocaleString('zh-CN'), 
+                    value: users > 0 ? users.toLocaleString('zh-CN') : (safeParse(d30.users) || safeParse(d7.users)).toLocaleString('zh-CN'), 
                     label: '累计用户数',
-                    sub: '日均 +' + avgDailyUsers.toLocaleString('zh-CN')
+                    sub: '日均 +' + (users > 0 ? avgDailyUsers : 0).toLocaleString('zh-CN')
                 },
                 { 
                     icon: '💬', 
-                    value: sessions.toLocaleString('zh-CN'), 
+                    value: sessions > 0 ? sessions.toLocaleString('zh-CN') : (safeParse(d7.sessions) + safeParse(d30.sessions)).toLocaleString('zh-CN'), 
                     label: '累计会话数',
-                    sub: '日均 +' + avgDailySessions.toLocaleString('zh-CN')
+                    sub: '日均 +' + (sessions > 0 ? avgDailySessions : 0).toLocaleString('zh-CN')
                 },
                 { 
                     icon: '⏱️', 
