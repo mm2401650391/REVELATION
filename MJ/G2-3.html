@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVELATION/幸运抽奖</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background:
+                linear-gradient(180deg, rgba(5,8,20,0.50) 0%, rgba(8,12,30,0.50) 50%, rgba(5,8,20,0.60) 100%),
+                url('../IMGs/01.jpg') center/cover no-repeat fixed;
+            color: #c8d4e0;
+            font-family: 'Rajdhani', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            padding: 2vw;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0, 180, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 60, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 255, 200, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 180, 255, 0.015) 2px, rgba(0, 180, 255, 0.015) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== Logo ========== */
+        .d2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            padding: 2vw 0;
+            margin-bottom: 2vw;
+            position: relative;
+            z-index: 2;
+        }
+
+        .d2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('../IMGs/01.jpg') center/cover no-repeat;
+            opacity: 0.3;
+            border-radius: 4px;
+            z-index: 0;
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.1);
+        }
+
+        .d2>a { position: absolute; left: 2vw; z-index: 1; }
+        .d2>h2 { position: relative; z-index: 1; }
+
+        .d2 a img {
+            width: 5vw; height: 5vw; object-fit: cover; border-radius: 50%;
+            filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.6));
+            transition: all 0.4s ease;
+            border: 2px solid rgba(0, 200, 255, 0.3);
+        }
+
+        .d2 a img:hover {
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 0 25px rgba(0, 200, 255, 0.9));
+            border-color: rgba(0, 200, 255, 0.8);
+        }
+
+        .d2 h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4vw; font-weight: 900; color: #FF9800;
+            text-shadow: 0 0 10px rgba(255, 152, 0, 0.8), 0 0 30px rgba(255, 152, 0, 0.5), 0 0 60px rgba(255, 152, 0, 0.3);
+            letter-spacing: 0.15em; text-align: center; line-height: 1;
+            min-width: 12em; white-space: nowrap; display: inline-block;
+        }
+
+        hr {
+            border: none; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.3), transparent);
+            margin: 2vw 0; position: relative; z-index: 2;
+        }
+
+        /* ========== 导航 ========== */
+        .d3 {
+            text-align: center; margin-bottom: 1.5vw;
+            position: relative; z-index: 2;
+        }
+
+        .d3 div {
+            display: flex; justify-content: center; align-items: center;
+            flex-wrap: wrap; gap: 1vw;
+        }
+
+        .d3 a {
+            text-decoration: none; font-family: 'Orbitron', sans-serif;
+            font-size: 1.2vw; font-weight: 500; padding: 0.6vw 2.5vw;
+            border-radius: 2px; transition: all 0.3s ease;
+            letter-spacing: 0.1em; position: relative; overflow: hidden;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        .d3 a:hover {
+            color: #00c8ff; border-color: rgba(0, 200, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+            background: rgba(0, 100, 200, 0.15);
+        }
+
+        .d3 a.b {
+            color: rgba(100, 180, 255, 0.8);
+            border: 1px solid rgba(100, 180, 255, 0.25);
+            background: rgba(0, 80, 160, 0.08);
+        }
+
+        .d3 a.a {
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.5);
+            background: rgba(255, 60, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 80, 0, 0.2), inset 0 0 20px rgba(255, 60, 0, 0.05);
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+
+        /* ========== 抽奖主区域 ========== */
+        .lottery-container {
+            position: relative; z-index: 2;
+            max-width: 900px; margin: 0 auto;
+            padding: 2vw;
+        }
+
+        .lottery-title {
+            text-align: center; font-family: 'Orbitron', sans-serif;
+            font-size: 2.5vw; color: #00c8ff;
+            text-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
+            margin-bottom: 2vw; letter-spacing: 0.2em;
+        }
+
+        .lottery-title::before, .lottery-title::after {
+            content: '◆'; margin: 0 15px;
+            color: rgba(0, 200, 255, 0.4); font-size: 0.7em;
+        }
+
+        .points-bar {
+            display: flex; justify-content: center; gap: 2vw;
+            margin-bottom: 3vw; flex-wrap: wrap;
+        }
+
+        .point-card {
+            background: rgba(5, 10, 25, 0.7);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            border-radius: 4px; padding: 1vw 2vw;
+            text-align: center; min-width: 140px;
+            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+            transition: all 0.3s ease;
+        }
+
+        .point-card:hover {
+            border-color: rgba(0, 200, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .point-card.rout { border-color: rgba(255, 152, 0, 0.3); }
+        .point-card.rout:hover { border-color: rgba(255, 152, 0, 0.5); box-shadow: 0 0 20px rgba(255, 152, 0, 0.15); }
+
+        .point-card.prime { border-color: rgba(0, 200, 255, 0.3); }
+        .point-card.prime:hover { border-color: rgba(0, 200, 255, 0.5); }
+
+        .point-card.vip { border-color: rgba(233, 69, 96, 0.3); }
+        .point-card.vip:hover { border-color: rgba(233, 69, 96, 0.5); box-shadow: 0 0 20px rgba(233, 69, 96, 0.15); }
+
+        .point-card .label {
+            font-family: 'Orbitron', sans-serif; font-size: 0.9vw;
+            margin-bottom: 0.3vw;
+        }
+
+        .point-card.rout .label { color: #FF9800; }
+        .point-card.prime .label { color: #00c8ff; }
+        .point-card.vip .label { color: #e94560; }
+
+        .point-card .value {
+            font-family: 'Orbitron', sans-serif; font-size: 1.8vw; font-weight: 700;
+        }
+
+        .point-card.rout .value { color: #FF9800; text-shadow: 0 0 10px rgba(255, 152, 0, 0.3); }
+        .point-card.prime .value { color: #00c8ff; text-shadow: 0 0 10px rgba(0, 200, 255, 0.3); }
+        .point-card.vip .value { color: #e94560; text-shadow: 0 0 10px rgba(233, 69, 96, 0.3); }
+
+        /* ========== 抽奖机 ========== */
+        .slot-machine {
+            background: rgba(5, 10, 25, 0.8);
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            border-radius: 8px;
+            padding: 3vw;
+            margin-bottom: 2vw;
+            position: relative;
+            clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+        }
+
+        .slot-machine::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.05) 0%, transparent 50%, rgba(255, 80, 0, 0.03) 100%);
+            pointer-events: none;
+        }
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1vw;
+            margin-bottom: 2vw;
+            position: relative;
+        }
+
+        .prize-cell {
+            aspect-ratio: 1;
+            background: rgba(0, 30, 60, 0.5);
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            border-radius: 4px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 0.8vw;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-cell::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.08) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .prize-cell:hover::before { opacity: 1; }
+
+        .prize-cell .prize-icon {
+            font-size: 2.5vw; margin-bottom: 0.3vw;
+            filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .prize-cell:hover .prize-icon { transform: scale(1.15); }
+
+        .prize-cell .prize-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85vw; color: rgba(180, 200, 220, 0.9);
+            text-align: center; line-height: 1.2;
+        }
+
+        .prize-cell .prize-rate {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7vw; color: rgba(0, 200, 255, 0.6);
+            margin-top: 0.2vw;
+        }
+
+        .prize-cell.active {
+            border-color: rgba(0, 200, 255, 0.8);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.3), inset 0 0 20px rgba(0, 150, 255, 0.1);
+            background: rgba(0, 60, 120, 0.6);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .prize-cell.active::before { opacity: 1; }
+
+        .prize-cell.winner {
+            border-color: #FF9800;
+            box-shadow: 0 0 40px rgba(255, 152, 0, 0.5), inset 0 0 30px rgba(255, 152, 0, 0.15);
+            background: rgba(255, 152, 0, 0.15);
+            animation: winnerPulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes winnerPulse {
+            from { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 152, 0, 0.4); }
+            to { transform: scale(1.12); box-shadow: 0 0 50px rgba(255, 152, 0, 0.7); }
+        }
+
+        .prize-cell.loser {
+            opacity: 0.4;
+            filter: grayscale(0.6);
+        }
+
+        /* 抽奖按钮 */
+        .draw-section {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 1.5vw;
+        }
+
+        .cost-selector {
+            display: flex; gap: 1vw; flex-wrap: wrap; justify-content: center;
+        }
+
+        .cost-btn {
+            background: rgba(0, 30, 60, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            color: #00c8ff;
+            padding: 0.8vw 2vw;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1vw;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+        }
+
+        .cost-btn:hover {
+            background: rgba(0, 80, 160, 0.5);
+            border-color: rgba(0, 200, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+        }
+
+        .cost-btn.selected {
+            background: rgba(0, 150, 255, 0.3);
+            border-color: rgba(0, 200, 255, 0.8);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.3);
+            color: #fff;
+        }
+
+        .cost-btn:disabled {
+            opacity: 0.3; cursor: not-allowed;
+            border-color: rgba(100, 100, 100, 0.3);
+            color: #666;
+        }
+
+        .draw-btn {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 80, 0, 0.2));
+            border: 2px solid rgba(255, 152, 0, 0.6);
+            color: #FF9800;
+            padding: 1.2vw 4vw;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5vw; font-weight: 700;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+            position: relative; overflow: hidden;
+            text-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+        }
+
+        .draw-btn::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .draw-btn:hover::before { left: 100%; }
+
+        .draw-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.35), rgba(255, 80, 0, 0.35));
+            box-shadow: 0 0 40px rgba(255, 152, 0, 0.3);
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+        .draw-btn:active { transform: translateY(0); }
+
+        .draw-btn:disabled {
+            opacity: 0.3; cursor: not-allowed;
+            border-color: rgba(100, 100, 100, 0.4);
+            color: #666;
+            box-shadow: none;
+        }
+
+        .draw-btn:disabled::before { display: none; }
+
+        .draw-btn.spinning {
+            animation: btnSpin 0.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes btnSpin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .result-area {
+            text-align: center;
+            min-height: 60px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .result-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3vw;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+        }
+
+        .result-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-text.win { color: #FF9800; text-shadow: 0 0 15px rgba(255, 152, 0, 0.5); }
+        .result-text.lose { color: rgba(150, 180, 200, 0.7); }
+
+        .history-section {
+            margin-top: 3vw;
+        }
+
+        .history-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3vw; color: #00c8ff;
+            text-align: center; margin-bottom: 1.5vw;
+            letter-spacing: 0.1em;
+        }
+
+        .history-title::before, .history-title::after {
+            content: '—'; margin: 0 15px;
+            color: rgba(0, 200, 255, 0.3);
+        }
+
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(5, 10, 25, 0.5);
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            border-radius: 4px;
+            padding: 1vw;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(0, 30, 60, 0.3);
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 200, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .history-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.6vw 1vw;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.05);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95vw;
+            transition: background 0.2s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(0, 60, 120, 0.15);
+        }
+
+        .history-item:last-child { border-bottom: none; }
+
+        .history-item .time { color: rgba(150, 180, 200, 0.5); font-size: 0.8vw; }
+        .history-item .prize { color: #c8d4e0; }
+        .history-item .prize.win { color: #FF9800; }
+        .history-item .cost { color: rgba(0, 200, 255, 0.6); }
+
+        .rules-section {
+            margin-top: 2vw;
+            background: rgba(5, 10, 25, 0.5);
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            border-radius: 4px;
+            padding: 1.5vw;
+            text-align: center;
+        }
+
+        .rules-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1vw; color: rgba(0, 200, 255, 0.7);
+            margin-bottom: 0.8vw;
+        }
+
+        .rules-text {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9vw;
+            color: rgba(150, 180, 200, 0.6);
+            line-height: 1.8;
+        }
+
+        .login-hint {
+            text-align: center;
+            padding: 3vw;
+            background: rgba(5, 10, 25, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            border-radius: 4px;
+            clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+        }
+
+        .login-hint p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2vw; color: rgba(150, 180, 200, 0.7);
+            margin-bottom: 1.5vw;
+        }
+
+        .login-pulse {
+            position: relative;
+            background: rgba(0, 60, 120, 0.4);
+            border: 1px solid rgba(0, 200, 255, 0.5);
+            color: #00c8ff;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+            transition: all 0.3s;
+            text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05); }
+            50% { box-shadow: 0 0 40px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.1); }
+        }
+
+        .login-pulse:hover {
+            background: rgba(0, 100, 200, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .login-pulse.logged {
+            background: rgba(22, 199, 154, 0.2);
+            border-color: rgba(22, 199, 154, 0.5);
+            color: #16c79a;
+            text-shadow: 0 0 10px rgba(22, 199, 154, 0.5);
+            animation: none;
+            box-shadow: 0 0 20px rgba(22, 199, 154, 0.2);
+        }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(5, 8, 20, 0.85);
+            backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 99999;
+        }
+
+        .modal {
+            background: rgba(5, 10, 25, 0.95);
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            border-radius: 4px; padding: 30px;
+            width: 90%; max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(0, 150, 255, 0.15), inset 0 0 40px rgba(0, 100, 200, 0.05);
+            clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+        }
+
+        .modal h3 {
+            font-family: 'Orbitron', sans-serif; color: #00c8ff;
+            margin-bottom: 20px; text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+        }
+
+        .modal p { color: #aaa; margin-bottom: 20px; line-height: 1.6; }
+
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; }
+
+        .modal-buttons button {
+            width: auto; padding: 10px 25px; font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-cancel {
+            background: rgba(100, 100, 100, 0.3);
+            border-color: rgba(100, 100, 100, 0.5);
+            color: rgba(180, 200, 220, 0.8);
+        }
+
+ 
+        .toast {
+            position: fixed; top: 20px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(22, 199, 154, 0.9);
+            color: #fff; padding: 15px 30px;
+            border-radius: 4px; display: none;
+            z-index: 999999;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid rgba(22, 199, 154, 0.5);
+            box-shadow: 0 0 20px rgba(22, 199, 154, 0.3);
+        }
+
+
+        @media (max-width: 800px) {
+            .d2 h2 { font-size: 5vw; }
+            .d2 a img { width: 8vw; height: 8vw; }
+            .d3 a { font-size: 2vw; padding: 1vw 3vw; }
+            .lottery-title { font-size: 4vw; }
+            .prize-grid { grid-template-columns: repeat(4, 1fr); }
+            .prize-cell .prize-icon { font-size: 4vw; }
+            .prize-cell .prize-name { font-size: 1.4vw; }
+            .prize-cell .prize-rate { font-size: 1.1vw; }
+            .point-card { min-width: 100px; padding: 2vw 3vw; }
+            .point-card .label { font-size: 1.4vw; }
+            .point-card .value { font-size: 2.5vw; }
+            .draw-btn { font-size: 2.5vw; padding: 2vw 6vw; }
+            .cost-btn { font-size: 1.8vw; padding: 1.5vw 3vw; }
+            .result-text { font-size: 2vw; }
+            .history-title { font-size: 2vw; }
+            .history-item { font-size: 1.6vw; }
+            .rules-title { font-size: 1.6vw; }
+            .rules-text { font-size: 1.4vw; }
+        }
+
+        @media (max-width: 500px) {
+            .prize-grid { grid-template-columns: repeat(3, 1fr); }
+            .prize-cell .prize-icon { font-size: 6vw; }
+            .prize-cell .prize-name { font-size: 2.2vw; }
+            .points-bar { flex-direction: column; align-items: center; }
+            .point-card { width: 80%; }
+        }
+    </style>
+    <base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <div class="d2">
+        <a href="G2.html" id="logoLink" target="_self">
+            <img src="../Logo.jpg" alt="Logo">
+        </a>
+        <h2 id="typing"></h2>
+    </div>
+
+    <hr />
+
+    <div class="d3">
+        <div>
+            <a class="a">☞幸运抽奖☜</a>
+        </div>
+    </div>
+
+    <div class="lottery-container">
+        <div class="lottery-title">LUCKY DRAW</div>
+        <div id="loginHint" class="login-hint" style="display:none;">
+            <p>◈ 请先登录以参与抽奖 ◈</p>
+            <button class="login-pulse" onclick="toggleCorner()" style="padding:12px 30px;font-size:14px;">🔐 登录</button>
+        </div>
+
+        <div id="lotteryContent">
+            <div class="points-bar">
+                <div class="point-card rout">
+                    <div class="label">ROUT</div>
+                    <div class="value" id="routValue">--</div>
+                </div>
+                <div class="point-card prime">
+                    <div class="label">PRIME</div>
+                    <div class="value" id="primeValue">--</div>
+                </div>
+                <div class="point-card vip">
+                    <div class="label">PRIME VIP</div>
+                    <div class="value" id="vipValue">--</div>
+                </div>
+                <div class="point-card" style="border-color: rgba(22, 199, 154, 0.3);">
+                    <div class="label" style="color: #16c79a;">今日剩余</div>
+                    <div class="value" id="drawLimitValue" style="color: #16c79a; text-shadow: 0 0 10px rgba(22, 199, 154, 0.3);">--</div>
+                </div>
+            </div>
+            <div class="slot-machine">
+                <div class="prize-grid" id="prizeGrid"></div>
+
+                <div class="draw-section">
+                    <div class="cost-selector">
+                        <button class="cost-btn selected" data-cost="10" data-type="Rout" onclick="selectCost(this)">10 Rout</button>
+                        <button class="cost-btn" data-cost="10" data-type="Prime" onclick="selectCost(this)">1 Prime</button>
+                    </div>
+
+                    <button class="draw-btn" id="drawBtn" onclick="startDraw()">◈ 开始抽奖 ◈</button>
+
+                    <div class="result-area">
+                        <div class="result-text" id="resultText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <div class="history-title">抽奖记录</div>
+                <div class="history-list" id="historyList">
+                    <div style="text-align:center;color:rgba(150,180,200,0.4);padding:2vw;font-size:0.9vw;">暂无记录</div>
+                </div>
+            </div>
+
+            <div class="rules-section">
+                <div class="rules-title">◈ 抽奖规则 ◈</div>
+                <div class="rules-text">
+                    消耗积分进行抽奖，奖品根据积分类型和消耗量浮动<br>
+                    高消耗抽奖有更高概率获得稀有奖品 | 每次抽奖独立计算概率<br>
+                    每日抽奖上限 <span id="rulesLimit" style="color:#FF9800;font-weight:bold;">10</span> 次
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右上角登录 -->
+    <div id="userCorner" style="position:fixed;top:20px;right:20px;z-index:99999;">
+        <button id="cornerBtn" onclick="toggleCorner()" class="login-pulse" style="width:auto;padding:10px 20px;font-size:13px;">🔐 登录</button>
+    </div>
+
+    <div id="cornerPanel" style="display:none;position:fixed;top:70px;right:20px;width:260px;z-index:99998;background:rgba(5,10,25,0.95);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:20px;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);box-shadow:0 0 40px rgba(0,0,0,0.5);">
+        <div id="panelLogin">
+            <h3 style="text-align:center;color:#00c8ff;font-family:'Orbitron';font-size:16px;margin-bottom:15px;text-shadow:0 0 15px rgba(0,200,255,0.3);">◈ ID 验证 ◈</h3>
+            <input type="text" id="cornerUser" placeholder="游戏ID" style="width:100%;padding:12px;margin-bottom:10px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+            <input type="password" id="cornerPass" placeholder="密码" style="width:100%;padding:12px;margin-bottom:15px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+            <button onclick="doCornerLogin()" style="width:100%;padding:12px;background:rgba(0,180,255,0.2);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-family:'Orbitron';font-size:14px;cursor:pointer;transition:all 0.3s;">验证</button>
+            <p id="cornerError" style="color:#e94560;text-align:center;margin-top:10px;display:none;font-size:13px;">验证失败</p>
+        </div>
+        <div id="panelInfo" style="display:none;">
+            <div style="text-align:center;margin-bottom:15px;">
+                <span style="color:#00c8ff;font-family:'Orbitron';font-size:14px;">👤 <span id="cornerName">--</span></span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px;">
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.2);border-radius:3px;">
+                    <span style="color:#FF9800;">Rout</span><span style="color:#FF9800;font-weight:bold;" id="cornerRout">0</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);border-radius:3px;">
+                    <span style="color:#00c8ff;">Prime</span><span style="color:#00c8ff;font-weight:bold;" id="cornerPrime">0</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:3px;">
+                    <span style="color:#e94560;">VIP</span><span style="color:#e94560;font-weight:bold;" id="cornerVip">0</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(22,199,154,0.1);border:1px solid rgba(22,199,154,0.2);border-radius:3px;">
+                    <span style="color:#16c79a;">今日剩余</span><span style="color:#16c79a;font-weight:bold;" id="cornerLimit">--</span>
+                </div>
+            </div>
+            <button onclick="doCornerLogout()" style="width:100%;padding:10px;background:rgba(100,100,100,0.2);border:1px solid rgba(100,100,100,0.4);color:rgba(150,180,200,0.7);font-size:12px;cursor:pointer;">断开连接</button>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="modal-overlay" id="resultModal" style="display:none;">
+        <div class="modal">
+            <h3 id="modalTitle">抽奖结果</h3>
+            <p id="modalText"></p>
+            <div class="modal-buttons">
+                <button onclick="closeModal()">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" style="display:none;"></div>
+
+    <script>
+        // ========== 全局变量 ==========
+        let sb = null;
+        let currentUser = null;
+        let panelOpen = false;
+        let isSpinning = false;
+        let selectedCost = 10;
+        let selectedType = 'Rout';
+
+        // 抽奖上限
+        const DAILY_DRAW_LIMIT = 10;
+        const PRIZES = {
+            Rout: {
+                10: [
+                    { name: '1 Rout', icon: '💰', rate: 0.08, points: 1 },
+                    { name: '3 Rout', icon: '💰', rate: 0.12, points: 3 },
+                    { name: '5 Rout', icon: '💰', rate: 0.15, points: 5 },
+                    { name: '8 Rout', icon: '💰', rate: 0.20, points: 8 },
+                    { name: '10 Rout', icon: '💰', rate: 0.18, points: 10 },
+                    { name: '15 Rout', icon: '💰', rate: 0.15, points: 15 },
+                    { name: '25 Rout', icon: '💰', rate: 0.06, points: 25 },
+                    { name: '50 Rout', icon: '💰', rate: 0.035, points: 50 },
+                    { name: '100 Rout', icon: '💰', rate: 0.018, points: 100 },
+                    { name: '200 Rout', icon: '💰', rate: 0.007, points: 200 }
+                ],
+            },
+            Prime: {
+                10: [
+                    { name: '0.50 Prime', icon: '💠', rate: 0.21, points: 0.5 },
+                    { name: '0.75 Prime', icon: '💠', rate: 0.18, points: 0.75 },
+                    { name: '1 Prime', icon: '💠', rate: 0.20, points: 1 },
+                    { name: '1.5 Prime', icon: '💠', rate: 0.11, points: 1.5 },
+                    { name: '2.5 Prime', icon: '💠', rate: 0.08, points: 2.5 },
+                    { name: '3 Prime', icon: '💠', rate: 0.07, points: 3 },
+                    { name: '4 Prime', icon: '💠', rate: 0.06, points: 4 },
+                    { name: '5 Prime', icon: '💠', rate: 0.035, points: 5 },
+                    { name: '8 Prime', icon: '💠', rate: 0.018, points: 8 },
+                    { name: '10 Prime', icon: '💠', rate: 0.007, points: 10 }
+                ],
+            }
+        };
+
+        function initSupabase() {
+            if (typeof supabase === 'undefined') {
+                console.error('Supabase 库未加载');
+                return false;
+            }
+            const SUPABASE_URL = 'https://rfmgembzxqbqsegquxmh.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable_9qFlq7jJcXvnkZOIoxinug_RVotHtGw';
+            sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('rulesLimit').textContent = DAILY_DRAW_LIMIT;
+            if (initSupabase()) {
+                autoLogin();
+            }
+            renderPrizes();
+            loadHistory();
+        });
+
+        function renderPrizes() {
+            const grid = document.getElementById('prizeGrid');
+            const prizes = PRIZES[selectedType][selectedCost];
+
+            grid.innerHTML = prizes.map((prize, i) =>
+                `
+                <div class="prize-cell" data-index="${i}">
+                    <div class="prize-icon">${prize.icon}</div>
+                    <div class="prize-name">${prize.name}</div>
+                    <div class="prize-rate">${(prize.rate * 100).toFixed(1)}%</div>
+                </div>
+                `
+            ).join('');
+        }
+
+        function selectCost(btn) {
+            if (isSpinning) return;
+
+            document.querySelectorAll('.cost-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            selectedCost = parseInt(btn.dataset.cost);
+            selectedType = btn.dataset.type;
+
+            renderPrizes();
+        }
+
+        async function startDraw() {
+            if (isSpinning) return;
+            if (!currentUser) {
+                showModal('请先登录', '点击右上角 🔐 登录后再来抽奖吧');
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = currentUser.last_draw_date;
+            let todayCount = currentUser.daily_draw_count || 0;
+
+            if (lastDate !== today) {
+                todayCount = 0;
+            }
+
+            if (todayCount >= DAILY_DRAW_LIMIT) {
+                showModal('今日抽奖次数已达上限', `你今日已抽奖 ${todayCount} 次，每日上限为 ${DAILY_DRAW_LIMIT} 次<br>请明日再来！`);
+                return;
+            }
+
+            const pointField = selectedType === 'Rout' ? 'rout_points' : 'prime_points';
+            const currentPoints = currentUser[pointField] || 0;
+
+            if (currentPoints < selectedCost) {
+                showModal('积分不足', `你的 ${selectedType} 积分不足 ${selectedCost}，无法抽奖`);
+                return;
+            }
+
+            isSpinning = true;
+            const drawBtn = document.getElementById('drawBtn');
+            drawBtn.classList.add('spinning');
+            drawBtn.textContent = '◈ 抽奖中... ◈';
+
+            const prizes = PRIZES[selectedType][selectedCost];
+            const cells = document.querySelectorAll('.prize-cell');
+
+            const result = drawByProbability(prizes);
+
+            let currentIndex = 0;
+            let speed = 50;
+            let rounds = 0;
+            const totalRounds = 3 + Math.floor(Math.random() * 2); 
+            const finalIndex = prizes.indexOf(result);
+
+            function step() {
+                cells.forEach(c => c.classList.remove('active', 'winner', 'loser'));
+                cells[currentIndex].classList.add('active');
+
+                const isFinalRound = rounds >= totalRounds;
+                const isFinalCell = isFinalRound && currentIndex === finalIndex;
+
+                if (isFinalCell) {
+                    setTimeout(() => finishDraw(result, cells), 300);
+                    return;
+                }
+
+                currentIndex++;
+                if (currentIndex >= cells.length) {
+                    currentIndex = 0;
+                    rounds++;
+                }
+
+                if (rounds >= totalRounds) {
+                    speed += 30;
+                }
+
+                setTimeout(step, speed);
+            }
+
+            step();
+        }
+
+
+        function drawByProbability(prizes) {
+            const rand = Math.random();
+            let cumulative = 0;
+
+            for (const prize of prizes) {
+                cumulative += prize.rate;
+                if (rand <= cumulative) {
+                    return prize;
+                }
+            }
+
+            return prizes[prizes.length - 1];
+        }
+
+        async function finishDraw(result, cells) {
+            const pointField = selectedType === 'Rout' ? 'rout_points' : 'prime_points';
+            const currentPoints = currentUser[pointField] || 0;
+            const newPoints = currentPoints - selectedCost + (result.points || 0);
+
+            const today = new Date().toISOString().split('T')[0];
+            const isNewDay = currentUser.last_draw_date !== today;
+            const newCount = isNewDay ? 1 : (currentUser.daily_draw_count || 0) + 1;
+
+            const { error } = await sb
+                .from('game_users')
+                .update({
+                    [pointField]: newPoints,
+                    daily_draw_count: newCount,
+                    last_draw_date: today
+                })
+                .eq('id', currentUser.id);
+
+            if (error) {
+                showToast('积分操作失败，请重试', 'error');
+                resetDraw();
+                return;
+            }
+
+
+            currentUser[pointField] = newPoints;
+            currentUser.daily_draw_count = newCount;
+            currentUser.last_draw_date = today;
+            updateDisplay();
+
+
+            const isWin = result.points > selectedCost || result.points === 0 && result.name.includes('裂罅') || result.name.includes('核心');
+            const resultIndex = PRIZES[selectedType][selectedCost].indexOf(result);
+
+            cells.forEach((c, i) => {
+                if (i === resultIndex) {
+                    c.classList.add('winner');
+                } else {
+                    c.classList.add('loser');
+                }
+            });
+
+            const resultText = document.getElementById('resultText');
+            const gainText = result.points > 0 ? `+${result.points} ${selectedType}` : '';
+            resultText.innerHTML =
+                `🎉 获得 <span style="color:#FF9800;font-weight:bold;">${result.name}</span> ${gainText ? `<br><span style="color:#16c79a">${gainText}</span>` : ''}`;
+            resultText.className = 'result-text show win';
+
+            // 记录历史
+            addHistory(result);
+
+            // 保存到数据库
+            await saveDrawRecord(result);
+
+            // 3秒后重置
+            setTimeout(() => {
+                resetDraw();
+            }, 3000);
+        }
+
+        function resetDraw() {
+            isSpinning = false;
+            const drawBtn = document.getElementById('drawBtn');
+            drawBtn.classList.remove('spinning');
+            drawBtn.textContent = '◈ 开始抽奖 ◈';
+
+            document.querySelectorAll('.prize-cell').forEach(c => {
+                c.classList.remove('active', 'winner', 'loser');
+            });
+
+            const resultText = document.getElementById('resultText');
+            resultText.classList.remove('show');
+        }
+
+        // ========== 历史记录 ==========
+        function addHistory(result) {
+            const history = JSON.parse(localStorage.getItem('lottery_history') || '[]');
+            history.unshift({
+                time: new Date().toLocaleString('zh-CN', { hour12: false }),
+                prize: result.name,
+                cost: selectedCost,
+                type: selectedType,
+                points: result.points
+            });
+
+            // 只保留最近50条
+            if (history.length > 50) history.pop();
+
+            localStorage.setItem('lottery_history', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function loadHistory() {
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            const history = JSON.parse(localStorage.getItem('lottery_history') || '[]');
+
+            if (history.length === 0) {
+                list.innerHTML = '<div style="text-align:center;color:rgba(150,180,200,0.4);padding:2vw;font-size:0.9vw;">暂无记录</div>';
+                return;
+            }
+
+            list.innerHTML = history.slice(0, 20).map(h =>
+                `
+                <div class="history-item">
+                    <span class="time">${h.time.split(' ')[1] || h.time}</span>
+                    <span class="prize ${h.points > h.cost ? 'win' : ''}">${h.prize}</span>
+                    <span class="cost">-${h.cost} ${h.type}${h.points > 0 ? ` +${h.points}` : ''}</span>
+                </div>
+                `
+            ).join('');
+        }
+
+        // ========== 保存抽奖记录到数据库 ==========
+        async function saveDrawRecord(result) {
+            if (!sb || !currentUser) return;
+
+            try {
+                await sb.from('lottery_records').insert({
+                    user_id: currentUser.id,
+                    username: currentUser.username,
+                    prize_name: result.name,
+                    cost: selectedCost,
+                    points_type: selectedType,
+                    points_gained: result.points || 0,
+                    created_at: new Date().toISOString()
+                });
+            } catch (e) {
+                console.log('记录保存失败（不影响抽奖结果）');
+            }
+        }
+
+        async function doCornerLogin() {
+            const user = document.getElementById('cornerUser').value.trim();
+            const pass = document.getElementById('cornerPass').value;
+
+            if (!sb) {
+                showToast('系统初始化中', 'error');
+                return;
+            }
+
+            const { data, error } = await sb
+                .from('game_users')
+                .select('*')
+                .eq('username', user)
+                .eq('password', pass)
+                .single();
+
+            if (error || !data) {
+                document.getElementById('cornerError').style.display = 'block';
+                return;
+            }
+
+            currentUser = data;
+            localStorage.setItem('clan_user_id', data.id);
+            showPanelInfo();
+            showToast('✅ 登录成功');
+        }
+
+        async function autoLogin() {
+            const savedId = localStorage.getItem('clan_user_id');
+            if (!savedId || !sb) return;
+
+            const { data } = await sb
+                .from('game_users')
+                .select('*')
+                .eq('id', savedId)
+                .single();
+
+            if (data) {
+                currentUser = data;
+                const btn = document.getElementById('cornerBtn');
+                if (btn) {
+                    btn.textContent = '✓ ' + data.username;
+                    btn.classList.add('logged');
+                }
+                updateDisplay();
+            }
+        }
+
+        function doCornerLogout() {
+            localStorage.removeItem('clan_user_id');
+            currentUser = null;
+            document.getElementById('cornerPanel').style.display = 'none';
+            panelOpen = false;
+
+            const btn = document.getElementById('cornerBtn');
+            btn.textContent = '🔐 登录';
+            btn.classList.remove('logged');
+
+            document.getElementById('lotteryContent').style.display = 'none';
+            document.getElementById('loginHint').style.display = 'block';
+
+            location.reload();
+        }
+
+        function toggleCorner() {
+            const panel = document.getElementById('cornerPanel');
+            if (panelOpen) {
+                panel.style.display = 'none';
+                panelOpen = false;
+            } else {
+                const savedId = localStorage.getItem('clan_user_id');
+                if (savedId && currentUser) {
+                    showPanelInfo();
+                } else if (savedId && !currentUser) {
+                    autoLogin().then(() => {
+                        if (currentUser) showPanelInfo();
+                        else showPanelLogin();
+                    });
+                    return;
+                } else {
+                    showPanelLogin();
+                }
+                panel.style.display = 'block';
+                panelOpen = true;
+            }
+        }
+
+        function showPanelLogin() {
+            document.getElementById('panelLogin').style.display = 'block';
+            document.getElementById('panelInfo').style.display = 'none';
+        }
+
+        function showPanelInfo() {
+            if (!currentUser) return;
+            document.getElementById('panelLogin').style.display = 'none';
+            document.getElementById('panelInfo').style.display = 'block';
+            document.getElementById('cornerName').textContent = currentUser.username;
+            document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+            document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+            document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+
+            // 显示今日剩余次数
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = currentUser.last_draw_date;
+            let todayCount = currentUser.daily_draw_count || 0;
+            if (lastDate !== today) todayCount = 0;
+            const remaining = Math.max(0, DAILY_DRAW_LIMIT - todayCount);
+            document.getElementById('cornerLimit').textContent = `${remaining}/${DAILY_DRAW_LIMIT}`;
+
+            const btn = document.getElementById('cornerBtn');
+            btn.textContent = '✓ ' + currentUser.username;
+            btn.classList.add('logged');
+
+            document.getElementById('loginHint').style.display = 'none';
+            document.getElementById('lotteryContent').style.display = 'block';
+
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            if (!currentUser) return;
+            document.getElementById('routValue').textContent = currentUser.rout_points || 0;
+            document.getElementById('primeValue').textContent = currentUser.prime_points || 0;
+            document.getElementById('vipValue').textContent = currentUser.vip_points || 0;
+
+            document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+            document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+            document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+
+            // 更新今日剩余抽奖次数
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = currentUser.last_draw_date;
+            let todayCount = currentUser.daily_draw_count || 0;
+            if (lastDate !== today) todayCount = 0;
+            const remaining = Math.max(0, DAILY_DRAW_LIMIT - todayCount);
+            const limitEl = document.getElementById('drawLimitValue');
+            if (limitEl) limitEl.textContent = `${remaining}/${DAILY_DRAW_LIMIT}`;
+
+            const cornerLimitEl = document.getElementById('cornerLimit');
+            if (cornerLimitEl) cornerLimitEl.textContent = `${remaining}/${DAILY_DRAW_LIMIT}`;
+        }
+
+        // ========== 弹窗 ==========
+        function showModal(title, text) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+        }
+
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.background = type === 'error' ? 'rgba(233, 69, 96, 0.9)' : 'rgba(22, 199, 154, 0.9)';
+            toast.style.borderColor = type === 'error' ? 'rgba(233, 69, 96, 0.5)' : 'rgba(22, 199, 154, 0.5)';
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2500);
+        }
+
+        // ========== 点击外部关闭面板 ==========
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('cornerPanel');
+            const btn = document.getElementById('cornerBtn');
+            if (panelOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+                panel.style.display = 'none';
+                panelOpen = false;
+            }
+
+            const modal = document.getElementById('resultModal');
+            if (modal.style.display === 'flex' && e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // ========== 打字机效果 ==========
+        const texts = ["REVELATION", "天启 联盟"];
+        let tIndex = 0, tIsTyping = true, tCursor = 0;
+
+        function typeEffect() {
+            const el = document.getElementById("typing");
+            const text = texts[tIndex];
+            if (tIsTyping) {
+                if (tCursor < text.length) {
+                    el.textContent += text.charAt(tCursor);
+                    tCursor++;
+                } else {
+                    setTimeout(() => {
+                        tIsTyping = false;
+                        tCursor = 0;
+                        setTimeout(typeEffect, 1500);
+                    }, 300);
+                    return;
+                }
+            } else {
+                if (el.textContent.length > 1) {
+                    el.textContent = el.textContent.slice(0, -1);
+                } else {
+                    el.textContent = "​";
+                    tIsTyping = true;
+                    tIndex = (tIndex + 1) % texts.length;
+                    setTimeout(typeEffect, 400);
+                    return;
+                }
+            }
+            setTimeout(typeEffect, tIsTyping ? 100 : 80);
+        }
+        typeEffect();
+    </script>
+</body>
+</html>
