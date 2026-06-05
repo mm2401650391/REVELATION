@@ -207,7 +207,7 @@
     <!-- 数据看板区域 -->
     <div class="dashboard">
         <h2>📊 数据看板 📊</h2>
-        <p class="subtitle">数据来源：Google Analytics 4 · 纯真实数据</p>
+        <p class="subtitle">数据来源：Google Analytics</p>
 
         <div style="text-align:center;">
             <span class="live-indicator">
@@ -247,7 +247,7 @@
             }
         }, 1000);
 
-        // ========== 数据看板功能（纯真实数据）==========
+        // ========== 数据看板功能==========
         async function loadData() {
             const container = document.getElementById('statsContainer');
             const statusEl = document.getElementById('apiStatus');
@@ -287,6 +287,7 @@ function renderStats(data) {
     const container = document.getElementById('statsContainer');
     
     const all = data.allTime || {};
+    const today = data.today || {};
     const d7 = data.last7days || {};
     const d30 = data.last30days || {};
     
@@ -298,35 +299,37 @@ function renderStats(data) {
     };
     
     const startDate = new Date('2026-05-17');
-    const today = new Date();
-    const runDays = Math.max(1, Math.floor((today - startDate) / (1000 * 60 * 60 * 24)));
+    const todayDate = new Date();
+    const runDays = Math.max(1, Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24)));
     
+    // 累计总量
     const pageViews = safeParse(all.pageViews) > 0 ? safeParse(all.pageViews) : safeParse(d7.pageViews);
     const users = safeParse(all.users) > 0 ? safeParse(all.users) : safeParse(d7.users);
     const sessions = safeParse(all.sessions) > 0 ? safeParse(all.sessions) : safeParse(d7.sessions);
     
-    const avgDailyPV = Math.round(pageViews / runDays);
-    const avgDailyUsers = Math.round(users / runDays);
-    const avgDailySessions = Math.round(sessions / runDays);
+    // 今日新增
+    const todayPV = safeParse(today.pageViews);
+    const todayUsers = safeParse(today.users);
+    const todaySessions = safeParse(today.sessions);
     
     const stats = [
         { 
             icon: '👁️', 
             value: pageViews.toLocaleString('zh-CN'), 
             label: '累计浏览量',
-            sub: '日均 +' + avgDailyPV.toLocaleString('zh-CN')
+            sub: todayPV > 0 ? ('今日 +' + todayPV.toLocaleString('zh-CN')) : '今日暂无数据'
         },
         { 
             icon: '👥', 
             value: users.toLocaleString('zh-CN'), 
             label: '累计用户数',
-            sub: '日均 +' + avgDailyUsers.toLocaleString('zh-CN')
+            sub: todayUsers > 0 ? ('今日 +' + todayUsers.toLocaleString('zh-CN')) : '今日暂无数据'
         },
         { 
             icon: '💬', 
             value: sessions.toLocaleString('zh-CN'), 
             label: '累计会话数',
-            sub: '日均 +' + avgDailySessions.toLocaleString('zh-CN')
+            sub: todaySessions > 0 ? ('今日 +' + todaySessions.toLocaleString('zh-CN')) : '今日暂无数据'
         },
         { 
             icon: '⏱️', 
@@ -356,9 +359,8 @@ function renderStats(data) {
     `;
     
     document.getElementById('periodInfo').textContent = 
-        '统计起始：2026-05-17（已运行 ' + runDays + ' 天）· 纯真实数据，无模拟增长';
+        '统计起始：2026-05-17（已运行 ' + runDays + ' 天）';
 }
-
         // 初始加载
         loadData();
 
