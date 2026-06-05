@@ -297,7 +297,7 @@ function renderStats(data) {
         return isNaN(num) ? 0 : num;
     };
     
-    const startDate = new Date('2026-05-18');
+    const startDate = new Date('2026-05-17');
     const today = new Date();
     const runDays = Math.max(1, Math.floor((today - startDate) / (1000 * 60 * 60 * 24)));
     
@@ -356,7 +356,7 @@ function renderStats(data) {
     `;
     
     document.getElementById('periodInfo').textContent = 
-        '统计起始：2026-05-18（已运行 ' + runDays + ' 天）· 纯真实数据，无模拟增长';
+        '统计起始：2026-05-17（已运行 ' + runDays + ' 天）· 纯真实数据，无模拟增长';
 }
 
         // 初始加载
