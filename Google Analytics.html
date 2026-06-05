@@ -175,17 +175,6 @@
             font-size: 12px;
             margin-top: 15px;
         }
-        .api-status {
-            text-align: center;
-            font-size: 12px;
-            margin-bottom: 15px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-        .api-status.ok { background: #dcfce7; color: #166534; }
-        .api-status.fail { background: #fee2e2; color: #991b1b; }
-        .api-status.wait { background: #fef9c3; color: #854d0e; }
     </style>
 <base target="_blank">
 </head>
@@ -193,8 +182,8 @@
 
     <!-- 跳转区域 -->
     <div class="redirect-box">
-        <h1><a href="Google Analytics.html">🎲</a> 随机跳转中...</h1>
-        <div class="countdown" id="countdown">8</div>
+        <h1>🎲 随机跳转中...</h1>
+        <div class="countdown" id="countdown">9999</div>
         <p>秒后自动跳转</p>
         <div class="target-page">
             目标页面：<span id="targetPage">-</span>
@@ -215,11 +204,8 @@
                 数据同步中
             </span>
         </div>
-        <div style="text-align:center;">
-            <span class="api-status wait" id="apiStatus">正在加载 stats.json...</span>
-        </div>
 
-        <div class="period-info" id="periodInfo">统计起始：2026-05-18</div>
+        <div class="period-info" id="periodInfo">统计起始：2026-05-17</div>
 
         <div id="statsContainer">
             <div class="loading">正在加载数据...</div>
@@ -236,7 +222,7 @@
         document.getElementById('targetPage').textContent = targetPage;
         document.getElementById('manualLink').href = targetPage;
 
-        let countdown = 8;
+        let countdown = 9999;
         const countdownEl = document.getElementById('countdown');
         const timer = setInterval(() => {
             countdown--;
@@ -261,8 +247,6 @@
                 if (result.success) {
                     const updatedAt = result.updatedAt ? new Date(result.updatedAt).toLocaleString('zh-CN') : '未知';
 
-                    statusEl.textContent = '✅ stats.json 已加载（GA4 真实数据）';
-                    statusEl.className = 'api-status ok';
 
                     renderStats(result.data);
                     document.getElementById('updateTime').textContent = 
@@ -271,8 +255,6 @@
                     throw new Error(result.error || '数据格式错误');
                 }
             } catch (error) {
-                statusEl.textContent = '❌ 加载失败：' + error.message;
-                statusEl.className = 'api-status fail';
                 container.innerHTML = `
                     <div class="error">
                         <p>❌ 加载失败</p>
