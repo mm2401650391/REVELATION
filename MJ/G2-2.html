@@ -17,13 +17,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>REVELATION/兑换宝库</title>
 		<style>
-        * {
+			* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* ========== Warframe 氏族风格背景 ========== */
         body {
             background: 
                 linear-gradient(180deg, rgba(5,8,20,0.50) 0%, rgba(8,12,30,0.50) 50%, rgba(5,8,20,0.60) 100%),
@@ -35,7 +34,6 @@
             position: relative;
         }
 
-        /* 背景粒子效果层 */
         body::before {
             content: '';
             position: fixed;
@@ -54,7 +52,6 @@
             100% { opacity: 1; }
         }
 
-        /* 扫描线效果 */
         body::after {
             content: '';
             position: fixed;
@@ -69,8 +66,6 @@
             pointer-events: none;
             z-index: 1;
         }
-
-        /* ========== Logo区域 ========== */
         .d2 {
             display: flex;
             align-items: center;
@@ -138,7 +133,6 @@
             display: inline-block;
         }
 
-        /* ========== 导航区域 ========== */
         .d3 {
             text-align: center;
             margin-bottom: 1.5vw;
@@ -239,7 +233,6 @@
             clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
         }
 
-        /* 折叠按钮 */
         button {
             display: block;
             width: 80%;
@@ -287,7 +280,6 @@
             transform: translateY(0);
         }
 
-        /* 按钮内的图标样式 */
         button .btn-icon {
             width: 1.5em;
             height: 1.5em;
@@ -381,7 +373,7 @@
             font-size: 0.8em;
         }
 
-        /* 新增：库存量和价格容器 */
+   
         .d4>div .info-bar {
             margin-top: auto;
             padding-top: 0.5vw;
@@ -426,7 +418,7 @@
             display: none;
         }
 
-        /* 子标题 */
+
         .atxt h4 {
             text-align: center;
             font-family: 'Orbitron', sans-serif;
@@ -458,8 +450,7 @@
             display: none;
         }
 
-        /* ========== 动态边框特效 - errorInfo赞助物品（保留原样）========== */
-		/* 传家宝卡片固定占位，防止伪元素动画导致页面高度抖动 */
+        /* ========== 动态边框特效 - errorInfo========== */
 		#ember-card {
 		margin: 22px !important;
 		}
@@ -1299,20 +1290,154 @@
                 font-size: 3.5vw;
             }
         }
-		</style>
+		
+		.redeem-btn {
+		    background: rgba(233, 69, 96, 0.2);
+		    border: 1px solid rgba(233, 69, 96, 0.5);
+		    color: #e94560;
+		    padding: 4px 12px;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+		    font-size: 0.9em;
+		    transition: all 0.3s;
+		}
+
+		.redeem-btn:hover {
+		    background: rgba(233, 69, 96, 0.4);
+		    box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
+		}
+
+		.redeem-btn:disabled {
+		    background: rgba(100, 100, 100, 0.2);
+		    border-color: rgba(100, 100, 100, 0.3);
+		    color: #666;
+		    cursor: not-allowed;
+		}
+
+		.login-pulse {
+		    position: relative;
+		    background: rgba(0, 60, 120, 0.4);
+		    border: 1px solid rgba(0, 200, 255, 0.5);
+		    color: #00c8ff;
+		    font-family: 'Orbitron', sans-serif;
+		    letter-spacing: 0.1em;
+		    cursor: pointer;
+		    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+		    transition: all 0.3s;
+		    text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+		    box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05);
+		    animation: pulseGlow 2s ease-in-out infinite;
+		}
+
+		@keyframes pulseGlow {
+		    0%, 100% { box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05); }
+		    50% { box-shadow: 0 0 40px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.1); }
+		}
+
+		.login-pulse:hover {
+		    background: rgba(0, 100, 200, 0.5);
+		    transform: translateY(-2px);
+		}
+
+		.login-pulse.logged {
+		    background: rgba(22, 199, 154, 0.2);
+		    border-color: rgba(22, 199, 154, 0.5);
+		    color: #16c79a;
+		    text-shadow: 0 0 10px rgba(22, 199, 154, 0.5);
+		    animation: none;
+		    box-shadow: 0 0 20px rgba(22, 199, 154, 0.2);
+		}
+
+		.modal-overlay {
+		    position: fixed;
+		    top: 0; left: 0; right: 0; bottom: 0;
+		    background: rgba(5, 8, 20, 0.85);
+		    backdrop-filter: blur(5px);
+		    display: none;
+		    justify-content: center;
+		    align-items: center;
+		    z-index: 99999;
+		}
+
+		.modal {
+		    background: rgba(5, 10, 25, 0.95);
+		    border: 1px solid rgba(0, 200, 255, 0.3);
+		    border-radius: 4px;
+		    padding: 30px;
+		    width: 90%;
+		    max-width: 400px;
+		    text-align: center;
+		    box-shadow: 0 0 60px rgba(0, 150, 255, 0.15), inset 0 0 40px rgba(0, 100, 200, 0.05);
+		    clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+		}
+
+		.modal h3 {
+		    font-family: 'Orbitron', sans-serif;
+		    color: #00c8ff;
+		    margin-bottom: 20px;
+		    text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+		}
+
+		.modal p {
+		    color: #aaa;
+		    margin-bottom: 20px;
+		    line-height: 1.6;
+		}
+
+		.modal-buttons {
+		    display: flex;
+		    gap: 10px;
+		    justify-content: center;
+		}
+
+		.modal-buttons button {
+		    width: auto;
+		    padding: 10px 25px;
+		    font-size: 14px;
+		}
+
+		.btn-cancel {
+		    background: rgba(100, 100, 100, 0.3);
+		    border-color: rgba(100, 100, 100, 0.5);
+		    color: rgba(180, 200, 220, 0.8);
+		}
+
+		.btn-cancel:hover {
+		    background: rgba(100, 100, 100, 0.5);
+		}
+
+		.toast {
+		    position: fixed;
+		    top: 20px;
+		    left: 50%;
+		    transform: translateX(-50%);
+		    background: rgba(22, 199, 154, 0.9);
+		    color: #fff;
+		    padding: 15px 30px;
+		    border-radius: 4px;
+		    display: none;
+		    z-index: 999999;
+		    font-family: 'Orbitron', sans-serif;
+		    border: 1px solid rgba(22, 199, 154, 0.5);
+		    box-shadow: 0 0 20px rgba(22, 199, 154, 0.3);
+		}
+</style>
+		<base target="_blank">
+		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 		<base target="_blank">
 	</head>
 	<body>
-			<!-- 浮动粒子 -->
-			<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
-			<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
-			<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
-			<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
-			<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
-			<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
-			<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
-			<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
-			
+		<!-- 浮动粒子 -->
+		<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
+		<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
+		<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
+		<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
+		<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
+		<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
+		<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
+		<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
+
 		<div class="d2">
 			<a href="../index.html" id="backLink">
 				<img src="../Logo.jpg" alt="Logo">
@@ -1347,92 +1472,92 @@
 				<img src="IMG/Prime/1.JPG" class="btn-icon" style="display:none;" alt="❄">
 			</button>
 			<div id="div1" class="d4">
-				<div>
+				<div data-pool="normal">
 					<span>霰弹扩充 Prime</span>
 					<img src="IMG/Prime/1/01.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*7］</span>
+						<span class="price">［7 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>恶毒弹匣 Prime</span>
 					<img src="IMG/Prime/1/02.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*6.5］</span>
+						<span class="price">［6.5 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>制衡 Prime</span>
 					<img src="IMG/Prime/1/03.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*10］</span>
+						<span class="price">［10 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>猛烈爆发 Prime</span>
 					<img src="IMG/Prime/1/04.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*7］</span>
+						<span class="price">［7 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>抵近射击 Prime</span>
 					<img src="IMG/Prime/1/05.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5.5］</span>
+						<span class="price">［5.5 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>火焰装填 Prime</span>
 					<img src="IMG/Prime/1/06.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5］</span>
+						<span class="price">［5 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>串联弹匣 Prime</span>
 					<img src="IMG/Prime/1/07.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4.5］</span>
+						<span class="price">［4.5 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>领袖 Prime</span>
 					<img src="IMG/Prime/1/08.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4］</span>
+						<span class="price">［4 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>非晶变压器 Prime</span>
 					<img src="IMG/Prime/1/09.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*6］</span>
+						<span class="price">［6 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>急冻控场 Prime</span>
 					<img src="IMG/Prime/1/10.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5.5］</span>
+						<span class="price">［5.5 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="normal">
 					<span>致命效率 Prime</span>
 					<img src="IMG/Prime/1/11.jpg" alt="路径错误">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*5］</span>
+						<span class="price">［5 Prime］</span>
 					</div>
 				</div>
 			</div>
@@ -1440,44 +1565,44 @@
 			<div id="div1-mod1">
 				<h4>毁灭派系 系列</h4>
 				<div class="d4">
-					<div>
+					<div data-pool="normal">
 						<span>毁灭Grineer Prime</span>
 						<img src="IMG/Prime/1/21.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*5］</span>
+							<span class="price">［5 Prime］</span>
 						</div>
 					</div>
-					<div>
+					<div data-pool="normal">
 						<span>毁灭Corpus Prime</span>
 						<img src="IMG/Prime/1/22.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*5.5］</span>
+							<span class="price">［5.5 Prime］</span>
 						</div>
 					</div>
-					<div>
+					<div data-pool="normal">
 						<span>毁灭Infested Prime</span>
 						<img src="IMG/Prime/1/23.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*3］</span>
+							<span class="price">［3 Prime］</span>
 						</div>
 					</div>
-					<div>
+					<div data-pool="normal">
 						<span>毁灭奥罗金 Prime</span>
 						<img src="IMG/Prime/1/24.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*4.5］</span>
+							<span class="price">［4.5 Prime］</span>
 						</div>
 					</div>
-					<div>
+					<div data-pool="normal">
 						<span>毁灭低语者 Prime</span>
 						<img src="IMG/Prime/1/25.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*3］</span>
+							<span class="price">［3 Prime］</span>
 						</div>
 					</div>
 				</div>
@@ -1486,28 +1611,28 @@
 			<div id="div1-mod2">
 				<h4>灭亡派系 系列</h4>
 				<div class="d4">
-					<div>
+					<div data-pool="normal">
 						<span>灭亡Grineer Prime</span>
 						<img src="IMG/Prime/1/31.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*4］</span>
+							<span class="price">［4 Prime］</span>
 						</div>
 					</div>
-					<div>
+					<div data-pool="normal">
 						<span>灭亡Corpus Prime</span>
 						<img src="IMG/Prime/1/32.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*3.5］</span>
+							<span class="price">［3.5 Prime］</span>
 						</div>
 					</div>
-					<div>
+					<div data-pool="normal">
 						<span>灭亡奥罗金 Prime</span>
 						<img src="IMG/Prime/1/33.jpg" alt="路径错误">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［Prime*6］</span>
+							<span class="price">［6 Prime］</span>
 						</div>
 					</div>
 				</div>
@@ -1519,113 +1644,113 @@
 			<img src="IMG/Prime/2.JPG" class="btn-icon" style="display:none;" alt="❄">
 			<span class="btn-text">Prime军械</span>
 			<img src="IMG/Prime/2.JPG" class="btn-icon" style="display:none;" alt="❄">
-			</button>
+		</button>
 		<div id="div2" class="d4">
-			<div>
+			<div data-pool="normal">
 				<span>Gyre Prime</span>
 				<img src="IMG/Prime/2/00.jpg" alt="路径错误">
 				<div class="info-bar">
 					<span>库存量：1</span>
-					<span class="price">［Prime*4.5］</span>
+					<span class="price">［4.5 Prime］</span>
 				</div>
 			</div>
-			<div>
+			<div data-pool="normal">
 				<span>塞多 Prime</span>
 				<img src="IMG/Prime/2/01.jpg" alt="路径错误">
 				<div class="info-bar">
 					<span>库存量：1</span>
-					<span class="price">［Prime*2.5］</span>
+					<span class="price">［2.5 Prime］</span>
 				</div>
 			</div>
-			<div>
+			<div data-pool="normal">
 				<span>瓦德雅 Prime</span>
 				<img src="IMG/Prime/2/02.jpg" alt="路径错误">
 				<div class="info-bar">
 					<span>库存量：1</span>
-					<span class="price">［Prime*2.2］</span>
+					<span class="price">［2.2 Prime］</span>
 				</div>
 			</div>
-			<div>
+			<div data-pool="normal">
 				<span>葬铭 Prime</span>
 				<img src="IMG/Prime/2/03.jpg" alt="路径错误">
 				<div class="info-bar">
 					<span>库存量：1</span>
-					<span class="price">［Prime*1.7］</span>
+					<span class="price">［1.7 Prime］</span>
 				</div>
 			</div>
-			<div>
+			<div data-pool="normal">
 				<span>逐电 Prime</span>
 				<img src="IMG/Prime/2/04.jpg" alt="路径错误">
 				<div class="info-bar">
 					<span>库存量：1</span>
-					<span class="price">［Prime*1.7］</span>
+					<span class="price">［1.7 Prime］</span>
 				</div>
 			</div>
 		</div>
-	</div>
-	
+		</div>
+
 		<div class="atxt">
 			<button onclick="button4()" id="bu4">
 				<img src="IMG/Prime/3.jpg" class="btn-icon" style="display:none;" alt="❄">
 				<span class="btn-text">赞助奖池</span>
 				<img src="IMG/Prime/3.jpg" class="btn-icon" style="display:none;" alt="❄">
-				</button>
+			</button>
 			<div id="div4" class="d4">
 				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> Skulajj"赞助</span></h4>
-				<div>
+				<div data-pool="sponsored">
 					<span>白金*100</span>
 					<img src="IMG\Prime\R\G1.jpg" alt="白金">
 					<div class="info-bar">
-						<span>库存量：800</span>
-						<span class="price">［Prime*10］</span>
+						<span>库存量：6</span>
+						<span class="price">［10 Prime］</span>
 					</div>
 				</div>
 
 				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> FengXiansenPrime"赞助</h4>
-				<div>
+				<div data-pool="sponsored">
 					<span>Nekros Prime</span>
 					<img src="IMG\Prime\R\G2.jpg" alt="Nekros Prime">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*9］</span>
+						<span class="price">［9 Prime］</span>
 					</div>
 				</div>
 
 				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> icedust2"赞助</h4>
-				<div>
+				<div data-pool="sponsored">
 					<span>Gauss Prime</span>
 					<img src="IMG\Prime\R\G3-1.jpg" alt="Nekros Prime">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4］</span>
+						<span class="price">［4 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="sponsored">
 					<span>Grendel Prime</span>
 					<img src="IMG\Prime\R\G3-2.jpg" alt="Nekros Prime">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*4］</span>
+						<span class="price">［4 Prime］</span>
 					</div>
 				</div>
-				<div>
+				<div data-pool="sponsored">
 					<span>Mesa Prime</span>
 					<img src="IMG\Prime\R\G3-3.jpg" alt="Nekros Prime">
 					<div class="info-bar">
 						<span>库存量：1</span>
-						<span class="price">［Prime*6］</span>
+						<span class="price">［6 Prime］</span>
 					</div>
 				</div>
 
 				<h4>由"<img src="img/1.jpg" class="id-icon" alt=""> errorInfo"赞助</h4>
 				<div id="ember-card">
-					<span>任选 传家宝</span>
+					<span data-pool="sponsored">任选 传家宝</span>
 					<img id="image1" src="IMG\Prime\R\EMBER.jpg" alt="传家宝">
 					<div class="info-bar">
 						<span>库存量：3</span>
-						<span class="price">［Prime*40］</span>
+						<span class="price">［40 Prime］</span>
 					</div>
-				</div>		
+				</div>
 			</div>
 
 
@@ -1634,7 +1759,7 @@
                 <img src="IMG/Prime/R/A4.jpg" alt="Mag Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*4.75］</span>
+                    <span class="price">［4.75 Prime］</span>
                 </div>
             </div>
             <div>
@@ -1642,7 +1767,7 @@
                 <img src="IMG/Prime/R/A5.jpg" alt="Hildryn Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*1.25］</span>
+                    <span class="price">［1.25 Prime］</span>
                 </div>
             </div>
 
@@ -1652,7 +1777,7 @@
                 <img src="IMG/Prime/R/B1.jpg" alt="Nidus Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*1.85］</span>
+                    <span class="price">［1.85 Prime］</span>
                 </div>
             </div>
             <div>
@@ -1660,7 +1785,7 @@
                 <img src="IMG/Prime/R/B2.jpg" alt="Khora Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*1.35］</span>
+                    <span class="price">［1.35 Prime］</span>
                 </div>
             </div>
             <div>
@@ -1668,7 +1793,7 @@
                 <img src="IMG/Prime/R/B3.jpg" alt="Frost Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*2］</span>
+                    <span class="price">［2 Prime］</span>
                 </div>
             </div>
 
@@ -1678,7 +1803,7 @@
                 <img src="IMG/Prime/R/C1.jpg" alt="Xaku Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*3.75］</span>
+                    <span class="price">［3.75 Prime］</span>
                 </div>
             </div>
             <div>
@@ -1686,7 +1811,7 @@
                 <img src="IMG/Prime/R/A2.jpg" alt="Nyx Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*5］</span>
+                    <span class="price">［5 Prime］</span>
                 </div>
             </div>
             <div>
@@ -1694,209 +1819,394 @@
                 <img src="IMG/Prime/R/C3.jpg" alt="Protea Prime">
                 <div class="info-bar">
                     <span>库存量：充足</span>
-                    <span class="price">［Prime*2.25］</span>
+                    <span class="price">［2.25 Prime］</span>
                 </div>
             </div>-->
 		</div>
 		<button class="toggle-all" id="toggleAll" title="展开/折叠全部">≡</button>
 		<button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
-</body>
-		<script>
-			function button1() {
-				var div1 = document.getElementById('div1');
-				var div1mod1 = document.getElementById('div1-mod1');
-				var div1mod2 = document.getElementById('div1-mod2');
-				var bu1 = document.getElementById('bu1');
-				var icons = bu1.querySelectorAll('.btn-icon');
-				if (div1.style.display == 'grid') {
-					div1.style.display = 'none';
-					div1mod1.style.display = 'none';
-					div1mod2.style.display = 'none';
-					bu1.querySelector('.btn-text').innerText = "PrimeMOD";
-					icons.forEach(function(icon) { icon.style.display = 'none'; });
-				} else {
-					div1.style.display = 'grid';
-					div1mod1.style.display = 'block';
-					div1mod2.style.display = 'block';
-					bu1.querySelector('.btn-text').innerText = "PrimeMOD";
-					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-				}
-				updateToggleAllState();
+
+		<!-- 兑换确认弹窗 -->
+		<div class="modal-overlay" id="redeemModal" style="display:none;">
+			<div class="modal">
+				<h3>确认兑换</h3>
+				<p id="redeemText"></p>
+				<div class="modal-buttons">
+					<button class="btn-cancel" onclick="closeRedeem()">取消</button>
+					<button onclick="confirmRedeem()">确定兑换</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- 积分选择弹窗 -->
+		<div class="modal-overlay" id="pointChoiceModal" style="display:none;">
+			<div class="modal">
+				<h3>选择积分类型</h3>
+				<p id="pointChoiceText"></p>
+				<div class="modal-buttons">
+					<button onclick="choosePointType('Prime')" style="background:rgba(0,200,255,0.2);border-color:rgba(0,200,255,0.5);color:#00c8ff;">
+						Prime 积分<br><small id="primeAvail">可用: 0</small>
+					</button>
+					<button onclick="choosePointType('Prime VIP')" style="background:rgba(233,69,96,0.2);border-color:rgba(233,69,96,0.5);color:#e94560;">
+						Prime VIP积分<br><small id="vipAvail">可用: 0</small>
+					</button>
+				</div>
+				<button class="btn-cancel" onclick="closePointChoice()" style="margin-top:10px;width:100%;">取消</button>
+			</div>
+		</div>
+
+		<!-- 修改密码弹窗 -->
+		<div class="modal-overlay" id="changePassModal" style="display:none;">
+			<div class="modal">
+				<h3>修改密码</h3>
+				<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+					<input type="password" id="oldPass" placeholder="原密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+					<input type="password" id="newPass" placeholder="新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+					<input type="password" id="confirmPass" placeholder="确认新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+				</div>
+				<p id="changePassError" style="color:#e94560;text-align:center;margin-bottom:15px;display:none;font-size:13px;"></p>
+				<div class="modal-buttons">
+					<button class="btn-cancel" onclick="closeChangePass()">取消</button>
+					<button onclick="doChangePass()">确认修改</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="toast" id="redeemToast" style="display:none;">✅ 兑换申请已提交！</div>
+
+
+		<div id="userCorner" style="position:fixed;top:20px;right:20px;z-index:99999;">
+			<button id="cornerBtn" onclick="toggleCorner()" class="login-pulse" style="width:auto;padding:10px 20px;font-size:13px;">🔐
+				登录</button>
+		</div>
+
+
+		<div id="cornerPanel" style="display:none;position:fixed;top:70px;right:20px;width:260px;z-index:99998;background:rgba(5,10,25,0.95);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:20px;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);box-shadow:0 0 40px rgba(0,0,0,0.5);">
+
+			<div id="panelLogin">
+				<h3 style="text-align:center;color:#00c8ff;font-family:'Orbitron';font-size:16px;margin-bottom:15px;text-shadow:0 0 15px rgba(0,200,255,0.3);">◈
+					验证 ◈</h3>
+				<input type="text" id="cornerUser" placeholder="游戏ID" style="width:100%;padding:12px;margin-bottom:10px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+				<input type="password" id="cornerPass" placeholder="密码" style="width:100%;padding:12px;margin-bottom:15px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+				<button onclick="doCornerLogin()" style="width:100%;padding:12px;background:rgba(0,180,255,0.2);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-family:'Orbitron';font-size:14px;cursor:pointer;transition:all 0.3s;">验证</button>
+				<p id="cornerError" style="color:#e94560;text-align:center;margin-top:10px;display:none;font-size:13px;">验证失败</p>
+			</div>
+
+			<!-- 已登录：显示积分 -->
+			<div id="panelInfo" style="display:none;">
+				<div style="text-align:center;margin-bottom:15px;">ID
+					<span style="color:#00c8ff;font-family:'Orbitron';font-size:14px;">👤 <span id="cornerName">--</span></span>
+				</div>
+				<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px;">
+					<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.2);border-radius:3px;">
+						<span style="color:#FF9800;">Rout</span>
+						<span style="color:#FF9800;font-weight:bold;" id="cornerRout">0</span>
+					</div>
+					<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);border-radius:3px;">
+						<span style="color:#00c8ff;">Prime</span>
+						<span style="color:#00c8ff;font-weight:bold;" id="cornerPrime">0</span>
+					</div>
+					<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:3px;">
+						<span style="color:#e94560;">Prime VIP</span>
+						<span style="color:#e94560;font-weight:bold;" id="cornerVip">0</span>
+					</div>
+				</div>
+				<button id="changePassBtn" style="width:100%;padding:10px;margin-bottom:10px;background:rgba(0,180,255,0.15);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-size:12px;cursor:pointer;">🔑
+					修改密码</button>
+				<button onclick="doCornerLogout()" style="width:100%;padding:10px;background:rgba(100,100,100,0.2);border:1px solid rgba(100,100,100,0.4);color:rgba(150,180,200,0.7);font-size:12px;cursor:pointer;">断开连接</button>
+			</div>
+		</div>
+	</body>
+	<script>
+		function showChangePass() {
+			document.getElementById('changePassModal').style.display = 'flex';
+			document.getElementById('oldPass').value = '';
+			document.getElementById('newPass').value = '';
+			document.getElementById('confirmPass').value = '';
+			document.getElementById('changePassError').style.display = 'none';
+		}
+
+		function closeChangePass() {
+			document.getElementById('changePassModal').style.display = 'none';
+		}
+
+		async function doChangePass() {
+			const oldPass = document.getElementById('oldPass').value;
+			const newPass = document.getElementById('newPass').value;
+			const confirmPass = document.getElementById('confirmPass').value;
+			const errorEl = document.getElementById('changePassError');
+
+			if (!currentUser) {
+				errorEl.textContent = '请先登录！';
+				errorEl.style.display = 'block';
+				return;
 			}
 
-			function button2() {
-				var div2 = document.getElementById('div2');
-				var bu2 = document.getElementById('bu2');
-				var icons = bu2.querySelectorAll('.btn-icon');
-				if (div2.style.display == 'grid') {
-					div2.style.display = 'none';
-					bu2.querySelector('.btn-text').innerText = "Prime军械";
-					icons.forEach(function(icon) { icon.style.display = 'none'; });
-				} else {
-					div2.style.display = 'grid';
-					bu2.querySelector('.btn-text').innerText = "Prime军械";
-					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-				}
-				updateToggleAllState();
+			if (!oldPass || !newPass || !confirmPass) {
+				errorEl.textContent = '请填写所有字段';
+				errorEl.style.display = 'block';
+				return;
 			}
 
-
-			function button4() {
-				var div4 = document.getElementById('div4');
-				var bu4 = document.getElementById('bu4');
-				var icons = bu4.querySelectorAll('.btn-icon');
-				if (div4.style.display == 'grid') {
-					div4.style.display = 'none';
-					bu4.querySelector('.btn-text').innerText = "赞助奖池";
-					icons.forEach(function(icon) { icon.style.display = 'none'; });
-				} else {
-					div4.style.display = 'grid';
-					bu4.querySelector('.btn-text').innerText = "赞助奖池";
-					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-				}
-				updateToggleAllState();
+			if (oldPass !== currentUser.password) {
+				errorEl.textContent = '原密码错误';
+				errorEl.style.display = 'block';
+				return;
 			}
 
-			var images1 = [
-				'IMG/Prime/R/EMBER.jpg',
-				'IMG/Prime/R/RHINO.jpg',
-				'IMG/Prime/R/Valkyr.jpg',
-				'IMG/Prime/R/VAUBAN.jpg',
-			];
-			var index1 = 0;
-			setInterval(function() {
-				var imgElement = document.getElementById('image1');
-				var cardElement = document.getElementById('ember-card');
-				
-				index1 = (index1 + 1) % images1.length;
-				var currentImg = images1[index1];
-				imgElement.src = currentImg;
+			if (newPass === oldPass) {
+				errorEl.textContent = '新密码不能和原密码相同';
+				errorEl.style.display = 'block';
+				return;
+			}
 
-				// 移除旧边框类
-				if (cardElement) {
-					cardElement.classList.remove('ember-border', 'rhino-border', 'valkyr-border', 'vauban-border');
-					
-					// 强制重绘以重置动画
-					void cardElement.offsetWidth;
+			if (newPass !== confirmPass) {
+				errorEl.textContent = '两次输入的新密码不一致';
+				errorEl.style.display = 'block';
+				return;
+			}
 
-					// 根据图片添加对应边框
-					if (currentImg.includes('EMBER')) {
-						cardElement.classList.add('ember-border');
-					} else if (currentImg.includes('RHINO')) {
-						cardElement.classList.add('rhino-border');
-					} else if (currentImg.includes('Valkyr')) {
-						cardElement.classList.add('valkyr-border');
-					} else if (currentImg.includes('VAUBAN')) {
-						cardElement.classList.add('vauban-border');
-					}
+			if (newPass.length < 6) {
+				errorEl.textContent = '新密码至少6位';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			// 更新数据库
+			const {
+				error
+			} = await sb
+				.from('game_users')
+				.update({
+					password: newPass
+				})
+				.eq('id', currentUser.id);
+
+			if (error) {
+				errorEl.textContent = '修改失败：' + error.message;
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			// 更新本地数据
+			currentUser.password = newPass;
+
+			closeChangePass();
+			alert('✅ 密码修改成功！请重新登录');
+			doCornerLogout();
+		}
+
+		function button1() {
+			var div1 = document.getElementById('div1');
+			var div1mod1 = document.getElementById('div1-mod1');
+			var div1mod2 = document.getElementById('div1-mod2');
+			var bu1 = document.getElementById('bu1');
+			var icons = bu1.querySelectorAll('.btn-icon');
+			if (div1.style.display == 'grid') {
+				div1.style.display = 'none';
+				div1mod1.style.display = 'none';
+				div1mod2.style.display = 'none';
+				bu1.querySelector('.btn-text').innerText = "PrimeMOD";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div1.style.display = 'grid';
+				div1mod1.style.display = 'block';
+				div1mod2.style.display = 'block';
+				bu1.querySelector('.btn-text').innerText = "PrimeMOD";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
+			}
+			updateToggleAllState();
+		}
+
+		function button2() {
+			var div2 = document.getElementById('div2');
+			var bu2 = document.getElementById('bu2');
+			var icons = bu2.querySelectorAll('.btn-icon');
+			if (div2.style.display == 'grid') {
+				div2.style.display = 'none';
+				bu2.querySelector('.btn-text').innerText = "Prime军械";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div2.style.display = 'grid';
+				bu2.querySelector('.btn-text').innerText = "Prime军械";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
+			}
+			updateToggleAllState();
+		}
+
+
+		function button4() {
+			var div4 = document.getElementById('div4');
+			var bu4 = document.getElementById('bu4');
+			var icons = bu4.querySelectorAll('.btn-icon');
+			if (div4.style.display == 'grid') {
+				div4.style.display = 'none';
+				bu4.querySelector('.btn-text').innerText = "赞助奖池";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div4.style.display = 'grid';
+				bu4.querySelector('.btn-text').innerText = "赞助奖池";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
+			}
+			updateToggleAllState();
+		}
+
+		var images1 = [
+			'IMG/Prime/R/EMBER.jpg',
+			'IMG/Prime/R/RHINO.jpg',
+			'IMG/Prime/R/Valkyr.jpg',
+			'IMG/Prime/R/VAUBAN.jpg',
+		];
+		var index1 = 0;
+		setInterval(function() {
+			var imgElement = document.getElementById('image1');
+			var cardElement = document.getElementById('ember-card');
+
+			index1 = (index1 + 1) % images1.length;
+			var currentImg = images1[index1];
+			imgElement.src = currentImg;
+
+
+			if (cardElement) {
+				cardElement.classList.remove('ember-border', 'rhino-border', 'valkyr-border', 'vauban-border');
+
+				void cardElement.offsetWidth;
+
+				if (currentImg.includes('EMBER')) {
+					cardElement.classList.add('ember-border');
+				} else if (currentImg.includes('RHINO')) {
+					cardElement.classList.add('rhino-border');
+				} else if (currentImg.includes('Valkyr')) {
+					cardElement.classList.add('valkyr-border');
+				} else if (currentImg.includes('VAUBAN')) {
+					cardElement.classList.add('vauban-border');
 				}
-			}, 2600);
+			}
+		}, 2600);
 
-			var images2 = [
-				'IMG/Rout/R/B2-1.jpg',
-				'IMG/Rout/R/B2-2.jpg',
-				'IMG/Rout/R/B2-3.jpg',
-			];
-			var index2 = 0;
-			setInterval(function() {
-				var imgElement = document.getElementById('image2');
+		var images2 = [
+			'IMG/Rout/R/B2-1.jpg',
+			'IMG/Rout/R/B2-2.jpg',
+			'IMG/Rout/R/B2-3.jpg',
+		];
+		var index2 = 0;
+		setInterval(function() {
+			var imgElement = document.getElementById('image2');
+			if (imgElement) {
 				imgElement.src = images2[index2];
-				index2 = (index2 + 1) % images2.length;
-			}, 2000);
-
-			// 打字机效果
-			const texts = ["REVELATION", "天启 联盟"];
-			let index = 0;
-			let isTyping = true;
-			let cursor = 0;
-			let blinkInterval;
-
-			function initBlink() {
-				blinkInterval = setInterval(() => {
-					const cursorElement = document.getElementById("cursor");
-					if (cursorElement) {
-						cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
-					}
-				}, 500);
 			}
+			index2 = (index2 + 1) % images2.length;
+		}, 2000);
 
-			function stopBlink() {
-				clearInterval(blinkInterval);
-			}
+		// 打字机效果
+		const texts = ["REVELATION", "天启 联盟"];
+		let index = 0;
+		let isTyping = true;
+		let cursor = 0;
+		let blinkInterval;
 
-			function addCursor() {
-				const cursorElement = document.createElement("span");
-				cursorElement.id = "cursor";
-				cursorElement.textContent = "|";
-				cursorElement.style.visibility = "visible";
-				document.getElementById("typing").appendChild(cursorElement);
-				initBlink();
-			}
-
-			function removeCursor() {
+		function initBlink() {
+			blinkInterval = setInterval(() => {
 				const cursorElement = document.getElementById("cursor");
 				if (cursorElement) {
-					stopBlink();
-					cursorElement.remove();
+					cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
 				}
-			}
+			}, 500);
+		}
 
-			function typeEffect() {
-				const textElement = document.getElementById("typing");
-				const currentText = texts[index];
-				if (isTyping) {
-					if (cursor < currentText.length) {
-						textElement.textContent += currentText.charAt(cursor);
-						cursor++;
-					} else {
-						addCursor();
-						setTimeout(() => {
-							isTyping = false;
-							cursor = 0;
-							setTimeout(() => {
-								removeCursor();
-								typeEffect();
-							}, 1500);
-							return;
-						}, 300);
-						return;
-					}
+		function stopBlink() {
+			clearInterval(blinkInterval);
+		}
+
+		function addCursor() {
+			const cursorElement = document.createElement("span");
+			cursorElement.id = "cursor";
+			cursorElement.textContent = "|";
+			cursorElement.style.visibility = "visible";
+			document.getElementById("typing").appendChild(cursorElement);
+			initBlink();
+		}
+
+		function removeCursor() {
+			const cursorElement = document.getElementById("cursor");
+			if (cursorElement) {
+				stopBlink();
+				cursorElement.remove();
+			}
+		}
+
+		function typeEffect() {
+			const textElement = document.getElementById("typing");
+			const currentText = texts[index];
+			if (isTyping) {
+				if (cursor < currentText.length) {
+					textElement.textContent += currentText.charAt(cursor);
+					cursor++;
 				} else {
-					if (textElement.textContent.length > 1) {
-						textElement.textContent = textElement.textContent.slice(0, -1);
-					} else {
-						textElement.textContent = "\u200b";
-						isTyping = true;
-						index = (index + 1) % texts.length;
-						removeCursor();
-						setTimeout(typeEffect, 400);
+					addCursor();
+					setTimeout(() => {
+						isTyping = false;
+						cursor = 0;
+						setTimeout(() => {
+							removeCursor();
+							typeEffect();
+						}, 1500);
 						return;
-					}
+					}, 300);
+					return;
 				}
-				setTimeout(typeEffect, isTyping ? 100 : 100);
+			} else {
+				if (textElement.textContent.length > 1) {
+					textElement.textContent = textElement.textContent.slice(0, -1);
+				} else {
+					textElement.textContent = "\u200b";
+					isTyping = true;
+					index = (index + 1) % texts.length;
+					removeCursor();
+					setTimeout(typeEffect, 400);
+					return;
+				}
 			}
+			setTimeout(typeEffect, isTyping ? 100 : 100);
+		}
 
-			typeEffect();
-			
-			// 回到顶部按钮逻辑
-			let backToTopBtn = document.getElementById('backToTop');
-			window.addEventListener('scroll', function() {
-			    if (window.pageYOffset > 300) {
-			        backToTopBtn.classList.add('visible');
-			    } else {
-			        backToTopBtn.classList.remove('visible');
-			    }
+		typeEffect();
+
+		let backToTopBtn = document.getElementById('backToTop');
+		window.addEventListener('scroll', function() {
+			if (window.pageYOffset > 300) {
+				backToTopBtn.classList.add('visible');
+			} else {
+				backToTopBtn.classList.remove('visible');
+			}
+		});
+		backToTopBtn.addEventListener('click', function() {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
 			});
-			backToTopBtn.addEventListener('click', function() {
-			    window.scrollTo({ top: 0, behavior: 'smooth' });
-			});
-			
-			// ========== 5秒提示 ==========
-			setTimeout(function() {
-			    let tip = document.createElement('div');
-			    tip.id = 'avatar-tip';
-			    tip.innerHTML = '💡 点击顶部 <img src="../Logo.jpg" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,200,255,0.4);">可返回上一级';
-			    tip.style.cssText = `
+		});
+
+		// ========== 5秒提示 ==========
+		setTimeout(function() {
+			let tip = document.createElement('div');
+			tip.id = 'avatar-tip';
+			tip.innerHTML =
+				'💡 点击顶部 <img src="../Logo.jpg" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,200,255,0.4);">可返回上一级';
+			tip.style.cssText =
+				`
 			        position:fixed;
 			        top:50%;
 			        left:0;
@@ -1916,84 +2226,668 @@
 			        white-space:nowrap;
 			        animation:tipSlideInLeft 0.6s ease forwards,tipPulse 2s ease-in-out infinite alternate;
 			    `;
-			    document.body.appendChild(tip);
-			
-			    function removeTip() {
-			        if (!tip.parentNode) return;
-			        tip.style.animation = 'tipSlideOutRight 0.5s ease forwards';
-			        setTimeout(() => tip.remove(), 500);
-			    }
-			    tip.addEventListener('click', removeTip);
-			    setTimeout(removeTip, 4000);
-			
-			    // 用户滑动页面时向右滑出消失
-			    window.addEventListener('scroll', removeTip, { once: true });
-			}, 5000);
-			
-				let params = new URLSearchParams(window.location.search);
-				let from = params.get('from');
-				let backLink = document.getElementById('backLink');
-				
-				if (from) {
-					backLink.href = '../' + from;
-				}
-				backLink.target = '_self';
-				
-			// ========== 展开/折叠全部奖品 ==========
-			let toggleAllBtn = document.getElementById('toggleAll');
-			let allExpanded = false;
-		
-			function checkAnyExpanded() {
-				var div1 = document.getElementById('div1');
-				var div2 = document.getElementById('div2');
-				var div4 = document.getElementById('div4');
-				return (div1 && div1.style.display == 'grid') ||
-				       (div2 && div2.style.display == 'grid') ||
-				       (div4 && div4.style.display == 'grid');
+			document.body.appendChild(tip);
+
+			function removeTip() {
+				if (!tip.parentNode) return;
+				tip.style.animation = 'tipSlideOutRight 0.5s ease forwards';
+				setTimeout(() => tip.remove(), 500);
 			}
-		
-			function updateToggleAllState() {
-				allExpanded = checkAnyExpanded();
-				toggleAllBtn.classList.toggle('active', allExpanded);
-				toggleAllBtn.title = allExpanded ? '折叠全部' : '展开全部';
-			}
-		
-			toggleAllBtn.addEventListener('click', function() {
-				allExpanded = checkAnyExpanded();
-				
-				// 如果当前有任何一个展开，则全部折叠；否则全部展开
-				var targetDisplay = allExpanded ? 'none' : 'grid';
-				var subDisplay = allExpanded ? 'none' : 'block';
-				
-				// 所有主内容区域
-				let sections = ['div1', 'div2', 'div4'];
-				// 所有子区域
-				let subSections = ['div1-mod1', 'div1-mod2'];
-		
-				// 切换主区域
-				sections.forEach(function(id) {
-					let el = document.getElementById(id);
-					if (el) el.style.display = targetDisplay;
-				});
-		
-				// 切换子区域
-				subSections.forEach(function(id) {
-					let el = document.getElementById(id);
-					if (el) el.style.display = subDisplay;
-				});
-		
-				// 同步各按钮图标状态
-				let btns = ['bu1', 'bu2', 'bu4'];
-				btns.forEach(function(btnId) {
-					let btn = document.getElementById(btnId);
-					if (!btn) return;
-					let icons = btn.querySelectorAll('.btn-icon');
-					icons.forEach(function(icon) {
-						icon.style.display = allExpanded ? 'none' : 'inline-block';
-					});
-				});
-		
-				updateToggleAllState();
+			tip.addEventListener('click', removeTip);
+			setTimeout(removeTip, 4000);
+
+
+			window.addEventListener('scroll', removeTip, {
+				once: true
 			});
-		</script>
+		}, 5000);
+
+		let params = new URLSearchParams(window.location.search);
+		let from = params.get('from');
+		let backLink = document.getElementById('backLink');
+
+		if (from) {
+			backLink.href = '../' + from;
+		}
+		backLink.target = '_self';
+
+		// ========== 展开/折叠全部奖品 ==========
+		let toggleAllBtn = document.getElementById('toggleAll');
+		let allExpanded = false;
+
+		function checkAnyExpanded() {
+			var div1 = document.getElementById('div1');
+			var div2 = document.getElementById('div2');
+			var div4 = document.getElementById('div4');
+			return (div1 && div1.style.display == 'grid') ||
+				(div2 && div2.style.display == 'grid') ||
+				(div4 && div4.style.display == 'grid');
+		}
+
+		function updateToggleAllState() {
+			allExpanded = checkAnyExpanded();
+			toggleAllBtn.classList.toggle('active', allExpanded);
+			toggleAllBtn.title = allExpanded ? '折叠全部' : '展开全部';
+		}
+
+		toggleAllBtn.addEventListener('click', function() {
+			allExpanded = checkAnyExpanded();
+
+
+			var targetDisplay = allExpanded ? 'none' : 'grid';
+			var subDisplay = allExpanded ? 'none' : 'block';
+
+			let sections = ['div1', 'div2', 'div4'];
+
+			let subSections = ['div1-mod1', 'div1-mod2'];
+
+			sections.forEach(function(id) {
+				let el = document.getElementById(id);
+				if (el) el.style.display = targetDisplay;
+			});
+
+			subSections.forEach(function(id) {
+				let el = document.getElementById(id);
+				if (el) el.style.display = subDisplay;
+			});
+
+			let btns = ['bu1', 'bu2', 'bu4'];
+			btns.forEach(function(btnId) {
+				let btn = document.getElementById(btnId);
+				if (!btn) return;
+				let icons = btn.querySelectorAll('.btn-icon');
+				icons.forEach(function(icon) {
+					icon.style.display = allExpanded ? 'none' : 'inline-block';
+				});
+			});
+
+			updateToggleAllState();
+		});
+
+		// ==================== Supabase 配置 ====================
+
+		// 全局变量
+		let sb = null;
+		let currentUser = null;
+		let redeemItem = null;
+		let panelOpen = false;
+
+		let _pendingRedeem = null;
+
+		function showPointChoice(name, cost, stock, poolType) {
+			document.getElementById('pointChoiceText').innerHTML =
+				`兑换「${name}」需要 <span style="color:#FF9800;font-weight:bold;">${cost}</span> 积分<br>请选择使用的积分类型：`;
+			document.getElementById('primeAvail').textContent = '可用: ' + (currentUser.prime_points || 0);
+			document.getElementById('vipAvail').textContent = '可用: ' + (currentUser.vip_points || 0);
+
+			_pendingRedeem = {
+				name,
+				cost,
+				stock,
+				poolType
+			};
+			document.getElementById('pointChoiceModal').style.display = 'flex';
+		}
+
+		function choosePointType(pointType) {
+			const pending = _pendingRedeem;
+			if (!pending) return;
+
+			const userPoints = pointType === 'VIP' ? (currentUser.vip_points || 0) : (currentUser.prime_points || 0);
+
+			if (userPoints < pending.cost) {
+				alert(pointType + ' 积分不足！');
+				return;
+			}
+
+			closePointChoice();
+
+			redeemItem = {
+				name: pending.name,
+				cost: pending.cost,
+				type: pointType,
+				stock: pending.stock || 0,
+				poolType: pending.poolType
+			};
+
+			document.getElementById('redeemText').innerHTML =
+				`确定用 <span style="color:#e94560;font-weight:bold;">${pending.cost} ${pointType}</span> 积分<br>兑换「${pending.name}」吗？`;
+			document.getElementById('redeemModal').style.display = 'flex';
+		}
+
+		function closePointChoice() {
+			document.getElementById('pointChoiceModal').style.display = 'none';
+			_pendingRedeem = null;
+		}
+
+		// ==================== 修改密码 ====================
+
+
+		// 初始化 Supabase
+		function initSupabase() {
+			if (typeof supabase === 'undefined') {
+				console.error('Supabase 库没加载，检查网络');
+				return false;
+			}
+			const SUPABASE_URL = 'https://rfmgembzxqbqsegquxmh.supabase.co';
+			const SUPABASE_KEY = 'sb_publishable_9qFlq7jJcXvnkZOIoxinug_RVotHtGw';
+			sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+			return true;
+		}
+
+		// 检查登录
+		async function checkLogin() {
+			if (currentUser) return true;
+
+			const savedId = localStorage.getItem('clan_user_id');
+			if (!savedId) {
+				alert('请先登录！');
+				toggleCorner();
+				return false;
+			}
+
+			const {
+				data
+			} = await sb.from('game_users').select('*').eq('id', savedId).single();
+			if (!data) {
+				alert('登录已过期，请重新登录！');
+				localStorage.removeItem('clan_user_id');
+				currentUser = null;
+				toggleCorner();
+				return false;
+			}
+			currentUser = data;
+			return true;
+		}
+
+
+		async function openRedeem(name, cost, type, stock, poolType) {
+			if (!await checkLogin()) return;
+
+			if (poolType === 'sponsored') {
+				if ((currentUser.prime_points || 0) < cost) {
+					alert('Prime 积分不足！');
+					return;
+				}
+				redeemItem = {
+					name,
+					cost,
+					type: 'Prime',
+					stock: stock || 0,
+					poolType
+				};
+				document.getElementById('redeemText').innerHTML =
+					`确定用 <span style="color:#e94560;font-weight:bold;">${cost} Prime</span> 积分<br>兑换「${name}」吗？`;
+				document.getElementById('redeemModal').style.display = 'flex';
+				return;
+			}
+
+			const vipPoints = currentUser.vip_points || 0;
+			const primePoints = currentUser.prime_points || 0;
+
+			if (vipPoints > 0 && primePoints > 0) {
+				showPointChoice(name, cost, stock, poolType);
+			} else if (vipPoints > 0) {
+				redeemItem = {
+					name,
+					cost,
+					type: 'VIP',
+					stock: stock || 0,
+					poolType
+				};
+				document.getElementById('redeemText').innerHTML =
+					`确定用 <span style="color:#e94560;font-weight:bold;">${cost} VIP</span> 积分<br>兑换「${name}」吗？`;
+				document.getElementById('redeemModal').style.display = 'flex';
+			} else if (primePoints > 0) {
+				redeemItem = {
+					name,
+					cost,
+					type: 'Prime',
+					stock: stock || 0,
+					poolType
+				};
+				document.getElementById('redeemText').innerHTML =
+					`确定用 <span style="color:#e94560;font-weight:bold;">${cost} Prime</span> 积分<br>兑换「${name}」吗？`;
+				document.getElementById('redeemModal').style.display = 'flex';
+			} else {
+				alert('积分不足！');
+			}
+		}
+
+
+		function closeRedeem() {
+			document.getElementById('redeemModal').style.display = 'none';
+			redeemItem = null;
+		}
+
+
+		async function confirmRedeem() {
+			if (!redeemItem || !currentUser) return;
+
+			let pointField = '';
+			let currentPoints = 0;
+
+			if (redeemItem.type === 'Rout') {
+				pointField = 'rout_points';
+				currentPoints = currentUser.rout_points || 0;
+			} else if (redeemItem.type === 'Prime') {
+				pointField = 'prime_points';
+				currentPoints = currentUser.prime_points || 0;
+			} else if (redeemItem.type === 'VIP') {
+				pointField = 'vip_points';
+				currentPoints = currentUser.vip_points || 0;
+			}
+
+			if (currentPoints < redeemItem.cost) {
+				alert('积分不足！');
+				closeRedeem();
+				return;
+			}
+
+			const newPoints = currentPoints - redeemItem.cost;
+
+
+			const {
+				error: updateError
+			} = await sb
+				.from('game_users')
+				.update({
+					[pointField]: newPoints
+				})
+				.eq('id', currentUser.id);
+
+			if (updateError) {
+				alert('扣除积分失败，请重试');
+				console.error(updateError);
+				return;
+			}
+
+			currentUser[pointField] = newPoints;
+
+			updateCornerDisplay();
+
+			refreshRedeemButtons();
+
+			const {
+				error: redeemError
+			} = await sb.from('redemptions').insert({
+				user_id: currentUser.id,
+				username: currentUser.username,
+				item_name: redeemItem.name,
+				quantity: 1,
+				points_before: currentPoints,
+				points_cost: redeemItem.cost,
+				points_after: newPoints,
+				points_type: redeemItem.type,
+				status: redeemItem.stock || 1
+			});
+
+			if (redeemError) {
+				console.error('兑换记录插入失败:', redeemError);
+				alert('兑换记录保存失败: ' + redeemError.message);
+				return;
+			}
+
+
+			if (redeemItem.stock > 0) {
+				const newStock = redeemItem.stock - 1;
+				const {
+					error: stockError
+				} = await sb
+					.from('shop_items')
+					.update({
+						stock: newStock
+					})
+					.eq('name', redeemItem.name);
+
+				if (stockError) {
+					console.error('库存扣减失败:', stockError);
+				} else {
+					redeemItem.stock = newStock;
+					updateItemStockDisplay(redeemItem.name, newStock);
+				}
+			}
+
+			closeRedeem();
+			showToast();
+		}
+
+		function showToast() {
+			const toast = document.getElementById('redeemToast');
+			toast.style.display = 'block';
+			setTimeout(() => toast.style.display = 'none', 2500);
+		}
+
+		// ==================== 右上角登录面板 ====================
+		function toggleCorner() {
+			const panel = document.getElementById('cornerPanel');
+			if (panelOpen) {
+				panel.style.display = 'none';
+				panelOpen = false;
+			} else {
+				const savedId = localStorage.getItem('clan_user_id');
+				if (savedId && currentUser) {
+					showPanelInfo();
+					panel.style.display = 'block';
+					panelOpen = true;
+				} else if (savedId && !currentUser) {
+					autoLogin().then(() => {
+						if (currentUser) {
+							showPanelInfo();
+							panel.style.display = 'block';
+							panelOpen = true;
+						} else {
+							showPanelLogin();
+							panel.style.display = 'block';
+							panelOpen = true;
+						}
+					});
+					return;
+				} else {
+					showPanelLogin();
+					panel.style.display = 'block';
+					panelOpen = true;
+				}
+			}
+		}
+
+		function showPanelInfo() {
+			if (!currentUser) return;
+			document.getElementById('panelLogin').style.display = 'none';
+			document.getElementById('panelInfo').style.display = 'block';
+
+			document.getElementById('cornerName').textContent = currentUser.username || currentUser.name || '未知';
+			document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+			document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+			document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+
+			const btn = document.getElementById('cornerBtn');
+			if (btn) {
+				btn.textContent = '✓ ' + (currentUser.username || currentUser.name);
+				btn.classList.add('logged');
+			}
+			panelOpen = true;
+		}
+
+		function showPanelLogin() {
+			document.getElementById('panelLogin').style.display = 'block';
+			document.getElementById('panelInfo').style.display = 'none';
+			panelOpen = true;
+		}
+
+		function updateCornerDisplay() {
+			if (!currentUser) return;
+			document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+			document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+			document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+		}
+
+		async function doCornerLogin() {
+			const user = document.getElementById('cornerUser').value.trim();
+			const pass = document.getElementById('cornerPass').value;
+
+			if (!sb) {
+				alert('系统初始化中');
+				return;
+			}
+
+			const {
+				data,
+				error
+			} = await sb
+				.from('game_users')
+				.select('*')
+				.eq('username', user)
+				.eq('password', pass)
+				.single();
+
+			if (error || !data) {
+				document.getElementById('cornerError').style.display = 'block';
+				return;
+			}
+
+			currentUser = data;
+			localStorage.setItem('clan_user_id', data.id);
+			showPanelInfo();
+		}
+
+		function doCornerLogout() {
+			localStorage.removeItem('clan_user_id');
+			currentUser = null;
+			document.getElementById('cornerPanel').style.display = 'none';
+			panelOpen = false;
+
+			const btn = document.getElementById('cornerBtn');
+			btn.textContent = '🔐 登录';
+			btn.classList.remove('logged');
+
+			location.reload();
+		}
+
+		document.addEventListener('click', function(e) {
+			const panel = document.getElementById('cornerPanel');
+			const btn = document.getElementById('cornerBtn');
+			if (panelOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+				panel.style.display = 'none';
+				panelOpen = false;
+			}
+
+
+			const passModal = document.getElementById('changePassModal');
+			if (passModal) {
+				const passContent = passModal.querySelector('.modal');
+				if (passModal.style.display === 'flex' && passContent && !passContent.contains(e.target)) {
+					closeChangePass();
+				}
+			}
+		});
+		async function refreshRedeemButtons() {
+			const buttons = document.querySelectorAll('.redeem-btn');
+
+			buttons.forEach(function(btn) {
+				const text = btn.textContent.trim();
+				const match = text.match(/［([\d.]+)\s*(Rout|Prime|VIP)?］/);
+				if (!match) return;
+
+				const cost = parseFloat(match[1]);
+				const type = match[2] || 'Rout';
+
+				let userPoints = 0;
+				if (type === 'Rout') userPoints = currentUser.rout_points || 0;
+				else if (type === 'Prime') userPoints = currentUser.prime_points || 0;
+				else if (type === 'VIP') userPoints = currentUser.vip_points || 0;
+
+				const stock = parseInt(btn.dataset.stock) || 0;
+				const disabled = userPoints < cost || stock === 0;
+
+				if (disabled) {
+					btn.disabled = true;
+					btn.style.background = 'rgba(100, 100, 100, 0.2)';
+					btn.style.borderColor = 'rgba(100, 100, 100, 0.3)';
+					btn.style.color = '#666';
+					btn.style.cursor = 'not-allowed';
+					btn.style.boxShadow = 'none';
+					if (stock === 0) btn.textContent = '［售罄］';
+				} else {
+					btn.disabled = false;
+					btn.style.background = 'rgba(233, 69, 96, 0.2)';
+					btn.style.borderColor = 'rgba(233, 69, 96, 0.5)';
+					btn.style.color = '#e94560';
+					btn.style.cursor = 'pointer';
+				}
+			});
+		}
+
+		function updateItemStockDisplay(itemName, newStock) {
+			const buttons = document.querySelectorAll('.redeem-btn');
+
+			buttons.forEach(function(btn) {
+				if (btn.dataset.itemName !== itemName) return;
+
+				const infoBar = btn.closest('.info-bar');
+				if (!infoBar) return;
+
+				const stockSpan = infoBar.querySelector('span:first-child');
+				if (!stockSpan) return;
+
+				if (newStock <= 0) {
+					stockSpan.textContent = '售罄';
+					stockSpan.style.color = '#e94560';
+					stockSpan.style.textShadow = '0 0 8px rgba(233, 69, 96, 0.4)';
+					btn.textContent = '［售罄］';
+					btn.disabled = true;
+					btn.style.background = 'rgba(100, 100, 100, 0.2)';
+					btn.style.borderColor = 'rgba(100, 100, 100, 0.3)';
+					btn.style.color = '#666';
+					btn.style.cursor = 'not-allowed';
+					btn.style.boxShadow = 'none';
+				} else {
+					stockSpan.textContent = '库存量：' + newStock;
+				}
+
+				btn.dataset.stock = newStock;
+			});
+		}
+
+		async function autoLogin() {
+			const savedId = localStorage.getItem('clan_user_id');
+			if (!savedId || !sb) return;
+
+			const {
+				data
+			} = await sb
+				.from('game_users')
+				.select('*')
+				.eq('id', savedId)
+				.single();
+
+			if (data) {
+				currentUser = data;
+				const btn = document.getElementById('cornerBtn');
+				if (btn) {
+					btn.textContent = '✓ ' + data.username;
+					btn.classList.add('logged');
+				}
+				if (panelOpen && document.getElementById('panelInfo').style.display === 'block') {
+					showPanelInfo();
+				}
+			}
+		}
+
+		window.addEventListener('load', function() {
+			if (initSupabase()) {
+				autoLogin();
+			}
+
+
+			const changePassBtn = document.getElementById('changePassBtn');
+			if (changePassBtn) {
+				changePassBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					showChangePass();
+				});
+			}
+		});
+
+		// ==================== 兑换按钮生成 ====================
+		document.addEventListener('DOMContentLoaded', async function() {
+
+			let shopData = {};
+			if (sb) {
+				const {
+					data,
+					error
+				} = await sb.from('shop_items').select('*');
+				if (!error && data) {
+					data.forEach(item => {
+						shopData[item.name] = item;
+					});
+				}
+			}
+
+			const prices = document.querySelectorAll('.price');
+
+			prices.forEach(function(el) {
+				const text = el.textContent.trim();
+				const match = text.match(/［([\d.]+)\s*(Rout|Prime|VIP)?］/);
+				if (!match) return;
+
+				const cost = parseFloat(match[1]);
+				const type = match[2] || 'Rout';
+
+
+				let itemName = '未知物品';
+				let card = el.closest('.d4 > div');
+				if (card) {
+					const nameSpan = card.querySelector(':scope > span:first-child');
+					if (nameSpan) itemName = nameSpan.textContent.trim();
+				}
+
+				let poolType = 'normal';
+				let checkEl = el;
+				while (checkEl) {
+					if (checkEl.id === 'div4') {
+						poolType = 'sponsored';
+						break;
+					}
+					checkEl = checkEl.parentElement;
+				}
+
+				let stockNum = -1;
+				let dbItem = shopData[itemName];
+
+				if (dbItem) {
+					stockNum = dbItem.stock;
+				} else {
+					const infoBar = el.closest('.info-bar');
+					if (infoBar) {
+						const stockSpan = infoBar.querySelector('span:first-child');
+						if (stockSpan) {
+							const stockMatch = stockSpan.textContent.match(/(\d+)/);
+							if (stockMatch) stockNum = parseInt(stockMatch[0]);
+						}
+					}
+				}
+
+				const infoBar = el.closest('.info-bar');
+				if (infoBar) {
+					const stockSpan = infoBar.querySelector('span:first-child');
+					if (stockSpan && dbItem) {
+						if (stockNum <= 0 && stockNum !== -1) {
+							stockSpan.textContent = '售罄';
+							stockSpan.style.color = '#e94560';
+							stockSpan.style.textShadow = '0 0 8px rgba(233, 69, 96, 0.4)';
+						} else if (stockNum === -1) {
+							stockSpan.textContent = '充足';
+						} else {
+							stockSpan.textContent = '库存量：' + stockNum;
+						}
+					}
+				}
+
+				const btn = document.createElement('button');
+				btn.className = 'redeem-btn';
+				btn.textContent = text;
+				btn.dataset.stock = stockNum;
+				btn.dataset.itemName = itemName;
+
+				if (stockNum === 0) {
+					btn.textContent = '［售罄］';
+					btn.disabled = true;
+					btn.style.background = 'rgba(100, 100, 100, 0.2)';
+					btn.style.borderColor = 'rgba(100, 100, 100, 0.3)';
+					btn.style.color = '#666';
+					btn.style.cursor = 'not-allowed';
+					btn.style.boxShadow = 'none';
+				}
+
+				btn.onclick = function() {
+					if (stockNum === 0) return;
+					openRedeem(itemName, cost, type, stockNum, poolType);
+				};
+
+				el.parentNode.replaceChild(btn, el);
+			});
+		});
+	</script>
 </html>

@@ -4,7 +4,7 @@
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
 		<script>
-		  window.dataLayer = window.dataLayer || [];
+			window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
 		  gtag('js', new Date());
 		
@@ -13,14 +13,13 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>REVELATION/兑换宝库</title>
-		    <style>
-        * {
+		<style>
+			* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* ========== Warframe 氏族风格背景 ========== */
         body {
             background: 
                 linear-gradient(180deg, rgba(5,8,20,0.50) 0%, rgba(8,12,30,0.50) 50%, rgba(5,8,20,0.60) 100%),
@@ -32,7 +31,6 @@
             position: relative;
         }
 
-        /* 背景粒子效果层 */
         body::before {
             content: '';
             position: fixed;
@@ -51,7 +49,6 @@
             100% { opacity: 1; }
         }
 
-        /* 扫描线效果 */
         body::after {
             content: '';
             position: fixed;
@@ -67,7 +64,6 @@
             z-index: 1;
         }
 
-        /* ========== Logo区域 ========== */
         .d2 {
             display: flex;
             align-items: center;
@@ -135,7 +131,6 @@
             display: inline-block;
         }
 
-        /* ========== 导航区域 ========== */
         .d3 {
             text-align: center;
             margin-bottom: 1.5vw;
@@ -217,7 +212,6 @@
             z-index: 2;
         }
 
-        /* 说明文字 */
         .atxt h3 {
             text-align: center;
             font-family: 'Rajdhani', sans-serif;
@@ -236,7 +230,6 @@
             clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
         }
 
-        /* 折叠按钮 */
         button {
             display: block;
             width: 80%;
@@ -284,7 +277,6 @@
             transform: translateY(0);
         }
 
-        /* 按钮内的图标样式 */
         button .btn-icon {
             width: 1.5em;
             height: 1.5em;
@@ -305,7 +297,6 @@
             vertical-align: middle;
         }
 
-        /* 商品网格 */
         .d4 {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -356,7 +347,7 @@
             transform: translateY(-5px);
         }
 
-        /* 跨两列的商品 */
+
         .d4>div.col-2 {
             grid-column: span 2;
             max-width: 600px;
@@ -364,7 +355,6 @@
             width: 100%;
         }
 
-        /* 跨列商品图片更大 */
         .d4 > div.col-2 img {
             width: 90%;
             max-width: 300px;
@@ -377,7 +367,7 @@
             }
         }
 
-        /* 新增：库存量和价格容器 */
+
         .d4>div .info-bar {
             margin-top: auto;
             padding-top: 0.5vw;
@@ -388,7 +378,7 @@
             gap: 0.3vw;
         }
 
-        /* 军械部件：四个信息块 2×2 网格布局 */
+  
         .d4>div .parts-info {
             margin-top: auto;
             padding-top: 0.5vw;
@@ -453,7 +443,7 @@
             display: none;
         }
 
-        /* 子标题 */
+
         .atxt h4 {
             text-align: center;
             font-family: 'Orbitron', sans-serif;
@@ -738,20 +728,160 @@
             90% { opacity: 1; }
             100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
         }
+		
+		.redeem-btn {
+		    background: rgba(233, 69, 96, 0.2);
+		    border: 1px solid rgba(233, 69, 96, 0.5);
+		    color: #e94560;
+		    padding: 4px 12px;
+		    border-radius: 4px;
+		    cursor: pointer;
+		    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+		    font-size: 0.9em;
+		    transition: all 0.3s;
+		}
+		
+		.login-pulse {
+		    position: relative;
+		    background: rgba(0, 60, 120, 0.4);
+		    border: 1px solid rgba(0, 200, 255, 0.5);
+		    color: #00c8ff;
+		    font-family: 'Orbitron', sans-serif;
+		    letter-spacing: 0.1em;
+		    cursor: pointer;
+		    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+		    transition: all 0.3s;
+		    text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+		    box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05);
+		    animation: pulseGlow 2s ease-in-out infinite;
+		}
+		
+		@keyframes pulseGlow {
+		    0%, 100% { box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05); }
+		    50% { box-shadow: 0 0 40px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.1); }
+		}
+		
+		.login-pulse:hover {
+		    background: rgba(0, 100, 200, 0.5);
+		    transform: translateY(-2px);
+		}
+		
+		.login-pulse.logged {
+		    background: rgba(22, 199, 154, 0.2);
+		    border-color: rgba(22, 199, 154, 0.5);
+		    color: #16c79a;
+		    text-shadow: 0 0 10px rgba(22, 199, 154, 0.5);
+		    animation: none;
+		    box-shadow: 0 0 20px rgba(22, 199, 154, 0.2);
+		}
+		
+		/* 兑换弹窗遮罩 */
+		.modal-overlay {
+		    position: fixed;
+		    top: 0; left: 0; right: 0; bottom: 0;
+		    background: rgba(5, 8, 20, 0.85);
+		    backdrop-filter: blur(5px);
+		    display: none;
+		    justify-content: center;
+		    align-items: center;
+		    z-index: 99999;
+		}
+		
+		/* 弹窗卡片 */
+		.modal {
+		    background: rgba(5, 10, 25, 0.95);
+		    border: 1px solid rgba(0, 200, 255, 0.3);
+		    border-radius: 4px;
+		    padding: 30px;
+		    width: 90%;
+		    max-width: 400px;
+		    text-align: center;
+		    box-shadow: 0 0 60px rgba(0, 150, 255, 0.15), inset 0 0 40px rgba(0, 100, 200, 0.05);
+		    clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+		}
+		
+		.modal h3 {
+		    font-family: 'Orbitron', sans-serif;
+		    color: #00c8ff;
+		    margin-bottom: 20px;
+		    text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+		}
+		
+		.modal p {
+		    color: #aaa;
+		    margin-bottom: 20px;
+		    line-height: 1.6;
+		}
+		
+		.modal-buttons {
+		    display: flex;
+		    gap: 10px;
+		    justify-content: center;
+		}
+		
+		.modal-buttons button {
+		    width: auto;
+		    padding: 10px 25px;
+		    font-size: 14px;
+		}
+		
+		.btn-cancel {
+		    background: rgba(100, 100, 100, 0.3);
+		    border-color: rgba(100, 100, 100, 0.5);
+		    color: rgba(180, 200, 220, 0.8);
+		}
+		
+		.btn-cancel:hover {
+		    background: rgba(100, 100, 100, 0.5);
+		}
+		
+		/* 成功提示 */
+		.toast {
+		    position: fixed;
+		    top: 20px;
+		    left: 50%;
+		    transform: translateX(-50%);
+		    background: rgba(22, 199, 154, 0.9);
+		    color: #fff;
+		    padding: 15px 30px;
+		    border-radius: 4px;
+		    display: none;
+		    z-index: 999999;
+		    font-family: 'Orbitron', sans-serif;
+		    border: 1px solid rgba(22, 199, 154, 0.5);
+		    box-shadow: 0 0 20px rgba(22, 199, 154, 0.3);
+		}
+		
+		.redeem-btn:hover {
+		    background: rgba(233, 69, 96, 0.4);
+		    box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
+		}
+		
+		.redeem-btn:disabled {
+		    background: rgba(100, 100, 100, 0.2);
+		    border-color: rgba(100, 100, 100, 0.3);
+		    color: #666;
+		    cursor: not-allowed;
+		}
+		
+		
     </style>
+		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 		<base target="_blank">
-<base target="_blank">
-</head>
+		<base target="_blank">
+		<base target="_blank">
+		<base target="_blank">
+	</head>
 	<body>
-	<!-- 浮动粒子 -->
-	<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
-	<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
-	<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
-	<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
-	<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
-	<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
-	<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
-	<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
+		<!-- 浮动粒子 -->
+		<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
+		<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
+		<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
+		<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
+		<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
+		<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
+		<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
+		<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
 
 		<div class="d2">
 			<a href="../index.html" id="logoLink" target="_self">
@@ -784,9 +914,9 @@
 			</h3>
 
 			<button onclick="button1()" id="bu1">
-				<img src="IMG/Rout/1.JPG" class="btn-icon" style="display:none; alt="❄">
+				<img src="IMG/Rout/1.JPG" class="btn-icon" style="display:none; alt=" ❄">
 				<span class="btn-text">MOD奖池</span>
-				<img src="IMG/Rout/1.JPG" class="btn-icon" style="display:none; alt="❄">
+				<img src="IMG/Rout/1.JPG" class="btn-icon" style="display:none; alt=" ❄">
 			</button>
 			<div id="div1" class="d4">
 				<div class="col-2">
@@ -813,584 +943,584 @@
 						<span class="price">［95 Rout］</span>
 					</div>
 				</div>
-		</div>
-		
-		<div id="div1-mod1">
-			<h4>光环 MOD</h4>
-		<div class="d4">
-		<div>
-			<span>钢铁充能</span>
-			<img src="IMG/Rout/1/T1/01.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>电磁脉冲场</span>
-			<img src="IMG/Rout/1/T1/02.jpg" alt="生长怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>召唤师之怒</span>
-			<img src="IMG/Rout/1/T1/03.jpg" alt="观众怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>空气动力</span>
-			<img src="IMG/Rout/1/T1/04.jpg" alt="Lohk颂歌">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>战斗教条</span>
-			<img src="IMG/Rout/1/T1/05.jpg" alt="镀层 致死加速">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>机甲强化</span>
-			<img src="IMG/Rout/1/T1/06.jpg" alt="镀层液压准心">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［18 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>能量调谐矩阵</span>
-			<img src="IMG/Rout/1/T1/07.jpg" alt="中空子弹">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>铁甲矩阵</span>
-			<img src="IMG/Rout/1/T1/08.jpg" alt="乏能迅敏">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-	</div>
-</div>
-
-		<div id="div1-mod2">
-			<h4>噩梦 MOD</h4>
-		<div class="d4">
-		<div>
-			<span>冰风暴</span>
-			<img src="IMG/Rout/1/T2/01.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：9</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>慑人神速</span>
-			<img src="IMG/Rout/1/T2/02.jpg" alt="生长怪奇">
-			<div class="info-bar">
-				<span>库存量：7</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>野火</span>
-			<img src="IMG/Rout/1/T2/03.jpg" alt="观众怪奇">
-			<div class="info-bar">
-				<span>库存量：12</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>加速冲击</span>
-			<img src="IMG/Rout/1/T2/04.jpg" alt="Lohk颂歌">
-			<div class="info-bar">
-				<span>库存量：11</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>激冷装填</span>
-			<img src="IMG/Rout/1/T2/05.jpg" alt="镀层 致死加速">
-			<div class="info-bar">
-				<span>库存量：17</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>漂移接触</span>
-			<img src="IMG/Rout/1/T2/06.jpg" alt="镀层液压准心">
-			<div class="info-bar">
-				<span>库存量：11</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>狂暴追猎</span>
-			<img src="IMG/Rout/1/T2/07.jpg" alt="中空子弹">
-			<div class="info-bar">
-				<span>库存量：10</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>灵活装甲</span>
-			<img src="IMG/Rout/1/T2/08.jpg" alt="乏能迅敏">
-			<div class="info-bar">
-				<span>库存量：4</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>撕裂</span>
-			<img src="IMG/Rout/1/T2/07.jpg" alt="冰风暴">
-			<div class="info-bar">
-				<span>库存量：7</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>撕裂打击</span>
-			<img src="IMG/Rout/1/T2/10.jpg" alt="致命洪流">
-			<div class="info-bar">
-				<span>库存量：5</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>不屈不挠</span>
-			<img src="IMG/Rout/1/T2/11.jpg" alt="致命效率">
-			<div class="info-bar">
-				<span>库存量：9</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>流线外形</span>
-			<img src="IMG/Rout/1/T2/12.jpg" alt="咬碎">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>动物本能</span>
-			<img src="IMG/Rout/1/T2/13.jpg" alt="观众怪奇">
-			<div class="info-bar">
-				<span>库存量：5</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>活力</span>
-			<img src="IMG/Rout/1/T2/14.jpg" alt="Lohk颂歌">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［12 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>致命洪流</span>
-			<img src="IMG/Rout/1/T2/15.jpg" alt="镀层 致死加速">
-			<div class="info-bar">
-				<span>库存量：3</span>
-				<span class="price">［22 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>聚焦能量</span>
-			<img src="IMG/Rout/1/T2/16.jpg" alt="镀层液压准心">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［10 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>百折不挠</span>
-			<img src="IMG/Rout/1/T2/17.jpg" alt="中空子弹">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>	
-	</div>
-</div>
-
-		<div id="div1-mod3">
-			<h4>堕落 MOD</h4>
-		<div class="d4">
-		<div>
-			<span>弹指瞬技</span>
-			<img src="IMG/Rout/1/T3/01.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［20 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>过度延展</span>
-			<img src="IMG/Rout/1/T3/02.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［25 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>重口径</span>
-			<img src="IMG/Rout/1/T3/03.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>关键延迟</span>
-			<img src="IMG/Rout/1/T3/04.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［18 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>腐败弹匣</span>
-			<img src="IMG/Rout/1/T3/05.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：4</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>耗竭装填</span>
-			<img src="IMG/Rout/1/T3/06.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>降速暴击</span>
-			<img src="IMG/Rout/1/T3/07.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：3</span>
-				<span class="price">［16 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>污秽弹药</span>
-			<img src="IMG/Rout/1/T3/08.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-	<div>
-			<span>过载弹匣</span>
-			<img src="IMG/Rout/1/T3/09.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：3</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-	<div>
-			<span>重装火力</span>
-			<img src="IMG/Rout/1/T3/10.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-	<div>
-			<span>空尖弹</span>
-			<img src="IMG/Rout/1/T3/11.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-	</div>
-	<div>
-			<span>乏能迅敏</span>
-			<img src="IMG/Rout/1/T3/12.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［18 Rout］</span>
-			</div>
-		</div>
-	<div>
-			<span>感染弹匣</span>
-			<img src="IMG/Rout/1/T3/13.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：2</span>
-				<span class="price">［15 Rout］</span>
-			</div>
-		</div>
-	</div>
-</div>
-
-		<div id="div1-mod4">
-			<h4>灭骸之刃 MOD</h4>
-		<div class="d4">
-		<div>
-			<span>Khra</span>
-			<img src="IMG/Rout/1/T4/01.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［18 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>Lohk</span>
-			<img src="IMG/Rout/1/T4/02.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［18 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>Xata</span>
-			<img src="IMG/Rout/1/T4/03.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［18 Rout］</span>
-			</div>
-		</div>
-		<div>
-			<span>溜之大吉</span>
-			<img src="IMG/Rout/1/T4/04.jpg" alt="终劫怪奇">
-			<div class="info-bar">
-				<span>库存量：1</span>
-				<span class="price">［13 Rout］</span>
-			</div>
-		</div>
-	</div>
-</div>
-
-		<div class="atxt">
-			<button onclick="button2()" id="bu2">
-			    <img src="IMG/Rout/2.JPG" class="btn-icon" style="display:none; alt="❄">
-			    <span class="btn-text">赋能奖池</span>
-			    <img src="IMG/Rout/2.JPG" class="btn-icon" style="display:none; alt="❄">
-			</button>
-			<div id="div2" class="d4">
-				
 			</div>
 
-			<div id="div2-mod">
-				<h4>满级赋能</h4>
+			<div id="div1-mod1">
+				<h4>光环 MOD</h4>
 				<div class="d4">
 					<div>
-						<span>近战·渐强</span>
-						<img src="IMG/Rout/2/01.jpg" alt="近战·渐强">
+						<span>钢铁充能</span>
+						<img src="IMG/Rout/1/T1/01.jpg" alt="终劫怪奇">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［150 Rout］</span>
+							<span class="price">［15 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>主要·毒侵</span>
-						<img src="IMG/Rout/2/02.jpg" alt="主要·毒侵">
+						<span>电磁脉冲场</span>
+						<img src="IMG/Rout/1/T1/02.jpg" alt="生长怪奇">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［70 Rout］</span>
+							<span class="price">［15 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>主要·准星</span>
-						<img src="IMG/Rout/2/03.jpg" alt="主要·准星">
+						<span>召唤师之怒</span>
+						<img src="IMG/Rout/1/T1/03.jpg" alt="观众怪奇">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［65 Rout］</span>
+							<span class="price">［10 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>次要·筑垒</span>
-						<img src="IMG/Rout/2/04.jpg" alt="次要·筑垒">
+						<span>空气动力</span>
+						<img src="IMG/Rout/1/T1/04.jpg" alt="Lohk颂歌">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［45 Rout］</span>
+							<span class="price">［15 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>永恒·流转</span>
-						<img src="IMG/Rout/2/05.jpg" alt="永恒·流转">
+						<span>战斗教条</span>
+						<img src="IMG/Rout/1/T1/05.jpg" alt="镀层 致死加速">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［45 Rout］</span>
+							<span class="price">［10 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>赋能·暴虐</span>
-						<img src="IMG/Rout/2/06.jpg" alt="赋能·暴虐">
+						<span>机甲强化</span>
+						<img src="IMG/Rout/1/T1/06.jpg" alt="镀层液压准心">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［45 Rout］</span>
+							<span class="price">［18 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>赋能·保卫者</span>
-						<img src="IMG/Rout/2/07.jpg" alt="赋能·暴虐">
+						<span>能量调谐矩阵</span>
+						<img src="IMG/Rout/1/T1/07.jpg" alt="中空子弹">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［80 Rout］</span>
+							<span class="price">［10 Rout］</span>
 						</div>
 					</div>
 					<div>
-						<span>赋能·冰暴</span>
-						<img src="IMG/Rout/2/08.jpg" alt="赋能·暴虐">
+						<span>铁甲矩阵</span>
+						<img src="IMG/Rout/1/T1/08.jpg" alt="乏能迅敏">
 						<div class="info-bar">
 							<span>库存量：1</span>
-							<span class="price">［50 Rout］</span>
+							<span class="price">［10 Rout］</span>
 						</div>
 					</div>
 				</div>
 			</div>
 
-		<button onclick="button3()" id="bu3">
-		    <img src="IMG/Rout/3.JPG" class="btn-icon" style="display:none; alt="❄">
-		    <span class="btn-text">阿耶檀识</span>
-		    <img src="IMG/Rout/3.JPG" class="btn-icon" style="display:none; alt="❄">
-		</button>
-		<div id="div3" class="d4">
-			<div>
-				<span>Anasa 塑像</span>
-				<img src="IMG/Rout/3/01.jpg" alt="Anasa塑像">
-				<div class="info-bar">
-					<span>库存量：15</span>
-					<span class="price">［18 Rout］</span>
+			<div id="div1-mod2">
+				<h4>噩梦 MOD</h4>
+				<div class="d4">
+					<div>
+						<span>冰风暴</span>
+						<img src="IMG/Rout/1/T2/01.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：9</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>慑人神速</span>
+						<img src="IMG/Rout/1/T2/02.jpg" alt="生长怪奇">
+						<div class="info-bar">
+							<span>库存量：7</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>野火</span>
+						<img src="IMG/Rout/1/T2/03.jpg" alt="观众怪奇">
+						<div class="info-bar">
+							<span>库存量：12</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>加速冲击</span>
+						<img src="IMG/Rout/1/T2/04.jpg" alt="Lohk颂歌">
+						<div class="info-bar">
+							<span>库存量：11</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>激冷装填</span>
+						<img src="IMG/Rout/1/T2/05.jpg" alt="镀层 致死加速">
+						<div class="info-bar">
+							<span>库存量：17</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>漂移接触</span>
+						<img src="IMG/Rout/1/T2/06.jpg" alt="镀层液压准心">
+						<div class="info-bar">
+							<span>库存量：11</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>狂暴追猎</span>
+						<img src="IMG/Rout/1/T2/07.jpg" alt="中空子弹">
+						<div class="info-bar">
+							<span>库存量：10</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>灵活装甲</span>
+						<img src="IMG/Rout/1/T2/08.jpg" alt="乏能迅敏">
+						<div class="info-bar">
+							<span>库存量：4</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>撕裂</span>
+						<img src="IMG/Rout/1/T2/07.jpg" alt="冰风暴">
+						<div class="info-bar">
+							<span>库存量：7</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>撕裂打击</span>
+						<img src="IMG/Rout/1/T2/10.jpg" alt="致命洪流">
+						<div class="info-bar">
+							<span>库存量：5</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>不屈不挠</span>
+						<img src="IMG/Rout/1/T2/11.jpg" alt="致命效率">
+						<div class="info-bar">
+							<span>库存量：9</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>流线外形</span>
+						<img src="IMG/Rout/1/T2/12.jpg" alt="咬碎">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>动物本能</span>
+						<img src="IMG/Rout/1/T2/13.jpg" alt="观众怪奇">
+						<div class="info-bar">
+							<span>库存量：5</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>活力</span>
+						<img src="IMG/Rout/1/T2/14.jpg" alt="Lohk颂歌">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［12 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>致命洪流</span>
+						<img src="IMG/Rout/1/T2/15.jpg" alt="镀层 致死加速">
+						<div class="info-bar">
+							<span>库存量：3</span>
+							<span class="price">［22 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>聚焦能量</span>
+						<img src="IMG/Rout/1/T2/16.jpg" alt="镀层液压准心">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>百折不挠</span>
+						<img src="IMG/Rout/1/T2/17.jpg" alt="中空子弹">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div>
-				<span>Ayr 塑像</span>
-				<img src="IMG/Rout/3/02.jpg" alt="Ayr 塑像">
-				<div class="info-bar">
-					<span>库存量：9</span>
-					<span class="price">［10 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>Kitha 塑像</span>
-				<img src="IMG/Rout/3/03.jpg" alt="Kitha 塑像">
-				<div class="info-bar">
-					<span>库存量：2</span>
-					<span class="price">［27 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>Orta 塑像</span>
-				<img src="IMG/Rout/3/04.jpg" alt="Orta 塑像">
-				<div class="info-bar">
-					<span>库存量：24</span>
-					<span class="price">［12 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>Piv 塑像</span>
-				<img src="IMG/Rout/3/05.jpg" alt="Piv 塑像">
-				<div class="info-bar">
-					<span>库存量：11</span>
-					<span class="price">［10 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>Sah 塑像</span>
-				<img src="IMG/Rout/3/06.jpg" alt="Sah 塑像">
-				<div class="info-bar">
-					<span>库存量：11</span>
-					<span class="price">［10 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>Valana 塑像</span>
-				<img src="IMG/Rout/3/07.jpg" alt="Valana 塑像">
-				<div class="info-bar">
-					<span>库存量：18</span>
-					<span class="price">［10 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>Vaya 塑像</span>
-				<img src="IMG/Rout/3/08.jpg" alt="Vaya 塑像">
-				<div class="info-bar">
-					<span>库存量：6</span>
-					<span class="price">［12 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>琥珀星</span>
-				<img src="IMG/Rout/3/09.jpg" alt="琥珀星">
-				<div class="info-bar">
-					<span>库存量：189</span>
-					<span class="price">［3 Rout］</span>
-				</div>
-			</div>
-			<div>
-				<span>青蓝星</span>
-				<img src="IMG/Rout/3/10.jpg" alt="青蓝星">
-				<div class="info-bar">
-					<span>库存量：313</span>
-					<span class="price">［1 Rout］</span>
-				</div>
-			</div>
-		</div>
 
-		<div class="atxt">
-			<button onclick="button4()" id="bu4">
-			    <img src="IMG/Rout/4-1.JPG" class="btn-icon" style="display:none; alt="❄">
-			    <span class="btn-text">杂项分类</span>
-			    <img src="IMG/Rout/4-2.JPG" class="btn-icon" style="display:none; alt="❄">
-			</button>
-			<div id="div4" class="d4">
-				<div>
-					<span>SCIMITAR</span>
-					<img src="IMG/Rout/4/01.jpg" alt="SCIMITAR">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［25 Rout］</span>
+			<div id="div1-mod3">
+				<h4>堕落 MOD</h4>
+				<div class="d4">
+					<div>
+						<span>弹指瞬技</span>
+						<img src="IMG/Rout/1/T3/01.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［20 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>过度延展</span>
+						<img src="IMG/Rout/1/T3/02.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［25 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>重口径</span>
+						<img src="IMG/Rout/1/T3/03.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>关键延迟</span>
+						<img src="IMG/Rout/1/T3/04.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［18 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>腐败弹匣</span>
+						<img src="IMG/Rout/1/T3/05.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：4</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>耗竭装填</span>
+						<img src="IMG/Rout/1/T3/06.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>降速暴击</span>
+						<img src="IMG/Rout/1/T3/07.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：3</span>
+							<span class="price">［16 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>污秽弹药</span>
+						<img src="IMG/Rout/1/T3/08.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>过载弹匣</span>
+						<img src="IMG/Rout/1/T3/09.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：3</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>重装火力</span>
+						<img src="IMG/Rout/1/T3/10.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>空尖弹</span>
+						<img src="IMG/Rout/1/T3/11.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［15 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>乏能迅敏</span>
+						<img src="IMG/Rout/1/T3/12.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［18 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>感染弹匣</span>
+						<img src="IMG/Rout/1/T3/13.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［15 Rout］</span>
+						</div>
 					</div>
 				</div>
-				<div>
-					<span>星察</span>
-					<img src="IMG/Rout/4/02.jpg" alt="星察">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［28 Rout］</span>
+			</div>
+
+			<div id="div1-mod4">
+				<h4>灭骸之刃 MOD</h4>
+				<div class="d4">
+					<div>
+						<span>Khra</span>
+						<img src="IMG/Rout/1/T4/01.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［18 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Lohk</span>
+						<img src="IMG/Rout/1/T4/02.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［18 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Xata</span>
+						<img src="IMG/Rout/1/T4/03.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［18 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>溜之大吉</span>
+						<img src="IMG/Rout/1/T4/04.jpg" alt="终劫怪奇">
+						<div class="info-bar">
+							<span>库存量：1</span>
+							<span class="price">［13 Rout］</span>
+						</div>
 					</div>
 				</div>
-				<div>
-					<span>冷冻光束步枪·破坏者</span>
-					<img src="IMG/Rout/4/03.jpg" alt="星察">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［95 Rout］</span>
+			</div>
+
+			<div class="atxt">
+				<button onclick="button2()" id="bu2">
+					<img src="IMG/Rout/2.JPG" class="btn-icon" style="display:none; alt=" ❄">
+					<span class="btn-text">赋能奖池</span>
+					<img src="IMG/Rout/2.JPG" class="btn-icon" style="display:none; alt=" ❄">
+				</button>
+				<div id="div2" class="d4">
+
+				</div>
+
+				<div id="div2-mod">
+					<h4>满级赋能</h4>
+					<div class="d4">
+						<div>
+							<span>近战·渐强</span>
+							<img src="IMG/Rout/2/01.jpg" alt="近战·渐强">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［150 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>主要·毒侵</span>
+							<img src="IMG/Rout/2/02.jpg" alt="主要·毒侵">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［70 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>主要·准星</span>
+							<img src="IMG/Rout/2/03.jpg" alt="主要·准星">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［65 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>次要·筑垒</span>
+							<img src="IMG/Rout/2/04.jpg" alt="次要·筑垒">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［45 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>永恒·流转</span>
+							<img src="IMG/Rout/2/05.jpg" alt="永恒·流转">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［45 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>赋能·暴虐</span>
+							<img src="IMG/Rout/2/06.jpg" alt="赋能·暴虐">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［45 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>赋能·保卫者</span>
+							<img src="IMG/Rout/2/07.jpg" alt="赋能·暴虐">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［80 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>赋能·冰暴</span>
+							<img src="IMG/Rout/2/08.jpg" alt="赋能·暴虐">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［50 Rout］</span>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div>
-					<span>圣洁·执法者</span>
-					<img src="IMG/Rout/4/04.jpg" alt="星察">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［40 Rout］</span>
+
+				<button onclick="button3()" id="bu3">
+					<img src="IMG/Rout/3.JPG" class="btn-icon" style="display:none; alt=" ❄">
+					<span class="btn-text">阿耶檀识</span>
+					<img src="IMG/Rout/3.JPG" class="btn-icon" style="display:none; alt=" ❄">
+				</button>
+				<div id="div3" class="d4">
+					<div>
+						<span>Anasa 塑像</span>
+						<img src="IMG/Rout/3/01.jpg" alt="Anasa塑像">
+						<div class="info-bar">
+							<span>库存量：15</span>
+							<span class="price">［18 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Ayr 塑像</span>
+						<img src="IMG/Rout/3/02.jpg" alt="Ayr 塑像">
+						<div class="info-bar">
+							<span>库存量：9</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Kitha 塑像</span>
+						<img src="IMG/Rout/3/03.jpg" alt="Kitha 塑像">
+						<div class="info-bar">
+							<span>库存量：2</span>
+							<span class="price">［27 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Orta 塑像</span>
+						<img src="IMG/Rout/3/04.jpg" alt="Orta 塑像">
+						<div class="info-bar">
+							<span>库存量：24</span>
+							<span class="price">［12 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Piv 塑像</span>
+						<img src="IMG/Rout/3/05.jpg" alt="Piv 塑像">
+						<div class="info-bar">
+							<span>库存量：11</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Sah 塑像</span>
+						<img src="IMG/Rout/3/06.jpg" alt="Sah 塑像">
+						<div class="info-bar">
+							<span>库存量：11</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Valana 塑像</span>
+						<img src="IMG/Rout/3/07.jpg" alt="Valana 塑像">
+						<div class="info-bar">
+							<span>库存量：18</span>
+							<span class="price">［10 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>Vaya 塑像</span>
+						<img src="IMG/Rout/3/08.jpg" alt="Vaya 塑像">
+						<div class="info-bar">
+							<span>库存量：6</span>
+							<span class="price">［12 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>琥珀星</span>
+						<img src="IMG/Rout/3/09.jpg" alt="琥珀星">
+						<div class="info-bar">
+							<span>库存量：189</span>
+							<span class="price">［3 Rout］</span>
+						</div>
+					</div>
+					<div>
+						<span>青蓝星</span>
+						<img src="IMG/Rout/3/10.jpg" alt="青蓝星">
+						<div class="info-bar">
+							<span>库存量：313</span>
+							<span class="price">［1 Rout］</span>
+						</div>
 					</div>
 				</div>
-				<div>
-					<span>任意枢议武器</span>
-					<img id="image1" src="IMG/Rout/4/1/B1-1.png" alt="任意枢议武器">
-					<div class="info-bar">
-						<span>库存量：1</span>
-						<span class="price">［40 Rout］</span>
-					</div>
-				</div>
-			<!--<div>
+
+				<div class="atxt">
+					<button onclick="button4()" id="bu4">
+						<img src="IMG/Rout/4-1.JPG" class="btn-icon" style="display:none; alt=" ❄">
+						<span class="btn-text">杂项分类</span>
+						<img src="IMG/Rout/4-2.JPG" class="btn-icon" style="display:none; alt=" ❄">
+					</button>
+					<div id="div4" class="d4">
+						<div>
+							<span>SCIMITAR</span>
+							<img src="IMG/Rout/4/01.jpg" alt="SCIMITAR">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［25 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>星察</span>
+							<img src="IMG/Rout/4/02.jpg" alt="星察">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［28 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>冷冻光束步枪·破坏者</span>
+							<img src="IMG/Rout/4/03.jpg" alt="星察">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［95 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>圣洁·执法者</span>
+							<img src="IMG/Rout/4/04.jpg" alt="星察">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［40 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>任意枢议武器</span>
+							<img id="image1" src="IMG/Rout/4/1/B1-1.png" alt="任意枢议武器">
+							<div class="info-bar">
+								<span>库存量：1</span>
+								<span class="price">［40 Rout］</span>
+							</div>
+						</div>
+						<!--<div>
 					<span>任意终极武器</span>
 					<img id="image2" src="IMG/Rout/4/1/B2-1.png" alt="任意终极武器">
 					<div class="info-bar">
@@ -1398,450 +1528,551 @@
 						<span class="price">［占位符］</span>
 					</div>
 				</div>-->
-			</div>
+					</div>
 
-			<div id="div4-mod">
-				<h4>殁世机甲专属</h4>
-				<div class="d4">
-					<div>
-						<span>虚空锐将</span>
-						<img src="IMG/Rout/4/10.jpg" alt="虚空锐将">
-						<div class="info-bar">
-							<span>库存量：1</span>
-							<span class="price">［70 Rout］</span>
+					<div id="div4-mod">
+						<h4>殁世机甲专属</h4>
+						<div class="d4">
+							<div>
+								<span>虚空锐将</span>
+								<img src="IMG/Rout/4/10.jpg" alt="虚空锐将">
+								<div class="info-bar">
+									<span>库存量：1</span>
+									<span class="price">［70 Rout］</span>
+								</div>
+							</div>
+							<div>
+								<span>殁世机甲 推进器</span>
+								<img src="IMG/Rout/4/11.jpg" alt="殁世机甲推进器">
+								<div class="info-bar">
+									<span>库存量：2</span>
+									<span class="price">［22 Rout］</span>
+								</div>
+							</div>
+							<div>
+								<span>殁世机甲 震波</span>
+								<img src="IMG/Rout/4/12.jpg" alt="殁世机甲震波">
+								<div class="info-bar">
+									<span>库存量：1</span>
+									<span class="price">［20 Rout］</span>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div>
-						<span>殁世机甲 推进器</span>
-						<img src="IMG/Rout/4/11.jpg" alt="殁世机甲推进器">
-						<div class="info-bar">
-							<span>库存量：2</span>
-							<span class="price">［22 Rout］</span>
+					<!-- 新增：军械部件折叠按钮 -->
+					<button onclick="button5()" id="bu5">
+						<img src="IMG/Rout/5-1.JPG" class="btn-icon" style="display:none; alt=" ❄">
+						<span class="btn-text">军械部件</span>
+						<img src="IMG/Rout/5-2.JPG" class="btn-icon" style="display:none; alt=" ❄">
+					</button>
+					<div id="div5" class="d4">
+						<div>
+							<span>光谱切割器·破坏者</span>
+							<img src="IMG/Rout/5/01.jpg" alt="光谱切割器·破坏者">
+							<div class="info-bar">
+								<span>蓝图：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>机体：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪管：1</span>
+								<span class="price">［12 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>握柄：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>嫣红·潘塔</span>
+							<img src="IMG/Rout/5/02.jpg" alt="嫣红·潘塔">
+							<div class="info-bar">
+								<span>蓝图：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪管：1</span>
+								<span class="price">［25 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪机：1</span>
+								<span class="price">［25 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪托：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>布莱顿·破坏者</span>
+							<img src="IMG/Rout/5/03.jpg" alt="布莱顿·破坏者">
+							<div class="info-bar">
+								<span>蓝图：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪管：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪机：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪托：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>德拉·破坏者</span>
+							<img src="IMG/Rout/5/04.jpg" alt="德拉·破坏者">
+							<div class="info-bar">
+								<span>蓝图：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪管：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪机：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪托：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>恶狼战锤</span>
+							<img src="IMG/Rout/5/05.jpg" alt="恶狼战锤">
+							<div class="info-bar">
+								<span>蓝图：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>锤头：1</span>
+								<span class="price">［25 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>马达：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>握柄：2</span>
+								<span class="price">［25 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>拉托·破坏者</span>
+							<img src="IMG/Rout/5/06.jpg" alt="拉托·破坏者">
+							<div class="info-bar">
+								<span>蓝图：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪管：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪机：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span></span>
+								<span class="price"></span>
+							</div>
+						</div>
+						<div>
+							<span>Mantis</span>
+							<img src="IMG/Rout/5/07.jpg" alt="暮斩">
+							<div class="info-bar">
+								<span>机身：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>引擎：1</span>
+								<span class="price">［12 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>飞航系统：1</span>
+								<span class="price">［12 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span></span>
+								<span class="price"></span>
+							</div>
+						</div>
+						<div>
+							<span>舍杜</span>
+							<img src="IMG/Rout/5/08.jpg" alt="舍杜">
+							<div class="info-bar">
+								<span>机体：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪管：1</span>
+								<span class="price">［15 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>枪机：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>握柄：2</span>
+								<span class="price">［15 Rout］</span>
+							</div>
+						</div>
+						<div>
+							<span>鹦鹉螺</span>
+							<img src="IMG/Rout/5/09.jpg" alt="鹦鹉螺">
+							<div class="info-bar">
+								<span>蓝图：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>头部：0</span>
+								<span class="price">［00 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>外壳：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
+							<div class="info-bar">
+								<span>系统：1</span>
+								<span class="price">［17 Rout］</span>
+							</div>
 						</div>
 					</div>
-					<div>
-						<span>殁世机甲 震波</span>
-						<img src="IMG/Rout/4/12.jpg" alt="殁世机甲震波">
-						<div class="info-bar">
-							<span>库存量：1</span>
-							<span class="price">［20 Rout］</span>
+				</div>
+				<button class="toggle-all" id="toggleAll" title="展开/折叠全部">≡</button>
+				<button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
+				<div class="modal-overlay" id="redeemModal" style="display:none;">
+					<div class="modal">
+						<h3>确认兑换</h3>
+						<p id="redeemText"></p>
+						<div class="modal-buttons">
+							<button class="btn-cancel" onclick="closeRedeem()">取消</button>
+							<button onclick="confirmRedeem()">确定兑换</button>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- 新增：军械部件折叠按钮 -->
-			<button onclick="button5()" id="bu5">
-			    <img src="IMG/Rout/5-1.JPG" class="btn-icon" style="display:none; alt="❄">
-			    <span class="btn-text">军械部件</span>
-			    <img src="IMG/Rout/5-2.JPG" class="btn-icon" style="display:none; alt="❄">
-			</button>
-			<div id="div5" class="d4">
-				<div>
-					<span>光谱切割器·破坏者</span>
-					<img src="IMG/Rout/5/01.jpg" alt="光谱切割器·破坏者">
-					<div class="info-bar">
-						<span>蓝图：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>机体：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪管：1</span>
-						<span class="price">［12 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>握柄：0</span>
-						<span class="price">［00 Rout］</span>
+
+				<!-- 修改密码弹窗 -->
+				<div class="modal-overlay" id="changePassModal" style="display:none;">
+					<div class="modal">
+						<h3>修改密码</h3>
+						<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+							<input type="password" id="oldPass" placeholder="原密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+							<input type="password" id="newPass" placeholder="新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+							<input type="password" id="confirmPass" placeholder="确认新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+						</div>
+						<p id="changePassError" style="color:#e94560;text-align:center;margin-bottom:15px;display:none;font-size:13px;"></p>
+						<div class="modal-buttons">
+							<button class="btn-cancel" onclick="closeChangePass()">取消</button>
+							<button onclick="doChangePass()">确认修改</button>
+						</div>
 					</div>
 				</div>
-				<div>
-					<span>嫣红·潘塔</span>
-					<img src="IMG/Rout/5/02.jpg" alt="嫣红·潘塔">
-					<div class="info-bar">
-						<span>蓝图：0</span>
-						<span class="price">［00 Rout］</span>
+
+				<div class="toast" id="redeemToast" style="display:none;">✅ 兑换申请已提交！</div>
+
+				<div id="userCorner" style="position:fixed;top:20px;right:20px;z-index:99999;">
+					<button id="cornerBtn" onclick="toggleCorner()" class="login-pulse" style="width:auto;padding:10px 20px;font-size:13px;">🔐
+						登录</button>
+				</div>
+
+
+				<div id="cornerPanel" style="display:none;position:fixed;top:70px;right:20px;width:260px;z-index:99998;background:rgba(5,10,25,0.95);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:20px;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);box-shadow:0 0 40px rgba(0,0,0,0.5);">
+
+
+					<div id="panelLogin">
+						<h3 style="text-align:center;color:#00c8ff;font-family:'Orbitron';font-size:16px;margin-bottom:15px;text-shadow:0 0 15px rgba(0,200,255,0.3);">◈
+							ID验证 ◈</h3>
+						<input type="text" id="cornerUser" placeholder="游戏ID" style="width:100%;padding:12px;margin-bottom:10px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+						<input type="password" id="cornerPass" placeholder="密码" style="width:100%;padding:12px;margin-bottom:15px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+						<button onclick="doCornerLogin()" style="width:100%;padding:12px;background:rgba(0,180,255,0.2);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-family:'Orbitron';font-size:14px;cursor:pointer;transition:all 0.3s;">验证</button>
+						<p id="cornerError" style="color:#e94560;text-align:center;margin-top:10px;display:none;font-size:13px;">验证失败</p>
 					</div>
-					<div class="info-bar">
-						<span>枪管：1</span>
-						<span class="price">［25 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪机：1</span>
-						<span class="price">［25 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪托：0</span>
-						<span class="price">［00 Rout］</span>
+
+
+					<div id="panelInfo" style="display:none;">
+						<div style="text-align:center;margin-bottom:15px;">
+							<span style="color:#00c8ff;font-family:'Orbitron';font-size:14px;">👤 <span id="cornerName">--</span></span>
+						</div>
+						<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px;">
+							<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.2);border-radius:3px;">
+								<span style="color:#FF9800;">Rout</span>
+								<span style="color:#FF9800;font-weight:bold;" id="cornerRout">0</span>
+							</div>
+							<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);border-radius:3px;">
+								<span style="color:#00c8ff;">Prime</span>
+								<span style="color:#00c8ff;font-weight:bold;" id="cornerPrime">0</span>
+							</div>
+							<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:3px;">
+								<span style="color:#e94560;">Prime VIP</span>
+								<span style="color:#e94560;font-weight:bold;" id="cornerVip">0</span>
+							</div>
+						</div>
+						<button id="changePassBtn" style="width:100%;padding:10px;margin-bottom:10px;background:rgba(0,180,255,0.15);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-size:12px;cursor:pointer;">🔑
+							修改密码</button>
+						<button onclick="doCornerLogout()" style="width:100%;padding:10px;background:rgba(100,100,100,0.2);border:1px solid rgba(100,100,100,0.4);color:rgba(150,180,200,0.7);font-size:12px;cursor:pointer;">断开连接</button>
 					</div>
 				</div>
-				<div>
-					<span>布莱顿·破坏者</span>
-					<img src="IMG/Rout/5/03.jpg" alt="布莱顿·破坏者">
-					<div class="info-bar">
-						<span>蓝图：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪管：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪机：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪托：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>德拉·破坏者</span>
-					<img src="IMG/Rout/5/04.jpg" alt="德拉·破坏者">
-					<div class="info-bar">
-						<span>蓝图：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪管：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪机：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪托：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>恶狼战锤</span>
-					<img src="IMG/Rout/5/05.jpg" alt="恶狼战锤">
-					<div class="info-bar">
-						<span>蓝图：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>锤头：1</span>
-						<span class="price">［25 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>马达：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>握柄：2</span>
-						<span class="price">［25 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>拉托·破坏者</span>
-					<img src="IMG/Rout/5/06.jpg" alt="拉托·破坏者">
-					<div class="info-bar">
-						<span>蓝图：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪管：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪机：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span></span>
-						<span class="price"></span>
-					</div>
-				</div>
-				<div>
-					<span>Mantis</span>
-					<img src="IMG/Rout/5/07.jpg" alt="暮斩">
-					<div class="info-bar">
-						<span>机身：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>引擎：1</span>
-						<span class="price">［12 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>飞航系统：1</span>
-						<span class="price">［12 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span></span>
-						<span class="price"></span>
-					</div>
-				</div>
-				<div>
-					<span>舍杜</span>
-					<img src="IMG/Rout/5/08.jpg" alt="舍杜">
-					<div class="info-bar">
-						<span>机体：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪管：1</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>枪机：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>握柄：2</span>
-						<span class="price">［15 Rout］</span>
-					</div>
-				</div>
-				<div>
-					<span>鹦鹉螺</span>
-					<img src="IMG/Rout/5/09.jpg" alt="鹦鹉螺">
-					<div class="info-bar">
-						<span>蓝图：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>头部：0</span>
-						<span class="price">［00 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>外壳：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-					<div class="info-bar">
-						<span>系统：1</span>
-						<span class="price">［17 Rout］</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<button class="toggle-all" id="toggleAll" title="展开/折叠全部">≡</button>
-		<button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
 	</body>
-		<script>
-			function button1() {
-			    var div1 = document.getElementById('div1');
-			    var bu1 = document.getElementById('bu1');
-			    var div1mod1 = document.getElementById('div1-mod1');
-			    var div1mod2 = document.getElementById('div1-mod2');
-			    var div1mod3 = document.getElementById('div1-mod3');
-			    var div1mod4 = document.getElementById('div1-mod4');
-			    var icons = bu1.querySelectorAll('.btn-icon');
-			    if (div1.style.display == 'grid') {
-			        div1.style.display = 'none';
-			        div1mod1.style.display = 'none';
-			        div1mod2.style.display = 'none';
-			        div1mod3.style.display = 'none';
-			        div1mod4.style.display = 'none';
-			        bu1.querySelector('.btn-text').innerText = "MOD奖池";
-			        icons.forEach(function(icon) { icon.style.display = 'none'; });
-			    } else {
-			        div1.style.display = 'grid';
-			        div1mod1.style.display = 'block';
-			        div1mod2.style.display = 'block';
-			        div1mod3.style.display = 'block';
-			        div1mod4.style.display = 'block';
-			        bu1.querySelector('.btn-text').innerText = "MOD奖池";
-			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-			    }
-			    updateToggleAllState();
+	<script>
+		function button1() {
+			var div1 = document.getElementById('div1');
+			var bu1 = document.getElementById('bu1');
+			var div1mod1 = document.getElementById('div1-mod1');
+			var div1mod2 = document.getElementById('div1-mod2');
+			var div1mod3 = document.getElementById('div1-mod3');
+			var div1mod4 = document.getElementById('div1-mod4');
+			var icons = bu1.querySelectorAll('.btn-icon');
+			if (div1.style.display == 'grid') {
+				div1.style.display = 'none';
+				div1mod1.style.display = 'none';
+				div1mod2.style.display = 'none';
+				div1mod3.style.display = 'none';
+				div1mod4.style.display = 'none';
+				bu1.querySelector('.btn-text').innerText = "MOD奖池";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div1.style.display = 'grid';
+				div1mod1.style.display = 'block';
+				div1mod2.style.display = 'block';
+				div1mod3.style.display = 'block';
+				div1mod4.style.display = 'block';
+				bu1.querySelector('.btn-text').innerText = "MOD奖池";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
 			}
+			updateToggleAllState();
+		}
 
-			function button2() {
-			    var div2 = document.getElementById('div2');
-			    var div2mod = document.getElementById('div2-mod');
-			    var bu2 = document.getElementById('bu2');
-			    var icons = bu2.querySelectorAll('.btn-icon');
-			    if (div2.style.display == 'grid') {
-			        div2.style.display = 'none';
-			        div2mod.style.display = 'none';
-			        bu2.querySelector('.btn-text').innerText = "赋能奖池";
-			        icons.forEach(function(icon) { icon.style.display = 'none'; });
-			    } else {
-			        div2.style.display = 'grid';
-			        div2mod.style.display = 'block';
-			        bu2.querySelector('.btn-text').innerText = "赋能奖池";
-			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-			    }
-			    updateToggleAllState();
+		function button2() {
+			var div2 = document.getElementById('div2');
+			var div2mod = document.getElementById('div2-mod');
+			var bu2 = document.getElementById('bu2');
+			var icons = bu2.querySelectorAll('.btn-icon');
+			if (div2.style.display == 'grid') {
+				div2.style.display = 'none';
+				div2mod.style.display = 'none';
+				bu2.querySelector('.btn-text').innerText = "赋能奖池";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div2.style.display = 'grid';
+				div2mod.style.display = 'block';
+				bu2.querySelector('.btn-text').innerText = "赋能奖池";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
 			}
-			
-			function button3() {
-			    var div3 = document.getElementById('div3');
-			    var bu3 = document.getElementById('bu3');
-			    var icons = bu3.querySelectorAll('.btn-icon');
-			    if (div3.style.display == 'grid') {
-			        div3.style.display = 'none';
-			        bu3.querySelector('.btn-text').innerText = "阿耶檀识";
-			        icons.forEach(function(icon) { icon.style.display = 'none'; });
-			    } else {
-			        div3.style.display = 'grid';
-			        bu3.querySelector('.btn-text').innerText = "阿耶檀识";
-			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-			    }
-			    updateToggleAllState();
+			updateToggleAllState();
+		}
+
+		function button3() {
+			var div3 = document.getElementById('div3');
+			var bu3 = document.getElementById('bu3');
+			var icons = bu3.querySelectorAll('.btn-icon');
+			if (div3.style.display == 'grid') {
+				div3.style.display = 'none';
+				bu3.querySelector('.btn-text').innerText = "阿耶檀识";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div3.style.display = 'grid';
+				bu3.querySelector('.btn-text').innerText = "阿耶檀识";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
 			}
+			updateToggleAllState();
+		}
 
-			function button4() {
-			    var div4 = document.getElementById('div4');
-			    var div4mod = document.getElementById('div4-mod');
-			    var bu4 = document.getElementById('bu4');
-			    var icons = bu4.querySelectorAll('.btn-icon');
-			    if (div4.style.display == 'grid') {
-			        div4.style.display = 'none';
-			        div4mod.style.display = 'none';
-			        bu4.querySelector('.btn-text').innerText = "杂项分类";
-			        icons.forEach(function(icon) { icon.style.display = 'none'; });
-			    } else {
-			        div4.style.display = 'grid';
-			        div4mod.style.display = 'block';
-			        bu4.querySelector('.btn-text').innerText = "杂项分类";
-			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-			    }
-			    updateToggleAllState();
+		function button4() {
+			var div4 = document.getElementById('div4');
+			var div4mod = document.getElementById('div4-mod');
+			var bu4 = document.getElementById('bu4');
+			var icons = bu4.querySelectorAll('.btn-icon');
+			if (div4.style.display == 'grid') {
+				div4.style.display = 'none';
+				div4mod.style.display = 'none';
+				bu4.querySelector('.btn-text').innerText = "杂项分类";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div4.style.display = 'grid';
+				div4mod.style.display = 'block';
+				bu4.querySelector('.btn-text').innerText = "杂项分类";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
 			}
+			updateToggleAllState();
+		}
 
 
-			function button5() {
-			    var div5 = document.getElementById('div5');
-			    var bu5 = document.getElementById('bu5');
-			    var icons = bu5.querySelectorAll('.btn-icon');
-			    if (div5.style.display == 'grid') {
-			        div5.style.display = 'none';
-			        bu5.querySelector('.btn-text').innerText = "军械部件";
-			        icons.forEach(function(icon) { icon.style.display = 'none'; });
-			    } else {
-			        div5.style.display = 'grid';
-			        bu5.querySelector('.btn-text').innerText = "军械部件";
-			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-			    }
-			    updateToggleAllState();
+		function button5() {
+			var div5 = document.getElementById('div5');
+			var bu5 = document.getElementById('bu5');
+			var icons = bu5.querySelectorAll('.btn-icon');
+			if (div5.style.display == 'grid') {
+				div5.style.display = 'none';
+				bu5.querySelector('.btn-text').innerText = "军械部件";
+				icons.forEach(function(icon) {
+					icon.style.display = 'none';
+				});
+			} else {
+				div5.style.display = 'grid';
+				bu5.querySelector('.btn-text').innerText = "军械部件";
+				icons.forEach(function(icon) {
+					icon.style.display = 'inline-block';
+				});
 			}
+			updateToggleAllState();
+		}
 
-			// 图片轮播		
+		// 图片轮播		
 
-			// 图片轮播
-			var images1 = [
-				'IMG/Rout/4/1/B1-1.png',
-				'IMG/Rout/4/1/B1-2.png',
-				'IMG/Rout/4/1/B1-3.png',
-			];
-			var index1 = 0;
-			setInterval(function() {
-				var imgElement = document.getElementById('image1');
+		// 图片轮播
+		var images1 = [
+			'IMG/Rout/4/1/B1-1.png',
+			'IMG/Rout/4/1/B1-2.png',
+			'IMG/Rout/4/1/B1-3.png',
+		];
+		var index1 = 0;
+		setInterval(function() {
+			var imgElement = document.getElementById('image1');
+			if (imgElement) {
 				imgElement.src = images1[index1];
 				index1 = (index1 + 1) % images1.length;
-			}, 200);
+			}
+		}, 200);
 
-			var images2 = [
-				'IMG/Rout/4/1/B2-1.png',
-				'IMG/Rout/4/1/B2-2.png',
-				'IMG/Rout/4/1/B2-3.png',
-			];
-			var index2 = 0;
-			setInterval(function() {
-				var imgElement = document.getElementById('image2');
+		var images2 = [
+			'IMG/Rout/4/1/B2-1.png',
+			'IMG/Rout/4/1/B2-2.png',
+			'IMG/Rout/4/1/B2-3.png',
+		];
+		var index2 = 0;
+		setInterval(function() {
+			var imgElement = document.getElementById('image2');
+			if (imgElement) { // 加判断
 				imgElement.src = images2[index2];
 				index2 = (index2 + 1) % images2.length;
-			}, 200);
-
-			// 打字机效果
-			const texts = ["REVELATION", "天启 联盟"];
-			let index = 0;
-			let isTyping = true;
-			let cursor = 0;
-			let blinkInterval;
-
-			function initBlink() {
-				blinkInterval = setInterval(() => {
-					const cursorElement = document.getElementById("cursor");
-					if (cursorElement) {
-						cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
-					}
-				}, 500);
 			}
+		}, 200);
 
-			function stopBlink() {
-				clearInterval(blinkInterval);
-			}
+		// 打字机效果
+		const texts = ["REVELATION", "天启 联盟"];
+		let index = 0;
+		let isTyping = true;
+		let cursor = 0;
+		let blinkInterval;
 
-			function addCursor() {
-				const cursorElement = document.createElement("span");
-				cursorElement.id = "cursor";
-				cursorElement.textContent = "|";
-				cursorElement.style.visibility = "visible";
-				document.getElementById("typing").appendChild(cursorElement);
-				initBlink();
-			}
-
-			function removeCursor() {
+		function initBlink() {
+			blinkInterval = setInterval(() => {
 				const cursorElement = document.getElementById("cursor");
 				if (cursorElement) {
-					stopBlink();
-					cursorElement.remove();
+					cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
 				}
-			}
+			}, 500);
+		}
 
-			function typeEffect() {
-				const textElement = document.getElementById("typing");
-				const currentText = texts[index];
-				if (isTyping) {
-					if (cursor < currentText.length) {
-						textElement.textContent += currentText.charAt(cursor);
-						cursor++;
-					} else {
-						addCursor();
-						setTimeout(() => {
-							isTyping = false;
-							cursor = 0;
-							setTimeout(() => {
-								removeCursor();
-								typeEffect();
-							}, 1500);
-							return;
-						}, 300);
-						return;
-					}
+		function stopBlink() {
+			clearInterval(blinkInterval);
+		}
+
+		function addCursor() {
+			const cursorElement = document.createElement("span");
+			cursorElement.id = "cursor";
+			cursorElement.textContent = "|";
+			cursorElement.style.visibility = "visible";
+			document.getElementById("typing").appendChild(cursorElement);
+			initBlink();
+		}
+
+		function removeCursor() {
+			const cursorElement = document.getElementById("cursor");
+			if (cursorElement) {
+				stopBlink();
+				cursorElement.remove();
+			}
+		}
+
+		function typeEffect() {
+			const textElement = document.getElementById("typing");
+			const currentText = texts[index];
+			if (isTyping) {
+				if (cursor < currentText.length) {
+					textElement.textContent += currentText.charAt(cursor);
+					cursor++;
 				} else {
-					// 修改回删逻辑：保留一个零宽空格防止容器塌陷
-					if (textElement.textContent.length > 1) {
-						textElement.textContent = textElement.textContent.slice(0, -1);
-					} else {
-						textElement.textContent = "\u200b"; // 零宽空格，占位但不可见
-						isTyping = true;
-						index = (index + 1) % texts.length;
-						removeCursor();
-						setTimeout(typeEffect, 400);
+					addCursor();
+					setTimeout(() => {
+						isTyping = false;
+						cursor = 0;
+						setTimeout(() => {
+							removeCursor();
+							typeEffect();
+						}, 1500);
 						return;
-					}
+					}, 300);
+					return;
 				}
-				setTimeout(typeEffect, isTyping ? 100 : 100);
+			} else {
+				// 修改回删逻辑：保留一个零宽空格防止容器塌陷
+				if (textElement.textContent.length > 1) {
+					textElement.textContent = textElement.textContent.slice(0, -1);
+				} else {
+					textElement.textContent = "\u200b"; // 零宽空格，占位但不可见
+					isTyping = true;
+					index = (index + 1) % texts.length;
+					removeCursor();
+					setTimeout(typeEffect, 400);
+					return;
+				}
 			}
+			setTimeout(typeEffect, isTyping ? 100 : 100);
+		}
 
-			typeEffect();
-			
-			// 回到顶部按钮逻辑
-			let backToTopBtn = document.getElementById('backToTop');
-			window.addEventListener('scroll', function() {
-			    if (window.pageYOffset > 300) {
-			        backToTopBtn.classList.add('visible');
-			    } else {
-			        backToTopBtn.classList.remove('visible');
-			    }
+		typeEffect();
+
+		// 回到顶部按钮逻辑
+		let backToTopBtn = document.getElementById('backToTop');
+		window.addEventListener('scroll', function() {
+			if (window.pageYOffset > 300) {
+				backToTopBtn.classList.add('visible');
+			} else {
+				backToTopBtn.classList.remove('visible');
+			}
+		});
+		backToTopBtn.addEventListener('click', function() {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
 			});
-			backToTopBtn.addEventListener('click', function() {
-			    window.scrollTo({ top: 0, behavior: 'smooth' });
-			});
-			
-			// ========== 5秒提示 ==========
-			setTimeout(function() {
-			    let tip = document.createElement('div');
-			    tip.id = 'avatar-tip';
-			    tip.innerHTML = '💡 点击顶部 <img src="../Logo.jpg" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,200,255,0.4);">可返回上一级';
-			    tip.style.cssText = `
+		});
+
+		// ========== 5秒提示 ==========
+		setTimeout(function() {
+			let tip = document.createElement('div');
+			tip.id = 'avatar-tip';
+			tip.innerHTML =
+				'💡 点击顶部 <img src="../Logo.jpg" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,200,255,0.4);">可返回上一级';
+			tip.style.cssText =
+				`
 			        position:fixed;
 			        top:50%;
 			        left:0;
@@ -1861,95 +2092,710 @@
 			        white-space:nowrap;
 			        animation:tipSlideInLeft 0.6s ease forwards,tipPulse 2s ease-in-out infinite alternate;
 			    `;
-			    document.body.appendChild(tip);
-			
-			    function removeTip() {
-			        if (!tip.parentNode) return;
-			        tip.style.animation = 'tipSlideOutRight 0.5s ease forwards';
-			        setTimeout(() => tip.remove(), 500);
-			    }
-			    tip.addEventListener('click', removeTip);
-			    setTimeout(removeTip, 4000);
-			
-			    // 用户滑动页面时向右滑出消失
-			    window.addEventListener('scroll', removeTip, { once: true });
-			}, 5000);
-			
-			// ========== Logo 链接返回来源页 ==========
-			let logoLink = document.getElementById('logoLink');
-			let params = new URLSearchParams(window.location.search);
-			let from = params.get('from');
-			
-			if (from && from.startsWith('index-')) {
-				logoLink.href = '../' + from;
-				logoLink.target = '_self';
+			document.body.appendChild(tip);
+
+			function removeTip() {
+				if (!tip.parentNode) return;
+				tip.style.animation = 'tipSlideOutRight 0.5s ease forwards';
+				setTimeout(() => tip.remove(), 500);
+			}
+			tip.addEventListener('click', removeTip);
+			setTimeout(removeTip, 4000);
+
+			window.addEventListener('scroll', removeTip, {
+				once: true
+			});
+		}, 5000);
+
+		let logoLink = document.getElementById('logoLink');
+		let params = new URLSearchParams(window.location.search);
+		let from = params.get('from');
+
+		if (from && from.startsWith('index-')) {
+			logoLink.href = '../' + from;
+			logoLink.target = '_self';
+		}
+
+		let g22Link = document.getElementById('g2toG22');
+		if (from && g22Link) {
+			g22Link.href = 'G2-2.html?from=' + from;
+		}
+
+		let toggleAllBtn = document.getElementById('toggleAll');
+		let allExpanded = false;
+
+		function checkAnyExpanded() {
+			var div1 = document.getElementById('div1');
+			var div2 = document.getElementById('div2');
+			var div3 = document.getElementById('div3');
+			var div4 = document.getElementById('div4');
+			var div5 = document.getElementById('div5');
+			return (div1 && div1.style.display == 'grid') ||
+				(div2 && div2.style.display == 'grid') ||
+				(div3 && div3.style.display == 'grid') ||
+				(div4 && div4.style.display == 'grid') ||
+				(div5 && div5.style.display == 'grid');
+		}
+
+		function updateToggleAllState() {
+			allExpanded = checkAnyExpanded();
+			toggleAllBtn.classList.toggle('active', allExpanded);
+			toggleAllBtn.title = allExpanded ? '折叠全部' : '展开全部';
+		}
+
+		toggleAllBtn.addEventListener('click', function() {
+			allExpanded = checkAnyExpanded();
+
+
+			var targetDisplay = allExpanded ? 'none' : 'grid';
+			var subDisplay = allExpanded ? 'none' : 'block';
+
+			let sections = ['div1', 'div2', 'div3', 'div4', 'div5'];
+
+			let subSections = ['div1-mod1', 'div1-mod2', 'div1-mod3', 'div1-mod4', 'div2-mod', 'div4-mod'];
+
+			sections.forEach(function(id) {
+				let el = document.getElementById(id);
+				if (el) el.style.display = targetDisplay;
+			});
+
+
+			subSections.forEach(function(id) {
+				let el = document.getElementById(id);
+				if (el) el.style.display = subDisplay;
+			});
+
+
+			let btns = ['bu1', 'bu2', 'bu3', 'bu4', 'bu5'];
+			btns.forEach(function(btnId) {
+				let btn = document.getElementById(btnId);
+				if (!btn) return;
+				let icons = btn.querySelectorAll('.btn-icon');
+				icons.forEach(function(icon) {
+					icon.style.display = allExpanded ? 'none' : 'inline-block';
+				});
+			});
+
+			updateToggleAllState();
+		});
+
+		document.addEventListener('DOMContentLoaded', async function() {
+
+			let shopData = {};
+			if (typeof supabase !== 'undefined' && !sb) {
+				const SUPABASE_URL = 'https://rfmgembzxqbqsegquxmh.supabase.co';
+				const SUPABASE_KEY = 'sb_publishable_9qFlq7jJcXvnkZOIoxinug_RVotHtGw';
+				sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+			}
+			if (sb) {
+				try {
+					const {
+						data,
+						error
+					} = await sb.from('shop_items').select('*');
+					if (!error && data) {
+						data.forEach(item => {
+							shopData[item.name] = item;
+						});
+					}
+				} catch (e) {
+					console.log('数据库连接失败，使用本地库存');
+				}
 			}
 
-			// 把 from 参数继续传给 G2-2.html
-			let g22Link = document.getElementById('g2toG22');
-			if (from && g22Link) {
-				g22Link.href = 'G2-2.html?from=' + from;
-			}
-			
-			// ========== 展开/折叠全部奖品 ==========
-			let toggleAllBtn = document.getElementById('toggleAll');
-			let allExpanded = false;
-		
-			function checkAnyExpanded() {
-				var div1 = document.getElementById('div1');
-				var div2 = document.getElementById('div2');
-				var div3 = document.getElementById('div3');
-				var div4 = document.getElementById('div4');
-				var div5 = document.getElementById('div5');
-				return (div1 && div1.style.display == 'grid') ||
-				       (div2 && div2.style.display == 'grid') ||
-				       (div3 && div3.style.display == 'grid') ||
-				       (div4 && div4.style.display == 'grid') ||
-				       (div5 && div5.style.display == 'grid');
-			}
-		
-			function updateToggleAllState() {
-				allExpanded = checkAnyExpanded();
-				toggleAllBtn.classList.toggle('active', allExpanded);
-				toggleAllBtn.title = allExpanded ? '折叠全部' : '展开全部';
-			}
-		
-			toggleAllBtn.addEventListener('click', function() {
-				allExpanded = checkAnyExpanded();
-				
-				// 如果当前有任何一个展开，则全部折叠；否则全部展开
-				var targetDisplay = allExpanded ? 'none' : 'grid';
-				var subDisplay = allExpanded ? 'none' : 'block';
-				
-				// 所有主内容区域
-				let sections = ['div1', 'div2', 'div3', 'div4', 'div5'];
-				// 所有子区域
-				let subSections = ['div1-mod1', 'div1-mod2', 'div1-mod3', 'div1-mod4', 'div2-mod', 'div4-mod'];
-		
-				// 切换主区域
-				sections.forEach(function(id) {
-					let el = document.getElementById(id);
-					if (el) el.style.display = targetDisplay;
-				});
-		
-				// 切换子区域
-				subSections.forEach(function(id) {
-					let el = document.getElementById(id);
-					if (el) el.style.display = subDisplay;
-				});
-		
-				// 同步各按钮图标状态
-				let btns = ['bu1', 'bu2', 'bu3', 'bu4', 'bu5'];
-				btns.forEach(function(btnId) {
-					let btn = document.getElementById(btnId);
-					if (!btn) return;
-					let icons = btn.querySelectorAll('.btn-icon');
-					icons.forEach(function(icon) {
-						icon.style.display = allExpanded ? 'none' : 'inline-block';
-					});
-				});
-		
-				updateToggleAllState();
+			const prices = document.querySelectorAll('.price');
+
+			prices.forEach(function(el) {
+				const text = el.textContent.trim();
+				const match = text.match(/［([\d.]+)\s*(Rout|Prime|VIP)?］/);
+				if (!match) return;
+
+				const cost = parseFloat(match[1]);
+				const type = match[2] || 'Rout';
+
+				let itemName = '未知物品';
+				const card = el.closest('.d4 > div');
+				if (card) {
+					const nameSpan = card.querySelector(':scope > span:first-child');
+					if (nameSpan) itemName = nameSpan.textContent.trim();
+				}
+
+
+				let stockNum = -1;
+				let dbItem = shopData[itemName];
+
+				if (dbItem) {
+					stockNum = dbItem.stock;
+				} else {
+
+					const infoBar = el.closest('.info-bar');
+					if (infoBar) {
+						const stockSpan = infoBar.querySelector('span:first-child');
+						if (stockSpan) {
+							const stockMatch = stockSpan.textContent.match(/(\d+)/);
+							if (stockMatch) stockNum = parseInt(stockMatch[0]);
+						}
+					}
+				}
+
+				const infoBar = el.closest('.info-bar');
+				if (infoBar) {
+					const stockSpan = infoBar.querySelector('span:first-child');
+					if (stockSpan && dbItem) {
+						if (stockNum <= 0 && stockNum !== -1) {
+							stockSpan.textContent = '售罄';
+							stockSpan.style.color = '#e94560';
+							stockSpan.style.textShadow = '0 0 8px rgba(233, 69, 96, 0.4)';
+						} else if (stockNum === -1) {
+							stockSpan.textContent = '充足';
+						} else {
+							stockSpan.textContent = '库存量：' + stockNum;
+						}
+					}
+				}
+
+
+				const btn = document.createElement('button');
+				btn.className = 'redeem-btn';
+				btn.textContent = text;
+				btn.dataset.stock = stockNum;
+				btn.dataset.itemName = itemName;
+
+				if (stockNum === 0) {
+					btn.textContent = '［售罄］';
+					btn.disabled = true;
+					btn.style.background = 'rgba(100, 100, 100, 0.2)';
+					btn.style.borderColor = 'rgba(100, 100, 100, 0.3)';
+					btn.style.color = '#666';
+					btn.style.cursor = 'not-allowed';
+					btn.style.boxShadow = 'none';
+				}
+
+				btn.onclick = function() {
+					if (stockNum === 0) return;
+					openRedeem(itemName, cost, type, stockNum);
+				};
+
+				el.parentNode.replaceChild(btn, el);
 			});
-		</script>
+		});
+		// ==================== Supabase 配置 ====================
+
+		// 全局变量
+		let sb = null;
+		let currentUser = null;
+		let redeemItem = null;
+		let panelOpen = false;
+
+		function initSupabase() {
+			if (typeof supabase === 'undefined') {
+				console.error('Supabase 库没加载，检查网络');
+				return false;
+			}
+			const SUPABASE_URL = 'https://rfmgembzxqbqsegquxmh.supabase.co';
+			const SUPABASE_KEY = 'sb_publishable_9qFlq7jJcXvnkZOIoxinug_RVotHtGw';
+			sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+			return true;
+		}
+
+		window.addEventListener('load', function() {
+			if (initSupabase()) {
+				autoLogin();
+			}
+
+			// 绑定修改密码按钮事件
+			const changePassBtn = document.getElementById('changePassBtn');
+			if (changePassBtn) {
+				changePassBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					showChangePass();
+				});
+			}
+		});
+
+
+		async function checkLogin() {
+			if (currentUser) return true;
+
+			const savedId = localStorage.getItem('clan_user_id');
+			if (!savedId) {
+				alert('请先登录！');
+				toggleCorner();
+				return false;
+			}
+
+			const {
+				data
+			} = await sb.from('game_users').select('*').eq('id', savedId).single();
+			if (!data) {
+				alert('登录已过期，请重新登录！');
+				localStorage.removeItem('clan_user_id');
+				currentUser = null;
+				toggleCorner();
+				return false;
+			}
+			currentUser = data;
+			return true;
+		}
+
+		async function openRedeem(name, cost, type, stock) {
+			if (!await checkLogin()) return;
+
+			redeemItem = {
+				name,
+				cost,
+				type,
+				stock: stock || 0
+			};
+			document.getElementById('redeemText').innerHTML =
+				`确定用 <span style="color:#e94560;font-weight:bold;">${cost} ${type}</span> 积分<br>兑换「${name}」吗？`;
+			document.getElementById('redeemModal').style.display = 'flex';
+		}
+
+
+		function closeRedeem() {
+			document.getElementById('redeemModal').style.display = 'none';
+			redeemItem = null;
+		}
+
+		async function confirmRedeem() {
+			if (!redeemItem || !currentUser) return;
+
+
+			let pointField = '';
+			let currentPoints = 0;
+
+			if (redeemItem.type === 'Rout') {
+				pointField = 'rout_points';
+				currentPoints = currentUser.rout_points || 0;
+			} else if (redeemItem.type === 'Prime') {
+				pointField = 'prime_points';
+				currentPoints = currentUser.prime_points || 0;
+			} else if (redeemItem.type === 'VIP') {
+				pointField = 'vip_points';
+				currentPoints = currentUser.vip_points || 0;
+			}
+
+			if (currentPoints < redeemItem.cost) {
+				alert('积分不足！');
+				closeRedeem();
+				return;
+			}
+
+
+			const newPoints = currentPoints - redeemItem.cost;
+
+
+			const {
+				data: updateData,
+				error: updateError
+			} = await sb
+				.from('game_users')
+				.update({
+					[pointField]: newPoints
+				})
+				.eq('id', currentUser.id);
+
+			console.log('积分更新结果:', updateData, updateError);
+
+			if (updateError) {
+				alert('扣除积分失败，请重试');
+				console.error(updateError);
+				return;
+			}
+
+			currentUser[pointField] = newPoints;
+
+			updateCornerDisplay();
+
+			refreshRedeemButtons();
+
+
+			const {
+				data: redeemData,
+				error: redeemError
+			} = await sb.from('redemptions').insert({
+				user_id: currentUser.id,
+				username: currentUser.username,
+				item_name: redeemItem.name,
+				quantity: 1,
+				points_before: currentPoints,
+				points_cost: redeemItem.cost,
+				points_after: newPoints,
+				points_type: redeemItem.type,
+				status: redeemItem.stock || 1
+			});
+
+			if (redeemError) {
+				console.error('兑换记录插入失败:', redeemError);
+				alert('兑换记录保存失败: ' + redeemError.message);
+				return;
+			}
+
+			console.log('兑换记录插入成功:', redeemData);
+
+			if (redeemItem.stock > 0) {
+				const newStock = redeemItem.stock - 1;
+				const {
+					error: stockError
+				} = await sb
+					.from('shop_items')
+					.update({
+						stock: newStock
+					})
+					.eq('name', redeemItem.name);
+
+				if (stockError) {
+					console.error('库存扣减失败:', stockError);
+				} else {
+					redeemItem.stock = newStock;
+
+					updateItemStockDisplay(redeemItem.name, newStock);
+				}
+			}
+
+			closeRedeem();
+			showToast();
+		}
+
+		function showToast() {
+			const toast = document.getElementById('redeemToast');
+			toast.style.display = 'block';
+			setTimeout(() => toast.style.display = 'none', 2500);
+		}
+
+		// ==================== 右上角登录面板 ====================
+		function toggleCorner() {
+			const panel = document.getElementById('cornerPanel');
+			if (panelOpen) {
+				panel.style.display = 'none';
+				panelOpen = false;
+			} else {
+				const savedId = localStorage.getItem('clan_user_id');
+				if (savedId && currentUser) {
+					showPanelInfo();
+					panel.style.display = 'block';
+					panelOpen = true;
+				} else if (savedId && !currentUser) {
+					autoLogin().then(() => {
+						if (currentUser) {
+							showPanelInfo();
+							panel.style.display = 'block';
+							panelOpen = true;
+						} else {
+							showPanelLogin();
+							panel.style.display = 'block';
+							panelOpen = true;
+						}
+					});
+					return;
+				} else {
+					showPanelLogin();
+					panel.style.display = 'block';
+					panelOpen = true;
+				}
+			}
+		}
+
+		function showPanelLogin() {
+			document.getElementById('panelLogin').style.display = 'block';
+			document.getElementById('panelInfo').style.display = 'none';
+		}
+
+		function showPanelInfo() {
+			if (!currentUser) return;
+			document.getElementById('panelLogin').style.display = 'none';
+			document.getElementById('panelInfo').style.display = 'block';
+			document.getElementById('cornerName').textContent = currentUser.username;
+			document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+			document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+			document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+
+
+			const btn = document.getElementById('cornerBtn');
+			btn.textContent = '✓ ' + currentUser.username;
+			btn.classList.add('logged');
+
+			refreshRedeemButtons();
+		}
+
+		// ==================== 修改密码 ====================
+		function showChangePass() {
+			document.getElementById('changePassModal').style.display = 'flex';
+			document.getElementById('oldPass').value = '';
+			document.getElementById('newPass').value = '';
+			document.getElementById('confirmPass').value = '';
+			document.getElementById('changePassError').style.display = 'none';
+		}
+
+		function closeChangePass() {
+			document.getElementById('changePassModal').style.display = 'none';
+		}
+
+		async function doChangePass() {
+			const oldPass = document.getElementById('oldPass').value;
+			const newPass = document.getElementById('newPass').value;
+			const confirmPass = document.getElementById('confirmPass').value;
+			const errorEl = document.getElementById('changePassError');
+
+			if (!currentUser) {
+				errorEl.textContent = '请先登录！';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (!oldPass || !newPass || !confirmPass) {
+				errorEl.textContent = '请填写所有字段';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (oldPass !== currentUser.password) {
+				errorEl.textContent = '原密码错误';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (newPass === oldPass) {
+				errorEl.textContent = '新密码不能和原密码相同';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (newPass !== confirmPass) {
+				errorEl.textContent = '两次输入的新密码不一致';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (newPass.length < 4) {
+				errorEl.textContent = '新密码至少4位';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			const {
+				error
+			} = await sb
+				.from('game_users')
+				.update({
+					password: newPass
+				})
+				.eq('id', currentUser.id);
+
+			if (error) {
+				errorEl.textContent = '修改失败：' + error.message;
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			currentUser.password = newPass;
+			closeChangePass();
+			alert('✅ 密码修改成功！请重新登录');
+			doCornerLogout();
+		}
+
+		function updateCornerDisplay() {
+			if (!currentUser) return;
+
+			document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+			document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+			document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+		}
+
+		function updateItemStockDisplay(itemName, newStock) {
+
+			const buttons = document.querySelectorAll('.redeem-btn');
+
+			buttons.forEach(function(btn) {
+
+				if (btn.dataset.itemName !== itemName) return;
+
+
+				const infoBar = btn.closest('.info-bar');
+				if (!infoBar) return;
+
+				const stockSpan = infoBar.querySelector('span:first-child');
+				if (!stockSpan) return;
+
+
+				if (newStock <= 0) {
+					stockSpan.textContent = '售罄';
+					stockSpan.style.color = '#e94560';
+					stockSpan.style.textShadow = '0 0 8px rgba(233, 69, 96, 0.4)';
+
+					btn.textContent = '［售罄］';
+					btn.disabled = true;
+					btn.style.background = 'rgba(100, 100, 100, 0.2)';
+					btn.style.borderColor = 'rgba(100, 100, 100, 0.3)';
+					btn.style.color = '#666';
+					btn.style.cursor = 'not-allowed';
+					btn.style.boxShadow = 'none';
+				} else {
+					// 更新库存数字
+					const text = stockSpan.textContent;
+					// 替换数字部分
+					stockSpan.textContent = text.replace(/\d+/, newStock);
+				}
+
+				// 更新按钮上的库存数据
+				btn.dataset.stock = newStock;
+			});
+		}
+
+		async function doCornerLogin() {
+			const user = document.getElementById('cornerUser').value.trim();
+			const pass = document.getElementById('cornerPass').value;
+
+			if (!sb) {
+				alert('系统初始化中');
+				return;
+			}
+
+			const {
+				data,
+				error
+			} = await sb
+				.from('game_users')
+				.select('*')
+				.eq('username', user)
+				.eq('password', pass)
+				.single();
+
+			if (error || !data) {
+				document.getElementById('cornerError').style.display = 'block';
+				return;
+			}
+
+			currentUser = data;
+			localStorage.setItem('clan_user_id', data.id);
+			showPanelInfo();
+		}
+
+		function doCornerLogout() {
+			localStorage.removeItem('clan_user_id');
+			currentUser = null;
+			document.getElementById('cornerPanel').style.display = 'none';
+			panelOpen = false;
+
+			const btn = document.getElementById('cornerBtn');
+			btn.textContent = '🔐 登录';
+			btn.classList.remove('logged');
+
+			location.reload();
+		}
+
+		document.addEventListener('click', function(e) {
+			const panel = document.getElementById('cornerPanel');
+			const btn = document.getElementById('cornerBtn');
+			if (panelOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+				panel.style.display = 'none';
+				panelOpen = false;
+			}
+
+			// 点击修改密码弹窗外关闭
+			const passModal = document.getElementById('changePassModal');
+			if (passModal) {
+				const passContent = passModal.querySelector('.modal');
+				if (passModal.style.display === 'flex' && passContent && !passContent.contains(e.target)) {
+					closeChangePass();
+				}
+			}
+		});
+
+		async function refreshRedeemButtons() {
+			const buttons = document.querySelectorAll('.redeem-btn');
+
+			buttons.forEach(function(btn) {
+				const text = btn.textContent.trim();
+				const match = text.match(/［(\d+)\s*(Rout|Prime|VIP)?］/);
+				if (!match) return;
+
+				const cost = parseInt(match[1]);
+				const type = match[2] || 'Rout';
+
+				let userPoints = 0;
+				if (type === 'Rout') userPoints = currentUser.rout_points || 0;
+				else if (type === 'Prime') userPoints = currentUser.prime_points || 0;
+				else if (type === 'VIP') userPoints = currentUser.vip_points || 0;
+
+				const infoBar = btn.closest('.info-bar') || btn.closest('.parts-info');
+				let stock = -1;
+				if (infoBar) {
+					const stockSpan = infoBar.querySelector('span:first-child');
+					if (stockSpan) {
+						const stockText = stockSpan.textContent;
+						if (stockText.includes('售罄')) {
+							stock = 0;
+						} else {
+							const stockMatch = stockText.match(/(\d+)/);
+							if (stockMatch) stock = parseInt(stockMatch[1]);
+						}
+					}
+				}
+
+				const disabled = userPoints < cost || stock === 0;
+
+				if (disabled) {
+					btn.disabled = true;
+					btn.style.background = 'rgba(100, 100, 100, 0.2)';
+					btn.style.borderColor = 'rgba(100, 100, 100, 0.3)';
+					btn.style.color = '#666';
+					btn.style.cursor = 'not-allowed';
+					btn.style.boxShadow = 'none';
+					if (stock === 0) btn.textContent = '［售罄］';
+				} else {
+					btn.disabled = false;
+					btn.style.background = 'rgba(233, 69, 96, 0.2)';
+					btn.style.borderColor = 'rgba(233, 69, 96, 0.5)';
+					btn.style.color = '#e94560';
+					btn.style.cursor = 'pointer';
+				}
+			});
+		}
+
+		async function refreshStockDisplay() {
+			const infoBars = document.querySelectorAll('.info-bar');
+
+			infoBars.forEach(function(bar) {
+				const spans = bar.querySelectorAll('span');
+				if (spans.length < 2) return;
+
+				const stockSpan = spans[0];
+				const text = stockSpan.textContent;
+
+				const match = text.match(/库存量[：:]\s*(\d+)/);
+				if (!match) return;
+
+				const stock = parseInt(match[1]);
+
+				if (stock === 0) {
+					stockSpan.textContent = '售罄';
+					stockSpan.style.color = '#e94560';
+					stockSpan.style.textShadow = '0 0 8px rgba(233, 69, 96, 0.4)';
+				}
+			});
+		}
+		async function autoLogin() {
+			const savedId = localStorage.getItem('clan_user_id');
+			if (!savedId || !sb) return;
+
+			const {
+				data
+			} = await sb
+				.from('game_users')
+				.select('*')
+				.eq('id', savedId)
+				.single();
+
+			if (data) {
+				currentUser = data;
+				const btn = document.getElementById('cornerBtn');
+				if (btn) {
+					btn.textContent = '✓ ' + data.username;
+					btn.classList.add('logged');
+				}
+			}
+		}
+	</script>
 </html>
