@@ -28,43 +28,40 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             padding: 20px;
-            color: #fff;
         }
 
         /* 跳转区域 */
         .redirect-box {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: white;
             border-radius: 20px;
             padding: 30px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             max-width: 500px;
             width: 90%;
             margin-bottom: 30px;
         }
         .redirect-box h1 {
-            color: #fff;
+            color: #333;
             margin-bottom: 15px;
             font-size: 22px;
         }
         .redirect-box h1 a {
-            color: #fff;
+            color: #333;
             text-decoration: none;
         }
         .countdown {
             font-size: 48px;
             font-weight: bold;
-            color: #00d4ff;
+            color: #667eea;
             margin: 15px 0;
-            text-shadow: 0 0 20px rgba(0,212,255,0.5);
         }
         .target-page {
             color: #888;
@@ -75,24 +72,23 @@
             margin-top: 15px;
         }
         .manual-jump a {
-            color: #00d4ff;
+            color: #667eea;
             text-decoration: none;
             font-size: 14px;
         }
 
         /* 数据看板区域 */
         .dashboard {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: white;
             border-radius: 20px;
             padding: 30px;
             max-width: 900px;
             width: 100%;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         .dashboard h2 {
             text-align: center;
-            color: #fff;
+            color: #333;
             margin-bottom: 5px;
             font-size: 24px;
         }
@@ -133,16 +129,14 @@
             gap: 15px;
         }
         .stat-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
             border-radius: 16px;
             padding: 24px 10px;
             text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.3s;
         }
         .stat-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(0,212,255,0.3);
         }
         .stat-icon {
             font-size: 28px;
@@ -151,12 +145,12 @@
         .stat-number {
             font-size: 28px;
             font-weight: 800;
-            color: #00d4ff;
+            color: #667eea;
             line-height: 1;
             font-variant-numeric: tabular-nums;
         }
         .stat-label {
-            color: #aaa;
+            color: #666;
             font-size: 12px;
             margin-top: 8px;
         }
@@ -165,21 +159,21 @@
             margin-top: 4px;
             font-weight: 600;
         }
-        .stat-change.up { color: #4ade80; }
-        .stat-change.down { color: #f87171; }
+        .stat-change.up { color: #22c55e; }
+        .stat-change.down { color: #ef4444; }
         .loading, .error {
             text-align: center;
             padding: 30px;
             color: #888;
         }
         .error {
-            color: #f87171;
-            background: rgba(248,113,113,0.1);
+            color: #e74c3c;
+            background: #fdf0f0;
             border-radius: 10px;
         }
         .update-time {
             text-align: center;
-            color: #666;
+            color: #aaa;
             font-size: 12px;
             margin-top: 15px;
         }
@@ -191,9 +185,9 @@
             border-radius: 20px;
             display: inline-block;
         }
-        .api-status.ok { background: rgba(74,222,128,0.15); color: #4ade80; }
-        .api-status.fail { background: rgba(248,113,113,0.15); color: #f87171; }
-        .api-status.wait { background: rgba(250,204,21,0.15); color: #facc15; }
+        .api-status.ok { background: #dcfce7; color: #166534; }
+        .api-status.fail { background: #fee2e2; color: #991b1b; }
+        .api-status.wait { background: #fef9c3; color: #854d0e; }
     </style>
 <base target="_blank">
 </head>
@@ -203,7 +197,7 @@
     <div class="redirect-box">
         <h1><a href="Google Analytics.html">🎲</a> 随机跳转中...</h1>
         <div class="countdown" id="countdown">8</div>
-        <p style="color:#aaa">秒后自动跳转</p>
+        <p>秒后自动跳转</p>
         <div class="target-page">
             目标页面：<span id="targetPage">-</span>
         </div>
@@ -215,7 +209,7 @@
     <!-- 数据看板区域 -->
     <div class="dashboard">
         <h2>📊 数据看板 📊</h2>
-        <p class="subtitle">数据来源：Google Analytics 4 · 每小时自动更新</p>
+        <p class="subtitle">数据来源：Google Analytics 4 · 实时累计</p>
 
         <div style="text-align:center;">
             <span class="live-indicator">
@@ -305,7 +299,7 @@
         function initLiveStats() {
             if (!currentData) return;
 
-            // 使用 allTime 作为基础值，没有的话用 today，再没有用 7天+30天
+            // 优先使用 allTime（全部历史），没有的话用 today，再没有用 7天+30天
             const all = currentData.allTime || {};
             const today = currentData.today || {};
             const d7 = currentData.last7days || {};
