@@ -283,84 +283,81 @@
             }
         }
 
-        function renderStats(data) {
-            const container = document.getElementById('statsContainer');
+function renderStats(data) {
+    const container = document.getElementById('statsContainer');
+    
+    const all = data.allTime || {};
+    const d7 = data.last7days || {};
+    const d30 = data.last30days || {};
+    
+    const safeParse = (str) => {
+        if (str === undefined || str === null || str === '') return 0;
+        const cleaned = String(str).replace(/,/g, '').replace(/%/g, '');
+        const num = parseInt(cleaned);
+        return isNaN(num) ? 0 : num;
+    };
+    
+    const startDate = new Date('2026-05-18');
+    const today = new Date();
+    const runDays = Math.max(1, Math.floor((today - startDate) / (1000 * 60 * 60 * 24)));
+    
+    const pageViews = safeParse(all.pageViews) > 0 ? safeParse(all.pageViews) : safeParse(d7.pageViews);
+    const users = safeParse(all.users) > 0 ? safeParse(all.users) : safeParse(d7.users);
+    const sessions = safeParse(all.sessions) > 0 ? safeParse(all.sessions) : safeParse(d7.sessions);
+    
+    const avgDailyPV = Math.round(pageViews / runDays);
+    const avgDailyUsers = Math.round(users / runDays);
+    const avgDailySessions = Math.round(sessions / runDays);
+    
+    const stats = [
+        { 
+            icon: '👁️', 
+            value: pageViews.toLocaleString('zh-CN'), 
+            label: '累计浏览量',
+            sub: '日均 +' + avgDailyPV.toLocaleString('zh-CN')
+        },
+        { 
+            icon: '👥', 
+            value: users.toLocaleString('zh-CN'), 
+            label: '累计用户数',
+            sub: '日均 +' + avgDailyUsers.toLocaleString('zh-CN')
+        },
+        { 
+            icon: '💬', 
+            value: sessions.toLocaleString('zh-CN'), 
+            label: '累计会话数',
+            sub: '日均 +' + avgDailySessions.toLocaleString('zh-CN')
+        },
+        { 
+            icon: '⏱️', 
+            value: all.avgDuration || d7.avgDuration || d30.avgDuration || '-', 
+            label: '平均停留',
+            sub: '全站平均'
+        },
+        { 
+            icon: '📉', 
+            value: all.bounceRate || d7.bounceRate || d30.bounceRate || '-', 
+            label: '跳出率',
+            sub: '全站平均'
+        },
+    ];
 
-            // 使用 allTime 数据（全部历史累计）
-            const all = data.allTime || {};
-            const d7 = data.last7days || {};
-            const d30 = data.last30days || {};
-
-            // 计算每日平均值
-            const startDate = new Date('2026-05-18');
-            const today = new Date();
-            const runDays = Math.max(1, Math.floor((today - startDate) / (1000 * 60 * 60 * 24)));
-
-            // 安全解析数字（处理字符串和数字）
-            const safeParse = (str) => {
-                if (str === undefined || str === null || str === '') return 0;
-                return parseInt(String(str).replace(/,/g, '')) || 0;
-            };
-
-            const pageViews = safeParse(all.pageViews);
-            const users = safeParse(all.users);
-            const sessions = safeParse(all.sessions);
-
-            // 计算每日平均
-            const avgDailyPV = Math.round(pageViews / runDays);
-            const avgDailyUsers = Math.round(users / runDays);
-            const avgDailySessions = Math.round(sessions / runDays);
-
-            const stats = [
-                { 
-                    icon: '👁️', 
-                    value: pageViews > 0 ? pageViews.toLocaleString('zh-CN') : (safeParse(d7.pageViews) + safeParse(d30.pageViews)).toLocaleString('zh-CN'), 
-                    label: '累计浏览量',
-                    sub: '日均 +' + (pageViews > 0 ? avgDailyPV : 0).toLocaleString('zh-CN')
-                },
-                { 
-                    icon: '👥', 
-                    value: users > 0 ? users.toLocaleString('zh-CN') : (safeParse(d30.users) || safeParse(d7.users)).toLocaleString('zh-CN'), 
-                    label: '累计用户数',
-                    sub: '日均 +' + (users > 0 ? avgDailyUsers : 0).toLocaleString('zh-CN')
-                },
-                { 
-                    icon: '💬', 
-                    value: sessions > 0 ? sessions.toLocaleString('zh-CN') : (safeParse(d7.sessions) + safeParse(d30.sessions)).toLocaleString('zh-CN'), 
-                    label: '累计会话数',
-                    sub: '日均 +' + (sessions > 0 ? avgDailySessions : 0).toLocaleString('zh-CN')
-                },
-                { 
-                    icon: '⏱️', 
-                    value: all.avgDuration || d30.avgDuration || d7.avgDuration || '-', 
-                    label: '平均停留',
-                    sub: '全站平均'
-                },
-                { 
-                    icon: '📉', 
-                    value: all.bounceRate || d30.bounceRate || d7.bounceRate || '-', 
-                    label: '跳出率',
-                    sub: '全站平均'
-                },
-            ];
-
-            container.innerHTML = `
-                <div class="stats-grid">
-                    ${stats.map(s => `
-                        <div class="stat-card">
-                            <div class="stat-icon">${s.icon}</div>
-                            <div class="stat-number">${s.value}</div>
-                            <div class="stat-label">${s.label}</div>
-                            <div class="stat-sub">${s.sub}</div>
-                        </div>
-                    `).join('')}
+    container.innerHTML = `
+        <div class="stats-grid">
+            ${stats.map(s => `
+                <div class="stat-card">
+                    <div class="stat-icon">${s.icon}</div>
+                    <div class="stat-number">${s.value}</div>
+                    <div class="stat-label">${s.label}</div>
+                    <div class="stat-sub">${s.sub}</div>
                 </div>
-            `;
-
-            // 更新运行天数
-            document.getElementById('periodInfo').textContent = 
-                '统计起始：2026-05-18（已运行 ' + runDays + ' 天）· 纯真实数据，无模拟增长';
-        }
+            `).join('')}
+        </div>
+    `;
+    
+    document.getElementById('periodInfo').textContent = 
+        '统计起始：2026-05-18（已运行 ' + runDays + ' 天）· 纯真实数据，无模拟增长';
+}
 
         // 初始加载
         loadData();
