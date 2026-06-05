@@ -17,7 +17,7 @@ jobs:
       
       - name: Fetch GA4 data
         run: |
-          curl -sL "https://script.google.com/macros/s/AKfycbzgRwkxGV-p7PIvdObiLkMdBrU-49VkiWbkSOmw288xeJ5hB_GgOawH-Gl_fAfSOiy0MQ/exec" > stats.json
+          curl -sL "https://script.google.com/macros/s/AKfycbzZIFECEYcQZzF2DdL5bh4pZTxO3EkIYG3FwOLgSZPjQ8Yq8PRIQDtBxOpViQVb5Ou94w/exec" > stats.json
           
       - name: Check if data changed
         id: check
