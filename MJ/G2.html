@@ -13,502 +13,748 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>REVELATION/兑换宝库</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
+		    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-			body {
-				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
-				color: #e0e0e0;
-				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-				min-height: 100vh;
-				padding: 2vw;
-			}
+        /* ========== Warframe 氏族风格背景 ========== */
+        body {
+            background: 
+                linear-gradient(180deg, rgba(5,8,20,0.50) 0%, rgba(8,12,30,0.50) 50%, rgba(5,8,20,0.60) 100%),
+                url('../IMGs/01.jpg') center/cover no-repeat fixed;
+            color: #c8d4e0;
+            font-family: 'Rajdhani', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            padding: 2vw;
+            position: relative;
+        }
 
-			/* Logo区域 */
-			.d2 {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 2vw;
-				padding: 2vw 0;
-				margin-bottom: 2vw;
-				position: relative;
-			}
+        /* 背景粒子效果层 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(0, 180, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 60, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 255, 200, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgPulse 8s ease-in-out infinite alternate;
+        }
 
-			.d2::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: url('../IMGs/01.jpg') center/cover no-repeat;
-				opacity: 0.4;
-				border-radius: 20px;
-				z-index: 0;
-			}
+        @keyframes bgPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
 
-			.d2>a {
-				position: absolute;
-				left: 2vw;
-				z-index: 1;
-			}
+        /* 扫描线效果 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 180, 255, 0.015) 2px,
+                rgba(0, 180, 255, 0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
 
-			.d2>h2 {
-				position: relative;
-				z-index: 1;
+        /* ========== Logo区域 ========== */
+        .d2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            padding: 2vw 0;
+            margin-bottom: 2vw;
+            position: relative;
+            z-index: 2;
+        }
 
+        .d2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('../IMGs/01.jpg') center/cover no-repeat;
+            opacity: 0.3;
+            border-radius: 4px;
+            z-index: 0;
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.1);
+        }
 
-			}
+        .d2>a {
+            position: absolute;
+            left: 2vw;
+            z-index: 1;
+        }
 
-			.d2 a img {
-				width: 5vw;
-				height: 5vw;
-				object-fit: cover;
-				border-radius: 12px;
-				filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
-				transition: transform 0.3s ease;
-			}
+        .d2>h2 {
+            position: relative;
+            z-index: 1;
+        }
 
-			.d2 a img:hover {
-				transform: scale(1.1) rotate(5deg);
-			}
+        .d2 a img {
+            width: 5vw;
+            height: 5vw;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.6));
+            transition: all 0.4s ease;
+            border: 2px solid rgba(0, 200, 255, 0.3);
+        }
 
-			.d2 h2 {
-				font-size: 4vw;
-				color: #FF9800;
-				text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
-				letter-spacing: 0.1em;
-				text-align: center;
-				line-height: 1;
-				min-width: 12em;
-				white-space: nowrap;
-				display: inline-block;
-			}
+        .d2 a img:hover {
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 0 25px rgba(0, 200, 255, 0.9));
+            border-color: rgba(0, 200, 255, 0.8);
+        }
 
-			/* 导航区域 */
-			.d3 {
-				text-align: center;
-				margin-bottom: 1.5vw;
-			}
+        .d2 h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4vw;
+            font-weight: 900;
+            color: #FF9800;
+            text-shadow: 
+                0 0 10px rgba(255, 152, 0, 0.8),
+                0 0 30px rgba(255, 152, 0, 0.5),
+                0 0 60px rgba(255, 152, 0, 0.3);
+            letter-spacing: 0.15em;
+            text-align: center;
+            line-height: 1;
+            min-width: 12em;
+            white-space: nowrap;
+            display: inline-block;
+        }
 
-			.d3 div {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-wrap: wrap;
-				gap: 1vw;
-			}
+        /* ========== 导航区域 ========== */
+        .d3 {
+            text-align: center;
+            margin-bottom: 1.5vw;
+            position: relative;
+            z-index: 2;
+        }
 
-			.d3 a {
-				text-decoration: none;
-				color: #b0b0b0;
-				font-size: 1.5vw;
-				padding: 0.5vw 2vw;
-				border-radius: 30px;
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				transition: all 0.3s ease;
-				display: inline-block;
-			}
+        .d3 div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1vw;
+        }
 
-			.d3 a:hover {
-				color: #ffffff;
-				border-color: #008DFF;
-				box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
-			}
+        .d3 a {
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2vw;
+            font-weight: 500;
+            padding: 0.6vw 2.5vw;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
 
-			.d3 a.a {
-				color: #FF0E00;
-				border: 1px solid #FF0E00;
-				background: rgba(255, 14, 0, 0.1);
-				box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
-			}
+        .d3 a::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
 
-			.d3 a.b {
-				color: #376CFF;
-				border: 1px solid rgba(55, 108, 255, 0.3);
-			}
+        .d3 a:hover::before {
+            left: 100%;
+        }
 
-			.d3 a.b:hover {
-				background: rgba(55, 108, 255, 0.1);
-				box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
-			}
+        .d3 a:hover {
+            color: #00c8ff;
+            border-color: rgba(0, 200, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+            background: rgba(0, 100, 200, 0.15);
+        }
 
-			hr {
-				border: none;
-				height: 1px;
-				background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
-				margin: 2vw 0;
-			}
+        .d3 a.a {
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.5);
+            background: rgba(255, 60, 0, 0.1);
+            box-shadow: 
+                0 0 15px rgba(255, 80, 0, 0.2),
+                inset 0 0 20px rgba(255, 60, 0, 0.05);
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
 
-			/* 说明文字 */
-			.atxt h3 {
-				text-align: center;
-				font-size: 1.2vw;
-				color: #a0a0a0;
-				line-height: 2;
-				margin-bottom: 2vw;
-				padding: 1vw;
-				background: rgba(255, 255, 255, 0.02);
-				border-radius: 15px;
-				border: 1px solid rgba(255, 255, 255, 0.05);
-			}
+        .d3 a.b {
+            color: rgba(100, 180, 255, 0.8);
+            border: 1px solid rgba(100, 180, 255, 0.25);
+            background: rgba(0, 80, 160, 0.08);
+        }
 
-			/* 折叠按钮 */
-			button {
-				display: block;
-				width: 80%;
-				max-width: 600px;
-				margin: 1vw auto;
-				padding: 1vw 2vw;
-				font-size: 1.8vw;
-				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-				color: #ffffff;
-				background: rgba(255, 255, 255, 0.05);
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				border-radius: 15px;
-				cursor: pointer;
-				transition: all 0.3s ease;
-				outline: none;
-				letter-spacing: 0.1em;
-			}
+        .d3 a.b:hover {
+            background: rgba(0, 120, 220, 0.15);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.25);
+            color: #80d0ff;
+            border-color: rgba(100, 200, 255, 0.5);
+        }
 
-			button:hover {
-				background: rgba(0, 141, 255, 0.1);
-				border-color: #008DFF;
-				box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
-				transform: translateY(-2px);
-			}
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.3), transparent);
+            margin: 2vw 0;
+            position: relative;
+            z-index: 2;
+        }
 
-			button:active {
-				transform: translateY(0);
-			}
-			
-			/* 按钮内的图标样式 */
-			button .btn-icon {
-			    width: 1.5em;
-			    height: 1.5em;
-			    vertical-align: middle;
-			    margin: 0 0.3em;
-			    filter: drop-shadow(0 0 5px rgba(128, 255, 0, 0.5));
-			    transition: transform 0.3s ease;
-			}
-			
-			button:hover .btn-icon {
-			    transform: scale(1.2) rotate(15deg);
-			}
-			
-			button .btn-text {
-			    vertical-align: middle;
-			}
+        /* 说明文字 */
+        .atxt h3 {
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2vw;
+            font-weight: 500;
+            color: rgba(150, 180, 200, 0.7);
+            line-height: 2;
+            margin-bottom: 2vw;
+            padding: 1vw;
+            background: rgba(5, 10, 25, 0.6);
+            border-radius: 2px;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            box-shadow: inset 0 0 20px rgba(0, 100, 200, 0.05);
+            position: relative;
+            z-index: 2;
+            clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+        }
 
-			/* 商品网格 */
-			.d4 {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-				gap: 2vw;
-				padding: 2vw;
-				max-width: 1400px;
-				margin: 0 auto;
-			}
+        /* 折叠按钮 */
+        button {
+            display: block;
+            width: 80%;
+            max-width: 600px;
+            margin: 1vw auto;
+            padding: 1vw 2vw;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4vw;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(0, 30, 60, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.25);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 2;
+            clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+            overflow: hidden;
+        }
 
-			                .d4 > div {
-			                    background: rgba(255, 255, 255, 0.03);
-			                    border: 1px solid rgba(255, 255, 255, 0.1);
-			                    border-radius: 20px;
-			                    padding: 1.5vw;
-			                    text-align: center;
-			                    font-size: 1.2vw;
-			                    transition: all 0.3s ease;
-			                    display: flex;
-			                    flex-direction: column;
-			                    align-items: center;
-			                    justify-content: center;  /* 新增：垂直居中 */
-			                    gap: 0.8vw;
-			                    min-height: 320px;
-			                }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
 
-			/* 跨两列的商品 */
-			.d4>div.col-2 {
-				grid-column: span 2;
-				max-width: 600px;
-				margin: 0 auto;
-				width: 100%;
-			}
-			
-			        /* 跨列商品图片更大 */
-			        .d4 > div.col-2 img {
-			            width: 90%;
-			            max-width: 300px;
-			        }
+        button:hover::before {
+            left: 100%;
+        }
 
-			@media (max-width: 600px) {
-				.d4>div.col-2 {
-					grid-column: span 1;
-					max-width: 100%;
-				}
-			}
+        button:hover {
+            background: rgba(0, 60, 120, 0.7);
+            border-color: rgba(0, 200, 255, 0.5);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-			/* 新增：库存量和价格容器 */
-			.d4>div .info-bar {
-				margin-top: auto;
-				padding-top: 0.5vw;
-				display: flex;
-				flex-direction: column;
-				/* 修改：垂直排列 */
-				align-items: center;
-				/* 修改：居中对齐 */
-				width: 100%;
-				gap: 0.3vw;
-				/* 修改：调整行间距 */
-			}
+        button:active {
+            transform: translateY(0);
+        }
 
-			/* 军械部件：四个信息块 2×2 网格布局 */
-			.d4>div .parts-info {
-				margin-top: auto;
-				padding-top: 0.5vw;
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 0.5vw;
-				width: 100%;
-			}
+        /* 按钮内的图标样式 */
+        button .btn-icon {
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            margin: 0 0.3em;
+            filter: drop-shadow(0 0 5px rgba(0, 200, 255, 0.5));
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+        }
 
-			.d4>div .parts-info .info-bar {
-				margin-top: 0;
-				padding: 0.4vw 0.6vw;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				gap: 0.2vw;
-				background: rgba(255, 255, 255, 0.03);
-				border: 1px solid rgba(255, 255, 255, 0.08);
-				border-radius: 8px;
-			}
+        button:hover .btn-icon {
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.8));
+        }
 
-			.d4>div .parts-info .info-bar span:first-child {
-				font-size: 0.9em;
-				color: #b0b0b0;
-			}
+        button .btn-text {
+            vertical-align: middle;
+        }
 
-			.d4>div .parts-info .info-bar .price {
-				font-size: 0.85em;
-			}
+        /* 商品网格 */
+        .d4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2vw;
+            padding: 2vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
 
+        .d4 > div {
+            background: rgba(5, 10, 25, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            border-radius: 2px;
+            padding: 1.5vw;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1vw;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8vw;
+            min-height: 320px;
+            position: relative;
+            clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+        }
 
-			.d4>div .info-bar span:first-child {
-				color: inherit;
-				font-size: inherit;
-			}
+        .d4 > div::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 200, 255, 0.05) 0%, 
+                transparent 50%, 
+                rgba(255, 80, 0, 0.03) 100%
+            );
+            pointer-events: none;
+        }
 
-			.d4>div .info-bar .price {
-				color: #FF9800;
-				font-weight: bold;
-				text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
-				font-size: inherit;
-			}
+        .d4 > div:hover {
+            background: rgba(0, 40, 80, 0.7);
+            border-color: rgba(0, 200, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 200, 255, 0.1);
+            transform: translateY(-5px);
+        }
 
-			.d4>div:hover {
-				background: rgba(255, 255, 255, 0.06);
-				border-color: rgba(128, 255, 0, 0.3);
-				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-				transform: translateY(-5px);
-			}
+        /* 跨两列的商品 */
+        .d4>div.col-2 {
+            grid-column: span 2;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
 
-			        .d4 > div img {
-			            width: 80%;
-			            max-width: 200px;
-			            height: auto;
-			            border-radius: 12px;
-			            transition: transform 0.3s ease;
-			            margin: auto;  /* 新增：在 flex 容器中自动居中 */
-			            object-fit: contain;
-			        }
+        /* 跨列商品图片更大 */
+        .d4 > div.col-2 img {
+            width: 90%;
+            max-width: 300px;
+        }
 
-			.d4>div:hover img {
-				transform: scale(1.05);
-			}
+        @media (max-width: 600px) {
+            .d4>div.col-2 {
+                grid-column: span 1;
+                max-width: 100%;
+            }
+        }
 
-			.d4>div br:first-of-type {
-				display: none;
-			}
+        /* 新增：库存量和价格容器 */
+        .d4>div .info-bar {
+            margin-top: auto;
+            padding-top: 0.5vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 0.3vw;
+        }
 
-			/* 子标题 */
-			.atxt h4 {
-				text-align: center;
-				font-size: 2vw;
-				color: #80FF00;
-				text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
-				margin: 2vw 0 1vw;
-				letter-spacing: 0.1em;
-			}
+        /* 军械部件：四个信息块 2×2 网格布局 */
+        .d4>div .parts-info {
+            margin-top: auto;
+            padding-top: 0.5vw;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5vw;
+            width: 100%;
+        }
 
-			/* 隐藏区域 */
-			#div1,
-			#div2,
-			#div3,
-			#div4,
-			#div4-mod,#div2-mod,#div1-mod1,#div1-mod2,#div1-mod3,#div1-mod4,
-			#div5 {
-				display: none;
-			}
+        .d4>div .parts-info .info-bar {
+            margin-top: 0;
+            padding: 0.4vw 0.6vw;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.2vw;
+            background: rgba(0, 30, 60, 0.4);
+            border: 1px solid rgba(0, 200, 255, 0.08);
+            border-radius: 2px;
+        }
 
-			/* 响应式 */
-			@media (max-width: 1000px) {
-				body {
-					padding: 3vw;
-				}
+        .d4>div .parts-info .info-bar span:first-child {
+            font-size: 0.9em;
+            color: rgba(150, 180, 200, 0.7);
+        }
 
-				.d2 a img {
-					width: 8vw;
-					height: 8vw;
-				}
+        .d4>div .parts-info .info-bar .price {
+            font-size: 0.85em;
+        }
 
-				.d2 h2 {
-					font-size: 6vw;
-				}
+        .d4>div .info-bar span:first-child {
+            color: rgba(180, 200, 220, 0.8);
+            font-size: inherit;
+        }
 
-				.d3 a {
-					font-size: 2.5vw;
-					padding: 1vw 3vw;
-				}
+        .d4>div .info-bar .price {
+            color: #FF9800;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+            font-size: inherit;
+            font-family: 'Orbitron', sans-serif;
+        }
 
-				.atxt h3 {
-					font-size: 2vw;
-				}
+        .d4 > div img {
+            width: 80%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+            margin: auto;
+            object-fit: contain;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 100, 200, 0.1);
+        }
 
-				button {
-					font-size: 3vw;
-					width: 90%;
-				}
+        .d4>div:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 150, 255, 0.2);
+        }
 
-				.d4 {
-					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-					gap: 3vw;
-				}
+        .d4>div br:first-of-type {
+            display: none;
+        }
 
-				.d4>div {
-					background: rgba(255, 255, 255, 0.03);
-					border: 1px solid rgba(255, 255, 255, 0.1);
-					border-radius: 20px;
-					padding: 1.5vw;
-					text-align: center;
-					font-size: 1.2vw;
-					transition: all 0.3s ease;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					gap: 0.8vw;
-					min-height: 320px;
-				}
+        /* 子标题 */
+        .atxt h4 {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5vw;
+            font-weight: 700;
+            color: #00c8ff;
+            text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+            margin: 2vw 0 1vw;
+            letter-spacing: 0.15em;
+            position: relative;
+            z-index: 2;
+        }
 
-				/* 新增：库存量和价格容器 */
-				.d4>div .info-bar {
-					margin-top: auto;
-					padding-top: 0.5vw;
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					width: 100%;
-					gap: 1vw;
-				}
+        .atxt h4::before, .atxt h4::after {
+            content: '◈';
+            margin: 0 15px;
+            color: rgba(0, 200, 255, 0.3);
+            font-size: 0.8em;
+        }
 
-				.d4>div .parts-info {
-					gap: 1vw;
-				}
+        /* 隐藏区域 */
+        #div1,
+        #div2,
+        #div3,
+        #div4,
+        #div4-mod,#div2-mod,#div1-mod1,#div1-mod2,#div1-mod3,#div1-mod4,
+        #div5 {
+            display: none;
+        }
 
-				.d4>div .info-bar span:first-child {
-					color: inherit;
-					/* 保持原库存量颜色 */
-					font-size: inherit;
-					/* 保持原字体大小 */
-				}
+        /* 响应式 */
+        @media (max-width: 1000px) {
+            body {
+                padding: 3vw;
+            }
 
-				.d4>div .info-bar .price {
-					color: #FF9800;
-					font-weight: bold;
-					text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
-					font-size: inherit;
-					/* 保持原字体大小 */
-				}
+            .d2 a img {
+                width: 8vw;
+                height: 8vw;
+            }
 
-				.atxt h4 {
-					font-size: 3.5vw;
-				}
+            .d2 h2 {
+                font-size: 5vw;
+            }
 
-				.d4>div .parts-info {
-					gap: 1vw;
-					padding-top: 1vw;
-				}
+            .d3 a {
+                font-size: 2vw;
+                padding: 1vw 3vw;
+            }
 
-				.d4>div .parts-info .info-bar {
-					padding: 1vw;
-				}
+            .atxt h3 {
+                font-size: 2vw;
+            }
+
+            button {
+                font-size: 2.5vw;
+                width: 90%;
+            }
+
+            .d4 {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 3vw;
+            }
+
+            .d4>div {
+                font-size: 1.8vw;
+                min-height: 280px;
+            }
+
+            .d4>div .info-bar {
+                margin-top: auto;
+                padding-top: 0.5vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                gap: 1vw;
+            }
+
+            .d4>div .parts-info {
+                gap: 1vw;
+            }
+
+            .d4>div .info-bar span:first-child {
+                color: inherit;
+                font-size: inherit;
+            }
+
+            .d4>div .info-bar .price {
+                color: #FF9800;
+                font-weight: bold;
+                text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+                font-size: inherit;
+            }
+
+            .atxt h4 {
+                font-size: 2.5vw;
+            }
+
+            .d4>div .parts-info {
+                gap: 1vw;
+                padding-top: 1vw;
+            }
+
+            .d4>div .parts-info .info-bar {
+                padding: 1vw;
+            }
+
+            .d4 > div.col-2 img {
+                width: 85%;
+                max-width: 250px;
+                margin: auto;
+                object-fit: contain;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .d2 {
+                flex-direction: column;
+                gap: 1vw;
+            }
+
+            .d2 a img {
+                width: 12vw;
+                height: 12vw;
+            }
+
+            .d2 h2 {
+                font-size: 6vw;
+            }
+
+            .d3 div {
+                flex-direction: column;
+                gap: 1.5vw;
+            }
+
+            .d3 a {
+                font-size: 3vw;
+                width: 80%;
+            }
+
+            button {
+                font-size: 3.5vw;
+            }
+
+            .d4 {
+                grid-template-columns: 1fr;
+            }
+
+            .d4>div {
+                font-size: 3.5vw;
+            }
+
+            .d4>div .parts-info {
+                grid-template-columns: 1fr 1fr;
+                gap: 2vw;
+            }
+
+            .d4 > div.col-2 img {
+                width: 80%;
+                max-width: 200px;
+            }
+        }
+		        /* 展开/折叠全部按钮 */
+		        .toggle-all {
+		            position: fixed;
+		            bottom: 90px;
+		            right: 30px;
+		            width: 50px;
+		            height: 50px;
+		            background: rgba(0, 30, 60, 0.8);
+		            border: 1px solid rgba(0, 200, 255, 0.4);
+		            border-radius: 2px;
+		            color: #00c8ff;
+		            font-family: 'Orbitron', sans-serif;
+		            font-size: 20px;
+		            font-weight: 700;
+		            cursor: pointer;
+		            display: flex;
+		            align-items: center;
+		            justify-content: center;
+		            backdrop-filter: blur(10px);
+		            box-shadow: 
+		                0 0 20px rgba(0, 200, 255, 0.2),
+		                inset 0 0 20px rgba(0, 150, 255, 0.05);
+		            transition: all 0.3s ease;
+		            z-index: 999;
+		            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+		        }
+		
+		        .toggle-all:hover {
+		            background: rgba(0, 60, 120, 0.9);
+		            box-shadow: 
+		                0 0 30px rgba(0, 200, 255, 0.4),
+		                inset 0 0 30px rgba(0, 150, 255, 0.1);
+		            transform: translateY(-3px);
+		            color: #ffffff;
+		        }
+		
+		        .toggle-all.active {
+		            background: rgba(255, 60, 0, 0.2);
+		            border-color: rgba(255, 107, 53, 0.5);
+		            color: #ff6b35;
+		            box-shadow: 
+		                0 0 20px rgba(255, 80, 0, 0.2),
+		                inset 0 0 20px rgba(255, 60, 0, 0.05);
+		        }
 				
-				.d4 > div.col-2 img {
-				    width: 85%;
-				    max-width: 250px;
-					margin: auto;
-					            object-fit: contain;
-				}
-			}
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 30, 60, 0.8);
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            border-radius: 2px;
+            color: #00c8ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 20px rgba(0, 200, 255, 0.2),
+                inset 0 0 20px rgba(0, 150, 255, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+        }
 
-			@media (max-width: 600px) {
-				.d2 {
-					flex-direction: column;
-					gap: 1vw;
-				}
+        .back-to-top:hover {
+            background: rgba(0, 60, 120, 0.9);
+            box-shadow: 
+                0 0 30px rgba(0, 200, 255, 0.4),
+                inset 0 0 30px rgba(0, 150, 255, 0.1);
+            transform: translateY(-3px);
+            color: #ffffff;
+        }
 
-				.d2 a img {
-					width: 12vw;
-					height: 12vw;
-				}
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
-				.d2 h2 {
-					font-size: 7vw;
-				}
+        /* 提示动画 */
+        @keyframes tipSlideInLeft {
+            from { transform:translateY(-50%) translateX(-100%); opacity:0; }
+            to   { transform:translateY(-50%) translateX(0); opacity:1; }
+        }
+        @keyframes tipSlideOutRight {
+            from { transform:translateY(-50%) translateX(0); opacity:1; }
+            to   { transform:translateY(-50%) translateX(120%); opacity:0; }
+        }
+        @keyframes tipPulse {
+            from { box-shadow:0 0 20px rgba(0,200,255,0.3),inset 0 0 20px rgba(0,150,255,0.05); }
+            to   { box-shadow:0 0 30px rgba(0,200,255,0.5),inset 0 0 30px rgba(0,150,255,0.1); }
+        }
 
-				.d3 div {
-					flex-direction: column;
-					gap: 1.5vw;
-				}
+        /* 浮动装饰粒子 */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 200, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 15s infinite linear;
+            box-shadow: 0 0 6px rgba(0, 200, 255, 0.8);
+        }
 
-				.d3 a {
-					font-size: 3.5vw;
-					width: 80%;
-				}
-
-				button {
-					font-size: 4vw;
-				}
-
-				.d4 {
-					grid-template-columns: 1fr;
-				}
-
-				.d4>div {
-					font-size: 3.5vw;
-				}
-
-				.d4>div .parts-info {
-					grid-template-columns: 1fr 1fr;
-					gap: 2vw;
-				}
-				            .d4 > div.col-2 img {
-				                width: 80%;
-				                max-width: 200px;
-				            }
-			}
-		</style>
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
+    </style>
 		<base target="_blank">
-	<base target="_blank">
+<base target="_blank">
 </head>
 	<body>
+	<!-- 浮动粒子 -->
+	<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
+	<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
+	<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
+	<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
+	<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
+	<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
+	<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
+	<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
+
 		<div class="d2">
-			<a href="../index.html">
+			<a href="../index.html" id="logoLink" target="_self">
 				<img src="../Logo.jpg" alt="Logo">
 			</a>
 			<h2 id="typing"></h2>
@@ -526,7 +772,7 @@
 		<div class="d3">
 			<div>
 				<a class="b">☞Rout宝库☜</a>
-				<a href="G2-2.html" target="_self">Prime宝库</a>
+				<a href="G2-2.html" id="g2toG22">Prime宝库</a>
 			</div>
 		</div>
 
@@ -1372,7 +1618,9 @@
 				</div>
 			</div>
 		</div>
-
+		<button class="toggle-all" id="toggleAll" title="展开/折叠全部">≡</button>
+		<button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
+	</body>
 		<script>
 			function button1() {
 			    var div1 = document.getElementById('div1');
@@ -1399,26 +1647,28 @@
 			        bu1.querySelector('.btn-text').innerText = "MOD奖池";
 			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 			    }
+			    updateToggleAllState();
 			}
 
-					function button2() {
-					    var div2 = document.getElementById('div2');
-					    var div2mod = document.getElementById('div2-mod');
-					    var bu2 = document.getElementById('bu2');
-					    var icons = bu2.querySelectorAll('.btn-icon');
-					    if (div2.style.display == 'grid') {
-					        div2.style.display = 'none';
-					        div2mod.style.display = 'none';
-					        bu2.querySelector('.btn-text').innerText = "赋能奖池";
-					        icons.forEach(function(icon) { icon.style.display = 'none'; });
-					    } else {
-					        div2.style.display = 'grid';
-					        div2mod.style.display = 'block';
-					        bu2.querySelector('.btn-text').innerText = "赋能奖池";
-					        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
-					    }
-					}
-
+			function button2() {
+			    var div2 = document.getElementById('div2');
+			    var div2mod = document.getElementById('div2-mod');
+			    var bu2 = document.getElementById('bu2');
+			    var icons = bu2.querySelectorAll('.btn-icon');
+			    if (div2.style.display == 'grid') {
+			        div2.style.display = 'none';
+			        div2mod.style.display = 'none';
+			        bu2.querySelector('.btn-text').innerText = "赋能奖池";
+			        icons.forEach(function(icon) { icon.style.display = 'none'; });
+			    } else {
+			        div2.style.display = 'grid';
+			        div2mod.style.display = 'block';
+			        bu2.querySelector('.btn-text').innerText = "赋能奖池";
+			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
+			    }
+			    updateToggleAllState();
+			}
+			
 			function button3() {
 			    var div3 = document.getElementById('div3');
 			    var bu3 = document.getElementById('bu3');
@@ -1432,6 +1682,7 @@
 			        bu3.querySelector('.btn-text').innerText = "阿耶檀识";
 			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 			    }
+			    updateToggleAllState();
 			}
 
 			function button4() {
@@ -1450,6 +1701,7 @@
 			        bu4.querySelector('.btn-text').innerText = "杂项分类";
 			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 			    }
+			    updateToggleAllState();
 			}
 
 
@@ -1466,6 +1718,7 @@
 			        bu5.querySelector('.btn-text').innerText = "军械部件";
 			        icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 			    }
+			    updateToggleAllState();
 			}
 
 			// 图片轮播		
@@ -1569,6 +1822,134 @@
 			}
 
 			typeEffect();
+			
+			// 回到顶部按钮逻辑
+			let backToTopBtn = document.getElementById('backToTop');
+			window.addEventListener('scroll', function() {
+			    if (window.pageYOffset > 300) {
+			        backToTopBtn.classList.add('visible');
+			    } else {
+			        backToTopBtn.classList.remove('visible');
+			    }
+			});
+			backToTopBtn.addEventListener('click', function() {
+			    window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+			
+			// ========== 5秒提示 ==========
+			setTimeout(function() {
+			    let tip = document.createElement('div');
+			    tip.id = 'avatar-tip';
+			    tip.innerHTML = '💡 点击顶部 <img src="../Logo.jpg" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,200,255,0.4);">可返回上一级';
+			    tip.style.cssText = `
+			        position:fixed;
+			        top:50%;
+			        left:0;
+			        transform:translateY(-50%) translateX(-100%);
+			        background:rgba(0,30,60,0.95);
+			        border:1px solid rgba(0,200,255,0.5);
+			        border-left:none;
+			        color:#00c8ff;
+			        font-family:'Orbitron','Microsoft YaHei',sans-serif;
+			        font-size:13px;
+			        padding:14px 20px 14px 16px;
+			        border-radius:0 4px 4px 0;
+			        box-shadow:0 0 20px rgba(0,200,255,0.3),inset 0 0 20px rgba(0,150,255,0.05);
+			        z-index:1000;
+			        letter-spacing:0.08em;
+			        cursor:pointer;
+			        white-space:nowrap;
+			        animation:tipSlideInLeft 0.6s ease forwards,tipPulse 2s ease-in-out infinite alternate;
+			    `;
+			    document.body.appendChild(tip);
+			
+			    function removeTip() {
+			        if (!tip.parentNode) return;
+			        tip.style.animation = 'tipSlideOutRight 0.5s ease forwards';
+			        setTimeout(() => tip.remove(), 500);
+			    }
+			    tip.addEventListener('click', removeTip);
+			    setTimeout(removeTip, 4000);
+			
+			    // 用户滑动页面时向右滑出消失
+			    window.addEventListener('scroll', removeTip, { once: true });
+			}, 5000);
+			
+			// ========== Logo 链接返回来源页 ==========
+			let logoLink = document.getElementById('logoLink');
+			let params = new URLSearchParams(window.location.search);
+			let from = params.get('from');
+			
+			if (from && from.startsWith('index-')) {
+				logoLink.href = '../' + from;
+				logoLink.target = '_self';
+			}
+
+			// 把 from 参数继续传给 G2-2.html
+			let g22Link = document.getElementById('g2toG22');
+			if (from && g22Link) {
+				g22Link.href = 'G2-2.html?from=' + from;
+			}
+			
+			// ========== 展开/折叠全部奖品 ==========
+			let toggleAllBtn = document.getElementById('toggleAll');
+			let allExpanded = false;
+		
+			function checkAnyExpanded() {
+				var div1 = document.getElementById('div1');
+				var div2 = document.getElementById('div2');
+				var div3 = document.getElementById('div3');
+				var div4 = document.getElementById('div4');
+				var div5 = document.getElementById('div5');
+				return (div1 && div1.style.display == 'grid') ||
+				       (div2 && div2.style.display == 'grid') ||
+				       (div3 && div3.style.display == 'grid') ||
+				       (div4 && div4.style.display == 'grid') ||
+				       (div5 && div5.style.display == 'grid');
+			}
+		
+			function updateToggleAllState() {
+				allExpanded = checkAnyExpanded();
+				toggleAllBtn.classList.toggle('active', allExpanded);
+				toggleAllBtn.title = allExpanded ? '折叠全部' : '展开全部';
+			}
+		
+			toggleAllBtn.addEventListener('click', function() {
+				allExpanded = checkAnyExpanded();
+				
+				// 如果当前有任何一个展开，则全部折叠；否则全部展开
+				var targetDisplay = allExpanded ? 'none' : 'grid';
+				var subDisplay = allExpanded ? 'none' : 'block';
+				
+				// 所有主内容区域
+				let sections = ['div1', 'div2', 'div3', 'div4', 'div5'];
+				// 所有子区域
+				let subSections = ['div1-mod1', 'div1-mod2', 'div1-mod3', 'div1-mod4', 'div2-mod', 'div4-mod'];
+		
+				// 切换主区域
+				sections.forEach(function(id) {
+					let el = document.getElementById(id);
+					if (el) el.style.display = targetDisplay;
+				});
+		
+				// 切换子区域
+				subSections.forEach(function(id) {
+					let el = document.getElementById(id);
+					if (el) el.style.display = subDisplay;
+				});
+		
+				// 同步各按钮图标状态
+				let btns = ['bu1', 'bu2', 'bu3', 'bu4', 'bu5'];
+				btns.forEach(function(btnId) {
+					let btn = document.getElementById(btnId);
+					if (!btn) return;
+					let icons = btn.querySelectorAll('.btn-icon');
+					icons.forEach(function(icon) {
+						icon.style.display = allExpanded ? 'none' : 'inline-block';
+					});
+				});
+		
+				updateToggleAllState();
+			});
 		</script>
-	</body>
 </html>

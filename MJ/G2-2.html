@@ -17,383 +17,578 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>REVELATION/兑换宝库</title>
 		<style>
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-			body {
-				background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
-				color: #e0e0e0;
-				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-				min-height: 100vh;
-				padding: 2vw;
-			}
+        /* ========== Warframe 氏族风格背景 ========== */
+        body {
+            background: 
+                linear-gradient(180deg, rgba(5,8,20,0.50) 0%, rgba(8,12,30,0.50) 50%, rgba(5,8,20,0.60) 100%),
+                url('../IMGs/01.jpg') center/cover no-repeat fixed;
+            color: #c8d4e0;
+            font-family: 'Rajdhani', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            padding: 2vw;
+            position: relative;
+        }
 
-			/* Logo区域 */
-			.d2 {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 2vw;
-				padding: 2vw 0;
-				margin-bottom: 2vw;
-				position: relative;
-			}
+        /* 背景粒子效果层 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(0, 180, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 60, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 255, 200, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgPulse 8s ease-in-out infinite alternate;
+        }
 
-			.d2::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: url('../IMGs/01.jpg') center/cover no-repeat;
-				opacity: 0.4;
-				border-radius: 20px;
-				z-index: 0;
-			}
+        @keyframes bgPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
 
-			.d2>a {
-				position: absolute;
-				left: 2vw;
-				z-index: 1;
-			}
+        /* 扫描线效果 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 180, 255, 0.015) 2px,
+                rgba(0, 180, 255, 0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
 
-			.d2>h2 {
-				position: relative;
-				z-index: 1;
+        /* ========== Logo区域 ========== */
+        .d2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            padding: 2vw 0;
+            margin-bottom: 2vw;
+            position: relative;
+            z-index: 2;
+        }
 
+        .d2::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('../IMGs/01.jpg') center/cover no-repeat;
+            opacity: 0.3;
+            border-radius: 4px;
+            z-index: 0;
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.1);
+        }
 
-			}
+        .d2>a {
+            position: absolute;
+            left: 2vw;
+            z-index: 1;
+        }
 
-			.d2 a img {
-				width: 5vw;
-				height: 5vw;
-				object-fit: cover;
-				border-radius: 12px;
-				filter: drop-shadow(0 0 15px rgba(0, 141, 255, 0.6));
-				transition: transform 0.3s ease;
-			}
+        .d2>h2 {
+            position: relative;
+            z-index: 1;
+        }
 
-			.d2 a img:hover {
-				transform: scale(1.1) rotate(5deg);
-			}
+        .d2 a img {
+            width: 5vw;
+            height: 5vw;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.6));
+            transition: all 0.4s ease;
+            border: 2px solid rgba(0, 200, 255, 0.3);
+        }
 
-			.d2 h2 {
-				font-size: 4vw;
-				color: #FF9800;
-				text-shadow: 0 0 20px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.2);
-				letter-spacing: 0.1em;
-				text-align: center;
-				line-height: 1;
-				min-width: 12em;
-				white-space: nowrap;
-				display: inline-block;
-			}
+        .d2 a img:hover {
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 0 25px rgba(0, 200, 255, 0.9));
+            border-color: rgba(0, 200, 255, 0.8);
+        }
 
-			.d3 {
-				text-align: center;
-				margin-bottom: 1.5vw;
-			}
+        .d2 h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4vw;
+            font-weight: 900;
+            color: #FF9800;
+            text-shadow: 
+                0 0 10px rgba(255, 152, 0, 0.8),
+                0 0 30px rgba(255, 152, 0, 0.5),
+                0 0 60px rgba(255, 152, 0, 0.3);
+            letter-spacing: 0.15em;
+            text-align: center;
+            line-height: 1;
+            min-width: 12em;
+            white-space: nowrap;
+            display: inline-block;
+        }
 
-			.d3 div {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-wrap: wrap;
-				gap: 1vw;
-			}
+        /* ========== 导航区域 ========== */
+        .d3 {
+            text-align: center;
+            margin-bottom: 1.5vw;
+            position: relative;
+            z-index: 2;
+        }
 
-			.d3 a {
-				text-decoration: none;
-				color: #b0b0b0;
-				font-size: 1.5vw;
-				padding: 0.5vw 2vw;
-				border-radius: 30px;
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				transition: all 0.3s ease;
-				display: inline-block;
-			}
+        .d3 div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1vw;
+        }
 
-			.d3 a:hover {
-				color: #ffffff;
-				border-color: #008DFF;
-				box-shadow: 0 0 15px rgba(0, 141, 255, 0.3);
-			}
+        .d3 a {
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2vw;
+            font-weight: 500;
+            padding: 0.6vw 2.5vw;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
 
-			.d3 a.a {
-				color: #FF0E00;
-				border: 1px solid #FF0E00;
-				background: rgba(255, 14, 0, 0.1);
-				box-shadow: 0 0 15px rgba(255, 14, 0, 0.2);
-			}
+        .d3 a::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
 
-			.d3 a.b {
-				color: #376CFF;
-				border: 1px solid rgba(55, 108, 255, 0.3);
-			}
+        .d3 a:hover::before {
+            left: 100%;
+        }
 
-			.d3 a.b:hover {
-				background: rgba(55, 108, 255, 0.1);
-				box-shadow: 0 0 15px rgba(55, 108, 255, 0.3);
-			}
+        .d3 a:hover {
+            color: #00c8ff;
+            border-color: rgba(0, 200, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+            background: rgba(0, 100, 200, 0.15);
+        }
 
-			hr {
-				border: none;
-				height: 1px;
-				background: linear-gradient(90deg, transparent, rgba(128, 255, 0, 0.3), transparent);
-				margin: 2vw 0;
-			}
+        .d3 a.a {
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.5);
+            background: rgba(255, 60, 0, 0.1);
+            box-shadow: 
+                0 0 15px rgba(255, 80, 0, 0.2),
+                inset 0 0 20px rgba(255, 60, 0, 0.05);
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
 
-			/* 说明 */
-			.atxt h3 {
-				text-align: center;
-				font-size: 1.2vw;
-				color: #a0a0a0;
-				line-height: 2;
-				margin-bottom: 2vw;
-				padding: 1vw;
-				background: rgba(255, 255, 255, 0.02);
-				border-radius: 15px;
-				border: 1px solid rgba(255, 255, 255, 0.05);
-			}
+        .d3 a.b {
+            color: rgba(100, 180, 255, 0.8);
+            border: 1px solid rgba(100, 180, 255, 0.25);
+            background: rgba(0, 80, 160, 0.08);
+        }
 
-			/* 折叠按钮 */
-			button {
-				display: block;
-				width: 80%;
-				max-width: 600px;
-				margin: 1vw auto;
-				padding: 1vw 2vw;
-				font-size: 1.8vw;
-				font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
-				color: #ffffff;
-				background: rgba(255, 255, 255, 0.05);
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				border-radius: 15px;
-				cursor: pointer;
-				transition: all 0.3s ease;
-				outline: none;
-				letter-spacing: 0.1em;
-			}
+        .d3 a.b:hover {
+            background: rgba(0, 120, 220, 0.15);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.25);
+            color: #80d0ff;
+            border-color: rgba(100, 200, 255, 0.5);
+        }
 
-			button:hover {
-				background: rgba(0, 141, 255, 0.1);
-				border-color: #008DFF;
-				box-shadow: 0 0 20px rgba(0, 141, 255, 0.3);
-				transform: translateY(-2px);
-			}
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.3), transparent);
+            margin: 2vw 0;
+            position: relative;
+            z-index: 2;
+        }
 
-			button:active {
-				transform: translateY(0);
-			}
-			/* 按钮内的图标样式 */
-			button .btn-icon {
-			    width: 1.5em;
-			    height: 1.5em;
-			    vertical-align: middle;
-			    margin: 0 0.3em;
-			    filter: drop-shadow(0 0 5px rgba(128, 255, 0, 0.5));
-			    transition: transform 0.3s ease;
-			}
-			
-			button:hover .btn-icon {
-			    transform: scale(1.2) rotate(15deg);
-			}
-			
-			button .btn-text {
-			    vertical-align: middle;
-			}
+        /* 说明文字 */
+        .atxt h3 {
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2vw;
+            font-weight: 500;
+            color: rgba(150, 180, 200, 0.7);
+            line-height: 2;
+            margin-bottom: 2vw;
+            padding: 1vw;
+            background: rgba(5, 10, 25, 0.6);
+            border-radius: 2px;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            box-shadow: inset 0 0 20px rgba(0, 100, 200, 0.05);
+            position: relative;
+            z-index: 2;
+            clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+        }
 
-			/* 商品网格 */
-			.d4 {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-				gap: 2vw;
-				padding: 2vw;
-				max-width: 1400px;
-				margin: 0 auto;
-			}
+        /* 折叠按钮 */
+        button {
+            display: block;
+            width: 80%;
+            max-width: 600px;
+            margin: 1vw auto;
+            padding: 1vw 2vw;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4vw;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(0, 30, 60, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.25);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 2;
+            clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+            overflow: hidden;
+        }
 
-			.d4 h4 {
-				grid-column: 1 / -1;
-				width: 100%;
-			}
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
 
-			.d4>div {
-				background: rgba(255, 255, 255, 0.03);
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				border-radius: 20px;
-				padding: 1.5vw;
-				text-align: center;
-				font-size: 1.2vw;
-				transition: all 0.3s ease;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 0.8vw;
-				min-height: 320px;
-			}
+        button:hover::before {
+            left: 100%;
+        }
 
-			/* 新增：库存量和价格容器 */
-			.d4>div .info-bar {
-				margin-top: auto;
-				padding-top: 0.5vw;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				width: 100%;
-				gap: 0.3vw;
-			}
+        button:hover {
+            background: rgba(0, 60, 120, 0.7);
+            border-color: rgba(0, 200, 255, 0.5);
+            box-shadow: 0 0 25px rgba(0, 200, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-			.d4>div .info-bar span:first-child {
-				color: inherit;
-				font-size: inherit;
-			}
+        button:active {
+            transform: translateY(0);
+        }
 
-			.d4>div .info-bar .price {
-				color: #FF9800;
-				font-weight: bold;
-				text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
-				font-size: inherit;
-			}
+        /* 按钮内的图标样式 */
+        button .btn-icon {
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            margin: 0 0.3em;
+            filter: drop-shadow(0 0 5px rgba(0, 200, 255, 0.5));
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+        }
 
-			.d4>div:hover {
-				background: rgba(255, 255, 255, 0.06);
-				border-color: rgba(128, 255, 0, 0.3);
-				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-				transform: translateY(-5px);
-			}
+        button:hover .btn-icon {
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.8));
+        }
 
-			/* ========== 动态边框特效 - errorInfo赞助物品 ========== */
+        button .btn-text {
+            vertical-align: middle;
+        }
 
-			/* 基础发光层 */
-			.d4>div.ember-border,
-			.d4>div.rhino-border,
-			.d4>div.valkyr-border,
-			.d4>div.vauban-border {
-				position: relative;
-				overflow: visible;
-			}
+        /* 商品网格 */
+        .d4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2vw;
+            padding: 2vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
 
-			/* 伪元素 - 外层光晕 */
-			.d4>div.ember-border::before,
-			.d4>div.rhino-border::before,
-			.d4>div.valkyr-border::before,
-			.d4>div.vauban-border::before {
-				content: '';
-				position: absolute;
-				top: -4px;
-				left: -4px;
-				right: -4px;
-				bottom: -4px;
-				border-radius: 24px;
-				z-index: -1;
-				opacity: 0.8;
-				pointer-events: none;
-			}
+        .d4 > div {
+            background: rgba(5, 10, 25, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            border-radius: 2px;
+            padding: 1.5vw;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1vw;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8vw;
+            min-height: 320px;
+            position: relative;
+            clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+        }
 
-			/* ===== EMBER 传家宝 — 熔岩火山之火 ===== */
-			.d4>div.ember-border {
-				border: 2px solid #FF3300;
-				box-shadow:
-					0 0 30px rgba(255, 51, 0, 0.9),
-					0 0 60px rgba(255, 100, 0, 0.6),
-					0 0 100px rgba(255, 69, 0, 0.4),
-					0 0 150px rgba(139, 0, 0, 0.2),
-					inset 0 0 25px rgba(255, 51, 0, 0.4);
-				animation: lavaPulse 2s ease-in-out infinite alternate;
-			}
+        .d4 > div::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 200, 255, 0.05) 0%, 
+                transparent 50%, 
+                rgba(255, 80, 0, 0.03) 100%
+            );
+            pointer-events: none;
+        }
 
-			/* 熔岩流动层 */
-			.d4>div.ember-border::before {
-				content: '';
-				position: absolute;
-				top: -8px;
-				left: -8px;
-				right: -8px;
-				bottom: -8px;
-				border-radius: 28px;
-				z-index: -1;
-				pointer-events: none;
-				background:
-					/* 熔岩裂缝 — 顶部 */
-					linear-gradient(90deg,
-					transparent 0%,
-					rgba(255, 69, 0, 0.6) 15%,
-					rgba(255, 140, 0, 0.8) 25%,
-					rgba(255, 69, 0, 0.6) 35%,
-					transparent 45%,
-					transparent 55%,
-					rgba(255, 80, 0, 0.5) 65%,
-					rgba(255, 120, 0, 0.7) 75%,
-					rgba(255, 80, 0, 0.5) 85%,
-					transparent 100%),
-					/* 熔岩裂缝 — 左侧 */
-					linear-gradient(0deg,
-					transparent 0%,
-					rgba(255, 69, 0, 0.5) 20%,
-					rgba(255, 140, 0, 0.7) 30%,
-					rgba(255, 69, 0, 0.5) 40%,
-					transparent 50%);
-				background-size: 200% 100%, 100% 200%;
-				animation: lavaFlow 3s linear infinite;
-				opacity: 0.7;
-			}
+        .d4 > div:hover {
+            background: rgba(0, 40, 80, 0.7);
+            border-color: rgba(0, 200, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 200, 255, 0.1);
+            transform: translateY(-5px);
+        }
 
-			/* 火山喷发粒子层 */
-			.d4>div.ember-border::after {
-				content: '';
-				position: absolute;
-				top: -20px;
-				left: -20px;
-				right: -20px;
-				bottom: -20px;
-				border-radius: 40px;
-				z-index: -2;
-				pointer-events: none;
-				background:
-					/* 顶部火山喷发 — 主焰柱 */
-					radial-gradient(ellipse 50% 60% at 50% 0%,
-					rgba(255, 80, 0, 0.9) 0%,
-					rgba(255, 140, 0, 0.7) 20%,
-					rgba(255, 69, 0, 0.5) 40%,
-					rgba(139, 0, 0, 0.3) 60%,
-					transparent 80%),
-					/* 顶部左侧喷发 */
-					radial-gradient(ellipse 35% 45% at 25% 5%,
-					rgba(255, 60, 0, 0.7) 0%,
-					rgba(255, 100, 0, 0.5) 25%,
-					transparent 55%),
-					/* 顶部右侧喷发 */
-					radial-gradient(ellipse 35% 45% at 75% 5%,
-					rgba(255, 100, 0, 0.7) 0%,
-					rgba(255, 140, 0, 0.5) 25%,
-					transparent 55%),
-					/* 底部熔岩池 */
-					radial-gradient(ellipse 60% 40% at 50% 100%,
-					rgba(139, 0, 0, 0.6) 0%,
-					rgba(255, 69, 0, 0.4) 30%,
-					transparent 60%),
-					/* 左侧岩浆流 */
-					radial-gradient(ellipse 30% 50% at 0% 50%,
-					rgba(255, 69, 0, 0.5) 0%,
-					rgba(139, 0, 0, 0.3) 40%,
-					transparent 70%),
-					/* 右侧岩浆流 */
-					radial-gradient(ellipse 30% 50% at 100% 50%,
-					rgba(255, 69, 0, 0.5) 0%,
-					rgba(139, 0, 0, 0.3) 40%,
-					transparent 70%),
-					/* 四角火山灰 */
-					radial-gradient(circle at 15% 15%, rgba(255, 100, 0, 0.4) 0%, transparent 25%),
-					radial-gradient(circle at 85% 15%, rgba(255, 80, 0, 0.4) 0%, transparent 25%),
-					radial-gradient(circle at 15% 85%, rgba(139, 0, 0, 0.3) 0%, transparent 25%),
-					radial-gradient(circle at 85% 85%, rgba(139, 0, 0, 0.3) 0%, transparent 25%);
-				animation: volcanoErupt 2.5s ease-in-out infinite alternate;
-			}
+        .d4 h4 {
+            grid-column: 1 / -1;
+            width: 100%;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5vw;
+            font-weight: 700;
+            color: #00c8ff;
+            text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+            margin: 2vw 0 1vw;
+            letter-spacing: 0.15em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .d4 h4::before, .d4 h4::after {
+            content: '◈';
+            margin: 0 15px;
+            color: rgba(0, 200, 255, 0.3);
+            font-size: 0.8em;
+        }
+
+        /* 新增：库存量和价格容器 */
+        .d4>div .info-bar {
+            margin-top: auto;
+            padding-top: 0.5vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 0.3vw;
+        }
+
+        .d4>div .info-bar span:first-child {
+            color: rgba(180, 200, 220, 0.8);
+            font-size: inherit;
+        }
+
+        .d4>div .info-bar .price {
+            color: #FF9800;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+            font-size: inherit;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .d4 > div img {
+            width: 80%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+            margin: auto;
+            object-fit: contain;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 100, 200, 0.1);
+        }
+
+        .d4>div:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 150, 255, 0.2);
+        }
+
+        .d4>div br:first-of-type {
+            display: none;
+        }
+
+        /* 子标题 */
+        .atxt h4 {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5vw;
+            font-weight: 700;
+            color: #00c8ff;
+            text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+            margin: 2vw 0 1vw;
+            letter-spacing: 0.15em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .atxt h4::before, .atxt h4::after {
+            content: '◈';
+            margin: 0 15px;
+            color: rgba(0, 200, 255, 0.3);
+            font-size: 0.8em;
+        }
+
+        /* 隐藏区域 */
+        #div1,
+        #div2,
+        #div3,
+        #div4,
+        #div4-mod,
+        #div1-mod1,
+        #div1-mod2 {
+            display: none;
+        }
+
+        /* ========== 动态边框特效 - errorInfo赞助物品（保留原样）========== */
+		/* 传家宝卡片固定占位，防止伪元素动画导致页面高度抖动 */
+		#ember-card {
+		margin: 22px !important;
+		}
+
+		/* 基础发光层 */
+        .d4>div.ember-border,
+        .d4>div.rhino-border,
+        .d4>div.valkyr-border,
+        .d4>div.vauban-border {
+            position: relative;
+            overflow: visible;
+        }
+
+        /* 伪元素 - 外层光晕 */
+        .d4>div.ember-border::before,
+        .d4>div.rhino-border::before,
+        .d4>div.valkyr-border::before,
+        .d4>div.vauban-border::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* ===== EMBER 传家宝 — 熔岩火山之火 ===== */
+        .d4>div.ember-border {
+            border: 2px solid #FF3300;
+            box-shadow:
+                0 0 30px rgba(255, 51, 0, 0.9),
+                0 0 60px rgba(255, 100, 0, 0.6),
+                0 0 100px rgba(255, 69, 0, 0.4),
+                0 0 150px rgba(139, 0, 0, 0.2),
+                inset 0 0 25px rgba(255, 51, 0, 0.4);
+            animation: lavaPulse 2.6s ease-in-out infinite alternate;
+        }
+
+        /* 熔岩流动层 */
+        .d4>div.ember-border::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 28px;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                /* 熔岩裂缝 — 顶部 */
+                linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 69, 0, 0.6) 15%,
+                rgba(255, 140, 0, 0.8) 25%,
+                rgba(255, 69, 0, 0.6) 35%,
+                transparent 45%,
+                transparent 55%,
+                rgba(255, 80, 0, 0.5) 65%,
+                rgba(255, 120, 0, 0.7) 75%,
+                rgba(255, 80, 0, 0.5) 85%,
+                transparent 100%),
+                /* 熔岩裂缝 — 左侧 */
+                linear-gradient(0deg,
+                transparent 0%,
+                rgba(255, 69, 0, 0.5) 20%,
+                rgba(255, 140, 0, 0.7) 30%,
+                rgba(255, 69, 0, 0.5) 40%,
+                transparent 50%);
+            background-size: 200% 100%, 100% 200%;
+            animation: lavaFlow 2.6s linear infinite;
+            opacity: 0.7;
+        }
+
+        /* 火山喷发粒子层 */
+        .d4>div.ember-border::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            border-radius: 40px;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                /* 顶部火山喷发 — 主焰柱 */
+                radial-gradient(ellipse 50% 60% at 50% 0%,
+                rgba(255, 80, 0, 0.9) 0%,
+                rgba(255, 140, 0, 0.7) 20%,
+                rgba(255, 69, 0, 0.5) 40%,
+                rgba(139, 0, 0, 0.3) 60%,
+                transparent 80%),
+                /* 顶部左侧喷发 */
+                radial-gradient(ellipse 35% 45% at 25% 5%,
+                rgba(255, 60, 0, 0.7) 0%,
+                rgba(255, 100, 0, 0.5) 25%,
+                transparent 55%),
+                /* 顶部右侧喷发 */
+                radial-gradient(ellipse 35% 45% at 75% 5%,
+                rgba(255, 100, 0, 0.7) 0%,
+                rgba(255, 140, 0, 0.5) 25%,
+                transparent 55%),
+                /* 底部熔岩池 */
+                radial-gradient(ellipse 60% 40% at 50% 100%,
+                rgba(139, 0, 0, 0.6) 0%,
+                rgba(255, 69, 0, 0.4) 30%,
+                transparent 60%),
+                /* 左侧岩浆流 */
+                radial-gradient(ellipse 30% 50% at 0% 50%,
+                rgba(255, 69, 0, 0.5) 0%,
+                rgba(139, 0, 0, 0.3) 40%,
+                transparent 70%),
+                /* 右侧岩浆流 */
+                radial-gradient(ellipse 30% 50% at 100% 50%,
+                rgba(255, 69, 0, 0.5) 0%,
+                rgba(139, 0, 0, 0.3) 40%,
+                transparent 70%),
+                /* 四角火山灰 */
+                radial-gradient(circle at 15% 15%, rgba(255, 100, 0, 0.4) 0%, transparent 25%),
+                radial-gradient(circle at 85% 15%, rgba(255, 80, 0, 0.4) 0%, transparent 25%),
+                radial-gradient(circle at 15% 85%, rgba(139, 0, 0, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 85% 85%, rgba(139, 0, 0, 0.3) 0%, transparent 25%);
+            animation: volcanoErupt 2.6s ease-in-out infinite alternate;
+        }
 
 			@keyframes lavaPulse {
 				0% {
@@ -407,651 +602,719 @@
 				}
 			}
 
-			@keyframes lavaFlow {
-				0% {
-					background-position: 0% 0%, 0% 0%;
-				}
+        @keyframes lavaFlow {
+            0% {
+                background-position: 0% 0%, 0% 0%;
+            }
 
-				50% {
-					background-position: 100% 0%, 0% 100%;
-				}
+            50% {
+                background-position: 100% 0%, 0% 100%;
+            }
 
-				100% {
-					background-position: 200% 0%, 0% 200%;
-				}
-			}
+            100% {
+                background-position: 200% 0%, 0% 200%;
+            }
+        }
 
 			@keyframes volcanoErupt {
 				0% {
-					transform: scale(0.9) translateY(5px);
 					opacity: 0.5;
 					filter: blur(2px);
 				}
 
 				30% {
-					transform: scale(1.0) translateY(-2px);
 					opacity: 0.75;
 				}
 
 				60% {
-					transform: scale(1.05) translateY(2px);
 					opacity: 0.85;
 				}
 
 				100% {
-					transform: scale(1.15) translateY(-8px);
 					opacity: 1;
 					filter: blur(4px);
 				}
 			}
 
-			/* ===== RHINO 传家宝 — 黑白金 ===== */
-			.d4>div.rhino-border {
-				border: 4px solid #F0C850;
-				box-shadow:
-					0 0 30px rgba(240, 200, 80, 0.7),
-					0 0 70px rgba(240, 200, 80, 0.45),
-					0 0 120px rgba(240, 200, 80, 0.25),
-					0 0 180px rgba(240, 200, 80, 0.1),
-					inset 0 0 25px rgba(240, 200, 80, 0.15);
-				background: linear-gradient(145deg,
-					rgba(8, 8, 8, 0.97) 0%,
-					rgba(22, 22, 22, 0.92) 25%,
-					rgba(12, 12, 12, 0.97) 50%,
-					rgba(28, 28, 28, 0.92) 75%,
-					rgba(8, 8, 8, 0.97) 100%);
-				position: relative;
-				animation: armorSettle 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
+        /* ===== RHINO 传家宝 — 黑白金 ===== */
+        .d4>div.rhino-border {
+            border: 4px solid #F0C850;
+            box-shadow:
+                0 0 30px rgba(240, 200, 80, 0.7),
+                0 0 70px rgba(240, 200, 80, 0.45),
+                0 0 120px rgba(240, 200, 80, 0.25),
+                0 0 180px rgba(240, 200, 80, 0.1),
+                inset 0 0 25px rgba(240, 200, 80, 0.15);
+            background: linear-gradient(145deg,
+                rgba(8, 8, 8, 0.97) 0%,
+                rgba(22, 22, 22, 0.92) 25%,
+                rgba(12, 12, 12, 0.97) 50%,
+                rgba(28, 28, 28, 0.92) 75%,
+                rgba(8, 8, 8, 0.97) 100%);
+            position: relative;
+            animation: armorSettle 2.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
 
-			/* 外层白金装甲框 */
-			.d4>div.rhino-border::before {
-				content: '';
-				position: absolute;
-				top: -8px;
-				left: -8px;
-				right: -8px;
-				bottom: -8px;
-				border-radius: 28px;
-				z-index: -1;
-				pointer-events: none;
-				border: 3px solid rgba(240, 200, 80, 0.7);
-				background: linear-gradient(145deg,
-					rgba(240, 200, 80, 0.2) 0%,
-					rgba(255, 255, 255, 0.08) 20%,
-					transparent 40%,
-					rgba(255, 255, 255, 0.08) 60%,
-					rgba(240, 200, 80, 0.2) 100%);
-				box-shadow:
-					inset 0 0 40px rgba(0, 0, 0, 0.7),
-					0 0 60px rgba(240, 200, 80, 0.3);
-			}
+        /* 外层白金装甲框 */
+        .d4>div.rhino-border::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 28px;
+            z-index: -1;
+            pointer-events: none;
+            border: 3px solid rgba(240, 200, 80, 0.7);
+            background: linear-gradient(145deg,
+                rgba(240, 200, 80, 0.2) 0%,
+                rgba(255, 255, 255, 0.08) 20%,
+                transparent 40%,
+                rgba(255, 255, 255, 0.08) 60%,
+                rgba(240, 200, 80, 0.2) 100%);
+            box-shadow:
+                inset 0 0 40px rgba(0, 0, 0, 0.7),
+                0 0 60px rgba(240, 200, 80, 0.3);
+        }
 
-			/* 装甲接缝与金色铆钉*/
-			.d4>div.rhino-border::after {
-				content: '';
-				position: absolute;
-				top: -16px;
-				left: -16px;
-				right: -16px;
-				bottom: -16px;
-				border-radius: 36px;
-				z-index: -2;
-				pointer-events: none;
-				background:
-					/* 金色接缝线 — 顶部 */
-					linear-gradient(90deg,
-					transparent 6%,
-					rgba(240, 200, 80, 0.5) 6%,
-					rgba(240, 200, 80, 0.5) 10%,
-					transparent 10%,
-					transparent 90%,
-					rgba(240, 200, 80, 0.5) 90%,
-					rgba(240, 200, 80, 0.5) 94%,
-					transparent 94%),
-					/* 金色接缝线 — 左侧 */
-					linear-gradient(0deg,
-					transparent 6%,
-					rgba(240, 200, 80, 0.5) 6%,
-					rgba(240, 200, 80, 0.5) 10%,
-					transparent 10%,
-					transparent 90%,
-					rgba(240, 200, 80, 0.5) 90%,
-					rgba(240, 200, 80, 0.5) 94%,
-					transparent 94%),
-					/* 四角金色铆钉 */
-					radial-gradient(circle at 10% 10%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
-					radial-gradient(circle at 90% 10%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
-					radial-gradient(circle at 10% 90%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
-					radial-gradient(circle at 90% 90%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
-					/* 白色高光边缘 */
-					radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 45%),
-					radial-gradient(ellipse at 50% 100%, rgba(255, 255, 255, 0.08) 0%, transparent 45%);
-			}
+        /* 装甲接缝与金色铆钉*/
+        .d4>div.rhino-border::after {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            right: -16px;
+            bottom: -16px;
+            border-radius: 36px;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                /* 金色接缝线 — 顶部 */
+                linear-gradient(90deg,
+                transparent 6%,
+                rgba(240, 200, 80, 0.5) 6%,
+                rgba(240, 200, 80, 0.5) 10%,
+                transparent 10%,
+                transparent 90%,
+                rgba(240, 200, 80, 0.5) 90%,
+                rgba(240, 200, 80, 0.5) 94%,
+                transparent 94%),
+                /* 金色接缝线 — 左侧 */
+                linear-gradient(0deg,
+                transparent 6%,
+                rgba(240, 200, 80, 0.5) 6%,
+                rgba(240, 200, 80, 0.5) 10%,
+                transparent 10%,
+                transparent 90%,
+                rgba(240, 200, 80, 0.5) 90%,
+                rgba(240, 200, 80, 0.5) 94%,
+                transparent 94%),
+                /* 四角金色铆钉 */
+                radial-gradient(circle at 10% 10%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+                radial-gradient(circle at 90% 10%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+                radial-gradient(circle at 10% 90%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+                radial-gradient(circle at 90% 90%, rgba(240, 200, 80, 1) 0%, rgba(240, 200, 80, 1) 5px, transparent 6px),
+                /* 白色高光边缘 */
+                radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 100%, rgba(255, 255, 255, 0.08) 0%, transparent 45%);
+        }
 
-			@keyframes armorSettle {
-				0% {
-					transform: scale(1.03);
-				}
+        @keyframes armorSettle {
+            0% {
+                transform: scale(1.03);
+            }
 
-				30% {
-					transform: scale(1.015);
-				}
+            30% {
+                transform: scale(1.015);
+            }
 
-				60% {
-					transform: scale(1.005);
-				}
+            60% {
+                transform: scale(1.005);
+            }
 
-				100% {
-					transform: scale(1);
-				}
-			}
+            100% {
+                transform: scale(1);
+            }
+        }
 
 
-			/* ===== VALKYR 传家宝 — 辉煌的野性===== */
-			.d4>div.valkyr-border {
-				border: 3px solid #9B59B6;
-				box-shadow:
-					0 0 25px rgba(155, 89, 182, 0.7),
-					0 0 50px rgba(142, 68, 173, 0.5),
-					0 0 80px rgba(108, 52, 131, 0.35),
-					0 0 120px rgba(74, 35, 90, 0.2),
-					inset 0 0 20px rgba(155, 89, 182, 0.25);
-				background: linear-gradient(145deg,
-					rgba(20, 10, 25, 0.95) 0%,
-					rgba(45, 20, 55, 0.9) 30%,
-					rgba(30, 15, 40, 0.95) 50%,
-					rgba(40, 20, 50, 0.9) 70%,
-					rgba(20, 10, 25, 0.95) 100%);
-				position: relative;
-				animation: wildAwaken 2.5s ease-out;
-			}
+        /* ===== VALKYR 传家宝 — 辉煌的野性===== */
+        .d4>div.valkyr-border {
+            border: 3px solid #9B59B6;
+            box-shadow:
+                0 0 25px rgba(155, 89, 182, 0.7),
+                0 0 50px rgba(142, 68, 173, 0.5),
+                0 0 80px rgba(108, 52, 131, 0.35),
+                0 0 120px rgba(74, 35, 90, 0.2),
+                inset 0 0 20px rgba(155, 89, 182, 0.25);
+            background: linear-gradient(145deg,
+                rgba(20, 10, 25, 0.95) 0%,
+                rgba(45, 20, 55, 0.9) 30%,
+                rgba(30, 15, 40, 0.95) 50%,
+                rgba(40, 20, 50, 0.9) 70%,
+                rgba(20, 10, 25, 0.95) 100%);
+            position: relative;
+            animation: wildAwaken 2.6s ease-out;
+        }
 
-			/* 野性光环层 */
-			.d4>div.valkyr-border::before {
-				content: '';
-				position: absolute;
-				top: -8px;
-				left: -8px;
-				right: -8px;
-				bottom: -8px;
-				border-radius: 28px;
-				z-index: -1;
-				pointer-events: none;
-				border: 2px solid rgba(155, 89, 182, 0.4);
-				background:
-					/* 紫色能量脉动 */
-					radial-gradient(ellipse 70% 50% at 50% 50%,
-					rgba(155, 89, 182, 0.2) 0%,
-					transparent 60%),
-					/* 挣脱的裂痕 — 左上 */
-					linear-gradient(135deg,
-					transparent 45%,
-					rgba(142, 68, 173, 0.5) 48%,
-					rgba(155, 89, 182, 0.7) 50%,
-					rgba(142, 68, 173, 0.5) 52%,
-					transparent 55%),
-					/* 挣脱的裂痕 — 右下 */
-					linear-gradient(315deg,
-					transparent 45%,
-					rgba(142, 68, 173, 0.5) 48%,
-					rgba(155, 89, 182, 0.7) 50%,
-					rgba(142, 68, 173, 0.5) 52%,
-					transparent 55%);
-				animation: wildPulse 3.5s ease-in-out infinite;
-			}
+        /* 野性光环层 */
+        .d4>div.valkyr-border::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 28px;
+            z-index: -1;
+            pointer-events: none;
+            border: 2px solid rgba(155, 89, 182, 0.4);
+            background:
+                /* 紫色能量脉动 */
+                radial-gradient(ellipse 70% 50% at 50% 50%,
+                rgba(155, 89, 182, 0.2) 0%,
+                transparent 60%),
+                /* 挣脱的裂痕 — 左上 */
+                linear-gradient(135deg,
+                transparent 45%,
+                rgba(142, 68, 173, 0.5) 48%,
+                rgba(155, 89, 182, 0.7) 50%,
+                rgba(142, 68, 173, 0.5) 52%,
+                transparent 55%),
+                /* 挣脱的裂痕 — 右下 */
+                linear-gradient(315deg,
+                transparent 45%,
+                rgba(142, 68, 173, 0.5) 48%,
+                rgba(155, 89, 182, 0.7) 50%,
+                rgba(142, 68, 173, 0.5) 52%,
+                transparent 55%);
+            animation: wildPulse 2.6s ease-in-out infinite;
+        }
 
-			/* 向外撕裂 */
-			.d4>div.valkyr-border::after {
-				content: '';
-				position: absolute;
-				top: -18px;
-				left: -18px;
-				right: -18px;
-				bottom: -18px;
-				border-radius: 38px;
-				z-index: -2;
-				pointer-events: none;
-				background:
-					/* 顶部 — 女武神之翼 */
-					radial-gradient(ellipse 40% 50% at 20% 10%,
-					rgba(155, 89, 182, 0.6) 0%,
-					rgba(142, 68, 173, 0.4) 30%,
-					transparent 55%),
-					radial-gradient(ellipse 40% 50% at 80% 10%,
-					rgba(155, 89, 182, 0.6) 0%,
-					rgba(142, 68, 173, 0.4) 30%,
-					transparent 55%),
-					/* 左侧 — 爪痕撕裂 */
-					radial-gradient(ellipse 30% 60% at 5% 50%,
-					rgba(142, 68, 173, 0.5) 0%,
-					rgba(108, 52, 131, 0.4) 40%,
-					transparent 70%),
-					/* 右侧 — 爪痕撕裂 */
-					radial-gradient(ellipse 30% 60% at 95% 50%,
-					rgba(142, 68, 173, 0.5) 0%,
-					rgba(108, 52, 131, 0.4) 40%,
-					transparent 70%),
-					/* 底部 — 野性余烬 */
-					radial-gradient(ellipse 60% 35% at 50% 95%,
-					rgba(108, 52, 131, 0.5) 0%,
-					rgba(142, 68, 173, 0.3) 40%,
-					transparent 65%),
-					/* 四角 — 挣脱的锁链碎片 */
-					radial-gradient(circle at 12% 12%, rgba(155, 89, 182, 0.4) 0%, transparent 20%),
-					radial-gradient(circle at 88% 12%, rgba(155, 89, 182, 0.4) 0%, transparent 20%),
-					radial-gradient(circle at 12% 88%, rgba(142, 68, 173, 0.4) 0%, transparent 20%),
-					radial-gradient(circle at 88% 88%, rgba(142, 68, 173, 0.4) 0%, transparent 20%);
-				animation: berserkerClaw 4s ease-in-out infinite alternate;
-			}
+        /* 向外撕裂 */
+        .d4>div.valkyr-border::after {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: -18px;
+            right: -18px;
+            bottom: -18px;
+            border-radius: 38px;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                /* 顶部 — 女武神之翼 */
+                radial-gradient(ellipse 40% 50% at 20% 10%,
+                rgba(155, 89, 182, 0.6) 0%,
+                rgba(142, 68, 173, 0.4) 30%,
+                transparent 55%),
+                radial-gradient(ellipse 40% 50% at 80% 10%,
+                rgba(155, 89, 182, 0.6) 0%,
+                rgba(142, 68, 173, 0.4) 30%,
+                transparent 55%),
+                /* 左侧 — 爪痕撕裂 */
+                radial-gradient(ellipse 30% 60% at 5% 50%,
+                rgba(142, 68, 173, 0.5) 0%,
+                rgba(108, 52, 131, 0.4) 40%,
+                transparent 70%),
+                /* 右侧 — 爪痕撕裂 */
+                radial-gradient(ellipse 30% 60% at 95% 50%,
+                rgba(142, 68, 173, 0.5) 0%,
+                rgba(108, 52, 131, 0.4) 40%,
+                transparent 70%),
+                /* 底部 — 野性余烬 */
+                radial-gradient(ellipse 60% 35% at 50% 95%,
+                rgba(108, 52, 131, 0.5) 0%,
+                rgba(142, 68, 173, 0.3) 40%,
+                transparent 65%),
+                /* 四角 — 挣脱的锁链碎片 */
+                radial-gradient(circle at 12% 12%, rgba(155, 89, 182, 0.4) 0%, transparent 20%),
+                radial-gradient(circle at 88% 12%, rgba(155, 89, 182, 0.4) 0%, transparent 20%),
+                radial-gradient(circle at 12% 88%, rgba(142, 68, 173, 0.4) 0%, transparent 20%),
+                radial-gradient(circle at 88% 88%, rgba(142, 68, 173, 0.4) 0%, transparent 20%);
+            animation: berserkerClaw 2.6 ease-in-out infinite alternate;
+        }
 
-			@keyframes wildAwaken {
-				0% {
-					transform: scale(0.98);
-					opacity: 0.8;
-					filter: brightness(0.7);
-				}
+        @keyframes wildAwaken {
+            0% {
+                transform: scale(0.98);
+                opacity: 0.8;
+                filter: brightness(0.7);
+            }
 
-				50% {
-					transform: scale(1.01);
-					filter: brightness(1.1);
-				}
+            50% {
+                transform: scale(1.01);
+                filter: brightness(1.1);
+            }
 
-				100% {
-					transform: scale(1);
-					opacity: 1;
-					filter: brightness(1);
-				}
-			}
+            100% {
+                transform: scale(1);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
 
 			@keyframes wildPulse {
 
 				0%,
 				100% {
 					opacity: 0.6;
-					transform: scale(1);
 				}
 
 				50% {
 					opacity: 0.9;
-					transform: scale(1.03);
 				}
 			}
 
 			@keyframes berserkerClaw {
 				0% {
-					transform: scale(0.95) rotate(-1deg);
 					opacity: 0.5;
 					filter: blur(1px);
 				}
 
 				30% {
-					transform: scale(1.02) rotate(1deg);
 					opacity: 0.75;
 				}
 
 				60% {
-					transform: scale(1.05) rotate(-0.5deg);
 					opacity: 0.85;
 				}
 
 				100% {
-					transform: scale(1.1) rotate(0deg);
 					opacity: 1;
 					filter: blur(2px);
 				}
 			}
 
-			/* ===== VAUBAN 传家宝 — 天才战术家===== */
-			.d4>div.vauban-border {
-				border: 3px solid #00B4D8;
-				box-shadow:
-					0 0 20px rgba(0, 180, 216, 0.6),
-					0 0 50px rgba(0, 150, 199, 0.4),
-					0 0 90px rgba(0, 119, 182, 0.25),
-					0 0 140px rgba(3, 4, 94, 0.15),
-					inset 0 0 20px rgba(0, 180, 216, 0.15);
-				background: linear-gradient(145deg,
-					rgba(10, 15, 20, 0.95) 0%,
-					rgba(20, 30, 40, 0.9) 25%,
-					rgba(15, 25, 35, 0.95) 50%,
-					rgba(25, 35, 45, 0.9) 75%,
-					rgba(10, 15, 20, 0.95) 100%);
-				position: relative;
-				animation: tacticalDeploy 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
+        /* ===== VAUBAN 传家宝 — 天才战术家===== */
+        .d4>div.vauban-border {
+            border: 3px solid #00B4D8;
+            box-shadow:
+                0 0 20px rgba(0, 180, 216, 0.6),
+                0 0 50px rgba(0, 150, 199, 0.4),
+                0 0 90px rgba(0, 119, 182, 0.25),
+                0 0 140px rgba(3, 4, 94, 0.15),
+                inset 0 0 20px rgba(0, 180, 216, 0.15);
+            background: linear-gradient(145deg,
+                rgba(10, 15, 20, 0.95) 0%,
+                rgba(20, 30, 40, 0.9) 25%,
+                rgba(15, 25, 35, 0.95) 50%,
+                rgba(25, 35, 45, 0.9) 75%,
+                rgba(10, 15, 20, 0.95) 100%);
+            position: relative;
+            animation: tacticalDeploy 2.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
 
-			/* 战术网格层 */
-			.d4>div.vauban-border::before {
-				content: '';
-				position: absolute;
-				top: -8px;
-				left: -8px;
-				right: -8px;
-				bottom: -8px;
-				border-radius: 28px;
-				z-index: -1;
-				pointer-events: none;
-				border: 2px solid rgba(0, 180, 216, 0.4);
-				background:
-					/* 战术网格线 */
-					linear-gradient(90deg,
-					transparent 0%,
-					rgba(0, 180, 216, 0.1) 10%,
-					transparent 10.5%,
-					transparent 20%,
-					rgba(0, 180, 216, 0.1) 20%,
-					transparent 20.5%,
-					transparent 30%,
-					rgba(0, 180, 216, 0.1) 30%,
-					transparent 30.5%,
-					transparent 40%,
-					rgba(0, 180, 216, 0.1) 40%,
-					transparent 40.5%,
-					transparent 50%,
-					rgba(0, 180, 216, 0.1) 50%,
-					transparent 50.5%,
-					transparent 60%,
-					rgba(0, 180, 216, 0.1) 60%,
-					transparent 60.5%,
-					transparent 70%,
-					rgba(0, 180, 216, 0.1) 70%,
-					transparent 70.5%,
-					transparent 80%,
-					rgba(0, 180, 216, 0.1) 80%,
-					transparent 80.5%,
-					transparent 90%,
-					rgba(0, 180, 216, 0.1) 90%,
-					transparent 90.5%),
-					linear-gradient(0deg,
-					transparent 0%,
-					rgba(0, 180, 216, 0.1) 10%,
-					transparent 10.5%,
-					transparent 20%,
-					rgba(0, 180, 216, 0.1) 20%,
-					transparent 20.5%,
-					transparent 30%,
-					rgba(0, 180, 216, 0.1) 30%,
-					transparent 30.5%,
-					transparent 40%,
-					rgba(0, 180, 216, 0.1) 40%,
-					transparent 40.5%,
-					transparent 50%,
-					rgba(0, 180, 216, 0.1) 50%,
-					transparent 50.5%,
-					transparent 60%,
-					rgba(0, 180, 216, 0.1) 60%,
-					transparent 60.5%,
-					transparent 70%,
-					rgba(0, 180, 216, 0.1) 70%,
-					transparent 70.5%,
-					transparent 80%,
-					rgba(0, 180, 216, 0.1) 80%,
-					transparent 80.5%,
-					transparent 90%,
-					rgba(0, 180, 216, 0.1) 90%,
-					transparent 90.5%);
-				box-shadow:
-					inset 0 0 30px rgba(0, 0, 0, 0.6),
-					0 0 40px rgba(0, 180, 216, 0.2);
-				animation: gridPulse 5s ease-in-out infinite;
-			}
+        /* 战术网格层 */
+        .d4>div.vauban-border::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 28px;
+            z-index: -1;
+            pointer-events: none;
+            border: 2px solid rgba(0, 180, 216, 0.4);
+            background:
+                /* 战术网格线 */
+                linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 180, 216, 0.1) 10%,
+                transparent 10.5%,
+                transparent 20%,
+                rgba(0, 180, 216, 0.1) 20%,
+                transparent 20.5%,
+                transparent 30%,
+                rgba(0, 180, 216, 0.1) 30%,
+                transparent 30.5%,
+                transparent 40%,
+                rgba(0, 180, 216, 0.1) 40%,
+                transparent 40.5%,
+                transparent 50%,
+                rgba(0, 180, 216, 0.1) 50%,
+                transparent 50.5%,
+                transparent 60%,
+                rgba(0, 180, 216, 0.1) 60%,
+                transparent 60.5%,
+                transparent 70%,
+                rgba(0, 180, 216, 0.1) 70%,
+                transparent 70.5%,
+                transparent 80%,
+                rgba(0, 180, 216, 0.1) 80%,
+                transparent 80.5%,
+                transparent 90%,
+                rgba(0, 180, 216, 0.1) 90%,
+                transparent 90.5%),
+                linear-gradient(0deg,
+                transparent 0%,
+                rgba(0, 180, 216, 0.1) 10%,
+                transparent 10.5%,
+                transparent 20%,
+                rgba(0, 180, 216, 0.1) 20%,
+                transparent 20.5%,
+                transparent 30%,
+                rgba(0, 180, 216, 0.1) 30%,
+                transparent 30.5%,
+                transparent 40%,
+                rgba(0, 180, 216, 0.1) 40%,
+                transparent 40.5%,
+                transparent 50%,
+                rgba(0, 180, 216, 0.1) 50%,
+                transparent 50.5%,
+                transparent 60%,
+                rgba(0, 180, 216, 0.1) 60%,
+                transparent 60.5%,
+                transparent 70%,
+                rgba(0, 180, 216, 0.1) 70%,
+                transparent 70.5%,
+                transparent 80%,
+                rgba(0, 180, 216, 0.1) 80%,
+                transparent 80.5%,
+                transparent 90%,
+                rgba(0, 180, 216, 0.1) 90%,
+                transparent 90.5%);
+            box-shadow:
+                inset 0 0 30px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(0, 180, 216, 0.2);
+            animation: gridPulse 2.6s ease-in-out infinite;
+        }
 
-			/* 陷阱节点与能量流 */
-			.d4>div.vauban-border::after {
-				content: '';
-				position: absolute;
-				top: -16px;
-				left: -16px;
-				right: -16px;
-				bottom: -16px;
-				border-radius: 36px;
-				z-index: -2;
-				pointer-events: none;
-				background:
-					/* 顶部 — 战术天线/传感器 */
-					radial-gradient(ellipse 30% 40% at 30% 8%,
-					rgba(0, 180, 216, 0.5) 0%,
-					rgba(0, 150, 199, 0.3) 30%,
-					transparent 55%),
-					radial-gradient(ellipse 30% 40% at 70% 8%,
-					rgba(0, 180, 216, 0.5) 0%,
-					rgba(0, 150, 199, 0.3) 30%,
-					transparent 55%),
-					/* 四角 — 陷阱节点 */
-					radial-gradient(circle at 12% 12%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
-					radial-gradient(circle at 88% 12%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
-					radial-gradient(circle at 12% 88%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
-					radial-gradient(circle at 88% 88%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
-					/* 边缘 — 能量流 */
-					radial-gradient(ellipse 50% 30% at 50% 0%, rgba(0, 180, 216, 0.2) 0%, transparent 50%),
-					radial-gradient(ellipse 50% 30% at 50% 100%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
-					radial-gradient(ellipse 30% 50% at 0% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
-					radial-gradient(ellipse 30% 50% at 100% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%);
-				animation: nodeActivate 4s ease-in-out infinite alternate;
-			}
+        /* 陷阱节点与能量流 */
+        .d4>div.vauban-border::after {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            right: -16px;
+            bottom: -16px;
+            border-radius: 36px;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                /* 顶部 — 战术天线/传感器 */
+                radial-gradient(ellipse 30% 40% at 30% 8%,
+                rgba(0, 180, 216, 0.5) 0%,
+                rgba(0, 150, 199, 0.3) 30%,
+                transparent 55%),
+                radial-gradient(ellipse 30% 40% at 70% 8%,
+                rgba(0, 180, 216, 0.5) 0%,
+                rgba(0, 150, 199, 0.3) 30%,
+                transparent 55%),
+                /* 四角 — 陷阱节点 */
+                radial-gradient(circle at 12% 12%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+                radial-gradient(circle at 88% 12%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+                radial-gradient(circle at 12% 88%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+                radial-gradient(circle at 88% 88%, rgba(0, 180, 216, 0.7) 0%, rgba(0, 180, 216, 0.7) 4px, transparent 5px),
+                /* 边缘 — 能量流 */
+                radial-gradient(ellipse 50% 30% at 50% 0%, rgba(0, 180, 216, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 50% 100%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 30% 50% at 0% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 30% 50% at 100% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 50%);
+            animation: nodeActivate 2.6s ease-in-out infinite alternate;
+        }
 
-			@keyframes tacticalDeploy {
-				0% {
-					transform: scale(1.02);
-					opacity: 0.9;
-					filter: brightness(0.8);
-				}
+        @keyframes tacticalDeploy {
+            0% {
+                transform: scale(1.02);
+                opacity: 0.9;
+                filter: brightness(0.8);
+            }
 
-				50% {
-					transform: scale(1.005);
-					filter: brightness(1.05);
-				}
+            50% {
+                transform: scale(1.005);
+                filter: brightness(1.05);
+            }
 
-				100% {
-					transform: scale(1);
-					opacity: 1;
-					filter: brightness(1);
-				}
-			}
+            100% {
+                transform: scale(1);
+                opacity: 1;
+                filter: brightness(1);
+            }
+        }
 
 			@keyframes gridPulse {
 
 				0%,
 				100% {
 					opacity: 0.5;
-					transform: scale(1);
 				}
 
 				50% {
 					opacity: 0.8;
-					transform: scale(1.02);
 				}
 			}
 
 			@keyframes nodeActivate {
 				0% {
-					transform: scale(0.95);
 					opacity: 0.5;
 					filter: blur(1px);
 				}
 
 				30% {
-					transform: scale(1.0);
 					opacity: 0.7;
 				}
 
 				60% {
-					transform: scale(1.03);
 					opacity: 0.85;
 				}
 
 				100% {
-					transform: scale(1.08);
 					opacity: 1;
 					filter: blur(2px);
 				}
 			}
 
-			.d4>div img {
-				width: 80%;
-				max-width: 200px;
-				height: auto;
-				border-radius: 12px;
-				transition: transform 0.3s ease;
-			}
+        .id-icon {
+            height: 1em;
+            width: auto;
+            vertical-align: middle;
+            display: inline-block;
+        }
 
-			.d4>div:hover img {
-				transform: scale(1.05);
-			}
+        /* 展开/折叠全部按钮 */
+        .toggle-all {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 30, 60, 0.8);
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            border-radius: 2px;
+            color: #00c8ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 20px rgba(0, 200, 255, 0.2),
+                inset 0 0 20px rgba(0, 150, 255, 0.05);
+            transition: all 0.3s ease;
+            z-index: 999;
+            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+        }
 
-			.d4>div br:first-of-type {
-				display: none;
-			}
+        .toggle-all:hover {
+            background: rgba(0, 60, 120, 0.9);
+            box-shadow: 
+                0 0 30px rgba(0, 200, 255, 0.4),
+                inset 0 0 30px rgba(0, 150, 255, 0.1);
+            transform: translateY(-3px);
+            color: #ffffff;
+        }
 
-			/* 子标题 */
-			.atxt h4 {
-				text-align: center;
-				font-size: 2vw;
-				color: #80FF00;
-				text-shadow: 0 0 15px rgba(128, 255, 0, 0.3);
-				margin: 2vw 0 1vw;
-				letter-spacing: 0.1em;
-			}
+        .toggle-all.active {
+            background: rgba(255, 60, 0, 0.2);
+            border-color: rgba(255, 107, 53, 0.5);
+            color: #ff6b35;
+            box-shadow: 
+                0 0 20px rgba(255, 80, 0, 0.2),
+                inset 0 0 20px rgba(255, 60, 0, 0.05);
+        }
 
-			/* 隐藏区域 */
-			#div1,
-			#div2,
-			#div3,
-			#div4,
-			#div4-mod,
-			#div1-mod1,
-			#div1-mod2 {
-				display: none;
-			}
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 30, 60, 0.8);
+            border: 1px solid rgba(0, 200, 255, 0.4);
+            border-radius: 2px;
+            color: #00c8ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 20px rgba(0, 200, 255, 0.2),
+                inset 0 0 20px rgba(0, 150, 255, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+        }
 
-			/* 响应式 */
-			@media (max-width: 1000px) {
-				body {
-					padding: 3vw;
-				}
+        .back-to-top:hover {
+            background: rgba(0, 60, 120, 0.9);
+            box-shadow: 
+                0 0 30px rgba(0, 200, 255, 0.4),
+                inset 0 0 30px rgba(0, 150, 255, 0.1);
+            transform: translateY(-3px);
+            color: #ffffff;
+        }
 
-				.d2 a img {
-					width: 8vw;
-					height: 8vw;
-				}
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
-				.d2 h2 {
-					font-size: 6vw;
-				}
+        /* 提示动画 */
+        @keyframes tipSlideInLeft {
+            from { transform:translateY(-50%) translateX(-100%); opacity:0; }
+            to   { transform:translateY(-50%) translateX(0); opacity:1; }
+        }
+        @keyframes tipSlideOutRight {
+            from { transform:translateY(-50%) translateX(0); opacity:1; }
+            to   { transform:translateY(-50%) translateX(120%); opacity:0; }
+        }
+        @keyframes tipPulse {
+            from { box-shadow:0 0 20px rgba(0,200,255,0.3),inset 0 0 20px rgba(0,150,255,0.05); }
+            to   { box-shadow:0 0 30px rgba(0,200,255,0.5),inset 0 0 30px rgba(0,150,255,0.1); }
+        }
 
-				.d3 a {
-					font-size: 2.5vw;
-					padding: 1vw 3vw;
-				}
+        /* 浮动装饰粒子 */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 200, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 15s infinite linear;
+            box-shadow: 0 0 6px rgba(0, 200, 255, 0.8);
+        }
 
-				.atxt h3 {
-					font-size: 2vw;
-				}
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
 
-				button {
-					font-size: 3vw;
-					width: 90%;
-				}
+        /* 响应式 */
+        @media (max-width: 1000px) {
+            body {
+                padding: 3vw;
+            }
 
-				.d4 {
-					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-					gap: 3vw;
-				}
+            .d2 a img {
+                width: 8vw;
+                height: 8vw;
+            }
 
-				.d4>div {
-					background: rgba(255, 255, 255, 0.03);
-					border: 1px solid rgba(255, 255, 255, 0.1);
-					border-radius: 20px;
-					padding: 1.5vw;
-					text-align: center;
-					font-size: 1.2vw;
-					transition: all 0.3s ease;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					gap: 0.8vw;
-					min-height: 320px;
-				}
+            .d2 h2 {
+                font-size: 5vw;
+            }
 
-				/* 新增：库存量和价格容器 */
-				.d4>div .info-bar {
-					margin-top: auto;
-					padding-top: 0.5vw;
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					width: 100%;
-					gap: 1vw;
-				}
+            .d3 a {
+                font-size: 2vw;
+                padding: 1vw 3vw;
+            }
 
-				.d4>div .info-bar span:first-child {
-					color: inherit;
-					font-size: inherit;
-				}
+            .atxt h3 {
+                font-size: 2vw;
+            }
 
-				.d4>div .info-bar .price {
-					color: #FF9800;
-					font-weight: bold;
-					text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
-					font-size: inherit;
-				}
+            button {
+                font-size: 2.5vw;
+                width: 90%;
+            }
 
-				.atxt h4 {
-					font-size: 3.5vw;
-				}
-			}
+            .d4 {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 3vw;
+            }
 
-			@media (max-width: 600px) {
-				.d2 {
-					flex-direction: column;
-					gap: 1vw;
-				}
+            .d4>div {
+                font-size: 1.8vw;
+                min-height: 280px;
+            }
 
-				.d2 a img {
-					width: 12vw;
-					height: 12vw;
-				}
+            .d4>div .info-bar {
+                margin-top: auto;
+                padding-top: 0.5vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                gap: 1vw;
+            }
 
-				.d2 h2 {
-					font-size: 7vw;
-				}
+            .d4>div .info-bar span:first-child {
+                color: inherit;
+                font-size: inherit;
+            }
 
-				.d3 div {
-					flex-direction: column;
-					gap: 1.5vw;
-				}
+            .d4>div .info-bar .price {
+                color: #FF9800;
+                font-weight: bold;
+                text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+                font-size: inherit;
+            }
 
-				.d3 a {
-					font-size: 3.5vw;
-					width: 80%;
-				}
+            .atxt h4 {
+                font-size: 2.5vw;
+            }
+        }
 
-				button {
-					font-size: 4vw;
-				}
+        @media (max-width: 600px) {
+            .d2 {
+                flex-direction: column;
+                gap: 1vw;
+            }
 
-				.d4 {
-					grid-template-columns: 1fr;
-				}
+            .d2 a img {
+                width: 12vw;
+                height: 12vw;
+            }
 
-				.d4>div {
-					font-size: 3.5vw;
-				}
-			}
+            .d2 h2 {
+                font-size: 6vw;
+            }
 
-			.id-icon {
-				height: 1em;
-				width: auto;
-				vertical-align: middle;
-				display: inline-block;
-			}
+            .d3 div {
+                flex-direction: column;
+                gap: 1.5vw;
+            }
+
+            .d3 a {
+                font-size: 3vw;
+                width: 80%;
+            }
+
+            button {
+                font-size: 3.5vw;
+            }
+
+            .d4 {
+                grid-template-columns: 1fr;
+            }
+
+            .d4>div {
+                font-size: 3.5vw;
+            }
+        }
 		</style>
 		<base target="_blank">
 	</head>
 	<body>
+			<!-- 浮动粒子 -->
+			<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
+			<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
+			<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
+			<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
+			<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
+			<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
+			<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
+			<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
+			
 		<div class="d2">
-			<a href="../index.html">
+			<a href="../index.html" id="backLink">
 				<img src="../Logo.jpg" alt="Logo">
 			</a>
 			<h2 id="typing"></h2>
@@ -1435,7 +1698,9 @@
                 </div>
             </div>-->
 		</div>
-
+		<button class="toggle-all" id="toggleAll" title="展开/折叠全部">≡</button>
+		<button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
+</body>
 		<script>
 			function button1() {
 				var div1 = document.getElementById('div1');
@@ -1449,7 +1714,6 @@
 					div1mod2.style.display = 'none';
 					bu1.querySelector('.btn-text').innerText = "PrimeMOD";
 					icons.forEach(function(icon) { icon.style.display = 'none'; });
-					
 				} else {
 					div1.style.display = 'grid';
 					div1mod1.style.display = 'block';
@@ -1457,6 +1721,7 @@
 					bu1.querySelector('.btn-text').innerText = "PrimeMOD";
 					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 				}
+				updateToggleAllState();
 			}
 
 			function button2() {
@@ -1472,13 +1737,14 @@
 					bu2.querySelector('.btn-text').innerText = "Prime军械";
 					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 				}
+				updateToggleAllState();
 			}
 
 
 			function button4() {
 				var div4 = document.getElementById('div4');
 				var bu4 = document.getElementById('bu4');
-				 var icons = bu4.querySelectorAll('.btn-icon');
+				var icons = bu4.querySelectorAll('.btn-icon');
 				if (div4.style.display == 'grid') {
 					div4.style.display = 'none';
 					bu4.querySelector('.btn-text').innerText = "赞助奖池";
@@ -1488,9 +1754,9 @@
 					bu4.querySelector('.btn-text').innerText = "赞助奖池";
 					icons.forEach(function(icon) { icon.style.display = 'inline-block'; });
 				}
+				updateToggleAllState();
 			}
 
-			// 图片轮播
 			var images1 = [
 				'IMG/Prime/R/EMBER.jpg',
 				'IMG/Prime/R/RHINO.jpg',
@@ -1501,14 +1767,19 @@
 			setInterval(function() {
 				var imgElement = document.getElementById('image1');
 				var cardElement = document.getElementById('ember-card');
-				imgElement.src = images1[index1];
+				
+				index1 = (index1 + 1) % images1.length;
+				var currentImg = images1[index1];
+				imgElement.src = currentImg;
 
 				// 移除旧边框类
 				if (cardElement) {
 					cardElement.classList.remove('ember-border', 'rhino-border', 'valkyr-border', 'vauban-border');
+					
+					// 强制重绘以重置动画
+					void cardElement.offsetWidth;
 
 					// 根据图片添加对应边框
-					var currentImg = images1[index1];
 					if (currentImg.includes('EMBER')) {
 						cardElement.classList.add('ember-border');
 					} else if (currentImg.includes('RHINO')) {
@@ -1519,8 +1790,6 @@
 						cardElement.classList.add('vauban-border');
 					}
 				}
-
-				index1 = (index1 + 1) % images1.length;
 			}, 2600);
 
 			var images2 = [
@@ -1608,6 +1877,123 @@
 			}
 
 			typeEffect();
+			
+			// 回到顶部按钮逻辑
+			let backToTopBtn = document.getElementById('backToTop');
+			window.addEventListener('scroll', function() {
+			    if (window.pageYOffset > 300) {
+			        backToTopBtn.classList.add('visible');
+			    } else {
+			        backToTopBtn.classList.remove('visible');
+			    }
+			});
+			backToTopBtn.addEventListener('click', function() {
+			    window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+			
+			// ========== 5秒提示 ==========
+			setTimeout(function() {
+			    let tip = document.createElement('div');
+			    tip.id = 'avatar-tip';
+			    tip.innerHTML = '💡 点击顶部 <img src="../Logo.jpg" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,200,255,0.4);">可返回上一级';
+			    tip.style.cssText = `
+			        position:fixed;
+			        top:50%;
+			        left:0;
+			        transform:translateY(-50%) translateX(-100%);
+			        background:rgba(0,30,60,0.95);
+			        border:1px solid rgba(0,200,255,0.5);
+			        border-left:none;
+			        color:#00c8ff;
+			        font-family:'Orbitron','Microsoft YaHei',sans-serif;
+			        font-size:13px;
+			        padding:14px 20px 14px 16px;
+			        border-radius:0 4px 4px 0;
+			        box-shadow:0 0 20px rgba(0,200,255,0.3),inset 0 0 20px rgba(0,150,255,0.05);
+			        z-index:1000;
+			        letter-spacing:0.08em;
+			        cursor:pointer;
+			        white-space:nowrap;
+			        animation:tipSlideInLeft 0.6s ease forwards,tipPulse 2s ease-in-out infinite alternate;
+			    `;
+			    document.body.appendChild(tip);
+			
+			    function removeTip() {
+			        if (!tip.parentNode) return;
+			        tip.style.animation = 'tipSlideOutRight 0.5s ease forwards';
+			        setTimeout(() => tip.remove(), 500);
+			    }
+			    tip.addEventListener('click', removeTip);
+			    setTimeout(removeTip, 4000);
+			
+			    // 用户滑动页面时向右滑出消失
+			    window.addEventListener('scroll', removeTip, { once: true });
+			}, 5000);
+			
+				let params = new URLSearchParams(window.location.search);
+				let from = params.get('from');
+				let backLink = document.getElementById('backLink');
+				
+				if (from) {
+					backLink.href = '../' + from;
+				}
+				backLink.target = '_self';
+				
+			// ========== 展开/折叠全部奖品 ==========
+			let toggleAllBtn = document.getElementById('toggleAll');
+			let allExpanded = false;
+		
+			function checkAnyExpanded() {
+				var div1 = document.getElementById('div1');
+				var div2 = document.getElementById('div2');
+				var div4 = document.getElementById('div4');
+				return (div1 && div1.style.display == 'grid') ||
+				       (div2 && div2.style.display == 'grid') ||
+				       (div4 && div4.style.display == 'grid');
+			}
+		
+			function updateToggleAllState() {
+				allExpanded = checkAnyExpanded();
+				toggleAllBtn.classList.toggle('active', allExpanded);
+				toggleAllBtn.title = allExpanded ? '折叠全部' : '展开全部';
+			}
+		
+			toggleAllBtn.addEventListener('click', function() {
+				allExpanded = checkAnyExpanded();
+				
+				// 如果当前有任何一个展开，则全部折叠；否则全部展开
+				var targetDisplay = allExpanded ? 'none' : 'grid';
+				var subDisplay = allExpanded ? 'none' : 'block';
+				
+				// 所有主内容区域
+				let sections = ['div1', 'div2', 'div4'];
+				// 所有子区域
+				let subSections = ['div1-mod1', 'div1-mod2'];
+		
+				// 切换主区域
+				sections.forEach(function(id) {
+					let el = document.getElementById(id);
+					if (el) el.style.display = targetDisplay;
+				});
+		
+				// 切换子区域
+				subSections.forEach(function(id) {
+					let el = document.getElementById(id);
+					if (el) el.style.display = subDisplay;
+				});
+		
+				// 同步各按钮图标状态
+				let btns = ['bu1', 'bu2', 'bu4'];
+				btns.forEach(function(btnId) {
+					let btn = document.getElementById(btnId);
+					if (!btn) return;
+					let icons = btn.querySelectorAll('.btn-icon');
+					icons.forEach(function(icon) {
+						icon.style.display = allExpanded ? 'none' : 'inline-block';
+					});
+				});
+		
+				updateToggleAllState();
+			});
 		</script>
-	</body>
 </html>
