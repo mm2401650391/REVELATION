@@ -807,14 +807,42 @@
             return true;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('rulesLimit').textContent = DAILY_DRAW_LIMIT;
-            if (initSupabase()) {
-                autoLogin();
-            }
-            renderPrizes();
-            loadHistory();
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    // 抽奖功能暂时关闭
+    document.body.innerHTML = `
+        <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #00c8ff;
+            font-family: 'Orbitron', 'Microsoft YaHei', sans-serif;
+            text-align: center;
+            padding: 2vw;
+        ">
+            <div style="font-size: 3vw; margin-bottom: 2vw; text-shadow: 0 0 20px rgba(0,200,255,0.4);">
+                ⚠ 功能维护中
+            </div>
+            <div style="font-size: 1.2vw; color: rgba(150,180,200,0.7); line-height: 2;">
+                幸运抽奖功能正在进行维护升级
+            </div>
+            <a href="../index.html" style="
+                margin-top: 3vw;
+                padding: 1vw 3vw;
+                border: 1px solid rgba(0,200,255,0.3);
+                color: #00c8ff;
+                text-decoration: none;
+                font-size: 1vw;
+                transition: all 0.3s;
+            " onmouseover="this.style.borderColor='rgba(0,200,255,0.6)';this.style.boxShadow='0 0 20px rgba(0,200,255,0.2)'"
+            onmouseout="this.style.borderColor='rgba(0,200,255,0.3)';this.style.boxShadow='none'">
+                ← 返回首页
+            </a>
+        </div>
+    `;
+    return; // 阻止后续所有代码执行
+});
 
         function renderPrizes() {
             const grid = document.getElementById('prizeGrid');
