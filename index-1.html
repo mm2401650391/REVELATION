@@ -611,9 +611,377 @@
             .section {
                 padding: 15px;
             }
+            #game-battle, #game-puzzle {
+                display: none !important;
+            }
         }
+		
+		        /* ========== 登录弹窗 ========== */
+		        .login-overlay {
+		            display: none;
+		            position: fixed;
+		            inset: 0;
+		            background: rgba(0,0,0,0.85);
+		            z-index: 10000;
+		            align-items: center;
+		            justify-content: center;
+		            backdrop-filter: blur(10px);
+		        }
+		        .login-overlay.active { display: flex; }
+		        
+		        .login-modal {
+		            background: linear-gradient(135deg, rgba(15,15,25,0.98), rgba(10,10,18,0.98));
+		            border: 1px solid rgba(0,212,255,0.3);
+		            border-radius: 16px;
+		            padding: 40px;
+		            width: 90%;
+		            max-width: 420px;
+		            position: relative;
+		            box-shadow: 0 0 40px rgba(0,212,255,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+		        }
+		        .login-modal::before {
+		            content: '';
+		            position: absolute;
+		            top: 0; left: 0; right: 0;
+		            height: 3px;
+		            background: linear-gradient(90deg, transparent, #00d4ff, #ffaa00, #00d4ff, transparent);
+		        }
+		        .login-modal h2 {
+		            font-family: 'Orbitron', sans-serif;
+		            color: #00d4ff;
+		            text-align: center;
+		            margin-bottom: 25px;
+		            font-size: 1.8rem;
+		            text-shadow: 0 0 15px rgba(0,212,255,0.3);
+		        }
+		        .login-input {
+		            width: 100%;
+		            padding: 14px 18px;
+		            background: rgba(0,0,0,0.5);
+		            border: 1px solid rgba(0,212,255,0.2);
+		            border-radius: 8px;
+		            color: #fff;
+		            font-size: 1rem;
+		            margin-bottom: 15px;
+		            transition: all 0.3s;
+		        }
+		        .login-input:focus {
+		            outline: none;
+		            border-color: #00d4ff;
+		            box-shadow: 0 0 15px rgba(0,212,255,0.2);
+		        }
+		        .login-input::placeholder { color: #555; }
+		        
+		        .login-btn {
+		            width: 100%;
+		            padding: 14px;
+		            background: linear-gradient(135deg, #00d4ff, #0088aa);
+		            border: none;
+		            border-radius: 8px;
+		            color: #000;
+		            font-weight: 700;
+		            font-size: 1rem;
+		            cursor: pointer;
+		            text-transform: uppercase;
+		            letter-spacing: 2px;
+		            transition: all 0.3s;
+		            margin-bottom: 12px;
+		        }
+		        .login-btn:hover {
+		            transform: translateY(-2px);
+		            box-shadow: 0 5px 20px rgba(0,212,255,0.4);
+		        }
+		        .login-btn.tenno {
+		            background: linear-gradient(135deg, #ffaa00, #cc8800);
+		        }
+		        .login-btn.tenno:hover {
+		            box-shadow: 0 5px 20px rgba(255,170,0,0.4);
+		        }
+		        
+		        .login-close {
+		            position: absolute;
+		            top: 15px;
+		            right: 20px;
+		            background: none;
+		            border: none;
+		            color: #666;
+		            font-size: 1.5rem;
+		            cursor: pointer;
+		            transition: color 0.3s;
+		        }
+		        .login-close:hover { color: #ff4444; }
+		        
+		        .login-tabs {
+		            display: flex;
+		            margin-bottom: 20px;
+		            border-bottom: 1px solid rgba(255,255,255,0.1);
+		        }
+		        .login-tab {
+		            flex: 1;
+		            padding: 12px;
+		            background: none;
+		            border: none;
+		            color: #666;
+		            cursor: pointer;
+		            font-size: 0.9rem;
+		            letter-spacing: 1px;
+		            transition: all 0.3s;
+		            position: relative;
+		        }
+		        .login-tab.active { color: #00d4ff; }
+		        .login-tab.active::after {
+		            content: '';
+		            position: absolute;
+		            bottom: -1px;
+		            left: 0; right: 0;
+		            height: 2px;
+		            background: #00d4ff;
+		        }
+		        
+		        .login-error {
+		            color: #ff4444;
+		            font-size: 0.85rem;
+		            text-align: center;
+		            margin-bottom: 15px;
+		            min-height: 1.2em;
+		        }
+		        
+		        .user-info {
+		            display: none;
+		            align-items: center;
+		            gap: 10px;
+		            position: fixed;
+		            top: 15px;
+		            right: 15px;
+		            z-index: 100;
+		            background: rgba(0,0,0,0.7);
+		            padding: 8px 16px;
+		            border-radius: 20px;
+		            border: 1px solid rgba(0,212,255,0.3);
+		            backdrop-filter: blur(10px);
+		        }
+		        .user-info.active { display: flex; }
+		        .user-avatar {
+		            width: 32px; height: 32px;
+		            border-radius: 50%;
+		            background: linear-gradient(135deg, #00d4ff, #0088aa);
+		            display: flex;
+		            align-items: center;
+		            justify-content: center;
+		            font-size: 1rem;
+		        }
+		        .user-name { color: #00d4ff; font-weight: 700; font-size: 0.9rem; }
+		        .user-points { color: #ffaa00; font-size: 0.8rem; }
+		        .logout-btn {
+		            background: none;
+		            border: none;
+		            color: #666;
+		            cursor: pointer;
+		            font-size: 0.8rem;
+		            margin-left: 5px;
+		        }
+		        .logout-btn:hover { color: #ff4444; }
+		
+		        /* ========== 游戏入口卡片 ========== */
+		        .game-grid {
+		            display: grid;
+		            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		            gap: 20px;
+		            margin-top: 15px;
+		        }
+		        .game-card {
+		            background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(255,170,0,0.05));
+		            border: 1px solid rgba(0,212,255,0.2);
+		            border-radius: 12px;
+		            padding: 25px;
+		            cursor: pointer;
+		            transition: all 0.3s;
+		            position: relative;
+		            overflow: hidden;
+		        }
+		        .game-card::before {
+		            content: '';
+		            position: absolute;
+		            top: 0; left: 0; right: 0;
+		            height: 2px;
+		            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+		            opacity: 0.5;
+		        }
+		        .game-card:hover {
+		            transform: translateY(-5px);
+		            border-color: rgba(0,212,255,0.5);
+		            box-shadow: 0 10px 30px rgba(0,212,255,0.15);
+		        }
+		        .game-card.locked {
+		            opacity: 0.5;
+		            cursor: not-allowed;
+		            filter: grayscale(0.8);
+		        }
+		        .game-card.locked:hover {
+		            transform: none;
+		            box-shadow: none;
+		        }
+		        .game-icon {
+		            font-size: 3rem;
+		            margin-bottom: 15px;
+		            display: block;
+		        }
+		        .game-title {
+		            font-size: 1.3rem;
+		            font-weight: 700;
+		            color: #fff;
+		            margin-bottom: 8px;
+		        }
+		        .game-desc {
+		            color: #888;
+		            font-size: 0.9rem;
+		            line-height: 1.5;
+		            margin-bottom: 15px;
+		        }
+		        .game-stats {
+		            display: flex;
+		            gap: 15px;
+		            font-size: 0.8rem;
+		            color: #666;
+		        }
+		        .game-stats span {
+		            display: flex;
+		            align-items: center;
+		            gap: 5px;
+		        }
+		        .game-badge {
+		            position: absolute;
+		            top: 10px;
+		            right: 10px;
+		            background: rgba(255,68,68,0.2);
+		            color: #ff4444;
+		            padding: 3px 10px;
+		            border-radius: 4px;
+		            font-size: 0.75rem;
+		            font-weight: 700;
+		            border: 1px solid rgba(255,68,68,0.3);
+		        }
+		        .game-badge.new {
+		            background: rgba(78,255,78,0.15);
+		            color: #4eff4e;
+		            border-color: rgba(78,255,78,0.3);
+		        }
+				
+				/* ========== 右上角登录入口（G2 风格） ========== */
+				.login-pulse {
+				    position: relative;
+				    background: rgba(0, 60, 120, 0.4);
+				    border: 1px solid rgba(0, 200, 255, 0.5);
+				    color: #00c8ff;
+				    font-family: 'Orbitron', sans-serif;
+				    letter-spacing: 0.1em;
+				    cursor: pointer;
+				    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+				    transition: all 0.3s;
+				    text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+				    box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05);
+				    animation: pulseGlow 2s ease-in-out infinite;
+				}
+				
+				@keyframes pulseGlow {
+				    0%, 100% { box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05); }
+				    50% { box-shadow: 0 0 40px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.1); }
+				}
+				
+				.login-pulse:hover {
+				    background: rgba(0, 100, 200, 0.5);
+				    transform: translateY(-2px);
+				}
+				
+				.login-pulse.logged {
+				    background: rgba(22, 199, 154, 0.2);
+				    border-color: rgba(22, 199, 154, 0.5);
+				    color: #16c79a;
+				    text-shadow: 0 0 10px rgba(22, 199, 154, 0.5);
+				    animation: none;
+				    box-shadow: 0 0 20px rgba(22, 199, 154, 0.2);
+				}
+				
+				/* 兑换弹窗遮罩 */
+				.modal-overlay {
+				    position: fixed;
+				    top: 0; left: 0; right: 0; bottom: 0;
+				    background: rgba(5, 8, 20, 0.85);
+				    backdrop-filter: blur(5px);
+				    display: none;
+				    justify-content: center;
+				    align-items: center;
+				    z-index: 99999;
+				}
+				
+				/* 弹窗卡片 */
+				.modal {
+				    background: rgba(5, 10, 25, 0.95);
+				    border: 1px solid rgba(0, 200, 255, 0.3);
+				    border-radius: 4px;
+				    padding: 30px;
+				    width: 90%;
+				    max-width: 400px;
+				    text-align: center;
+				    box-shadow: 0 0 60px rgba(0, 150, 255, 0.15), inset 0 0 40px rgba(0, 100, 200, 0.05);
+				    clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+				}
+				
+				.modal h3 {
+				    font-family: 'Orbitron', sans-serif;
+				    color: #00c8ff;
+				    margin-bottom: 20px;
+				    text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+				}
+				
+				.modal p {
+				    color: #aaa;
+				    margin-bottom: 20px;
+				    line-height: 1.6;
+				}
+				
+				.modal-buttons {
+				    display: flex;
+				    gap: 10px;
+				    justify-content: center;
+				}
+				
+				.modal-buttons button {
+				    width: auto;
+				    padding: 10px 25px;
+				    font-size: 14px;
+				}
+				
+				.btn-cancel {
+				    background: rgba(100, 100, 100, 0.3);
+				    border-color: rgba(100, 100, 100, 0.5);
+				    color: rgba(180, 200, 220, 0.8);
+				}
+				
+				.btn-cancel:hover {
+				    background: rgba(100, 100, 100, 0.5);
+				}
+				
+				/* 成功提示 */
+				.toast {
+				    position: fixed;
+				    top: 20px;
+				    left: 50%;
+				    transform: translateX(-50%);
+				    background: rgba(22, 199, 154, 0.9);
+				    color: #fff;
+				    padding: 15px 30px;
+				    border-radius: 4px;
+				    display: none;
+				    z-index: 999999;
+				    font-family: 'Orbitron', sans-serif;
+				    border: 1px solid rgba(22, 199, 154, 0.5);
+				    box-shadow: 0 0 20px rgba(22, 199, 154, 0.3);
+				}
     </style>
-    <base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<script src="1.js"></script>	
 <base target="_blank">
 </head>
 <body>
@@ -657,46 +1025,76 @@
     </header>
 
     <main>
-        <!-- 材料征集 -->
-        <section class="section collection-card">
-            <h2>⚔️ 材料征集</h2>
-            <p style="color: #aaa; font-size: 0.9em; margin-bottom: 10px;">当前征集：
-                
-                <strong style="color: #ff6b6b;">无进行中...</strong>
-                
-            </p>
+                <!-- 游戏入口 -->
+                <section class="section">
+                    <h2>🎮 游戏中心</h2>
+                    <div class="game-grid">
+                        <div class="game-card" onclick="enterGame('growth')">
+                            <span class="game-badge new">NEW</span>
+                            <span class="game-icon">⚔️</span>
+                            <div class="game-title">【星渊】</div>
+                            <div class="game-desc">日积月累，完成肃清获取积分，兑换联盟宝库奖品。</div>
+                            <div class="game-stats">
+                                <span>⭐ 积分获取</span>
+                                <span>📅 卡片收集</span>
+                                <span>⚒️ 铸造装备</span>
+                            </div>
+                        </div>
+                        
+                        <div class="game-card locked" id="game-battle">
+            <span class="game-badge">开发中...</span>
+            <span class="game-icon">⚔️</span>
+            <div class="game-title">占位符...</div>
+                            <div class="game-desc">占位符...</div>
+                            <div class="game-stats">
+                                <span>占位符...</span>
+                                <span>占位符...</span>
+                            </div>
+                        </div>
+                        
+                        <div class="game-card locked" id="game-puzzle">
+            <span class="game-badge">开发中</span>
+            <span class="game-icon">🏛️</span>
+            <div class="game-title">占位符...</div>
+                            <div class="game-desc">占位符...</div>
+                            <div class="game-stats">
+                                <span>占位符...</span>
+                                <span>占位符...</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+		
+		<!-- 材料征集 -->
+		<section class="section collection-card">
+		    <h2>⚔️ 材料征集</h2>
+		    <p style="color: #aaa; font-size: 0.9em; margin-bottom: 10px;">当前征集：
+		        
+		        <strong style="color: #ff6b6b;">无进行中...</strong>
+		        
+		    </p>
 			<!--
-            <div style="background: rgba(255,107,107,0.08); border-left: 4px solid #ff6b6b; padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
-                <p style="font-weight: bold; margin-bottom: 8px; color: #ff6b6b;">📋 征集要求</p>
-                <ul style="list-style: none; padding-left: 0; font-size: 0.95em; line-height: 1.8;">
-                    <li>🔹 征集总量：<strong>1000/2000</strong> 个</li>
-                    <li>🔹 单次最低捐献：<strong>100</strong> 个</li>
-                </ul>
-            </div>
-
-            <div style="background: rgba(78,205,196,0.08); border-left: 4px solid #4ecdc4; padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
-                <p style="font-weight: bold; margin-bottom: 8px; color: #4ecdc4;">🎁 征集奖励（三选一）</p>
-                <p style="font-size: 0.9em; color: #aaa; margin-bottom: 8px;">按 <strong>10:1</strong> 比例换算，三种方式任选其一：</p>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <span style="background: rgba(255,243,205,0.15); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; color: #ffaa00; border: 1px solid rgba(255,170,0,0.3);">💎 <strong>1 白金</strong> / 10个</span>
-                    <span style="background: rgba(209,236,241,0.15); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3);">⭐ <strong>0.1 Rout 积分</strong> / 10个</span>
-                    <span style="background: rgba(212,237,218,0.15); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; color: #96ceb4; border: 1px solid rgba(150,206,180,0.3);">👑 <strong>0.1 Prime 积分</strong> / 10个</span>
-                </div>
-                <p style="font-size: 0.85em; color: #666; margin-top: 8px;">* 例：捐献 500 个 = 50 白金 或 50 Rout 积分 或 5 Prime 积分</p>
-            </div>-->
-
-            <a href="MJ/G3-1.html">查看上期征集详情 →</a>
-        </section>
-
-        <!-- 周期状态 -->
-        <section class="section">
-            <h2>🌐 周期状态</h2>
-            <h1 class="wf-h1">测试中...</h1>
-            <div id="app"><div class="wf-loading">加载中...</div></div>
-            <div class="wf-update-time" id="updateTime"></div>
-            <div style="text-align: center;"><button class="wf-refresh-btn" onclick="loadData()">🔄</button></div>
-        </section>
-
+		    <div style="background: rgba(255,107,107,0.08); border-left: 4px solid #ff6b6b; padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
+		        <p style="font-weight: bold; margin-bottom: 8px; color: #ff6b6b;">📋 征集要求</p>
+		        <ul style="list-style: none; padding-left: 0; font-size: 0.95em; line-height: 1.8;">
+		            <li>🔹 征集总量：<strong>1000/2000</strong> 个</li>
+		            <li>🔹 单次最低捐献：<strong>100</strong> 个</li>
+		        </ul>
+		    </div>
+		
+		    <div style="background: rgba(78,205,196,0.08); border-left: 4px solid #4ecdc4; padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;">
+		        <p style="font-weight: bold; margin-bottom: 8px; color: #4ecdc4;">🎁 征集奖励（三选一）</p>
+		        <p style="font-size: 0.9em; color: #aaa; margin-bottom: 8px;">按 <strong>10:1</strong> 比例换算，三种方式任选其一：</p>
+		        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+		            <span style="background: rgba(255,243,205,0.15); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; color: #ffaa00; border: 1px solid rgba(255,170,0,0.3);">💎 <strong>1 白金</strong> / 10个</span>
+		            <span style="background: rgba(209,236,241,0.15); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3);">⭐ <strong>0.1 Rout 积分</strong> / 10个</span>
+		            <span style="background: rgba(212,237,218,0.15); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; color: #96ceb4; border: 1px solid rgba(150,206,180,0.3);">👑 <strong>0.1 Prime 积分</strong> / 10个</span>
+		        </div>
+		        <p style="font-size: 0.85em; color: #666; margin-top: 8px;">* 例：捐献 500 个 = 50 白金 或 50 Rout 积分 或 5 Prime 积分</p>
+		    </div>-->
+		
+		    <a href="MJ/G3-1.html">查看上期征集详情 →</a>
+		</section>
         <!-- 联盟活动 -->
         <section class="section">
             <h2>🛡️ 联盟活动</h2>
@@ -737,9 +1135,312 @@
         <img src="IMGs/index1-1.jpg" alt="Lotus">
         <p class="footer-text">REVELATION 天启联盟</p>
     </div>
+	
+	
+	    <!-- 登录弹窗 -->
+	<!-- 兑换弹窗遮罩 -->
+	<div class="modal-overlay" id="redeemModal" style="display:none;">
+	    <div class="modal">
+	        <h3>确认兑换</h3>
+	        <p id="redeemText"></p>
+	        <div class="modal-buttons">
+	            <button class="btn-cancel" onclick="closeRedeem()">取消</button>
+	            <button onclick="confirmRedeem()">确定兑换</button>
+	        </div>
+	    </div>
+	</div>
+	
+	<!-- 修改密码弹窗 -->
+	<div class="modal-overlay" id="changePassModal" style="display:none;">
+	    <div class="modal">
+	        <h3>修改密码</h3>
+	        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+	            <input type="password" id="oldPass" placeholder="原密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+	            <input type="password" id="newPass" placeholder="新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+	            <input type="password" id="confirmPass" placeholder="确认新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+	        </div>
+	        <p id="changePassError" style="color:#e94560;text-align:center;margin-bottom:15px;display:none;font-size:13px;"></p>
+	        <div class="modal-buttons">
+	            <button class="btn-cancel" onclick="closeChangePass()">取消</button>
+	            <button onclick="doChangePass()">确认修改</button>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="toast" id="redeemToast" style="display:none;">✅ 兑换申请已提交！</div>
+	
+	<!-- 右上角登录入口 -->
+	<div id="userCorner" style="position:fixed;top:20px;right:20px;z-index:99999;">
+	    <button id="cornerBtn" onclick="toggleCorner()" class="login-pulse" style="width:auto;padding:10px 20px;font-size:13px;">🔐 登录</button>
+	</div>
+	
+	<div id="cornerPanel" style="display:none;position:fixed;top:70px;right:20px;width:260px;z-index:99998;background:rgba(5,10,25,0.95);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:20px;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);box-shadow:0 0 40px rgba(0,0,0,0.5);">
+	    <div id="panelLogin">
+	        <h3 style="text-align:center;color:#00c8ff;font-family:'Orbitron';font-size:16px;margin-bottom:15px;text-shadow:0 0 15px rgba(0,200,255,0.3);">◈ ID验证 ◈</h3>
+	        <input type="text" id="cornerUser" placeholder="游戏ID" style="width:100%;padding:12px;margin-bottom:10px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+	        <input type="password" id="cornerPass" placeholder="密码" style="width:100%;padding:12px;margin-bottom:15px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+	        <button onclick="doCornerLogin()" style="width:100%;padding:12px;background:rgba(0,180,255,0.2);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-family:'Orbitron';font-size:14px;cursor:pointer;transition:all 0.3s;">验证</button>
+	        <p id="cornerError" style="color:#e94560;text-align:center;margin-top:10px;display:none;font-size:13px;">验证失败</p>
+	    </div>
+	    <div id="panelInfo" style="display:none;">
+	        <div style="text-align:center;margin-bottom:15px;">
+	            <span style="color:#00c8ff;font-family:'Orbitron';font-size:14px;">👤 <span id="cornerName">--</span></span>
+	        </div>
+	        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px;">
+	            <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.2);border-radius:3px;">
+	                <span style="color:#FF9800;">Rout</span>
+	                <span style="color:#FF9800;font-weight:bold;" id="cornerRout">0</span>
+	            </div>
+	            <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);border-radius:3px;">
+	                <span style="color:#00c8ff;">Prime</span>
+	                <span style="color:#00c8ff;font-weight:bold;" id="cornerPrime">0</span>
+	            </div>
+	            <div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:3px;">
+	                <span style="color:#e94560;">Prime VIP</span>
+	                <span style="color:#e94560;font-weight:bold;" id="cornerVip">0</span>
+	            </div>
+	        </div>
+	        <button id="changePassBtn" style="width:100%;padding:10px;margin-bottom:10px;background:rgba(0,180,255,0.15);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-size:12px;cursor:pointer;">🔑 修改密码</button>
+	        <button onclick="doCornerLogout()" style="width:100%;padding:10px;background:rgba(100,100,100,0.2);border:1px solid rgba(100,100,100,0.4);color:rgba(150,180,200,0.7);font-size:12px;cursor:pointer;">断开连接</button>
+	    </div>
+	</div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+
+    
+    // ═══════════════════════════════════════════════════════════════
+    //  右上角登录面板
+    // ═══════════════════════════════════════════════════════════════
+    function toggleCorner() {
+        const panel = document.getElementById('cornerPanel');
+        if (panelOpen) {
+            panel.style.display = 'none';
+            panelOpen = false;
+        } else {
+            const savedId = localStorage.getItem('clan_user_id');
+            if (savedId && currentUser) {
+                showPanelInfo();
+                panel.style.display = 'block';
+                panelOpen = true;
+            } else if (savedId && !currentUser) {
+                autoLogin().then(() => {
+                    if (currentUser) {
+                        showPanelInfo();
+                    } else {
+                        showPanelLogin();
+                    }
+                    panel.style.display = 'block';
+                    panelOpen = true;
+                });
+                return;
+            } else {
+                showPanelLogin();
+                panel.style.display = 'block';
+                panelOpen = true;
+            }
+        }
+    }
+    
+    function showPanelLogin() {
+        document.getElementById('panelLogin').style.display = 'block';
+        document.getElementById('panelInfo').style.display = 'none';
+    }
+    
+    function showPanelInfo() {
+        if (!currentUser) return;
+        document.getElementById('panelLogin').style.display = 'none';
+        document.getElementById('panelInfo').style.display = 'block';
+        document.getElementById('cornerName').textContent = currentUser.username || 'Tenno';
+        document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+        document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+        document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+        
+        const btn = document.getElementById('cornerBtn');
+        btn.textContent = '✓ ' + (currentUser.username || 'Tenno');
+        btn.classList.add('logged');
+    }
+    
+    async function doCornerLogin() {
+        const user = document.getElementById('cornerUser').value.trim();
+        const pass = document.getElementById('cornerPass').value;
+        
+        if (!sb) {
+            alert('系统初始化中');
+            return;
+        }
+        
+        const { data, error } = await sb
+            .from('game_users')
+            .select('*')
+            .eq('username', user)
+            .eq('password', pass)
+            .single();
+        
+        if (error || !data) {
+            document.getElementById('cornerError').style.display = 'block';
+            return;
+        }
+        
+        currentUser = data;
+        localStorage.setItem('clan_user_id', data.id);
+        showPanelInfo();
+    }
+    
+    function doCornerLogout() {
+        localStorage.removeItem('clan_user_id');
+        currentUser = null;
+        document.getElementById('cornerPanel').style.display = 'none';
+        panelOpen = false;
+        
+        const btn = document.getElementById('cornerBtn');
+        btn.textContent = '🔐 登录';
+        btn.classList.remove('logged');
+        
+        location.reload();
+    }
+    
+    async function autoLogin() {
+        const savedId = localStorage.getItem('clan_user_id');
+        if (!savedId || !sb) return;
+        
+        const { data } = await sb
+            .from('game_users')
+            .select('*')
+            .eq('id', savedId)
+            .single();
+        
+        if (data) {
+            currentUser = data;
+            const btn = document.getElementById('cornerBtn');
+            if (btn) {
+                btn.textContent = '✓ ' + (data.username || 'Tenno');
+                btn.classList.add('logged');
+            }
+        }
+    }
+    
+    // ═══════════════════════════════════════════════════════════════
+    //  修改密码
+    // ═══════════════════════════════════════════════════════════════
+    function showChangePass() {
+        document.getElementById('changePassModal').style.display = 'flex';
+        document.getElementById('oldPass').value = '';
+        document.getElementById('newPass').value = '';
+        document.getElementById('confirmPass').value = '';
+        document.getElementById('changePassError').style.display = 'none';
+    }
+    
+    function closeChangePass() {
+        document.getElementById('changePassModal').style.display = 'none';
+    }
+    
+    async function doChangePass() {
+        const oldPass = document.getElementById('oldPass').value;
+        const newPass = document.getElementById('newPass').value;
+        const confirmPass = document.getElementById('confirmPass').value;
+        const errorEl = document.getElementById('changePassError');
+        
+        if (!currentUser) {
+            errorEl.textContent = '请先登录！';
+            errorEl.style.display = 'block';
+            return;
+        }
+        if (!oldPass || !newPass || !confirmPass) {
+            errorEl.textContent = '请填写所有字段';
+            errorEl.style.display = 'block';
+            return;
+        }
+        if (oldPass !== currentUser.password) {
+            errorEl.textContent = '原密码错误';
+            errorEl.style.display = 'block';
+            return;
+        }
+        if (newPass === oldPass) {
+            errorEl.textContent = '新密码不能和原密码相同';
+            errorEl.style.display = 'block';
+            return;
+        }
+        if (newPass !== confirmPass) {
+            errorEl.textContent = '两次输入的新密码不一致';
+            errorEl.style.display = 'block';
+            return;
+        }
+        if (newPass.length < 4) {
+            errorEl.textContent = '新密码至少4位';
+            errorEl.style.display = 'block';
+            return;
+        }
+        
+        const { error } = await sb
+            .from('game_users')
+            .update({ password: newPass })
+            .eq('id', currentUser.id);
+        
+        if (error) {
+            errorEl.textContent = '修改失败：' + error.message;
+            errorEl.style.display = 'block';
+            return;
+        }
+        
+        currentUser.password = newPass;
+        closeChangePass();
+        alert('✅ 密码修改成功！请重新登录');
+        doCornerLogout();
+    }
+    
+    // ═══════════════════════════════════════════════════════════════
+    //  进入游戏
+    // ═══════════════════════════════════════════════════════════════
+    function enterGame(gameType) {
+        const gameUrls = {
+            growth: GAME_PATH,
+            battle: 'battle.html',
+            puzzle: 'puzzle.html'
+        };
+
+        const url = gameUrls[gameType] || GAME_PATH;
+        window.location.href = url;
+    }
+    
+    // ═══════════════════════════════════════════════════════════════
+    //  事件监听
+    // ═══════════════════════════════════════════════════════════════
+    document.addEventListener('click', function(e) {
+        const panel = document.getElementById('cornerPanel');
+        const btn = document.getElementById('cornerBtn');
+        if (panelOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+            panel.style.display = 'none';
+            panelOpen = false;
+        }
+        
+        // 点击修改密码弹窗外关闭
+        const passModal = document.getElementById('changePassModal');
+        if (passModal) {
+            const passContent = passModal.querySelector('.modal');
+            if (passModal.style.display === 'flex' && passContent && !passContent.contains(e.target)) {
+                closeChangePass();
+            }
+        }
+    });
+    
+    // 绑定修改密码按钮
+    window.addEventListener('load', function() {
+        initSupabase();
+        autoLogin();
+        
+        const changePassBtn = document.getElementById('changePassBtn');
+        if (changePassBtn) {
+            changePassBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showChangePass();
+            });
+        }
+    });
+</script>
     <!-- ========== 打字机效果 ========== -->
-    <script>
+  <script>
         const texts = ["REVELATION", "天启 联盟"];
         const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57", "#ff9ff3", "#54a0ff", "#00d4ff"];
         let index = 0;
@@ -755,6 +1456,7 @@
             "1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 15px rgba(84, 160, 255, 0.6)",
             "0 0 20px rgba(0, 212, 255, 0.6), 0 0 40px rgba(0, 212, 255, 0.3)"
         ];
+
 
         function typeEffect() {
             const textElement = document.getElementById("typing");
@@ -791,7 +1493,6 @@
 
         typeEffect();
     </script>
-
     <!-- ========== 星空粒子动画 ========== -->
     <script>
         const canvas = document.getElementById('starfield');
@@ -851,150 +1552,6 @@
             initStars();
         });
     </script>
-
-    <!-- ========== Warframe API 周期数据 ========== -->
-    <script>
-        const API_BASE = 'https://www.rln1.xyz/api/warframe?endpoint=';
-        let countdownInterval = null;
-
-        function getTime(data) {
-            if (!data) return '?';
-            if (data.timeLeft) return data.timeLeft;
-            if (data.eta) return data.eta;
-            if (data.etaString) return data.etaString;
-
-            if (data.expiry) {
-                const now = Date.now();
-                const expiry = Date.parse(data.expiry);
-                const diff = expiry - now;
-
-                if (diff > 0) {
-                    const hours = Math.floor(diff / 3600000);
-                    const mins = Math.floor((diff % 3600000) / 60000);
-                    const secs = Math.floor((diff % 60000) / 1000);
-
-                    if (hours > 0) return hours + 'h ' + mins + 'm ' + secs + 's';
-                    if (mins > 0) return mins + 'm ' + secs + 's';
-                    return secs + 's';
-                }
-                return 'expired';
-            }
-            return '?';
-        }
-
-        function startCountdown() {
-            if (countdownInterval) clearInterval(countdownInterval);
-
-            countdownInterval = setInterval(() => {
-                const elements = document.querySelectorAll('[data-expiry]');
-                let hasExpired = false;
-
-                elements.forEach(el => {
-                    const expiry = el.getAttribute('data-expiry');
-                    if (!expiry) return;
-
-                    const now = Date.now();
-                    const expiryTime = Date.parse(expiry);
-                    const diff = expiryTime - now;
-
-                    if (diff > 0) {
-                        const hours = Math.floor(diff / 3600000);
-                        const mins = Math.floor((diff % 3600000) / 60000);
-                        const secs = Math.floor((diff % 60000) / 1000);
-
-                        let text;
-                        if (hours > 0) text = hours + 'h ' + mins + 'm ' + secs + 's';
-                        else if (mins > 0) text = mins + 'm ' + secs + 's';
-                        else text = secs + 's';
-
-                        el.textContent = '剩余: ' + text;
-
-                        if (diff < 60000) {
-                            el.classList.add('expiring');
-                        } else {
-                            el.classList.remove('expiring');
-                        }
-                        el.classList.remove('expired');
-                    } else {
-                        el.textContent = '剩余: 状态轮换中...';
-                        el.classList.add('expired');
-                        el.classList.remove('expiring');
-                        hasExpired = true;
-                    }
-                });
-
-                if (hasExpired) {
-                    console.log('检测到状态过期，自动刷新...');
-                    loadData();
-                }
-            }, 1000);
-        }
-
-        async function loadData() {
-            try {
-                const [earth, cetus, vallis, cambion, zariman] = await Promise.all([
-                    fetch(API_BASE + 'earthCycle').then(r => r.json()),
-                    fetch(API_BASE + 'cetusCycle').then(r => r.json()),
-                    fetch(API_BASE + 'vallisCycle').then(r => r.json()),
-                    fetch(API_BASE + 'cambionCycle').then(r => r.json()),
-                    fetch(API_BASE + 'zarimanCycle').then(r => r.json()),
-                ]);
-
-                const cycles = [
-                    { name: '🌍 地球', data: earth, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
-                    { name: '🌙 希图斯', data: cetus, stateKey: 'isDay', dayText: '白天', nightText: '黑夜' },
-                    { name: '❄️ 福尔图娜', data: vallis, stateKey: 'isWarm', dayText: '温暖', nightText: '寒冷' },
-                    { name: '🦠 火卫二', data: cambion, stateKey: 'active', dayText: 'Fass', nightText: 'Vome' },
-                    { name: '🌌 扎里曼', data: zariman, stateKey: 'isCorpus', dayText: 'Corpus占领', nightText: 'Grineer占领' }
-                ];
-
-                let html = '';
-                cycles.forEach(c => {
-                    if (!c.data) return;
-                    let state, color;
-
-                    if (c.name === '🦠 火卫二') {
-                        state = c.data.state || 'Fass';
-                        color = state === 'fass' ? '#ff4444' : '#4488ff';
-                    } else if (c.name === '🌌 扎里曼') {
-                        state = c.data.state || 'Unknown';
-                        color = state.toLowerCase().includes('corpus') ? '#4488ff' : '#ff4444';
-                    } else {
-                        const isDay = c.data[c.stateKey];
-                        state = isDay ? c.dayText : c.nightText;
-                        color = isDay ? '#ffaa00' : '#4488ff';
-                    }
-
-                    const timeStr = getTime(c.data);
-                    const isExpired = timeStr === 'expired';
-                    const displayTime = isExpired ? '状态轮换中...' : timeStr;
-
-                    html += `
-                        <div class="wf-item" style="border-left-color: ${color};">
-                            <div class="wf-item-header">
-                                <span class="wf-item-name">${c.name}</span>
-                                <span class="wf-item-time" style="color:${color}; background: ${color}22;">${state}</span>
-                            </div>
-                            <div class="item-info ${isExpired ? 'expired' : ''}" data-expiry="${c.data.expiry || ''}">
-                                剩余: ${displayTime}
-                            </div>
-                        </div>
-                    `;
-                });
-
-                document.getElementById('app').innerHTML = '<div class="wf-card"><div class="wf-card-title">星球周期</div>' + html + '</div>';
-                document.getElementById('updateTime').textContent = '更新: ' + new Date().toLocaleString('zh-CN');
-
-                startCountdown();
-            } catch (err) {
-                document.getElementById('app').innerHTML = '<div class="wf-error">❌ ' + err.message + '</div>';
-            }
-        }
-
-        loadData();
-        setInterval(loadData, 120000);
-    </script>
-
     <!-- ========== 数据流文字生成 ========== -->
     <script>
         const streamChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
