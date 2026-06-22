@@ -44,7 +44,6 @@
 })();
 
 
-
 // 变量名兼容（音频控制台使用currentTrack，用户代码使用currentTrackIndex）
 if (typeof currentTrackIndex !== 'undefined' && typeof currentTrack === 'undefined') {
     currentTrack = currentTrackIndex;
@@ -527,7 +526,7 @@ function showWarframeSelect(user) {
     nextArrow.style.cssText = 'position:absolute;right:-50px;top:50%;transform:translateY(-50%);width:40px;height:40px;background:rgba(0,0,0,0.6);border:1px solid var(--tenno-gold-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.2rem;color:var(--tenno-gold);z-index:10;transition:all 0.3s;user-select:none;';
     container.appendChild(nextArrow);
 
-    // 滑动容器 - 关键：overflow:hidden 防止露出其他卡片
+    // 滑动容器 - 关键：overflow:hidden 防止露出其他回响
     const slider = document.createElement('div');
     slider.style.cssText = 'overflow:hidden;position:relative;width:100%;';
 
@@ -535,7 +534,7 @@ function showWarframeSelect(user) {
     track.id = 'warframeTrack';
     track.style.cssText = 'display:flex;transition:transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);';
 
-    // 构建战甲卡片
+    // 构建战甲回响
     for (let i = 0; i < STARTER_WARFRAMES.length; i++) {
         const key = STARTER_WARFRAMES[i];
         const wf = WARFRAMES[key];
@@ -1682,7 +1681,7 @@ const newData = {
 				    
 				    const currentType = gameData.activeWarframe || gameData.warframe_type || 'excalibur';
 				    
-				    // 构建战甲卡片
+				    // 构建战甲回响
 				    const cardsHtml = gameData.ownedWarframes.map(key => {
 				        const wf = WARFRAMES[key];
 				        if (!wf) return '';
@@ -3393,7 +3392,7 @@ function adminOverchargeStamina() {
 							renderCodexCards(codexViewState.faction, codexViewState.block, codexViewState.deck);
 						}
 						updateCodexOverview();
-						showToast('已解锁全部回响卡片！', 'success');
+						showToast('已解锁全部回响回响！', 'success');
 					}
 
 					function adminMaxLevel() {
@@ -3606,10 +3605,10 @@ function adminFixWarehouseImages() {
 								addToWarehouse(dropItem.name, dropItem.icon, amount, 'material', dropItem.image);
 							}
 
-							// 卡片掉落
+							// 回响掉落
 							var zoneId = selectedZone ? selectedZone.id : null;
 							if (zoneId && typeof tryDropCardFromDeck === 'function') {
-								var cardDrop = tryDropCardFromDeck(zoneId);
+								var cardDrop = tryDropCardFromEnemy(enemy.codexId, dropChance);
 								if (cardDrop) {
 									addPlayerCard(cardDrop);
 								}
@@ -3625,7 +3624,7 @@ function adminFixWarehouseImages() {
 					}
 
 	// ═══════════════════════════════════════════════════════════════
-	//  测试面板：卡片升星功能
+	//  测试面板：回响升星功能
 	// ═══════════════════════════════════════════════════════════════
 	function adminPromoteCardStar() {
 	    var cards = window.playerCards || playerCards || {};
@@ -3636,11 +3635,11 @@ function adminFixWarehouseImages() {
 	        }
 	    }
 	    if (collectedIds.length === 0) {
-	        if (typeof showToast === 'function') showToast('没有可升星的卡片，先解锁一些卡片吧', 'warning');
+	        if (typeof showToast === 'function') showToast('没有可升星的回响，先解锁一些回响吧', 'warning');
 	        return;
 	    }
 	    
-	    // 构建卡片选择列表
+	    // 构建回响选择列表
 	    var cardOptions = collectedIds.map(function(cid) {
 	        var c = cards[cid];
 	        var star = c.starLevel || 1;
@@ -3655,7 +3654,7 @@ function adminFixWarehouseImages() {
 	    // 过滤掉已满星的
 	    var upgradable = cardOptions.filter(function(o) { return o.star < 5; });
 	    if (upgradable.length === 0) {
-	        showToast('所有卡片已满星(5星)', 'warning');
+	        showToast('所有回响已满星(5星)', 'warning');
 	        return;
 	    }
 	    
@@ -3664,7 +3663,7 @@ function adminFixWarehouseImages() {
 	        return (i + 1) + '. ' + o.label;
 	    }).join('\n');
 	    
-	    var input = prompt('选择要升星的卡片（输入序号 1-' + upgradable.length + '）：\n\n' + listText);
+	    var input = prompt('选择要升星的回响（输入序号 1-' + upgradable.length + '）：\n\n' + listText);
 	    if (!input) return;
 	    
 	    var idx = parseInt(input) - 1;
@@ -3720,7 +3719,7 @@ function adminFixWarehouseImages() {
 	    }
 	    updateCodexOverview();
 	    
-	    showToast('已重置 ' + resetCount + ' 张卡片的星级为 1 星！', 'success');
+	    showToast('已重置 ' + resetCount + ' 张回响的星级为 1 星！', 'success');
 	}
 	
 	
@@ -4713,29 +4712,30 @@ function enemyDefeated() {
     autoBattleState.totalKills++;
     autoBattleState.todayKills++;
 
-    // 卡片掉落（保留）
-    var cardDrop = null;
-    if (enemy.codexId && typeof tryDropCardFromEnemy === 'function') {
-        var dropChance = (enemy.cardDrop && typeof enemy.cardDrop.chance === 'number') 
-            ? enemy.cardDrop.chance 
-            : undefined;
-        cardDrop = tryDropCardFromEnemy(enemy.codexId, dropChance);
-    }
+// ===== 回响掉落（敌人专属回响，codexId=回响ID）=====
+var cardDrop = null;
+
+if (enemy.codexId && typeof tryDropCardFromEnemy === 'function') {
+    var dropChance = (enemy.cardDrop && typeof enemy.cardDrop.chance === 'number') 
+        ? enemy.cardDrop.chance 
+        : undefined;
+    cardDrop = tryDropCardFromEnemy(enemy.codexId, dropChance);
+}
+
+if (cardDrop) {
+    var result = addPlayerCard(cardDrop);
+    var sourceText = ` [${enemy.name}]`;
     
-    if (cardDrop) {
-        var result = addPlayerCard(cardDrop);
-        var sourceText = ` [${enemy.name}]`;
-        
-        if (result.isNew) {
-            addBattleLog(`🎴 新卡片: ${cardDrop.name}${sourceText}`, 'drop');
-            setTimeout(function() {
-                showCardAcquireModal(cardDrop, enemy.name);
-            }, 800);
-        } else if (result.converted) {
-            var shard = result.converted;
-            addShardConvertLog(cardDrop, shard, enemy.name);
-        }
+    if (result.isNew) {
+        addBattleLog(`🎴 新回响: ${cardDrop.name}`, 'drop');
+        setTimeout(function() {
+            showCardAcquireModal(cardDrop, enemy.name);
+        }, 800);
+    } else {
+        // 重复获得，显示获得提示
+        addBattleLog(`🎴 获得 ${sourceText}`, 'drop');
     }
+}
 
     // 显示奖励（只显示击杀信息）
         if (cashReward > 0) {
@@ -4802,31 +4802,7 @@ function getEnemyXP(enemy) {
 							});
 						}
 
-    // ===== 卡片掉落（敌人专属卡片，codexId=卡片ID）=====
-    var cardDrop = null;
-    
-    if (enemy.codexId && typeof tryDropCardFromEnemy === 'function') {
-        // 传入敌人配置的 cardDrop.chance，实现不同敌人不同掉率
-        var dropChance = (enemy.cardDrop && typeof enemy.cardDrop.chance === 'number') 
-            ? enemy.cardDrop.chance 
-            : undefined;
-        cardDrop = tryDropCardFromEnemy(enemy.codexId, dropChance);
-    }
-    
-    if (cardDrop) {
-        var result = addPlayerCard(cardDrop);
-        var sourceText = ` [${enemy.name}]`;
-        
-        if (result.isNew) {
-            addBattleLog(`🎴 新卡片: ${cardDrop.name}${sourceText}`, 'drop');
-            setTimeout(function() {
-                showCardAcquireModal(cardDrop, enemy.name);
-            }, 800);
-        } else if (result.converted) {
-            var shard = result.converted;
-            addShardConvertLog(cardDrop, shard, enemy.name);
-        }
-    }
+
 
 						addBattleLog(`⭐ 获得 ${pointsReward} Prime | ${xpReward} 经验`, 'win');
 
@@ -5894,22 +5870,24 @@ const logIcon = vein.image
     ? `<img src="${vein.image}" style="width: 16px; height: 16px; object-fit: contain; vertical-align: middle; filter: drop-shadow(0 0 2px ${vein.color});" onerror="this.outerHTML='${vein.icon}'">`
     : vein.icon;
 
-addMiningLog(`⛏️ ${qualityLabel}回收！${logIcon} ${vein.name} x${finalAmount} (${nodeConfig.name})`, quality === 'perfect' ? 'drop' : 'info');
-// ========== 勘探卡片掉落 ==========
-    if (typeof tryDropMiningCard === 'function' && vein && vein.id) {
-        var cardDrop = tryDropMiningCard(vein, 'normal', 'blue');
-        if (cardDrop) {
-            var count = addPlayerCard(cardDrop);
-                var sourceName = '从' + gatherable.name + '容器' + qualityLabel + '拆解';
-            var isNew = count === 1;
-            
-            addMiningLog('🎴 ' + (isNew ? '新卡片' : '重复卡片') + ': ' + (cardDrop.icon || '💎') + ' ' + cardDrop.name + (isNew ? '！' : ' (数量: ' + count + ')'), 'drop');
-            
+addMiningLog(`⛏️ ${qualityLabel}切割！${logIcon} ${vein.name} x${finalAmount} (${nodeConfig.name})`, quality === 'perfect' ? 'drop' : 'info');
+// ========== 勘探回响掉落 ==========
+if (typeof tryDropMiningCard === 'function' && vein && vein.id) {
+    var cardDrop = tryDropMiningCard(vein, 'normal', 'blue');
+    if (cardDrop) {
+        var result = addPlayerCard(cardDrop);  // 返回对象
+        var sourceName = '从' + gatherable.name + '容器' + qualityLabel + '拆解';
+        
+        if (result.isNew) {
+            addMiningLog(`🎴 新回响: ${cardDrop.name}！`, 'drop');
             setTimeout(function() {
                 showCardAcquireModal(cardDrop, sourceName);
             }, 800);
+        } else {
+            addMiningLog(`🎴 获得: ${cardDrop.name} `, 'drop');
         }
     }
+}
 		// ================================================
     
     // 热量增加
@@ -6724,24 +6702,26 @@ function gatherCurrentPlant() {
     }
 
     // ═══════════════════════════════════════════════════════════════
-    //  【新增】卡片掉落逻辑
-    //  使用 gatherable.cardId 查找并掉落对应卡片
+    //  采集回响掉落逻辑
+    //  使用 gatherable.cardId 查找并掉落对应回响
     // ═══════════════════════════════════════════════════════════════
     if (gatherable && gatherable.cardId) {
         const cardDrop = tryDropGatheringCard(gatherable, quality, weather ? weather.type : 'sunny');
         if (cardDrop) {
             const result = addPlayerCard(cardDrop);
             if (result.isNew) {
-                addGatheringLog(`🎴 新卡片: ${cardDrop.name}！`, 'drop');
+                addGatheringLog(`🎴 新回响: ${cardDrop.name}！`, 'drop');
                 setTimeout(function() {
                     showCardAcquireModal(cardDrop, gatherable.name);
                 }, 800);
             } else if (result.converted) {
                 const shard = result.converted;
                 addShardConvertLog(cardDrop, shard, gatherable.name);
+				addGatheringLog(`🎴 获得: ${cardDrop.name}！`, 'drop');
             }
         }
     }
+	
 
     // ═══════════════════════════════════════════════════════════════
     //  【新增】全局伴生稀有掉落检测
@@ -6858,15 +6838,15 @@ function checkGlobalGatheringDrops(quality, weatherType) {
             // 显示稀有掉落提示
             showRareDropNotification(drop, amount);
             
-            // 尝试掉落对应卡片
+            // 尝试掉落对应回响
             if (drop.cardId) {
                 var card = findCardById(drop.cardId);
                 if (card) {
-                    var cardChance = 0.15 * qMult;  // 卡片掉率15%，受品质影响
+                    var cardChance = 0.15 * qMult;  // 回响掉率15%，受品质影响
                     if (Math.random() < cardChance) {
                         var result = addPlayerCard(card);
                         if (result.isNew) {
-                            addGatheringLog('🎴 稀有伴生卡片: ' + card.name + '！', 'drop');
+                            addGatheringLog('🎴 稀有伴生回响: ' + card.name + '！', 'drop');
                             setTimeout(function() {
                                 showCardAcquireModal(card, drop.name);
                             }, 800);
@@ -7128,14 +7108,14 @@ function stopAutoGathering() { stopInteractiveGathering(); }
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  可升星徽章更新：计算所有可升星的卡片数量
+//  可升星徽章更新：计算所有可升星的回响数量
 // ═══════════════════════════════════════════════════════════════
 function updateUpgradeBadge() {
     if (!gameData || !playerCards) return;
 
     var upgradeableCount = 0;
 
-    // 遍历所有已收集的卡片
+    // 遍历所有已收集的回响
     for (var cardId in playerCards) {
         if (cardId === '_shards') continue;
 
@@ -7539,7 +7519,7 @@ function renderMusicConsolePlaylist() {
 
         card.onclick = function() { selectPlaylist(pl.id); };
 
-        // === 用 DOM API 构建卡片内容 ===
+        // === 用 DOM API 构建回响内容 ===
 
         // 1. 图片区域容器
         var imgWrap = document.createElement('div');
@@ -7862,9 +7842,9 @@ function updateInfoUI() {
 }
 
 					// ═══════════════════════════════════════════════════════════════
-					//  玩家卡片库存系统
+					//  玩家回响库存系统
 					// ═══════════════════════════════════════════════════════════════
-					// 玩家已获得的卡片 { cardId: { count, firstGetTime, data } }
+					// 玩家已获得的回响 { cardId: { count, firstGetTime, data } }
 					let playerCards = {};
 					window.playerCards = playerCards; // 暴露到全局，供 codex_system.js 读取
 
@@ -7875,7 +7855,7 @@ function updateInfoUI() {
 						window.playerCards = playerCards; // 同步到全局
 					}
 
-					// 添加卡片到库存，返回当前数量
+					// 添加回响到库存，返回当前数量
 					// 通用碎片配置
 					var CARD_SHARD_CONFIG = {
 						1: {
@@ -7910,7 +7890,7 @@ function updateInfoUI() {
 								data: cardData
 							};
 						} else {
-							// 重复卡片：仅增加计数
+							// 重复回响：仅增加计数
 							playerCards[cardData.id].count++;
 						}
 
@@ -7920,7 +7900,7 @@ function updateInfoUI() {
 							saveGameData();
 						}
 
-						// 检查是否触发回响奖励（获得新卡片时）
+						// 检查是否触发回响奖励（获得新回响时）
 						if (isNew) {
 							setTimeout(function() {
 								checkAndTriggerCodexReward();
@@ -8044,7 +8024,7 @@ function showCodexRewardModal(deckId) {
     overlay.id = 'codexRewardOverlay';
     overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.5s ease;';
 
-    // 使用5星super卡片的特效样式
+    // 使用5星super回响的特效样式
     var starStyle = CARD_STAR_STYLES.super;
     var star5 = starStyle.stars[5];
 
@@ -8060,10 +8040,10 @@ function showCodexRewardModal(deckId) {
     // 集齐提示
     var deckInfo = document.createElement('div');
     deckInfo.style.cssText = 'color: var(--tenno-gold); font-size: 1rem; margin-bottom: 15px;';
-    deckInfo.innerHTML = '恭喜集齐 <span style="color: #ff4444;">' + deckName + '</span> 全套回响卡片！';
+    deckInfo.innerHTML = '恭喜集齐 <span style="color: #ff4444;">' + deckName + '</span> 全套回响回响！';
     modalBox.appendChild(deckInfo);
 
-    // 奖励卡片展示（5星super特效）
+    // 奖励回响展示（5星super特效）
     var cardBox = document.createElement('div');
     cardBox.style.cssText = 'width: 280px; margin: 0 auto 25px; position: relative; background: ' + star5.bg + '; border: ' + star5.borderWidth + 'px solid ' + star5.border + '; border-radius: 16px; overflow: hidden; box-shadow: ' + star5.shadow + '; animation: cardRainbowGlow 4s ease-in-out infinite;';
 
@@ -8335,7 +8315,7 @@ async function claimCodexReward(deckId, overlay) {
 }
 
 
-// 检查并触发回响奖励（在获得新卡片后调用）
+// 检查并触发回响奖励（在获得新回响后调用）
 function checkAndTriggerCodexReward() {
     
     if (!gameData) {
@@ -8378,19 +8358,19 @@ function checkAndTriggerCodexReward() {
 }
 
 
-					// 检查是否已有某张卡片
+					// 检查是否已有某张回响
 					function hasPlayerCard(cardId) {
 						return !!playerCards[cardId];
 					}
 
 					// ═══════════════════════════════════════════════════════════════
-					//  卡片掉落逻辑
+					//  回响掉落逻辑
 					// ═══════════════════════════════════════════════════════════════
-					// 从卡片池中随机抽取一张
+					// 从回响池中随机抽取一张
 					function rollCardDrop(cardPool) {
 						if (!cardPool || cardPool.length === 0) return null;
 
-						// 简单随机，每张卡片等概率
+						// 简单随机，每张回响等概率
 						return cardPool[Math.floor(Math.random() * cardPool.length)];
 					}
 
@@ -10011,7 +9991,7 @@ return false;
 		        });
 		    }
 		    
-		    // 2. 从玩家卡片中查找蓝图（如果蓝图以卡片形式存在）
+		    // 2. 从玩家回响中查找蓝图（如果蓝图以回响形式存在）
 		    if (playerCards && typeof playerCards === 'object') {
 		        for (const [id, card] of Object.entries(playerCards)) {
 		            if (id.includes('blueprint') || (card.data && card.data.type === 'blueprint')) {
@@ -10791,11 +10771,11 @@ function claimWarframeAsItem(craftKey) {
 								return;
 							}
 
-							// 计算每个用户的卡片收集数量
+							// 计算每个用户的回响收集数量
 							const usersWithCardCount = data.map(user => {
 								let cardCount = 0;
 								if (user.player_cards) {
-									// player_cards 是对象，键是卡片ID，值是卡片信息
+									// player_cards 是对象，键是回响ID，值是回响信息
 									for (var key in user.player_cards) {
 										if (key !== '_shards' && user.player_cards[key] && user.player_cards[key].count > 0) {
 											cardCount++;
@@ -10808,7 +10788,7 @@ function claimWarframeAsItem(craftKey) {
 								};
 							});
 
-							// 按卡片数量降序排序
+							// 按回响数量降序排序
 							usersWithCardCount.sort((a, b) => b.cardCount - a.cardCount);
 
 							tbody.innerHTML = usersWithCardCount.map((user, index) => {
@@ -12000,7 +11980,7 @@ onConfirm: function() {
 					}
 					
 						// ═══════════════════════════════════════════════════════════════
-						//  第1页：星图导航 - 渲染派系卡片
+						//  第1页：星图导航 - 渲染派系回响
 						// ═══════════════════════════════════════════════════════════════
 											function renderPlanetSelect() {
 											    if (typeof PLANETS === 'undefined' || !PLANETS) {

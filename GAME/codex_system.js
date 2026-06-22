@@ -289,11 +289,11 @@ var DECK_CARDS = {
     { id: 'm_copper2', name: '铁镍矿', image: 'GAME/items/1/b/Travoride.jpg', cardType: 'normal', rarity: 1, desc: '含有大量铁镍成分的常见矿物，铁镍矿是基础合金原料。', faction: 'mining' },
     { id: 'm_silver2', name: '启明矿石', image: 'GAME/items/1/b/Venerol.jpg', cardType: 'normal', rarity: 2, desc: '在寒冷地带发现的不常见矿物，启明矿石有微弱的荧光。', faction: 'mining' },
     { id: 'm_gold2', name: '长庚矿石', image: 'GAME/items/1/b/Hesperon.jpg', cardType: 'elite', rarity: 3, desc: '稀有的贵金属矿石，长庚矿石在极端环境下形成。', faction: 'mining' },
-    { id: 'm_orokin2', name: '翡斯敏石', image: 'GAME/items/1/b/Phasmin.jpg', cardType: 'boss', rarity: 4, desc: '散发着翡翠光芒的稀有宝石，翡斯敏石极为珍贵。', faction: 'mining' },
-    { id: 'm_orokin3', name: '夜石', image: 'GAME/items/1/b/Noctrul.jpg', cardType: 'boss', rarity: 4, desc: '在黑暗中发光的神秘宝石，夜石仅在特定时间出现。', faction: 'mining' },
-    { id: 'm_orokin4', name: '填充细石', image: 'GAME/items/1/b/Goblite.jpg', cardType: 'boss', rarity: 4, desc: '内部充满液态矿物的稀有宝石，填充细石是高级工艺材料。', faction: 'mining' },
-    { id: 'm_orokin5', name: '紫苋石', image: 'GAME/items/1/b/Amarast.jpg', cardType: 'boss', rarity: 4, desc: '深紫色的稀有宝石，紫苋石在贵族中极受欢迎。', faction: 'mining' },
-    { id: 'm_orokin6', name: '黄道宝石', image: 'GAME/items/1/b/Zodian.jpg', cardType: 'mechanic', rarity: 4, desc: '与黄道十二宫相关的传说宝石，黄道宝石蕴含星辰之力。', faction: 'mining' },
+    { id: 'm_orokin2_b', name: '翡斯敏石', image: 'GAME/items/1/b/Phasmin.jpg', cardType: 'boss', rarity: 4, desc: '散发着翡翠光芒的稀有宝石，翡斯敏石极为珍贵。', faction: 'mining' },
+    { id: 'm_orokin3_b', name: '夜石', image: 'GAME/items/1/b/Noctrul.jpg', cardType: 'boss', rarity: 4, desc: '在黑暗中发光的神秘宝石，夜石仅在特定时间出现。', faction: 'mining' },
+    { id: 'm_orokin4_b', name: '填充细石', image: 'GAME/items/1/b/Goblite.jpg', cardType: 'boss', rarity: 4, desc: '内部充满液态矿物的稀有宝石，填充细石是高级工艺材料。', faction: 'mining' },
+    { id: 'm_orokin5_b', name: '紫苋石', image: 'GAME/items/1/b/Amarast.jpg', cardType: 'boss', rarity: 4, desc: '深紫色的稀有宝石，紫苋石在贵族中极受欢迎。', faction: 'mining' },
+    { id: 'm_orokin6_b', name: '黄道宝石', image: 'GAME/items/1/b/Zodian.jpg', cardType: 'mechanic', rarity: 4, desc: '与黄道十二宫相关的传说宝石，黄道宝石蕴含星辰之力。', faction: 'mining' },
     { id: 'm_orokin7', name: '赤色水晶', image: 'GAME/items/1/b/Thyst.jpg', cardType: 'mechanic', rarity: 4, desc: '血红色的传说水晶，赤色水晶是顶级装备的关键材料。', faction: 'mining' },
 ],
 
@@ -302,11 +302,11 @@ var DECK_CARDS = {
     { id: 'm_copper3', name: '巴弗结晶', image: 'GAME/items/1/c/Bapholite.jpg', cardType: 'normal', rarity: 1, desc: '被 Infested 感染的常见结晶，巴弗结晶有生物活性。', faction: 'mining' },
     { id: 'm_silver3', name: '纳莫原石', image: 'GAME/items/1/c/Namalon.jpg', cardType: 'normal', rarity: 2, desc: '较为稀有的异化矿物，纳莫原石在深层矿脉中发现。', faction: 'mining' },
     { id: 'm_gold3', name: '萨莫感染石', image: 'GAME/items/1/c/Thaumica.jpg', cardType: 'elite', rarity: 3, desc: '高度感染的稀有矿物，萨莫感染石蕴含危险能量。', faction: 'mining' },
-    { id: 'm_orokin3', name: '达戈琥珀', image: 'GAME/items/1/c/Dagonic.jpg', cardType: 'boss', rarity: 4, desc: '远古达戈文明的琥珀化石，达戈琥珀是考古级珍品。', faction: 'mining' },
-    { id: 'm_orokin4', name: '提亚美凝石', image: 'GAME/items/1/c/Tiametrite.jpg', cardType: 'boss', rarity: 4, desc: '以古神提亚美命名的稀有宝石，提亚美凝石蕴含混沌之力。', faction: 'mining' },
-    { id: 'm_orokin5', name: '聚合荧石', image: 'GAME/items/1/c/Heciphron.jpg', cardType: 'boss', rarity: 4, desc: '多种矿物聚合而成的荧光宝石，聚合荧石极为罕见。', faction: 'mining' },
-    { id: 'm_orokin6', name: '栓子凝石', image: 'GAME/items/1/c/Embolos.jpg', cardType: 'boss', rarity: 4, desc: '形状如血栓的诡异宝石，栓子凝石在 Infested 核心附近形成。', faction: 'mining' },
-    { id: 'm_orokin7', name: '异源石', image: 'GAME/items/1/c/Xenorhast.jpg', cardType: 'mechanic', rarity: 4, desc: '来自异次元的传说宝石，异源石的存在违反物理法则。', faction: 'mining' },
+    { id: 'm_orokin3_c', name: '达戈琥珀', image: 'GAME/items/1/c/Dagonic.jpg', cardType: 'boss', rarity: 4, desc: '远古达戈文明的琥珀化石，达戈琥珀是考古级珍品。', faction: 'mining' },
+    { id: 'm_orokin4_c', name: '提亚美凝石', image: 'GAME/items/1/c/Tiametrite.jpg', cardType: 'boss', rarity: 4, desc: '以古神提亚美命名的稀有宝石，提亚美凝石蕴含混沌之力。', faction: 'mining' },
+    { id: 'm_orokin5_c', name: '聚合荧石', image: 'GAME/items/1/c/Heciphron.jpg', cardType: 'boss', rarity: 4, desc: '多种矿物聚合而成的荧光宝石，聚合荧石极为罕见。', faction: 'mining' },
+    { id: 'm_orokin6_c', name: '栓子凝石', image: 'GAME/items/1/c/Embolos.jpg', cardType: 'boss', rarity: 4, desc: '形状如血栓的诡异宝石，栓子凝石在 Infested 核心附近形成。', faction: 'mining' },
+    { id: 'm_orokin7_b', name: '异源石', image: 'GAME/items/1/c/Xenorhast.jpg', cardType: 'mechanic', rarity: 4, desc: '来自异次元的传说宝石，异源石的存在违反物理法则。', faction: 'mining' },
     { id: 'm_orokin8', name: '殁世烯', image: 'GAME/items/1/c/Necrathene.jpg', cardType: 'mechanic', rarity: 4, desc: '殁世机甲的核心材料，殁世烯是魔胎之境最珍贵的矿物。', faction: 'mining' },
 ],
     
@@ -338,38 +338,6 @@ var DECK_CARDS = {
 
 
 
-// ═══════════════════════════════════════════════════════════════
-//  修复后的采集卡片掉落函数
-//  使用 plant.cardId 直接查找 DECK_CARDS 中的真实卡片数据
-// ═══════════════════════════════════════════════════════════════
-function tryDropGatheringCard(plant, quality, weatherType) {
-    // 参数检查：plant 对象必须存在，且必须有 cardId 字段
-    if (!plant || !plant.cardId) {
-        console.log('tryDropGatheringCard: plant 或 plant.cardId 为空', plant);
-        return null;
-    }
-    
-    // 通过 cardId 在 DECK_CARDS 中查找真实卡片数据
-    var card = findCardById(plant.cardId);
-    if (!card) {
-        console.log('tryDropGatheringCard: 未找到卡片', plant.cardId);
-        return null;
-    }
-    
-    // 计算掉率：基础20%，品质×天气调整
-    var qMult = { perfect: 1.5, good: 1.2, normal: 1.0, poor: 0.8, immature: 0.5 }[quality] || 1.0;
-    var wMult = { sunny: 1.0, cloudy: 1.1, rainy: 1.2, storm: 1.3, foggy: 1.15, toxic: 1.25 }[weatherType] || 1.0;
-    var chance = 0.20 * qMult * wMult;
-    
-    // Roll点判定
-    if (Math.random() > chance) {
-        return null;
-    }
-    
-    // 返回 DECK_CARDS 中的真实卡片数据（包含正确的 image、desc 等）
-    return card;
-}
-
 
 
 // 统一的卡片掉落入口（可选，用于统一调用）
@@ -389,37 +357,7 @@ function tryDropCard(sourceType, sourceData, quality, extraParam) {
 
 
 
-// ═══════════════════════════════════════════════════════════════
-//  修复后的挖矿卡片掉落函数
-//  使用 vein.cardId 直接查找 DECK_CARDS 中的真实卡片数据
-// ═══════════════════════════════════════════════════════════════
-function tryDropMiningCard(vein, quality, nodeType) {
-    // 参数检查：vein 对象必须存在，且必须有 cardId 字段
-    if (!vein || !vein.cardId) {
-        console.log('tryDropMiningCard: vein 或 vein.cardId 为空', vein);
-        return null;
-    }
-    
-    // 通过 cardId 在 DECK_CARDS 中查找真实卡片数据
-    var card = findCardById(vein.cardId);
-    if (!card) {
-        console.log('tryDropMiningCard: 未找到卡片', vein.cardId);
-        return null;
-    }
-    
-    // 计算掉率：基础20%，品质×节点类型调整
-    var qMult = { perfect: 1.5, good: 1.2, normal: 1.0 }[quality] || 1.0;
-    var nMult = { red: 1.3, yellow: 1.15, blue: 1.0 }[nodeType] || 1.0;
-    var chance = 0.20 * qMult * nMult;
-    
-    // Roll点判定
-    if (Math.random() > chance) {
-        return null;
-    }
-    
-    // 返回 DECK_CARDS 中的真实卡片数据（包含正确的 image、desc 等）
-    return card;
-}
+
 
 var CARD_RARITY = {
     1: { name: '遗落', color: '#888', stars: '★☆☆☆☆', glow: 'none' },
@@ -757,10 +695,86 @@ var CARD_TYPE_MAP = {
 };
 
 
-// 根据卡片ID查找完整卡片数据
+
+
+
+
 // ═══════════════════════════════════════════════════════════════
-//  敌人专属卡片精确掉落（codexId → 卡片id 一对一）
+//  战斗保底计数器 - 按战斗次数累计
 // ═══════════════════════════════════════════════════════════════
+
+var _battlePityCounter = 0;  // 全局计数
+
+function tryDropCardFromEnemy(codexId, chance) {
+    if (!codexId) return null;
+    
+    var card = findCardById(codexId);
+    if (!card) return null;
+    
+    // 使用传入的掉率，或默认 35%
+    var dropChance = (typeof chance === 'number') ? chance : 0.35;
+    
+    // 战斗次数+1
+    _battlePityCounter++;
+    
+    // 保底触发：第20次战斗必掉当前敌人卡片
+    if (_battlePityCounter >= 20) {
+        _battlePityCounter = 0;
+        console.log('🎴 保底触发! 第20次战斗强制掉落:', card.name);
+        return card;
+    }
+    
+    // 正常掉落判定
+    if (Math.random() < dropChance) {
+        _battlePityCounter = 0;  // 掉了就重置
+        return card;
+    }
+    
+    return null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  挖矿掉落（无保底）
+// ═══════════════════════════════════════════════════════════════
+
+function tryDropMiningCard(vein, quality, nodeType) {
+    if (!vein || !vein.cardId) return null;
+    
+    var card = findCardById(vein.cardId);
+    if (!card) return null;
+    
+    // 计算掉率：基础30%，品质×节点类型调整
+    var qMult = { perfect: 1.5, good: 1.2, normal: 1.0 }[quality] || 1.0;
+    var nMult = { red: 1.3, yellow: 1.15, blue: 1.0 }[nodeType] || 1.0;
+    var chance = 0.30 * qMult * nMult;
+    
+    if (Math.random() < chance) {
+        return card;
+    }
+    return null;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  采集掉落（无保底）
+// ═══════════════════════════════════════════════════════════════
+
+function tryDropGatheringCard(plant, quality, weatherType) {
+    if (!plant || !plant.cardId) return null;
+    
+    var card = findCardById(plant.cardId);
+    if (!card) return null;
+    
+    // 计算掉率：基础30%，品质×天气调整
+    var qMult = { perfect: 1.5, good: 1.2, normal: 1.0, poor: 0.8, immature: 0.6 }[quality] || 1.0;
+    var wMult = { sunny: 1.0, cloudy: 1.1, rainy: 1.2, storm: 1.3, foggy: 1.15, toxic: 1.25 }[weatherType] || 1.0;
+    var chance = 0.30 * qMult * wMult;
+    
+    if (Math.random() < chance) {
+        return card;
+    }
+    return null;
+}
+
 
 // 根据敌人的 codexId 查找对应卡片数据
 function findCardById(cardId) {
@@ -777,51 +791,23 @@ function findCardById(cardId) {
 }
 
 // 敌人掉落：codexId 精确对应卡片id，30%掉率
-function dropCardFromEnemy(enemy) {
-    if (!enemy || !enemy.codexId) return null;
-    if (Math.random() >= 0.30) return null;  // 30% 掉率
-    
-    var card = findCardById(enemy.codexId);
-    return card;  // 找到就返回，找不到返回null
-}
+
 
 // 从敌人 codexId 尝试掉落卡片（每张卡片独立判定）
 // codexId 直接对应卡片ID
-function tryDropCardFromEnemy(codexId, chance) {
-    if (!codexId) return null;
-    
-    // codexId 就是卡片ID，直接查找
-    var card = findCardById(codexId);
-    if (!card) return null;
-    
-    // 使用传入的掉率，或默认 30%
-    var dropChance = (typeof chance === 'number') ? chance : 0.30;
-    
-    if (Math.random() < dropChance) {
-        return card;
-    }
-    return null;
-}
+// 保底计数器
+var _pityCounter = {};
 
 
-// 根据卡片ID查找完整卡片数据
-function findCardById(cardId) {
-    for (var deckId in DECK_CARDS) {
-        var deck = DECK_CARDS[deckId];
-        for (var i = 0; i < deck.length; i++) {
-            if (deck[i].id === cardId) {
-                return deck[i];
-            }
-        }
-    }
-    return null;
-}
+
+
+
 
 
 
 // 保留兼容：从指定卡组中尝试掉落（用于其他非敌人掉落场景）
 function tryDropCardFromDeck(deckId) {
-    if (Math.random() >= 0.20) return null;  // 20% 基础掉率
+    if (Math.random() >= 0.30) return null;  // 30% 基础掉率
     
     var cards = DECK_CARDS[deckId];
     if (!cards || cards.length === 0) return null;
@@ -900,6 +886,8 @@ function savePlayerCards() {
 
 // 修改 addPlayerCard 函数
 function addPlayerCard(cardData) {
+    var isNew = !playerCards[cardData.id];
+
     if (!playerCards[cardData.id]) {
         playerCards[cardData.id] = {
             count: 0,
@@ -910,7 +898,13 @@ function addPlayerCard(cardData) {
     }
     playerCards[cardData.id].count++;
     savePlayerCards();
-    return playerCards[cardData.id].count;
+
+    // 返回对象，兼容调用处的 isNew / converted 检查
+    return {
+        count: playerCards[cardData.id].count,
+        isNew: isNew,
+        converted: isNew ? null : { shardType: 'generic', amount: 1 }
+    };
 }
 
 // 手动升星
@@ -1549,7 +1543,7 @@ function enterCodexFaction(factionKey) { renderCodexBlocks(factionKey); }
 function enterCodexBlock(factionKey, blockKey) { renderCodexDecks(factionKey, blockKey); }
 function enterCodexDeck(factionKey, blockKey, deckId) { renderCodexCards(factionKey, blockKey, deckId); }
 
-function switchCodexTab(tab) { renderCodexFactions(); }
+
 
 function updateCodexOverview() {
     var stats = calculateTotalProgress();
@@ -1614,6 +1608,9 @@ function getCardCategory(card) {
 
 // 卡片获得弹窗
 function showCardAcquireModal(cardData, sourceName) {
+    // 确保数据已加载
+    initPlayerCards();
+
     // ═══════════════════════════════════════════════════════════════
     //  队列机制：一次只显示一张卡片获得弹窗
     // ═══════════════════════════════════════════════════════════════

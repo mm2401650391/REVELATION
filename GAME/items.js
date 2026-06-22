@@ -25,7 +25,7 @@ const FOUNDRY_RECIPES = [
 			
         
         },
-        time: 72,
+        time: 24,
         requireBlueprint: 'Excalibur蓝图'  // ← 新增：需要这个蓝图才显示
     },
     {
@@ -104,7 +104,7 @@ const FOUNDRY_RECIPES = [
             'Orokin电池': 1
         
         },
-        time: 72,
+        time: 24,
         requireBlueprint: 'Volt蓝图'  // ← 新增
     },
     {
@@ -180,7 +180,7 @@ const FOUNDRY_RECIPES = [
             'Orokin电池': 1
         
         },
-        time: 72,
+        time: 24,
         requireBlueprint: 'Mag蓝图'  // ← 新增
     },
     {
@@ -252,7 +252,7 @@ const BATTLE_DROPS = [
 	    icon: '⚙️', 
 	    image: 'GAME/items/2/1Oxium.jpg',
 	    color: '#c8a84b',
-	    dropRate: 0.2, 
+	    dropRate: 0.1, 
 	    minAmount: 1, 
 	    maxAmount: 3, 
 	    type: 'material'
