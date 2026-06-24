@@ -11502,19 +11502,19 @@ function buyUnlimitedStaminaCard() {
             // 根据选择确定扣款信息
             switch(payType) {
                 case 'rout':
-                    price = 300;
+                    price = 200;
                     currencyField = 'rout_points';
                     currencyName = 'Rout';
                     currencyIcon = '💰';
                     break;
                 case 'prime':
-                    price = 3;
+                    price = 6;
                     currencyField = 'prime_points';
                     currencyName = 'Prime';
                     currencyIcon = '💎';
                     break;
                 case 'vip':
-                    price = 3;
+                    price = 4;
                     currencyField = 'vip_points';
                     currencyName = 'VIP';
                     currencyIcon = '🔮';
