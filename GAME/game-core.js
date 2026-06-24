@@ -1,47 +1,4 @@
-//防开发者和右键工具
 
-(function() {
-    var destroyed = false;
-    
-    function destroy() {
-        if (destroyed) return;
-        destroyed = true;
-        document.body.innerHTML = '<div style="position:fixed;inset:0;background:#000;color:#ff4444;display:flex;align-items:center;justify-content:center;font-size:2rem;">请关闭开发者工具并刷新游戏</div>';
-    }
-    
-    // F12
-    document.addEventListener('keydown', function(e) {
-        if (e.keyCode === 123) {
-            e.preventDefault();
-            destroy();
-        }
-    });
-    
-    // 右键
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // 选择文本
-    document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // 拖拽
-    document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // 复制
-    document.addEventListener('copy', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-})();
 
 
 // 变量名兼容（音频控制台使用currentTrack，用户代码使用currentTrackIndex）
@@ -1010,7 +967,264 @@ function initWarframeSlider() {
 
 function TEST_FUNCTION() { return "test"; }
 		
-		
+// ═══════════════════════════════════════════════════════════════
+//  安全时间获取（防本地时间修改）
+// ═══════════════════════════════════════════════════════════════
+function getSecureTime() {
+    var offset = window.serverTimeOffset;
+    if (typeof offset !== 'number' || isNaN(offset)) {
+        offset = 0;
+    }
+    return Date.now() + offset;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  一小时无限负荷卡核心功能（修复版 - 使用服务器时间防作弊）
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * 检查无限负荷是否生效
+ */
+function isUnlimitedStaminaActive() {
+    if (!unlimitedStaminaBuff.active) return false;
+    
+    var now = getSecureTime();  // ← 使用服务器时间
+    
+    if (now >= unlimitedStaminaBuff.endTime) {
+        deactivateUnlimitedStamina();
+        return false;
+    }
+    return true;
+}
+
+/**
+ * 激活无限负荷Buff
+ */
+function activateUnlimitedStamina(durationMs) {
+    if (!currentUser) {
+        showToast('请先登录', 'error');
+        return false;
+    }
+    
+    var now = getSecureTime();  // ← 使用服务器时间
+    var endTime = now + durationMs;
+    
+    // 如果已有buff，延长持续时间
+    if (unlimitedStaminaBuff.active && unlimitedStaminaBuff.endTime > now) {
+        endTime = unlimitedStaminaBuff.endTime + durationMs;
+    }
+    
+    unlimitedStaminaBuff.active = true;
+    unlimitedStaminaBuff.endTime = endTime;
+    
+    // 保存到本地存储（保存endTime + 当前本地时间戳用于防回拨校验）
+    localStorage.setItem('unlimited_stamina_end_' + currentUser.id, String(endTime));
+    localStorage.setItem('unlimited_stamina_local_' + currentUser.id, String(Date.now()));
+    
+    // 启动倒计时
+    startUnlimitedStaminaTimer();
+    
+    // 显示视觉效果
+    showUnlimitedStaminaEffect();
+    
+    showToast('⚡ 无限负荷已激活！持续时间内不减少负荷', 'success');
+    if (typeof addBattleLog === 'function') {
+        addBattleLog('⚡ 【系统】无限负荷模式已启动！', 'info');
+    }
+    
+    return true;
+}
+
+/**
+ * 启动无限负荷倒计时
+ */
+function startUnlimitedStaminaTimer() {
+    if (unlimitedStaminaBuff.timer) {
+        clearInterval(unlimitedStaminaBuff.timer);
+    }
+    unlimitedStaminaBuff.timer = setInterval(function() {
+        checkUnlimitedStaminaExpiry();
+    }, 1000);
+    updateUnlimitedStaminaUI();
+}
+
+/**
+ * 检查是否到期
+ */
+function checkUnlimitedStaminaExpiry() {
+    if (!unlimitedStaminaBuff.active) return;
+    
+    var now = getSecureTime();  // ← 使用服务器时间
+    
+    if (now >= unlimitedStaminaBuff.endTime) {
+        deactivateUnlimitedStamina();
+    } else {
+        updateUnlimitedStaminaUI();
+    }
+}
+
+/**
+ * 关闭无限负荷
+ */
+function deactivateUnlimitedStamina() {
+    unlimitedStaminaBuff.active = false;
+    unlimitedStaminaBuff.endTime = 0;
+    if (unlimitedStaminaBuff.timer) {
+        clearInterval(unlimitedStaminaBuff.timer);
+        unlimitedStaminaBuff.timer = null;
+    }
+    if (currentUser) {
+        localStorage.removeItem('unlimited_stamina_end_' + currentUser.id);
+        localStorage.removeItem('unlimited_stamina_local_' + currentUser.id);
+    }
+    removeUnlimitedStaminaUI();
+    showToast('⏰ 无限负荷效果已结束', 'warning');
+    if (typeof addBattleLog === 'function') {
+        addBattleLog('⏰ 【系统】无限负荷模式已结束', 'info');
+    }
+}
+
+/**
+ * 显示无限负荷视觉效果
+ */
+function showUnlimitedStaminaEffect() {
+    // 添加CSS样式
+    if (!document.getElementById('unlimitedStaminaStyle')) {
+        var style = document.createElement('style');
+        style.id = 'unlimitedStaminaStyle';
+        style.textContent = 
+            '.unlimited-stamina-active { animation: unlimitedPulse 2s ease-in-out infinite !important; } ' +
+            '@keyframes unlimitedPulse { ' +
+            '  0%, 100% { box-shadow: 0 0 5px rgba(255,102,255,0.3); } ' +
+            '  50% { box-shadow: 0 0 20px rgba(255,102,255,0.8), 0 0 40px rgba(255,102,255,0.4); } ' +
+            '} ' +
+            '.unlimited-stamina-badge { ' +
+            '  position: fixed; top: 70px; right: 15px; ' +
+            '  background: linear-gradient(135deg, rgba(255,102,255,0.9), rgba(200,50,200,0.9)); ' +
+            '  border: 1px solid #ff66ff; border-radius: 8px; ' +
+            '  padding: 8px 15px; font-family: "Orbitron"; font-size: 0.8rem; ' +
+            '  color: #fff; z-index: 9998; ' +
+            '  animation: badgePulse 1.5s ease-in-out infinite; ' +
+            '  text-shadow: 0 0 8px rgba(255,255,255,0.5); ' +
+            '} ' +
+            '@keyframes badgePulse { ' +
+            '  0%, 100% { opacity: 1; transform: scale(1); } ' +
+            '  50% { opacity: 0.9; transform: scale(1.02); } ' +
+            '} ' +
+            '.unlimited-stamina-timer { color: #ffd700; font-size: 0.75rem; margin-top: 2px; }';
+        document.head.appendChild(style);
+    }
+    
+    // 无限负荷模式：同步修改所有负荷显示为倒计时 59:58 格式
+    var staminaElements = document.querySelectorAll('[id="battleStaminaValue"], #infoStamina, #staminaValue');
+    staminaElements.forEach(function(el) {
+        if (el) {
+            el.classList.add('unlimited-stamina-active');
+            // 显示倒计时，不显示 ∞/xxx
+            var remaining = Math.max(0, unlimitedStaminaBuff.endTime - getSecureTime());
+            var minutes = Math.floor(remaining / 60000);
+            var seconds = Math.floor((remaining % 60000) / 1000);
+            var timeStr = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            el.textContent = timeStr;
+        }
+    });
+}
+
+/**
+ * 更新倒计时UI
+ */
+function updateUnlimitedStaminaUI() {
+    var remaining = Math.max(0, unlimitedStaminaBuff.endTime - getSecureTime());
+    var minutes = Math.floor(remaining / 60000);
+    var seconds = Math.floor((remaining % 60000) / 1000);
+    var timeStr = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    // 同步更新所有负荷显示为倒计时格式
+    var staminaElements = document.querySelectorAll('[id="battleStaminaValue"], #infoStamina, #staminaValue');
+    staminaElements.forEach(function(el) {
+        if (el) el.textContent = timeStr;
+    });
+}
+
+/**
+ * 移除无限负荷UI
+ */
+function removeUnlimitedStaminaUI() {
+    var staminaElements = document.querySelectorAll('.unlimited-stamina-active');
+    staminaElements.forEach(function(el) {
+        el.classList.remove('unlimited-stamina-active');
+        el.textContent = stamina + '/100';
+    });
+}
+
+/**
+ * 页面加载时恢复状态（修复版 - 增加防作弊校验）
+ */
+function restoreUnlimitedStaminaState() {
+    if (!currentUser) return;
+    
+    var savedEndTime = localStorage.getItem('unlimited_stamina_end_' + currentUser.id);
+    if (!savedEndTime) return;
+    
+    var endTime = parseInt(savedEndTime);
+    var now = getSecureTime();
+    
+    // ========== 防作弊校验 ==========
+    var lastLocalTime = localStorage.getItem('unlimited_stamina_local_' + currentUser.id);
+    var currentLocal = Date.now();
+    
+    if (lastLocalTime) {
+        var lastLocal = parseInt(lastLocalTime);
+        
+        // 本地时间被回拨超过1分钟（作弊）
+        if (currentLocal < lastLocal - 60000) {
+            console.warn('【无限负荷】检测到时间回拨，清除状态');
+            clearUnlimitedStaminaState();
+            return;
+        }
+        
+        // endTime异常遥远（超过30天，明显作弊）
+        if (endTime > now + 30 * 24 * 3600000) {
+            console.warn('【无限负荷】endTime异常，清除状态');
+            clearUnlimitedStaminaState();
+            return;
+        }
+    }
+    
+    // 更新本地时间记录
+    localStorage.setItem('unlimited_stamina_local_' + currentUser.id, String(currentLocal));
+    // ================================
+    
+    if (endTime > now) {
+        unlimitedStaminaBuff.active = true;
+        unlimitedStaminaBuff.endTime = endTime;
+        startUnlimitedStaminaTimer();
+        showUnlimitedStaminaEffect();
+        console.log('恢复无限负荷状态，剩余:', Math.floor((endTime - now) / 1000), '秒');
+    } else {
+        localStorage.removeItem('unlimited_stamina_end_' + currentUser.id);
+        localStorage.removeItem('unlimited_stamina_local_' + currentUser.id);
+    }
+}
+
+// 辅助：清除无限负荷状态
+function clearUnlimitedStaminaState() {
+    unlimitedStaminaBuff.active = false;
+    unlimitedStaminaBuff.endTime = 0;
+    if (unlimitedStaminaBuff.timer) {
+        clearInterval(unlimitedStaminaBuff.timer);
+        unlimitedStaminaBuff.timer = null;
+    }
+    localStorage.removeItem('unlimited_stamina_end_' + currentUser.id);
+    localStorage.removeItem('unlimited_stamina_local_' + currentUser.id);
+}
+
+// 暴露到全局
+window.isUnlimitedStaminaActive = isUnlimitedStaminaActive;
+window.activateUnlimitedStamina = activateUnlimitedStamina;
+window.deactivateUnlimitedStamina = deactivateUnlimitedStamina;
+window.restoreUnlimitedStaminaState = restoreUnlimitedStaminaState;
+window.getSecureTime = getSecureTime;
+window.clearUnlimitedStaminaState = clearUnlimitedStaminaState;
 	
 	
 // ═══════════════════════════════════════════════════════════════
@@ -1636,7 +1850,7 @@ const newData = {
                         }
                         localStorage.setItem('stamina_' + currentUser.id, String(stamina));
             
-            checkDailyReset();
+            await checkDailyReset();
             
             // ========== 关键修复：确保调用 enterGame 进入游戏 ==========
             enterGame();
@@ -1836,6 +2050,7 @@ const newData = {
 					let currentFaction = null;
 					let selectedFactionPlanet = null;
 					let selectedFactionZone = null;
+					let selectedFactionParentZone = null;
 
 					// 负荷系统
 					var stamina = 100;
@@ -1848,10 +2063,25 @@ const newData = {
 					var STAMINA_REGEN_INTERVAL = 60000; // 60秒回复1点
 					let staminaRegenTimer = null;
 					
+					// ═══════════════════════════════════════════════════════════════
+					//  一小时无限负荷卡全局状态
+					// ═══════════════════════════════════════════════════════════════
+					var unlimitedStaminaBuff = {
+						active: false,
+						endTime: 0,
+						timer: null
+					};
+					
+					window.unlimitedStaminaBuff = unlimitedStaminaBuff;
+					
+					
 // ═══════════════════════════════════════════════════════════════
 //  每日现金获取上限管理（使用 window 挂载确保全局可访问）
 // ═══════════════════════════════════════════════════════════════
 window.DAILY_CASH_LIMIT = 100;
+
+// 战斗中上限提示标记（战斗中只提示一次）
+window._battleCashLimitWarned = false;
 
 window.canEarnCashToday = function(amount) {
     if (!gameData) return false;
@@ -1860,9 +2090,16 @@ window.canEarnCashToday = function(amount) {
     var todayEarned = gameData.today_cash_earned;
     
     if (todayEarned >= window.DAILY_CASH_LIMIT) {
-        showToast(`今日💰 Rout获取已达上限 (${window.DAILY_CASH_LIMIT})，请刷新页面以检查新一天是否开始`, 'warning');
+        // 战斗中只提示一次（非战斗场景如出售不受限制）
+        if (!window._battleCashLimitWarned) {
+            window._battleCashLimitWarned = true;
+            showToast(`💰 Rout获取已达日上限 (${window.DAILY_CASH_LIMIT})，请明日再来吧!`, 'warning');
+        }
         return false;
     }
+    
+    // 未达到上限时，重置标记（允许下次达到上限时再提示）
+    window._battleCashLimitWarned = false;
     
     var canGet = window.DAILY_CASH_LIMIT - todayEarned;
     if (amount > canGet) {
@@ -1872,26 +2109,19 @@ window.canEarnCashToday = function(amount) {
 };
 
 window.recordCashEarned = function(amount) {
-    
-    
     if (!gameData) {
-        
         return;
     }
     if (amount <= 0) {
-        
         return;
     }
     
     if (!gameData.today_cash_earned) {
-        
         gameData.today_cash_earned = 0;
     }
     
     var oldVal = gameData.today_cash_earned;
     gameData.today_cash_earned += amount;
-    
-    
 };
 					
 					
@@ -1903,25 +2133,33 @@ window.recordCashEarned = function(amount) {
 					// ═══════════════════════════════════════════════════════════════
 					function modifyStamina(delta, skipSave) {
 					    var oldStamina = stamina;
-					    // 确保 STAMINA_MAX 有值，且不会低于当前 stamina
+					    
+					    // ═══════════════════════════════════════════════════════════════
+					    //  一小时无限负荷卡：消耗时检查
+					    // ═══════════════════════════════════════════════════════════════
+					    					    if (delta < 0 && isUnlimitedStaminaActive()) {
+					    					        var now = Date.now();
+					    					        if (!window._lastUnlimitedNotify || now - window._lastUnlimitedNotify > 30000) {
+					    					            showToast('⚡ 无限负荷生效中，本次不消耗负荷！', 'info');
+					    					            window._lastUnlimitedNotify = now;
+					    					        }
+					    					        return stamina; // 直接返回，不执行后续扣除逻辑
+					    					    }
+					    
 					    if (typeof STAMINA_MAX === 'undefined') STAMINA_MAX = 1000;
 					    if (STAMINA_MAX < stamina) STAMINA_MAX = stamina;
 					    stamina = Math.max(0, Math.min(STAMINA_MAX, stamina + delta));
 					    
-					    // 同步到 gameData
 					    if (gameData) {
 					        gameData.stamina = stamina;
 					    }
 					    
-					    // 同步到 localStorage
 					    if (currentUser) {
 					        localStorage.setItem('stamina_' + currentUser.id, String(stamina));
 					    }
 					    
-					    // 更新所有 UI
 					    updateUI();
 					    
-					    // 延迟保存（防抖）
 					    if (!skipSave) {
 					        clearTimeout(window._staminaSaveTimer);
 					        window._staminaSaveTimer = setTimeout(function() {
@@ -2269,7 +2507,7 @@ setTimeout(createStars, 1000);
 					        }));
 					        localStorage.setItem('stamina_' + user.id, String(stamina));
 					
-					        checkDailyReset();
+					        await checkDailyReset();
 					        enterGame();
 					
 					        updateSyncStatus(true);
@@ -2822,8 +3060,8 @@ async function checkDailyReset() {
 
     // 服务器日期 > 上次领取日期 = 跨天
     if (serverDate > lastDate) {
-        var lastObj = new Date(lastDate + 'T00:00:00');
-        var nowObj = new Date(serverDate + 'T00:00:00');
+        var lastObj = new Date(lastDate + 'T00:00:00+08:00');
+        var nowObj = new Date(serverDate + 'T00:00:00+08:00');
         var dayDiff = Math.floor((nowObj - lastObj) / 86400000);
 
         if (dayDiff === 1) {
@@ -3198,6 +3436,8 @@ function showWeeklyLoginRewardModal() {
 						// 安全执行 UI 更新
 						try {
 							updateUI();
+							// 恢复无限负荷状态
+							restoreUnlimitedStaminaState();
 							// 防御性调用
 							try {
 							    if (typeof updateBattleUI === 'function') {
@@ -3580,22 +3820,7 @@ function adminFixWarehouseImages() {
 							var enemy = getRandomEnemy(selectedPlanet, selectedZone);
 							var xpReward = getEnemyXP(enemy);
 
-							// 仅 boss/mechanic 有几率获得
-							var pointsReward = 0;
-							if (enemy.type === 'boss' || enemy.cardType === 'boss') {
-								if (Math.random() < 0.15) {
-									pointsReward = 2;
-									currentUser.prime_points = (currentUser.prime_points || 0) + pointsReward;
-								}
-							} else if (enemy.type === 'mechanic' || enemy.cardType === 'mechanic') {
-								if (Math.random() < 0.10) {
-									pointsReward = 3;
-									currentUser.prime_points = (currentUser.prime_points || 0) + pointsReward;
-								}
-							}
-							addXP(xpReward);
-							autoBattleState.totalKills++;
-							autoBattleState.todayKills++;
+
 
 							// 模拟掉落
 							if (Math.random() < enemy.dropRate) {
@@ -4429,14 +4654,26 @@ function startAutoBattleWithPlanet(planet) {
     // ═══════════════════════════════════════════════════════════════
     //  2. 获取敌人（模板+公式生成属性）
     // ═══════════════════════════════════════════════════════════════
-    var enemyTemplate = getRandomEnemy(planet, selectedZone);
+    var enemyTemplate = selectedZone && selectedZone.bossEnemyId
+        ? (ENEMIES || []).find(e => e.id === selectedZone.bossEnemyId)
+        : getRandomEnemy(planet, selectedZone);
     if (!enemyTemplate) {
         showToast('生成敌人失败', 'error');
         return;
     }
     
     // 使用spawnEnemy生成完整属性
-    var enemy = spawnEnemy(enemyTemplate.id, playerLevel);
+    var enemy = (typeof spawnEnemy === 'function')
+        ? spawnEnemy(enemyTemplate.id, selectedZone && selectedZone.bossBattle ? (selectedZone.level || playerLevel) : playerLevel)
+        : null;
+    if (!enemy && selectedZone && selectedZone.bossBattle) {
+        enemy = Object.assign({}, enemyTemplate);
+        enemy.level = selectedZone.level || enemy.level || playerLevel;
+        enemy.maxHp = enemy.maxHp || enemy.hp || 500;
+        enemy.hp = enemy.maxHp;
+        enemy.maxShield = enemy.maxShield || enemy.shield || 0;
+        enemy.shield = enemy.maxShield;
+    }
     if (!enemy) {
         showToast('初始化敌人属性失败', 'error');
         return;
@@ -4489,12 +4726,7 @@ function startAutoBattleWithPlanet(planet) {
     addBattleLog(`⚔️ 肃清开始！${playerStats.name} Lv.${playerLevel} vs ${enemy.name} Lv.${enemy.level}`, 'info');
    
     
-    // 显示敌人前缀信息（从敌人对象本身读取）
-    if (enemy.prefix) {
-        addBattleLog(`🎭 变体类型: [${enemy.prefixName}] ${enemy.prefixTheme || enemy.prefix.theme}`, 'info');
-    } else {
-       
-    }
+
     
     // 显示当前轮换状态（每小时更新）
     var prefixStatus = getPrefixRotationStatus();
@@ -4503,10 +4735,46 @@ function startAutoBattleWithPlanet(planet) {
     //  6. 启动肃清循环（使用新的tick间隔）
     // ═══════════════════════════════════════════════════════════════
     updateBattleUI();
-    
-    // 启动肃清循环（使用新的tick间隔）
-		updateBattleUI();
-    
+
+    // 如果技能战斗系统已加载，使用技能战斗
+    if (typeof initSkillCombat === 'function') {
+        initSkillCombat(
+            {
+                warframe_type: gameData.warframe_type || 'excalibur',
+                level: playerLevel,
+                hp: autoBattleState.playerHp,
+                maxHp: autoBattleState.playerMaxHp,
+                shield: playerStats.maxShield || 60,
+                maxShield: playerStats.maxShield || 60,
+                energy: 100,
+                maxEnergy: 100,
+                attack: playerStats.attack,
+                defense: playerStats.defense,
+                armor: playerStats.defense,
+                speed: playerStats.speed
+            },
+            enemy,
+            {
+                onBattleEnd: function(result, defeatedEnemy) {
+                    if (result === 'win') {
+                        autoBattleState.enemyHp = 0;
+                        if (autoBattleState.enemy) autoBattleState.enemy.hp = 0;
+                        setTimeout(function() {
+                            enemyDefeated();
+                        }, 500);
+                    } else {
+                        autoBattleState.playerHp = 0;
+                        setTimeout(function() {
+                            playerDefeated();
+                        }, 500);
+                    }
+                }
+            }
+        );
+        return;
+    }
+
+    // 回退旧自动战斗
     var tickInterval = getBattleTickInterval(enemy.type);
     autoBattleState.timer = setInterval(function() {
         autoBattleTick();
@@ -4567,7 +4835,7 @@ function playerAttack() {
     var log = formatBattleLog(result, playerStats.name || '你', enemy.name, true);
     
     if (result.isDodge) {
-        showFloatingText('闪避！', 70, 30, '#ffaa00')
+        showFloatingText('闪避！', 70, 30, '#ffaa00');
     } else {
         showFloatingDamage(result.damage, 'enemy', result.isCrit);
         autoBattleState.enemyHp = Math.max(0, autoBattleState.enemyHp - result.damage);
@@ -4667,38 +4935,39 @@ function enemyDefeated() {
             }
         }
     }
-    // 现金奖励（仅 boss 和 mechanic 类型敌人有几率获得）
-    let cashReward = 0;
-    var canEarnResult = canEarnCashToday(cashReward);
-    if (enemy.type === 'boss' || enemy.cardType === 'boss') {
-        if (Math.random() < 0.15) { // 15% 概率
-            cashReward = 2;
-            var canEarn = canEarnCashToday(cashReward);
-            if (canEarn === false) {
-                addBattleLog(`💰 击败 ${enemy.name} 未获得Rout(已达上限)！`, 'warning');
-            } else {
-                var actualReward = (typeof canEarn === 'number') ? canEarn : cashReward;
-                currentUser.rout_points = (currentUser.rout_points || 0) + actualReward;
-                gameData.rout_points = currentUser.rout_points;
-                recordCashEarned(actualReward);
-                addBattleLog(`💰 击败 ${enemy.name} 获得 ${actualReward} Rout！`, 'drop');
-            }
-        }
-    } else if (enemy.type === 'mechanic' || enemy.cardType === 'mechanic') {
-        if (Math.random() < 0.10) { // 10% 概率
-            cashReward = 3;
-            var canEarn = canEarnCashToday(cashReward);
-            if (canEarn === false) {
-                addBattleLog(`💰 击败 ${enemy.name} 未获得Rout(已达上限)！`, 'warning');
-            } else {
-                var actualReward = (typeof canEarn === 'number') ? canEarn : cashReward;
-                currentUser.rout_points = (currentUser.rout_points || 0) + actualReward;
-                gameData.rout_points = currentUser.rout_points;
-                recordCashEarned(actualReward);
-                addBattleLog(`💰 击败 ${enemy.name} 获得 ${actualReward} Rout！`, 'drop');
-            }
+// 现金奖励（仅 boss 和 mechanic 类型敌人有几率获得）
+let cashReward = 0;
+var actualCashReward = 0;  // 实际获得的现金
+
+if (enemy.type === 'boss' || enemy.cardType === 'boss') {
+    if (Math.random() < 0.15) {
+        cashReward = 2;
+        var canEarn = canEarnCashToday(cashReward);
+        if (canEarn === false) {
+            addBattleLog(`击败 ${enemy.name} 💰 未获得(已达日上限)！`, 'warning');
+        } else {
+            actualCashReward = (typeof canEarn === 'number') ? canEarn : cashReward;
+            currentUser.rout_points = (currentUser.rout_points || 0) + actualCashReward;
+            gameData.rout_points = currentUser.rout_points;
+            recordCashEarned(actualCashReward);
+            addBattleLog(`💰 击败 ${enemy.name} 获得 ${actualCashReward} Rout！`, 'drop');
         }
     }
+} else if (enemy.type === 'mechanic' || enemy.cardType === 'mechanic') {
+    if (Math.random() < 0.10) {
+        cashReward = 3;
+        var canEarn = canEarnCashToday(cashReward);
+        if (canEarn === false) {
+            addBattleLog(`击败 ${enemy.name} 💰 未获得(已达日上限)！`, 'warning');
+        } else {
+            actualCashReward = (typeof canEarn === 'number') ? canEarn : cashReward;
+            currentUser.rout_points = (currentUser.rout_points || 0) + actualCashReward;
+            gameData.rout_points = currentUser.rout_points;
+            recordCashEarned(actualCashReward);
+            addBattleLog(`💰 击败 ${enemy.name} 获得 ${actualCashReward} Rout！`, 'drop');
+        }
+    }
+}
 
     // 经验奖励
     const xpReward = getEnemyXP(enemy);
@@ -4737,12 +5006,12 @@ if (cardDrop) {
     }
 }
 
-    // 显示奖励（只显示击杀信息）
-        if (cashReward > 0) {
-            addBattleLog(`⭐ 获得 ${cashReward} Rout | ${xpReward} 经验`, 'win');
-        } else {
-            addBattleLog(`⭐ 获得 ${xpReward} 经验`, 'win');
-        }
+// 显示奖励（只显示击杀信息）
+if (actualCashReward > 0) {
+    addBattleLog(`⭐ 获得 ${actualCashReward} Rout | ${xpReward} 经验`, 'win');
+} else {
+    addBattleLog(`⭐ 获得 ${xpReward} 经验`, 'win');
+}
 
     // 更新统计
     document.getElementById('totalKills').textContent = autoBattleState.totalKills;
@@ -4755,7 +5024,7 @@ if (cardDrop) {
     if (battleStopRequested) {
         stopAutoBattle();
         toggleAutoBattleMode(false);
-        addBattleLog('🛑 自动肃清已停止', 'info');
+        addBattleLog('🛑 连续肃清已停止', 'info');
     } else if (battleBtnPressState.autoMode) {
         stopAutoBattle();
     } else {
@@ -4819,7 +5088,7 @@ function getEnemyXP(enemy) {
 						if (battleStopRequested) {
 							stopAutoBattle();
 							toggleAutoBattleMode(false);
-							addBattleLog('🛑 自动肃清已停止', 'info');
+							addBattleLog('🛑 连续肃清已停止', 'info');
 						} else if (battleBtnPressState.autoMode) {
 							stopAutoBattle();
 						} else {
@@ -4834,7 +5103,7 @@ function getEnemyXP(enemy) {
 						if (battleStopRequested) {
 							stopAutoBattle();
 							toggleAutoBattleMode(false);
-							addBattleLog('🛑 自动肃清已停止', 'info');
+							addBattleLog('🛑 连续肃清已停止', 'info');
 						} else if (battleBtnPressState.autoMode) {
 							stopAutoBattle();
 						} else {
@@ -4848,6 +5117,10 @@ function getEnemyXP(enemy) {
 						if (autoBattleState.timer) {
 							clearInterval(autoBattleState.timer);
 							autoBattleState.timer = null;
+						}
+						// 停止技能战斗系统
+						if (typeof stopSkillCombat === 'function') {
+							stopSkillCombat();
 						}
 
 						const startBtn = document.getElementById('startBattleBtn');
@@ -4920,7 +5193,7 @@ function getEnemyXP(enemy) {
 								toggleAutoBattleMode(false);
 							}
 							stopAutoBattle();
-							addBattleLog('🛑 自动肃清已停止', 'info');
+							addBattleLog('🛑 连续肃清已停止', 'info');
 							return;
 						}
 
@@ -4955,6 +5228,20 @@ function getEnemyXP(enemy) {
 
 						document.body.appendChild(el);
 						setTimeout(() => el.remove(), 1200);
+					}
+					
+					function showFloatingText(text, x, y, color) {
+					    var el = document.createElement('div');
+					    el.className = 'auto-battle-damage';
+					    el.textContent = text;
+					    el.style.color = color || '#fff';
+					    el.style.left = (x || 50) + '%';
+					    el.style.top = (y || 30) + '%';
+					    el.style.fontSize = '1.2rem';
+					    el.style.fontWeight = 'bold';
+					    el.style.textShadow = '0 0 10px ' + (color || '#fff');
+					    document.body.appendChild(el);
+					    setTimeout(function() { el.remove(); }, 1200);
 					}
 
 					function addBattleLog(text, type) {
@@ -5051,15 +5338,50 @@ function getEnemyXP(enemy) {
 						}, 1500);
 					}
 
+					function setBattlePortraitBackground(elementId, entity) {
+						const el = document.getElementById(elementId);
+						if (!el || !entity) return;
+
+						const icon = entity.icon || '❔';
+						const image = entity.image || '';
+						el.classList.add('skill-combat-avatar');
+						el.classList.remove('death-anim', 'casting', 'hit-shake', 'hit-flash');
+						el.style.removeProperty('animation');
+						el.style.removeProperty('opacity');
+						el.style.removeProperty('transform');
+						el.style.removeProperty('filter');
+						el.setAttribute('data-avatar-key', image || icon);
+						el.setAttribute('data-avatar-icon', icon);
+						el.setAttribute('aria-label', entity.name || 'avatar');
+						el.textContent = '';
+
+						if (image) {
+							el.classList.add('has-avatar-image');
+							el.classList.remove('no-avatar-image');
+							el.style.backgroundImage = `url('${image}')`;
+							el.style.backgroundSize = 'contain';
+							el.style.backgroundPosition = 'center';
+							el.style.backgroundRepeat = 'no-repeat';
+						} else {
+							el.classList.remove('has-avatar-image');
+							el.classList.add('no-avatar-image');
+							el.style.backgroundImage = '';
+						}
+					}
+
 					function updateBattleUI() {
 						if (!gameData) return;
 
-						 // 更新负荷显示（当前值/自然上限100）
-						    const allStaminaValues = document.querySelectorAll('[id="battleStaminaValue"]');
-						    allStaminaValues.forEach(function(el) {
-						        const currentStamina = gameData?.stamina || stamina || 0;
-						        el.textContent = currentStamina + '/100'; // 自然上限固定100
-						    });
+						 						// 更新负荷显示（当前值/自然上限100，无限负荷模式显示 ∞/xxx）
+						 						    const allStaminaValues = document.querySelectorAll('[id="battleStaminaValue"]');
+						 						    allStaminaValues.forEach(function(el) {
+						 						        if (isUnlimitedStaminaActive()) {
+						 						            el.textContent = '∞/' + STAMINA_MAX;
+						 						        } else {
+						 						            const currentStamina = gameData?.stamina || stamina || 0;
+						 						            el.textContent = currentStamina + '/100'; // 自然上限固定100
+						 						        }
+						 						    });
 						
 						 
 						
@@ -5068,22 +5390,12 @@ function getEnemyXP(enemy) {
 
 						document.getElementById('battlePlayerName').textContent = wf.name;
 						document.getElementById('battlePlayerLevel').textContent = wfData.level;
-						document.getElementById('battlePlayerIcon').innerHTML = wf.image ?
-							`<img src="${wf.image}" style="width: 64px; height: 64px; object-fit: contain;">` :
-							wf.icon;
+						setBattlePortraitBackground('battlePlayerIcon', wf);
 
 						if (autoBattleState.enemy) {
 							document.getElementById('battleEnemyName').textContent = autoBattleState.enemy ? autoBattleState.enemy.name : '未知敌人';
 							document.getElementById('battleEnemyLevel').textContent = autoBattleState.enemy ? autoBattleState.enemy.level : '';
-
-							// 敌人图标：优先使用图片
-							const enemyIconEl = document.getElementById('battleEnemyIcon');
-							if (autoBattleState.enemy.image) {
-								enemyIconEl.innerHTML =
-									`<img src="${autoBattleState.enemy.image}" style="width: 64px; height: 64px; object-fit: contain;">`;
-							} else {
-								enemyIconEl.textContent = autoBattleState.enemy.icon;
-							}
+							setBattlePortraitBackground('battleEnemyIcon', autoBattleState.enemy);
 
 							document.getElementById('battlePlayerHpText').textContent =
 								`${autoBattleState.playerHp}/${autoBattleState.playerMaxHp}`;
@@ -5101,12 +5413,8 @@ function getEnemyXP(enemy) {
 							document.getElementById('battleEnemyLevel').textContent = defaultEnemy.level;
 
 							// 默认敌人图标：优先使用图片
-							const defaultIconEl = document.getElementById('battleEnemyIcon');
-							if (defaultEnemy.image) {
-								defaultIconEl.innerHTML =
-									`<img src="${defaultEnemy.image}" style="width: 64px; height: 64px; object-fit: contain;">`;
-							} else {
-								defaultIconEl.textContent = defaultEnemy.icon;
+							if (defaultEnemy) {
+								setBattlePortraitBackground('battleEnemyIcon', defaultEnemy);
 							}
 
 							const playerStats = getPlayerStats();
@@ -7093,12 +7401,22 @@ function stopAutoGathering() { stopInteractiveGathering(); }
 					    document.getElementById('resPrime').textContent = formatPoints(currentUser.prime_points || 0);
 					    document.getElementById('resVip').textContent = formatPoints(currentUser.vip_points || 0);
 					    
-					    // 同步更新肃清页面负荷显示
+    // 同步更新肃清页面负荷显示
 					    const allStaminaValues = document.querySelectorAll('[id="battleStaminaValue"]');
 					    allStaminaValues.forEach(function(el) {
-					        el.textContent = stamina + '/100';
+					        if (isUnlimitedStaminaActive()) {
+					            el.textContent = '∞/' + STAMINA_MAX;
+					        } else {
+					            el.textContent = stamina + '/100';
+					        }
 					    });
-					
+						
+						    // 更新无限负荷倒计时
+						    if (unlimitedStaminaBuff.active) {
+						        updateUnlimitedStaminaUI();
+						    }
+						
+						
     updateUpgradeBadge();
 
     // 检查回响奖励
@@ -7823,7 +8141,14 @@ function updateInfoUI() {
     document.getElementById('infoRout').textContent = currentUser.rout_points || 0;
     document.getElementById('infoPrime').textContent = currentUser.prime_points || 0;
     document.getElementById('infoVip').textContent = currentUser.vip_points || 0;
-    document.getElementById('infoStamina').textContent = stamina + '/100'; // 自然上限固定100
+        var infoStaminaEl = document.getElementById('infoStamina');
+        if (infoStaminaEl) {
+            if (isUnlimitedStaminaActive()) {
+                infoStaminaEl.textContent = '∞/' + STAMINA_MAX;
+            } else {
+                infoStaminaEl.textContent = stamina + '/100'; // 自然上限固定100
+            }
+        }
 
     // 负荷低时变红提醒
     const staminaBadge = document.getElementById('battleStaminaBadge');
@@ -8224,7 +8549,7 @@ async function claimCodexReward(deckId, overlay) {
             var errorCode = result?.code || '';
 
             // 【关键修复】全服奖励已达上限 → 标记本地状态，防止无限弹窗
-            if (errorMsg.includes('全服奖励已达上限') || errorCode === 'GLOBAL_LIMIT' || errorMsg.includes('上限')) {
+            if (errorMsg.includes('限量奖励已达上限') || errorCode === 'GLOBAL_LIMIT' || errorMsg.includes('上限')) {
                 console.log('【回响奖励】全服已达上限，标记本地状态防止重复弹窗');
                 
                 // 1. 内存标记：当前会话不再弹窗
@@ -9255,6 +9580,7 @@ function backToGatheringPlanets() {
 
 						// 重置区域选择状态
 						selectedFactionZone = null;
+						selectedFactionParentZone = null;
 
 						renderFactionZones(factionId, planet, zones);
 					}
@@ -9271,8 +9597,9 @@ function backToGatheringPlanets() {
 
 						grid.innerHTML = zones.map(zone => {
 							const isLocked = zone.locked === true;
+							const hasSubZones = Array.isArray(zone.subZones) && zone.subZones.length > 0;
 							const lockedStyle = isLocked ? 'opacity: 0.4; cursor: not-allowed; border-color: #333;' : 'cursor: pointer;';
-							const onclick = isLocked ? '' : `onclick="selectFactionZone('${factionId}', '${zone.id}')"`;
+							const onclick = isLocked ? '' : (hasSubZones ? `onclick="enterFactionSubZones('${factionId}', '${zone.id}')"` : `onclick="selectFactionZone('${factionId}', '${zone.id}')"`);
 
 							return `
             <div style="background: var(--panel-bg); border: 1px solid ${isLocked ? '#333' : planet.color}; 
@@ -9283,7 +9610,7 @@ function backToGatheringPlanets() {
                 <div style="color: #888; font-size: 0.75rem; margin-bottom: 4px;">${zone.desc}</div>
                 
                 <div style="color: #666; font-size: 0.7rem; margin-top: 4px;">
-                    ${isLocked ? '🔒 暂未开放' : ''}
+                    ${isLocked ? '🔒 暂未开放' : (hasSubZones ? '↳ 首领战场 ' + zone.subZones.length + ' 个' : '')}
                 </div>
             </div>
         `;
@@ -9294,16 +9621,55 @@ function backToGatheringPlanets() {
 						document.getElementById(gridId).style.display = 'grid';
 					}
 
+					function enterFactionSubZones(factionId, zoneId) {
+						const config = FACTION_CONFIG[factionId];
+						const zones = window[config.zones];
+						let planetId = selectedFactionPlanet ? selectedFactionPlanet.id : null;
+
+						// 兜底：如果 selectedFactionPlanet 丢失，从 zones 中反查
+						if (!planetId && zones) {
+							for (var pid in zones) {
+								if (zones[pid] && zones[pid].find(z => z.id === zoneId)) {
+									planetId = pid;
+									break;
+								}
+							}
+						}
+
+						if (!planetId || !zones || !zones[planetId]) return;
+
+						const parentZone = zones[planetId].find(z => z.id === zoneId);
+						if (!parentZone || !Array.isArray(parentZone.subZones)) return;
+
+						selectedFactionParentZone = parentZone;
+						selectedFactionZone = null;
+						renderFactionZones(factionId, parentZone, parentZone.subZones);
+					}
+
 					// 选择区域
 					function selectFactionZone(factionId, zoneId) {
 						const config = FACTION_CONFIG[factionId];
 						const zones = window[config.zones];
 						if (!zones) return;
 
-						const planetId = selectedFactionPlanet ? selectedFactionPlanet.id : null;
+						let planetId = selectedFactionPlanet ? selectedFactionPlanet.id : null;
+
+						// 兜底：如果 selectedFactionPlanet 丢失，从 zones 中反查
+						if (!planetId && zones) {
+							for (var pid in zones) {
+								if (zones[pid] && zones[pid].find(z => z.id === zoneId)) {
+									planetId = pid;
+									break;
+								}
+							}
+						}
+
 						if (!planetId || !zones[planetId]) return;
 
-						const zone = zones[planetId].find(z => z.id === zoneId);
+						let zone = zones[planetId].find(z => z.id === zoneId);
+						if (!zone && selectedFactionParentZone && Array.isArray(selectedFactionParentZone.subZones)) {
+							zone = selectedFactionParentZone.subZones.find(z => z.id === zoneId);
+						}
 						if (!zone) return;
 
 						selectedFactionZone = zone;
@@ -9350,11 +9716,22 @@ function backToGatheringPlanets() {
 					function backToFactionPlanets(factionId) {
 						const config = FACTION_CONFIG[factionId];
 
+						if (selectedFactionParentZone && selectedFactionPlanet) {
+							const zones = window[config.zones];
+							selectedFactionParentZone = null;
+							selectedFactionZone = null;
+							if (zones && zones[selectedFactionPlanet.id]) {
+								enterFactionZones(factionId, selectedFactionPlanet, zones[selectedFactionPlanet.id]);
+								return;
+							}
+						}
+
 						document.querySelectorAll('.page-section').forEach(s => s.classList.add('hidden'));
 						document.getElementById(config.page2).classList.remove('hidden');
 
 						// 关键修复：重置区域选择状态，但保留星球选择，这样用户可以重新选区域或换星球
 						selectedFactionZone = null;
+						selectedFactionParentZone = null;
 
 						// 重新渲染第2页，确保状态正确
 						renderFactionPlanets(factionId);
@@ -10840,7 +11217,7 @@ function claimWarframeAsItem(craftKey) {
 							name: '小型负荷恢复剂',
 							icon: '🧪',
 							desc: '立即恢复 50 点负荷',
-							price: 50,
+							price: 25,
 							type: 'consumable',
 							stamina: 50,
 							color: '#4eff4e'
@@ -10849,7 +11226,7 @@ function claimWarframeAsItem(craftKey) {
 							name: '中型负荷恢复剂',
 							icon: '⚗️',
 							desc: '立即恢复 100 点负荷',
-							price: 100,
+							price: 50,
 							type: 'consumable',
 							stamina: 100,
 							color: '#00d4ff'
@@ -10858,11 +11235,24 @@ function claimWarframeAsItem(craftKey) {
 							name: '大型负荷恢复剂',
 							icon: '🔋',
 							desc: '立即恢复 200 点负荷',
-							price: 190,
+							price: 90,
 							type: 'consumable',
 							stamina: 200,
 							color: '#c8a84b'
 						},
+						 // ========== 新增：一小时无限负荷卡 ==========
+						    {
+						        name: '1小时无限负荷卡',
+						        icon: '♾️',
+						        desc: '持续时间不再消耗负荷',
+						        price: { rout: 200, prime: 6, vip: 4 }, // 💰300 💎3 🔮3
+								priceType: 'multi', // 支持多种货币
+						        type: 'buff',  // 新类型：buff
+						        buffType: 'unlimited_stamina',
+						        duration: 3600000,  // 1小时 = 3600000毫秒
+						        color: '#ff66ff'  ,// 紫色，稀有物品
+								staminaAmount: null
+						    }
 					];
 					
 					
@@ -10968,22 +11358,192 @@ function claimWarframeAsItem(craftKey) {
 					    const container = document.getElementById('staminaShopList');
 					    if (!container) return;
 					
-					    container.innerHTML = SHOP_ITEMS.map((item, index) => `
-					        <div class="shop-item" style="border-color: ${item.color || '#333'};">
-					            <div class="shop-image" style="background: linear-gradient(135deg, rgba(0,0,0,0.5), ${item.color ? item.color + '15' : 'rgba(0,0,0,0.5)'});">${item.icon}</div>
-					            <div class="shop-info">
-					                <div class="shop-name">${item.name}</div>
-					                <div class="shop-desc">${item.desc}</div>
-					                <div class="shop-price">
-					                    <div class="price-tag" style="color: ${item.color || 'var(--sentient-purple)'};">💰 ${item.price}</div>
-					                    <button class="shop-btn" onclick="buyStaminaItem('${item.name}', ${item.price}, '${item.type}', '${item.stamina}')" style="background: linear-gradient(135deg, ${item.color || 'var(--sentient-purple)'}, ${item.color ? item.color + 'aa' : '#cc44cc'});">
-					                        购买
-					                    </button>
+					    container.innerHTML = SHOP_ITEMS.map((item, index) => {
+					        // 1小时无限负荷卡特殊处理：显示三种货币价格
+					        if (item.type === 'buff' && item.name === '1小时无限负荷卡') {
+					            return `
+					                <div class="shop-item" style="border-color: ${item.color || '#333'};">
+					                    <div class="shop-image" style="background: linear-gradient(135deg, rgba(0,0,0,0.5), ${item.color ? item.color + '15' : 'rgba(0,0,0,0.5)'});">${item.icon}</div>
+					                    <div class="shop-info">
+					                        <div class="shop-name">${item.name}</div>
+					                        <div class="shop-desc">${item.desc}</div>
+					                        <div class="shop-price" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+					                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+					                                <span style="color: var(--tenno-gold);">💰 200</span>
+					                                <span style="color: var(--orokin-cyan);">💎 6</span>
+					                                <span style="color: var(--infested-green);">🔮 4</span>
+					                            </div>
+					                            <button class="shop-btn" onclick="buyUnlimitedStaminaCard()" style="background: linear-gradient(135deg, ${item.color || 'var(--sentient-purple)'}, ${item.color ? item.color + 'aa' : '#cc44cc'}); width: 100%; margin-top: 5px;">
+					                                购买
+					                            </button>
+					                        </div>
+					                    </div>
+					                </div>
+					            `;
+					        }
+					        
+					        // 普通恢复剂
+					        return `
+					            <div class="shop-item" style="border-color: ${item.color || '#333'};">
+					                <div class="shop-image" style="background: linear-gradient(135deg, rgba(0,0,0,0.5), ${item.color ? item.color + '15' : 'rgba(0,0,0,0.5)'});">${item.icon}</div>
+					                <div class="shop-info">
+					                    <div class="shop-name">${item.name}</div>
+					                    <div class="shop-desc">${item.desc}</div>
+					                    <div class="shop-price">
+					                        <div class="price-tag" style="color: ${item.color || 'var(--sentient-purple)'};">💰 ${item.price}</div>
+					                        <button class="shop-btn" onclick="buyStaminaItem('${item.name}', ${item.price}, '${item.type}', '${item.stamina}')" style="background: linear-gradient(135deg, ${item.color || 'var(--sentient-purple)'}, ${item.color ? item.color + 'aa' : '#cc44cc'});">
+					                            购买
+					                        </button>
+					                    </div>
 					                </div>
 					            </div>
-					        </div>
-					    `).join('');
+					        `;
+					    }).join('');
 					}
+					
+					
+					
+function buyUnlimitedStaminaCard() {
+    const currentRout = gameData?.rout_points || 0;
+    const currentPrime = gameData?.prime_points || 0;
+    const currentVip = gameData?.vip_points || 0;
+    
+    // 检查是否至少有一种货币足够
+    const canBuyRout = currentRout >= 200;
+    const canBuyPrime = currentPrime >= 6;
+    const canBuyVip = currentVip >= 4;
+    
+    if (!canBuyRout && !canBuyPrime && !canBuyVip) {
+        showToast('货币不足！需要 💰200 或 💎6 或 🔮4', 'error');
+        return;
+    }
+    
+    // ========== 修复：使用全局变量存储用户最终选择 ==========
+    window.selectedPaymentType = canBuyRout ? 'rout' : (canBuyPrime ? 'prime' : 'vip');
+    
+    // 构建支付选择HTML
+    const paymentOptions = [
+        { type: 'rout', label: '💰 Rout', value: 200, canBuy: canBuyRout, color: 'var(--tenno-gold)' },
+        { type: 'prime', label: '💎 Prime', value: 6, canBuy: canBuyPrime, color: 'var(--orokin-cyan)' },
+        { type: 'vip', label: '🔮 VIP', value: 4, canBuy: canBuyVip, color: 'var(--infested-green)' }
+    ];
+    
+    const paymentHtml = paymentOptions.map(opt => `
+        <div class="payment-option" data-type="${opt.type}" onclick="selectPaymentType('${opt.type}')" 
+             style="padding: 10px; margin: 5px 0; border: 2px solid ${opt.type === window.selectedPaymentType ? opt.color : '#333'}; 
+                    border-radius: 8px; cursor: ${opt.canBuy ? 'pointer' : 'not-allowed'}; 
+                    background: ${opt.type === window.selectedPaymentType ? opt.color + '20' : 'transparent'};
+                    opacity: ${opt.canBuy ? '1' : '0.3'};">
+            <span style="color: ${opt.color}; font-family: 'Orbitron';">${opt.label} ${opt.value}</span>
+            ${!opt.canBuy ? '<span style="color: var(--grineer-red); font-size: 0.75rem;"> (不足)</span>' : ''}
+        </div>
+    `).join('');
+    
+    // ========== 修复：确认回调内读取全局变量，并增加二次校验 ==========
+    showConfirmModal({
+        icon: '⚡',
+        title: '购买 1小时无限负荷卡',
+        desc: '选择支付方式后确认购买',
+        costs: [
+            { label: '效果', value: '⚡ 1小时内不消耗负荷', type: 'gain' },
+            { label: '当前负荷', value: `${stamina}/${STAMINA_MAX || 100}`, type: 'neutral' }
+        ],
+        onConfirm: function() {
+            // 读取用户最终选择的支付方式（全局变量）
+            var payType = window.selectedPaymentType || 'rout';
+            var price = 0;
+            var currencyField = '';
+            var currencyName = '';
+            var currencyIcon = '';
+            
+            // 根据选择确定扣款信息
+            switch(payType) {
+                case 'rout':
+                    price = 300;
+                    currencyField = 'rout_points';
+                    currencyName = 'Rout';
+                    currencyIcon = '💰';
+                    break;
+                case 'prime':
+                    price = 3;
+                    currencyField = 'prime_points';
+                    currencyName = 'Prime';
+                    currencyIcon = '💎';
+                    break;
+                case 'vip':
+                    price = 3;
+                    currencyField = 'vip_points';
+                    currencyName = 'VIP';
+                    currencyIcon = '🔮';
+                    break;
+                default:
+                    showToast('支付方式错误', 'error');
+                    return;
+            }
+            
+            // ========== 二次校验余额（防止购买过程中余额变化）==========
+            var currentBalance = gameData[currencyField] || 0;
+            if (currentBalance < price) {
+                showToast(currencyIcon + ' ' + currencyName + ' 不足！需要 ' + price + '，当前 ' + currentBalance, 'error');
+                return;
+            }
+            
+            // ========== 扣款 ==========
+            gameData[currencyField] = currentBalance - price;
+            currentUser[currencyField] = gameData[currencyField];
+            
+            // 同步到本地缓存
+            var pointsKey = 'points_' + currentUser.id;
+            localStorage.setItem(pointsKey, JSON.stringify({
+                rout_points: gameData.rout_points || 0,
+                prime_points: gameData.prime_points || 0,
+                vip_points: gameData.vip_points || 0
+            }));
+            
+            // 激活无限负荷
+            var success = activateUnlimitedStamina(3600000);
+            
+            if (success) {
+                saveGameData();
+                updateUI();
+                
+            }
+        }
+    });
+    
+    // 在弹窗中添加支付选择
+    setTimeout(function() {
+        var costBox = document.getElementById('confirmCostBox');
+        if (costBox) {
+            // 清除之前的支付选项（防止重复添加）
+            var oldPayment = document.getElementById('paymentOptions');
+            if (oldPayment) oldPayment.remove();
+            
+            var paymentDiv = document.createElement('div');
+            paymentDiv.id = 'paymentOptions';
+            paymentDiv.innerHTML = '<div style="color: var(--tenno-gold); margin: 10px 0 5px; font-family: Orbitron;">选择支付方式：</div>' + paymentHtml;
+            costBox.appendChild(paymentDiv);
+        }
+    }, 50);
+}
+
+function selectPaymentType(type) {
+    // 更新全局变量
+    window.selectedPaymentType = type;
+    
+    // 更新UI高亮
+    document.querySelectorAll('.payment-option').forEach(function(el) {
+        var elType = el.dataset.type;
+        var isSelected = elType === type;
+        var color = elType === 'rout' ? 'var(--tenno-gold)' : 
+                   elType === 'prime' ? 'var(--orokin-cyan)' : 'var(--infested-green)';
+        
+        el.style.borderColor = isSelected ? color : '#333';
+        el.style.background = isSelected ? color + '20' : 'transparent';
+    });
+}
+					
+					
 					
 function buyStaminaItem(name, price, type, staminaValue) {
     if (!gameData) return;
@@ -10994,27 +11554,34 @@ function buyStaminaItem(name, price, type, staminaValue) {
         return;
     }
 
+    // ========== 无限负荷卡：直接激活，不走恢复剂逻辑 ==========
+    if (type === 'buff') {
+        gameData.rout_points -= price;
+        currentUser.rout_points = gameData.rout_points;
+        activateUnlimitedStamina(3600000);
+        saveGameData();
+        updateUI();
+        return;
+    }
+
     const currentStamina = gameData?.stamina || 0;
-    const ABSOLUTE_MAX = 1000; // 绝对上限
+    const ABSOLUTE_MAX = 1000;
 
     let staminaGain = 0;
     let staminaText = '';
 
     if (staminaValue === 'full') {
-        // 全满：恢复到当前上限（不是自然上限）
         const targetMax = gameData?.stamina_max || STAMINA_MAX || 100;
         staminaGain = targetMax - currentStamina;
         
         if (staminaGain <= 0) {
-            // 已经达到当前上限，检查是否还能突破
             if (targetMax >= ABSOLUTE_MAX) {
-                showToast(`负荷已达绝对上限 (${currentStamina}/${ABSOLUTE_MAX})，无法继续恢复`, 'warning');
+                showToast(`负荷已达上限 (${currentStamina}/${ABSOLUTE_MAX})`, 'warning');
                 return;
             }
-            // 可以突破上限，恢复到绝对上限
             staminaGain = ABSOLUTE_MAX - currentStamina;
             if (staminaGain <= 0) {
-                showToast(`负荷已达绝对上限 (${currentStamina}/${ABSOLUTE_MAX})，无法继续恢复`, 'warning');
+                showToast(`负荷已达上限 (${currentStamina}/${ABSOLUTE_MAX})`, 'warning');
                 return;
             }
         }
@@ -11024,21 +11591,13 @@ function buyStaminaItem(name, price, type, staminaValue) {
         const canGain = Math.max(0, ABSOLUTE_MAX - currentStamina);
         
         if (canGain <= 0) {
-            showToast(`负荷已达绝对上限 (${currentStamina}/${ABSOLUTE_MAX})，无法继续恢复`, 'warning');
+            showToast(`负荷已达上限`, 'warning');
             return;
         }
         
-        // 如果恢复剂效果超过可恢复量，阻止购买并推荐
         if (amount > canGain) {
-            // 推荐合适的恢复剂
-            let recommend = '';
-            if (canGain >= 200) recommend = '大型恢复剂';
-            else if (canGain >= 100) recommend = '中型恢复剂';
-            else if (canGain >= 50) recommend = '小型恢复剂';
-            else recommend = '无需购买';
-            
-            showToast(`恢复剂效果 (${amount}) 超过绝对上限 (${canGain})，建议购买${recommend}`, 'warning');
-            return; // 阻止购买
+            showToast(`恢复剂效果超过上限，建议购买更小剂量`, 'warning');
+            return;
         }
         
         staminaGain = amount;
@@ -11060,25 +11619,18 @@ function buyStaminaItem(name, price, type, staminaValue) {
             gameData.rout_points -= price;
             currentUser.rout_points = gameData.rout_points;
 
-            // 负荷恢复剂效果
             const oldStamina = gameData?.stamina || 0;
             
             if (staminaValue === 'full') {
-                // 全满：恢复到上限，并提升上限
                 const oldMax = gameData?.stamina_max || STAMINA_MAX || 100;
                 gameData.stamina = Math.min(ABSOLUTE_MAX, oldMax + 50);
                 gameData.stamina_max = Math.min(ABSOLUTE_MAX, oldMax + 50);
-                
-                // 同步全局变量
                 stamina = gameData.stamina;
                 STAMINA_MAX = gameData.stamina_max;
-                
                 showToast(`使用 ${name}！负荷全满，上限提升至 ${gameData.stamina_max}`, 'success');
             } else {
-                // 普通恢复剂
                 gameData.stamina = Math.min(ABSOLUTE_MAX, oldStamina + staminaGain);
                 stamina = gameData.stamina;
-                
                 showToast(`使用 ${name}！恢复 ${gameData.stamina - oldStamina} 点负荷`, 'success');
             }
             
@@ -11089,26 +11641,33 @@ function buyStaminaItem(name, price, type, staminaValue) {
 }
 					
 					function renderShop() {
-						const container = document.getElementById('shopList');
-						if (!container) return;
-
-						container.innerHTML = SHOP_ITEMS.map((item, index) =>
-							`
-        <div class="shop-item" style="border-color: ${item.color || '#333'};">
-            <div class="shop-image" style="background: linear-gradient(135deg, rgba(0,0,0,0.5), ${item.color ? item.color + '15' : 'rgba(0,0,0,0.5)'});">${item.icon}</div>
-            <div class="shop-info">
-                <div class="shop-name">${item.name}</div>
-                <div class="shop-desc">${item.desc}</div>
-                <div class="shop-price">
-                    <div class="price-tag" style="color: ${item.color || 'var(--sentient-purple)'};">💰 ${item.price}</div>
-                    <button class="shop-btn" onclick="buyShopItem('${item.name}', ${item.price}, '${item.type}', ${item.stamina || 0})" style="background: linear-gradient(135deg, ${item.color || 'var(--sentient-purple)'}, ${item.color ? item.color + 'aa' : '#cc44cc'});">
-                        购买
-                    </button>
-                </div>
-            </div>
-        </div>
-    `
-						).join('');
+					    const container = document.getElementById('shopList');
+					    if (!container) return;
+					
+					    container.innerHTML = SHOP_ITEMS.map((item, index) => {
+					        var typeLabel = '';
+					        if (item.type === 'buff') {
+					            typeLabel = '<span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#ff66ff,#cc33cc);color:#fff;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-family:Orbitron;z-index:5;">BUFF</span>';
+					        } else if (item.type === 'consumable') {
+					            typeLabel = '<span style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.5);border:1px solid ' + (item.color || '#333') + ';color:' + (item.color || '#888') + ';padding:2px 8px;border-radius:4px;font-size:0.65rem;z-index:5;">消耗品</span>';
+					        }
+					        return `
+					        <div class="shop-item" style="border-color: ${item.color || '#333'}; position: relative;">
+					            ${typeLabel}
+					            <div class="shop-image" style="background: linear-gradient(135deg, rgba(0,0,0,0.5), ${item.color ? item.color + '15' : 'rgba(0,0,0,0.5)'});">${item.icon}</div>
+					            <div class="shop-info">
+					                <div class="shop-name">${item.name}</div>
+					                <div class="shop-desc">${item.desc}</div>
+					                <div class="shop-price">
+					                    <div class="price-tag" style="color: ${item.color || 'var(--sentient-purple)'};">💰 ${item.price}</div>
+					                    <button class="shop-btn" onclick="buyShopItem('${item.name}', ${item.price}, '${item.type}', ${item.stamina || 0})" style="background: linear-gradient(135deg, ${item.color || 'var(--sentient-purple)'}, ${item.color ? item.color + 'aa' : '#cc44cc'});">
+					                        购买
+					                    </button>
+					                </div>
+					            </div>
+					        </div>
+					    `;
+					    }).join('');
 					}
 
 					function buyShopItem(name, price, type, staminaAmount) {
@@ -11132,6 +11691,11 @@ function buyStaminaItem(name, price, type, staminaValue) {
 					        }
 					        localStorage.setItem('stamina_' + currentUser.id, String(stamina));
 					        updateUI();
+					    } else if (type === 'buff') {
+					        // ========== 一小时无限负荷卡 ==========
+					        if (name === '一小时无限负荷卡') {
+					            activateUnlimitedStamina(3600000);
+					        }
 					    } else {
 					        showToast(`成功购买 ${name}！`, 'success');
 					    }
@@ -11140,15 +11704,10 @@ function buyStaminaItem(name, price, type, staminaValue) {
 					    updateUI();
 					    
 					    // ========== 同步更新所有积分显示元素 ==========
-					    // 1. 更新积分商城的 shopPoints（当前可能可见）
 					    var shopPointsEl = document.getElementById('shopPoints');
 					    if (shopPointsEl) shopPointsEl.textContent = gameData.prime_points || 0;
-					    
-					    // 2. 同步更新 Baro 商店的 baroPoints（用户可能随后切换过去）
 					    var baroPointsEl = document.getElementById('baroPoints');
 					    if (baroPointsEl) baroPointsEl.textContent = gameData.prime_points || 0;
-					    
-					    // 3. 同步更新 Maroo市集的 marooPoints（申秉之魂数量）
 					    updateMarooPoints();
 					}
 					
@@ -11964,7 +12523,7 @@ onConfirm: function() {
 						// 清空肃清日志
 						const log = document.getElementById('autoBattleLog');
 						if (log) log.innerHTML =
-							'<div style="color: #666; text-align: center; padding-top: 80px;">点击开始肃清消耗负荷进行自动肃清...</div>';
+							'<div style="color: #666; text-align: center; padding-top: 80px;">长按⚔️ 肃清(-3⚡) ️️消耗负荷进行连续肃清...</div>';
 
 						// 清空掉落
 						const drops = document.getElementById('battleDrops');
@@ -12217,7 +12776,10 @@ window.adminPromoteCardStar = adminPromoteCardStar;
 					window.stamina = stamina; 
 					window.modifyStamina = modifyStamina;
 					window.STAMINA_MAX = STAMINA_MAX;
+					window.enterFactionSubZones = enterFactionSubZones;
 					
+					window.selectPaymentType = selectPaymentType;
+					window.buyUnlimitedStaminaCard = buyUnlimitedStaminaCard;
 				})();
 	
 			

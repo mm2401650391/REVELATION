@@ -16,7 +16,7 @@ var PLANETS = [
 var PLANETS_GRINEER = [
     { id: 'earth', name: '寰宇-Grineer', icon: '🌍', image: 'GAME/Faction/earth.jpg', minLevel: 1, maxLevel: 5, faction: 'grineer', factionName: 'Grineer', dropMult: 1.0, desc: '起源系统的摇篮', color: '#4a8c4a', locked: false },
     { id: 'sedna', name: '夜灵之墓', icon: '🔴', image: 'GAME/Faction/sedna.jpg', minLevel: 15, maxLevel: 25, faction: 'grineer', factionName: 'Grineer', dropMult: 1.5, desc: 'Grineer女皇的领地', color: '#cc4444', locked: true },
-    { id: 'kuva', name: '星域凶顽', icon: '💀', image: 'GAME/Faction/kuva.jpg', minLevel: 25, maxLevel: 35, faction: 'grineer', factionName: 'Grineer', dropMult: 2.0, desc: '赤毒Grineer的核心要塞', color: '#8b0000', locked: true }
+    { id: 'kuva', name: '星域凶顽', icon: '💀', image: 'GAME/Faction/kuva.jpg', minLevel: 25, maxLevel: 35, faction: 'grineer', factionName: 'Grineer', dropMult: 2.0, desc: '赤毒Grineer的核心要塞', color: '#8b0000', locked: false }
 ];
 
 var PLANETS_CORPUS = [
@@ -61,7 +61,77 @@ var PLANET_ZONES_GRINEER = {
         { id: 's_zone1', name: '女皇禁地', icon: '👑', image: 'GAME/Faction/sedna.jpg', level: 18, minLevel: 18, maxLevel: 25, faction: 'grineer', factionName: 'Grineer', dropMult: 1.8, desc: 'Grineer女皇的私人领地', color: '#cc4444', locked: true }
     ],
     kuva: [
-        { id: 'k_zone1', name: '赤毒熔炉', icon: '🔥', image: 'GAME/Faction/kuva.jpg', level: 28, minLevel: 28, maxLevel: 35, faction: 'grineer', factionName: 'Grineer', dropMult: 2.5, desc: '赤毒提炼核心区域', color: '#8b0000', locked: true }
+        {
+            id: 'k_zone1',
+            name: '雅努斯之钥',
+            icon: '🔑',
+            image: 'GAME/Faction/kuva.jpg',
+            level: 28,
+            minLevel: 28,
+            maxLevel: 35,
+            faction: 'grineer',
+            factionName: 'Grineer',
+            dropMult: 2.5,
+            desc: '',
+            color: '#8b0000',
+            locked: true,
+            subZones: [
+                {
+                    id: 'vor_duel_1',
+                    name: '沃尔上尉对决1',
+                    icon: '🔑',
+                    image: 'GAME/Faction/kuva.jpg',
+                    level: 28,
+                    minLevel: 28,
+                    maxLevel: 30,
+                    faction: 'grineer',
+                    factionName: 'Grineer',
+                    dropMult: 2.8,
+                    desc: '赤毒核心前厅，沃尔上尉以 Seer 与雅努斯之钥试探 Tenno。',
+                    color: '#ff8844',
+                    locked: true,
+                    bossBattle: true,
+                    bossEnemyId: 'boss_vor_01',
+                    battlefieldType: 'janus_key_duel_1'
+                },
+                {
+                    id: 'vor_duel_2',
+                    name: '沃尔上尉对决2',
+                    icon: '🛡️',
+                    image: 'GAME/Faction/kuva.jpg',
+                    level: 31,
+                    minLevel: 31,
+                    maxLevel: 33,
+                    faction: 'grineer',
+                    factionName: 'Grineer',
+                    dropMult: 3.0,
+                    desc: '球形护盾阶段，沃尔会频繁传送并利用护盾拖延战斗。',
+                    color: '#ffaa44',
+                    locked: true,
+                    bossBattle: true,
+                    bossEnemyId: 'boss_vor_02',
+                    battlefieldType: 'janus_key_duel_2'
+                },
+                {
+                    id: 'vor_duel_3',
+                    name: '沃尔上尉对决3',
+                    icon: '☄️',
+                    image: 'GAME/Faction/kuva.jpg',
+                    level: 34,
+                    minLevel: 34,
+                    maxLevel: 35,
+                    faction: 'grineer',
+                    factionName: 'Grineer',
+                    dropMult: 3.5,
+                    desc: '雅努斯之钥完全启动，虚空光束、地雷和传送压迫同时出现。',
+                    color: '#ffcc66',
+                    locked: true,
+                    bossBattle: true,
+                    bossEnemyId: 'boss_vor_03',
+                    battlefieldType: 'janus_key_duel_3'
+                }
+            ]
+        }
     ]
 };
 
@@ -219,7 +289,10 @@ var ZONE_DROP_TABLES = {
         e_zone7: { drops: ['合金板', '控制模块', '聚合物束', '生物质'], rare: ['红化结晶', '奥罗金电池', 'Volt头部神经光元蓝图'] },
         e_zone8: { drops: ['红化结晶', '生物质', '奥罗金电池', '合金板'], rare: ['神经传感器', '神经元', 'Volt机体蓝图'] },
         s_zone1: { drops: ['合金板', '电路', '控制模块', '奥罗金电池'], rare: ['神经传感器', '神经元', '氩结晶', 'Volt系统蓝图'] },
-        k_zone1: { drops: ['合金板', '控制模块', '神经传感器', '奥罗金电池'], rare: ['虚空光体', '神经元', 'Mag蓝图'] }
+        k_zone1: { drops: ['合金板', '控制模块', '神经传感器', '奥罗金电池'], rare: ['虚空光体', '神经元', 'Mag蓝图'] },
+        vor_duel_1: { drops: ['克洛诺斯蓝图', 'Seer蓝图', 'Seer枪管', 'Seer机匣'], rare: ['沃尔印记', '奥罗金电池', '雅努斯残片'] },
+        vor_duel_2: { drops: ['Seer蓝图', 'Seer枪管', 'Seer机匣', '克洛诺斯蓝图'], rare: ['沃尔印记', '虚空光体', '雅努斯残片'] },
+        vor_duel_3: { drops: ['Seer蓝图', 'Seer枪管', 'Seer机匣', '克洛诺斯蓝图'], rare: ['沃尔印记', '雅努斯之钥裂片', '奥罗金电池'] }
     }
 };
 
