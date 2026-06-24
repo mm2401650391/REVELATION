@@ -18,6 +18,9 @@
 		<script src="GAME/warframes.js"></script>
 		<script src="GAME/enemies.js"></script>
 		<script src="GAME/combat_system.js"></script>
+		<script src="GAME/skill_combat.js"></script>
+		<link rel="stylesheet" href="GAME/skill_combat_enhanced.css">
+		<script src="GAME/inject_enhancement.js"></script>
 		<script src="GAME/items.js"></script>
 		<script src="GAME/Faction.js"></script>
 		<script src="GAME/codex_system.js"></script>
@@ -4547,20 +4550,26 @@ input, select, textarea, button {
 						<div style="display: flex; gap: 20px; margin-bottom: 12px;">
 							<div style="flex: 1;">
 								<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-									<span style="color: var(--orokin-cyan); font-size: 0.8rem;">我方 HP</span>
+									<span style="color: var(--orokin-cyan); font-size: 0.8rem;" id="battlePlayerHpLabel">我方 HP</span>
 									<span style="color: var(--orokin-cyan); font-size: 0.8rem;" id="battlePlayerHpText">100/100</span>
 								</div>
-								<div class="battle-hp-bar battle-hp-tenno">
-									<div class="battle-hp-fill" id="battlePlayerHpBar" style="width: 100%; background: var(--orokin-cyan);"></div>
+								<div class="battle-hp-bar battle-hp-tenno" style="position: relative; overflow: hidden;">
+									<!-- 护盾底层 -->
+									<div id="battlePlayerShieldBar" style="position: absolute; inset: 0; width: 0%; background: linear-gradient(90deg, #178dff, #5be7ff, #bdf7ff); transition: width 0.3s ease; z-index: 1;"></div>
+									<!-- HP上层 -->
+									<div class="battle-hp-fill" id="battlePlayerHpBar" style="width: 100%; background: var(--orokin-cyan); position: relative; z-index: 2;"></div>
 								</div>
 							</div>
 							<div style="flex: 1;">
 								<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-									<span style="color: var(--grineer-red); font-size: 0.8rem;">敌方 HP</span>
+									<span style="color: var(--grineer-red); font-size: 0.8rem;" id="battleEnemyHpLabel">敌方 HP</span>
 									<span style="color: var(--grineer-red); font-size: 0.8rem;" id="battleEnemyHpText">？？？</span>
 								</div>
-								<div class="battle-hp-bar battle-hp-enemy">
-									<div class="battle-hp-fill" id="battleEnemyHpBar" style="width: 100%; background: var(--grineer-red);"></div>
+								<div class="battle-hp-bar battle-hp-enemy" style="position: relative; overflow: hidden;">
+									<!-- 护盾底层 -->
+									<div id="battleEnemyShieldBar" style="position: absolute; inset: 0; width: 0%; background: linear-gradient(90deg, #178dff, #5be7ff, #bdf7ff); transition: width 0.3s ease; z-index: 1;"></div>
+									<!-- HP上层 -->
+									<div class="battle-hp-fill" id="battleEnemyHpBar" style="width: 100%; background: var(--grineer-red); position: relative; z-index: 2;"></div>
 								</div>
 							</div>
 						</div>
@@ -4569,19 +4578,19 @@ input, select, textarea, button {
 						<div style="display: flex; gap: 20px; margin-bottom: 12px;">
 							<div style="flex: 1;">
 								<div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-									<span style="color: var(--infested-green); font-size: 0.7rem;">⚡ 执行力</span>
-									<span style="color: var(--infested-green); font-size: 0.7rem; font-family: 'Orbitron';" id="battlePlayerActionText">0/100</span>
+									<span style="color: var(--orokin-cyan); font-size: 0.7rem;">⚡ 能量</span>
+									<span style="color: var(--orokin-cyan); font-size: 0.7rem; font-family: 'Orbitron';" id="battlePlayerActionText">100/100</span>
 								</div>
 								<div class="battle-hp-bar" style="height: 6px; background: #1a1a1a; border: 1px solid #333;">
-									<div id="battlePlayerActionBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #2a5a2a, var(--infested-green)); border-radius: 5px; transition: width 0.3s ease; position: relative; overflow: hidden;">
+									<div id="battlePlayerActionBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #2146a8, var(--orokin-cyan), #bdf7ff); border-radius: 5px; transition: width 0.3s ease; position: relative; overflow: hidden;">
 										<div style="position: absolute; right: 0; top: 0; bottom: 0; width: 15px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));"></div>
 									</div>
 								</div>
 							</div>
 							<div style="flex: 1;">
 								<div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-									<span style="color: #ff8844; font-size: 0.7rem;">⚡ 执行力</span>
-									<span style="color: #ff8844; font-size: 0.7rem; font-family: 'Orbitron';" id="battleEnemyActionText">0/100</span>
+									<span style="color: #ff8844; font-size: 0.7rem;">⚙️ 敌方行动</span>
+									<span style="color: #ff8844; font-size: 0.7rem; font-family: 'Orbitron';" id="battleEnemyActionText">AI 技能</span>
 								</div>
 								<div class="battle-hp-bar" style="height: 6px; background: #1a1a1a; border: 1px solid #333;">
 									<div id="battleEnemyActionBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #8b4513, #ff8844); border-radius: 5px; transition: width 0.3s ease; position: relative; overflow: hidden;">
