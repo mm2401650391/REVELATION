@@ -1,4 +1,47 @@
+//防开发者和右键工具
 
+(function() {
+    var destroyed = false;
+    
+    function destroy() {
+        if (destroyed) return;
+        destroyed = true;
+        document.body.innerHTML = '<div style="position:fixed;inset:0;background:#000;color:#ff4444;display:flex;align-items:center;justify-content:center;font-size:2rem;">请关闭开发者工具并刷新游戏</div>';
+    }
+    
+    // F12
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 123) {
+            e.preventDefault();
+            destroy();
+        }
+    });
+    
+    // 右键
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // 选择文本
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // 拖拽
+    document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // 复制
+    document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+})();
 
 
 // 变量名兼容（音频控制台使用currentTrack，用户代码使用currentTrackIndex）
