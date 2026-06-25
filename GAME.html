@@ -19,10 +19,8 @@
 		<script src="GAME/enemies.js"></script>
 		<script src="GAME/combat_system.js"></script>
 		<script src="GAME/skill_combat.js"></script>
-		<link rel="stylesheet" href="GAME/skill_combat_enhanced.css">
-		<script src="GAME/inject_enhancement.js"></script>
 		<script src="GAME/items.js"></script>
-		<script src="GAME/Faction.js"></script>
+		<script src="GAME/Faction.js?v=2"></script>
 		<script src="GAME/codex_system.js"></script>
 		<script src="GAME/admin.js"></script>
 		<link rel="stylesheet" href="GAME/codex.css">
@@ -2876,6 +2874,17 @@
     touch-action: manipulation;
 }
 
+/* 日志和面包屑中的图标图片与文字对齐 */
+#autoBattleLog img,
+#miningLog img,
+#gatheringLog img,
+#codexBreadcrumb img {
+    width: 1.1em !important;
+    height: 1.1em !important;
+    vertical-align: middle;
+    display: inline-block;
+}
+
 /* ── 小屏手机 (<= 480px) ── */
 @media (max-width: 480px) {
     :root {
@@ -2957,8 +2966,29 @@
     .foundry-grid,
     .shop-grid,
     .codex-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+    }
+
+    #codexCategoryStats {
+        gap: 6px !important;
+    }
+
+    #codexCategoryStats > div {
+        padding: 6px 2px !important;
+        min-width: 0;
+    }
+
+    #battleCardCount,
+    #miningCardCount,
+    #gatheringCardCount {
+        font-size: 0.85rem !important;
+        white-space: nowrap;
+    }
+
+    #codexCategoryStats > div > div:last-child {
+        font-size: 0.55rem !important;
     }
 
     /* 星球网格 */
@@ -3076,17 +3106,6 @@
         width: 32px !important;
         height: 32px !important;
         font-size: 0.85rem !important;
-    }
-
-    /* 回响分类标签 */
-    #codexTabs {
-        gap: 6px !important;
-    }
-    .codex-tab {
-        padding: 8px 12px !important;
-        font-size: 0.75rem !important;
-        flex: 1 1 45% !important;
-        text-align: center !important;
     }
 
     /* 测试面板网格 */
@@ -3271,7 +3290,7 @@
 /* ── 触摸设备优化 ── */
 @media (pointer: coarse) {
     .btn, .nav-item, .mission-card, .shop-item, .foundry-item,
-    .warframe-select-card, .codex-tab, .planet-card {
+    .warframe-select-card, .planet-card {
         cursor: pointer !important;
     }
 
@@ -3711,6 +3730,283 @@ input, select, textarea, button {
     .player-avatar[onclick="toggleMusicPlayer()"]::after {
         content: none;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   卡片列表响应式网格
+   ═══════════════════════════════════════════════════════════════ */
+.codex-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   卡组星级共用样式
+   ═══════════════════════════════════════════════════════════════ */
+.deck-card-wrap {
+    position: relative;
+    border-radius: 14px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+}
+.deck-card-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    z-index: 0;
+}
+.deck-card-wrap:hover {
+    transform: translateY(-6px);
+}
+.deck-card-wrap:hover::before {
+    opacity: 1;
+}
+.deck-card-content { position: relative; z-index: 1; }
+
+/* 星级花纹背景（使用CSS渐变模拟） */
+.deck-star-0 { background: var(--panel-bg); border: 2px solid rgba(255,255,255,0.06); }
+.deck-star-0:hover { border-color: rgba(255,255,255,0.18); box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+
+.deck-card-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 11px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s;
+    z-index: 0;
+}
+.deck-card-wrap:hover::after { opacity: 1; }
+
+.deck-star-1 {
+    background:
+        radial-gradient(circle at 16% 14%, rgba(176,140,82,0.14), transparent 32%),
+        radial-gradient(circle at 84% 82%, rgba(101,240,163,0.10), transparent 30%),
+        linear-gradient(145deg, rgba(101,240,163,0.10), #111018);
+    border: 2px solid rgba(101,240,163,0.55);
+    box-shadow: 0 0 16px rgba(101,240,163,0.20), inset 0 0 18px rgba(176,140,82,0.08);
+    isolation: isolate;
+}
+.deck-star-1::before { background: repeating-conic-gradient(from 25deg, rgba(101,240,163,0.03) 0deg 8deg, transparent 8deg 24deg); opacity: 0.36; }
+.deck-star-1::after { border: 1px solid rgba(176,140,82,0.32); box-shadow: inset 0 0 20px rgba(101,240,163,0.10), 0 0 18px rgba(101,240,163,0.10); }
+.deck-star-1:hover { border-color: rgba(101,240,163,0.80); box-shadow: 0 12px 36px rgba(101,240,163,0.30), inset 0 0 28px rgba(176,140,82,0.12); }
+
+.deck-star-2 {
+    background:
+        radial-gradient(circle at 16% 14%, rgba(181,108,255,0.14), transparent 32%),
+        radial-gradient(circle at 84% 82%, rgba(90,223,255,0.10), transparent 30%),
+        linear-gradient(145deg, rgba(90,223,255,0.10), #0e0818);
+    border: 2px solid rgba(90,223,255,0.55);
+    box-shadow: 0 0 16px rgba(90,223,255,0.20), inset 0 0 18px rgba(181,108,255,0.08);
+    isolation: isolate;
+}
+.deck-star-2::before { background: repeating-conic-gradient(from 25deg, rgba(90,223,255,0.03) 0deg 8deg, transparent 8deg 24deg); opacity: 0.36; }
+.deck-star-2::after { border: 1px solid rgba(181,108,255,0.32); box-shadow: inset 0 0 20px rgba(90,223,255,0.10), 0 0 18px rgba(90,223,255,0.10); }
+.deck-star-2:hover { border-color: rgba(90,223,255,0.80); box-shadow: 0 12px 36px rgba(90,223,255,0.30), inset 0 0 28px rgba(181,108,255,0.12); }
+
+.deck-star-3 {
+    background:
+        radial-gradient(circle at 16% 14%, rgba(66,245,179,0.20), transparent 32%),
+        radial-gradient(circle at 84% 82%, rgba(255,78,95,0.16), transparent 30%),
+        linear-gradient(145deg, rgba(255,78,95,0.16), #180810);
+    border: 3px solid rgba(255,78,95,0.71);
+    box-shadow: 0 0 28px rgba(255,78,95,0.32), inset 0 0 32px rgba(66,245,179,0.13);
+    isolation: isolate;
+}
+.deck-star-3::before { background: repeating-conic-gradient(from 25deg, rgba(255,78,95,0.07) 0deg 8deg, transparent 8deg 24deg), radial-gradient(circle at 80% 25%, rgba(66,245,179,0.18) 0%, transparent 28%); opacity: 0.56; }
+.deck-star-3::after { border: 1px solid rgba(66,245,179,0.50); box-shadow: inset 0 0 36px rgba(255,78,95,0.16), 0 0 32px rgba(255,78,95,0.16); }
+.deck-star-3:hover { border-color: rgba(255,78,95,0.90); box-shadow: 0 14px 48px rgba(255,78,95,0.42), inset 0 0 42px rgba(66,245,179,0.16); }
+
+.deck-star-4 {
+    background:
+        radial-gradient(circle at 16% 82%, rgba(255,70,48,0.20), transparent 30%),
+        radial-gradient(circle at 84% 18%, rgba(255,211,106,0.16), transparent 30%),
+        radial-gradient(circle at 16% 14%, rgba(255,240,189,0.24), transparent 32%),
+        linear-gradient(145deg, rgba(255,211,106,0.20), #141008);
+    border: 3px solid rgba(255,211,106,0.80);
+    box-shadow: 0 0 36px rgba(255,211,106,0.38), inset 0 0 38px rgba(255,240,189,0.16);
+    isolation: isolate;
+}
+.deck-star-4::before { background: repeating-conic-gradient(from 25deg, rgba(255,211,106,0.09) 0deg 8deg, transparent 8deg 24deg), linear-gradient(120deg, transparent 34%, rgba(255,240,189,0.06) 36%, transparent 39%); opacity: 0.66; }
+.deck-star-4::after { border: 1px solid rgba(255,240,189,0.58); box-shadow: inset 0 0 44px rgba(255,211,106,0.19), 0 0 40px rgba(255,211,106,0.19); }
+.deck-star-4:hover { border-color: rgba(255,211,106,1); box-shadow: 0 16px 58px rgba(255,211,106,0.48), inset 0 0 50px rgba(255,240,189,0.20); }
+
+.deck-star-5 {
+    background:
+        radial-gradient(circle at 50% -12%, rgba(199,210,255,0.28), transparent 34%),
+        radial-gradient(circle at 16% 82%, rgba(255,51,95,0.24), transparent 32%),
+        radial-gradient(circle at 84% 18%, rgba(255,51,95,0.20), transparent 30%),
+        radial-gradient(circle at 16% 14%, rgba(199,210,255,0.28), transparent 32%),
+        linear-gradient(145deg, rgba(255,51,95,0.24), #0a0608);
+    border: 4px solid rgba(255,51,95,0.90);
+    box-shadow: 0 0 44px rgba(255,51,95,0.44), inset 0 0 44px rgba(199,210,255,0.19);
+    animation: deckStar5Aura 3s ease-in-out infinite;
+    isolation: isolate;
+}
+.deck-star-5::before { background: repeating-conic-gradient(from 0deg, rgba(255,51,95,0.11) 0deg 9deg, transparent 9deg 24deg), radial-gradient(circle at 80% 20%, rgba(199,210,255,0.24), transparent 25%); opacity: 0.76; }
+.deck-star-5::after { border: 1px solid rgba(199,210,255,0.68); box-shadow: inset 0 0 52px rgba(255,51,95,0.22), 0 0 48px rgba(255,51,95,0.22); }
+.deck-star-5:hover { box-shadow: 0 0 0 2px rgba(199,210,255,1), 0 20px 80px rgba(255,51,95,0.58), inset 0 0 60px rgba(199,210,255,0.26); }
+@keyframes deckStar5Aura {
+    0%, 100% { filter: brightness(1) saturate(1); }
+    50% { filter: brightness(1.12) saturate(1.18); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   华丽版全局卡片动画关键帧
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes cardStarFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
+}
+@keyframes cardBorderFlow {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+@keyframes cardStarAura {
+    0%, 100% { filter: brightness(1) saturate(1); }
+    50% { filter: brightness(1.12) saturate(1.18); }
+}
+@keyframes cardBorderPulse3 {
+    0% { box-shadow: 0 0 28px rgba(101,240,163,0.32), inset 0 0 32px rgba(176,140,82,0.13); }
+    50% { box-shadow: 0 0 38px rgba(101,240,163,0.42), inset 0 0 42px rgba(176,140,82,0.18); }
+    100% { box-shadow: 0 0 28px rgba(101,240,163,0.32), inset 0 0 32px rgba(176,140,82,0.13); }
+}
+@keyframes cardBorderPulse4 {
+    0% { box-shadow: 0 0 36px rgba(101,240,163,0.38), inset 0 0 38px rgba(176,140,82,0.16); }
+    50% { box-shadow: 0 0 48px rgba(101,240,163,0.50), inset 0 0 50px rgba(176,140,82,0.22); }
+    100% { box-shadow: 0 0 36px rgba(101,240,163,0.38), inset 0 0 38px rgba(176,140,82,0.16); }
+}
+@keyframes cardBorderPulse5 {
+    0% { box-shadow: 0 0 44px rgba(101,240,163,0.44), inset 0 0 44px rgba(176,140,82,0.19); }
+    50% { box-shadow: 0 0 58px rgba(101,240,163,0.58), inset 0 0 58px rgba(176,140,82,0.26); }
+    100% { box-shadow: 0 0 44px rgba(101,240,163,0.44), inset 0 0 44px rgba(176,140,82,0.19); }
+}
+
+/* 星级指示器 */
+.deck-star-bar {
+    display: inline-flex;
+    gap: 3px;
+    margin-top: 6px;
+    justify-content: center;
+}
+.deck-star-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+    transition: all 0.3s;
+    position: relative;
+}
+.deck-star-dot.active {
+    background: linear-gradient(135deg, #ffd700, #c8a84b);
+    box-shadow: 0 0 6px rgba(255,215,0,0.5);
+}
+.deck-star-dot.max {
+    background: linear-gradient(135deg, #ffaa22, #ff8800);
+    box-shadow: 0 0 10px rgba(255,170,40,0.6);
+}
+
+/* 可领取奖励时的脉冲光效 */
+.deck-can-claim {
+    animation: deckClaimPulse 2s ease-in-out infinite;
+}
+@keyframes deckClaimPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.15); }
+    50% { box-shadow: 0 0 0 8px rgba(255,215,0,0); }
+}
+.deck-claim-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #c8a84b, #ffd700);
+    color: #1a1200;
+    font-family: 'Orbitron';
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(200,168,75,0.3);
+    letter-spacing: 1px;
+}
+
+/* 奖励领取动画 */
+.deck-reward-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.85);
+    border-radius: 14px;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+}
+.deck-reward-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.deck-reward-icon {
+    font-size: 3rem;
+    filter: drop-shadow(0 0 12px rgba(255,215,0,0.5));
+    animation: rewardIconPop 0.6s ease-out;
+}
+@keyframes rewardIconPop {
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    60% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.deck-reward-text {
+    font-family: 'Orbitron';
+    color: var(--tenno-gold);
+    font-size: 1rem;
+    margin-top: 10px;
+    text-shadow: 0 0 10px rgba(200,168,75,0.3);
+}
+.deck-reward-btn {
+    margin-top: 14px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #c8a84b, #ffd700);
+    color: #1a1200;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron';
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 1px;
+}
+.deck-reward-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(200,168,75,0.4);
+}
+
+/* 升星进度条覆盖样式 */
+.deck-star-progress-bg { background: #222; border-radius: 3px; overflow: hidden; height: 6px; flex: 1; }
+.deck-star-progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+.deck-star-progress-fill.s1 { background: linear-gradient(90deg, rgba(200,168,75,0.5), #c8a84b); }
+.deck-star-progress-fill.s2 { background: linear-gradient(90deg, rgba(200,168,75,0.6), #d4b76a); }
+.deck-star-progress-fill.s3 { background: linear-gradient(90deg, rgba(255,200,80,0.6), #ffd700); }
+.deck-star-progress-fill.s4 { background: linear-gradient(90deg, rgba(255,180,60,0.7), #ffb43c); }
+.deck-star-progress-fill.s5 { background: linear-gradient(90deg, rgba(255,170,40,0.8), #ffaa22); }
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+    .deck-card-wrap { padding: 18px 14px; }
+    .deck-star-dot { width: 8px; height: 8px; }
+    .deck-claim-badge { font-size: 0.5rem; padding: 2px 6px; }
 }
 
 </style>
@@ -5210,7 +5506,7 @@ input, select, textarea, button {
 								<tr>
 									<th>排名</th>
 									<th>Tenno</th>
-									<th>段位</th>
+									<th>总等级</th>
 									<th>已收集卡片</th>
 									<th>连续登录</th>
 								</tr>
@@ -5285,50 +5581,19 @@ input, select, textarea, button {
 						<span style="color: var(--orokin-cyan); cursor: pointer;" onclick="renderCodexFactions()">📖 回响总览</span>
 					</div>
 
-					<!-- 分类标签页 -->
-					<div id="codexTabs" style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
-						<div class="codex-tab active" data-category="all" onclick="switchCodexTab('all')" 
-						     style="padding: 10px 20px; background: var(--panel-bg); border: 1px solid var(--orokin-cyan); 
-						            border-radius: 8px; color: var(--orokin-cyan); cursor: pointer; font-family: 'Orbitron'; 
-						            font-size: 0.85rem; transition: all 0.3s;">
-							📖 全部
-						</div>
-						<div class="codex-tab" data-category="battle" onclick="switchCodexTab('battle')" 
-						     style="padding: 10px 20px; background: var(--panel-bg); border: 1px solid #333; 
-						            border-radius: 8px; color: #888; cursor: pointer; font-family: 'Orbitron'; 
-						            font-size: 0.85rem; transition: all 0.3s;">
-							⚔️ 肃清
-						</div>
-						<div class="codex-tab" data-category="mining" onclick="switchCodexTab('mining')" 
-						     style="padding: 10px 20px; background: var(--panel-bg); border: 1px solid #333; 
-						            border-radius: 8px; color: #888; cursor: pointer; font-family: 'Orbitron'; 
-						            font-size: 0.85rem; transition: all 0.3s;">
-							⛏️ 勘探
-						</div>
-						<div class="codex-tab" data-category="gathering" onclick="switchCodexTab('gathering')" 
-						     style="padding: 10px 20px; background: var(--panel-bg); border: 1px solid #333; 
-						            border-radius: 8px; color: #888; cursor: pointer; font-family: 'Orbitron'; 
-						            font-size: 0.85rem; transition: all 0.3s;">
-							⚙️ 回收
-						</div>
-					</div>
-
 					<!-- 分类统计 -->
-					<div id="codexCategoryStats" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
-						<div style="background: var(--panel-bg); border: 1px solid var(--grineer-red); border-radius: 10px; padding: 15px; text-align: center;">
-							<div style="font-family: 'Orbitron'; font-size: 1.5rem; color: var(--grineer-red);" id="battleCardCount">0</div>
-							<div style="color: #888; font-size: 0.75rem;">⚔️ 肃清 ⚔️</div>
-							<div style="color: var(--tenno-gold); font-size: 0.7rem; margin-top: 2px;" id="battleCardPercent">0%</div>
+					<div id="codexCategoryStats" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 25px;">
+						<div style="background: var(--panel-bg); border: 1px solid var(--grineer-red); border-radius: 8px; padding: 8px 4px; text-align: center;">
+							<div style="font-family: 'Orbitron'; font-size: 1rem; color: var(--grineer-red); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="battleCardCount">0</div>
+							<div style="color: #888; font-size: 0.65rem;">⚔️ 肃清 ⚔️</div>
 						</div>
-						<div style="background: var(--panel-bg); border: 1px solid var(--tenno-gold); border-radius: 10px; padding: 15px; text-align: center;">
-							<div style="font-family: 'Orbitron'; font-size: 1.5rem; color: var(--tenno-gold);" id="miningCardCount">0</div>
-							<div style="color: #888; font-size: 0.75rem;">⛏️ 勘探 ⛏️</div>
-							<div style="color: var(--tenno-gold); font-size: 0.7rem; margin-top: 2px;" id="miningCardPercent">0%</div>
+						<div style="background: var(--panel-bg); border: 1px solid var(--tenno-gold); border-radius: 8px; padding: 8px 4px; text-align: center;">
+							<div style="font-family: 'Orbitron'; font-size: 1rem; color: var(--tenno-gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="miningCardCount">0</div>
+							<div style="color: #888; font-size: 0.65rem;">⛏️ 勘探 ⛏️</div>
 						</div>
-						<div style="background: var(--panel-bg); border: 1px solid var(--infested-green); border-radius: 10px; padding: 15px; text-align: center;">
-							<div style="font-family: 'Orbitron'; font-size: 1.5rem; color: var(--infested-green);" id="gatheringCardCount">0</div>
-							<div style="color: #888; font-size: 0.75rem;">⚙️ 回收 ⚙️</div>
-							<div style="color: var(--tenno-gold); font-size: 0.7rem; margin-top: 2px;" id="gatheringCardPercent">0%</div>
+						<div style="background: var(--panel-bg); border: 1px solid var(--infested-green); border-radius: 8px; padding: 8px 4px; text-align: center;">
+							<div style="font-family: 'Orbitron'; font-size: 1rem; color: var(--infested-green); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="gatheringCardCount">0</div>
+							<div style="color: #888; font-size: 0.65rem;">⚙️ 回收 ⚙️</div>
 						</div>
 					</div>
 
@@ -5987,7 +6252,7 @@ input[type="range"]::-moz-range-thumb {
 			</div>
 
 
-			<script src="GAME/game-core.js"></script>	
+			<script src="GAME/game-core.js?v=2"></script>	
 	
 
 <!-- 掉落信息面板更新脚本 -->
