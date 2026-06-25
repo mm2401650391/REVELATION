@@ -67,12 +67,25 @@ if (typeof showToast === 'undefined') {
 					    if (!modalOverlay || !modalTitle || !modalContent) return;
 					
 					    modalTitle.textContent = '🎴 卡片测试控制台';
+					    var modalBox = modalContent.closest('.modal');
+					    if (modalBox) {
+					        modalBox.style.maxWidth = '1220px';
+					        modalBox.style.width = '96vw';
+					        modalBox.style.minWidth = '960px';
+					        modalBox.style.maxHeight = '92vh';
+					        modalBox.style.overflow = 'visible';
+					        modalBox.style.padding = '18px';
+					    }
 					
+					    modalContent.style.maxWidth = '1180px';
+					    modalContent.style.width = '96vw';
+					    modalContent.style.maxHeight = 'none';
+					    modalContent.style.overflow = 'visible';
 					    modalContent.innerHTML = 
-					        '<div style="min-width: 900px; max-width: 1100px;">' +
+					        '<div style="width: 100%; max-width: 1180px; font-size: 0.82rem;">' +
 					
 					            // ===== 第一行：基础操作 =====
-					            '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">' +
+					            '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px;">' +
 					                '<button class="btn" onclick="adminCardClearAll()" style="background: linear-gradient(135deg, #5a1a1a, var(--grineer-red)); font-size: 0.85rem;">' +
 					                    '🗑️ 卡片清零' +
 					                '</button>' +
@@ -82,11 +95,15 @@ if (typeof showToast === 'undefined') {
 					                '<button class="btn" onclick="adminCardResetStars()" style="background: linear-gradient(135deg, #5a5a1a, var(--tenno-gold)); font-size: 0.85rem;">' +
 					                    '⭐ 星级清零' +
 					                '</button>' +
+					                '<button class="btn" onclick="adminMakeDeckRewardClaimable()" style="background: linear-gradient(135deg, #7a4b00, #ffd700); color: #111; font-size: 0.85rem;">' +
+					                    '🎁 触发卡组奖励' +
+					                '</button>' +
 					            '</div>' +
 					
+					            '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: start;">' +
 					            // ===== 第二行：卡片弹窗测试 =====
-					            '<div style="background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 20px;">' +
-					                '<div style="font-family: Orbitron; color: var(--orokin-cyan); font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 1px;">🎴 卡片弹窗测试</div>' +
+					            '<div style="background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 10px; padding: 12px;">' +
+					                '<div style="font-family: Orbitron; color: var(--orokin-cyan); font-size: 0.86rem; margin-bottom: 10px; letter-spacing: 1px;">🎴 卡片弹窗测试</div>' +
 					                '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">' +
 					                    '<button class="btn" onclick="testCardAcquireModal(&quot;battle&quot;)" style="background: linear-gradient(135deg, var(--grineer-red), #ff6666); font-size: 0.8rem;">' +
 					                        '⚔️ 战斗卡片弹窗' +
@@ -104,9 +121,9 @@ if (typeof showToast === 'undefined') {
 					            '</div>' +
 					
 					            // ===== 第三行：卡片升星测试 =====
-					            '<div style="background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 20px;">' +
-					                '<div style="font-family: Orbitron; color: var(--tenno-gold); font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 1px;">⭐ 卡片升星测试</div>' +
-					                '<div id="cardUpgradeTestArea" style="max-height: 200px; overflow-y: auto;">' +
+					            '<div style="background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 10px; padding: 12px;">' +
+					                '<div style="font-family: Orbitron; color: var(--tenno-gold); font-size: 0.86rem; margin-bottom: 10px; letter-spacing: 1px;">⭐ 卡片升星测试</div>' +
+					                '<div id="cardUpgradeTestArea" style="max-height: 260px; overflow-y: auto;">' +
 					                    '<div style="color: #666; text-align: center; padding: 20px;">点击"加载卡片列表"查看可升星卡片</div>' +
 					                '</div>' +
 					                '<button class="btn" onclick="renderCardUpgradeList()" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, var(--orokin-cyan-dim), var(--orokin-cyan)); font-size: 0.85rem;">' +
@@ -115,9 +132,9 @@ if (typeof showToast === 'undefined') {
 					            '</div>' +
 					
 					            // ===== 第四行：掉落测试 =====
-					            '<div style="background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 10px; padding: 15px; margin-bottom: 20px;">' +
-					                '<div style="font-family: Orbitron; color: var(--infested-green); font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 1px;">🎲 掉落测试</div>' +
-					                '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px;">' +
+					            '<div style="background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 10px; padding: 12px;">' +
+					                '<div style="font-family: Orbitron; color: var(--infested-green); font-size: 0.86rem; margin-bottom: 10px; letter-spacing: 1px;">🎲 掉落测试</div>' +
+					                '<div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px;">' +
 					                    '<button class="btn" onclick="testCardDropBattle()" style="background: linear-gradient(135deg, var(--grineer-red), #ff6666); font-size: 0.8rem;">' +
 					                        '⚔️ 战斗卡片掉落' +
 					                    '</button>' +
@@ -128,11 +145,12 @@ if (typeof showToast === 'undefined') {
 					                        '🌿 采集卡片掉落' +
 					                    '</button>' +
 					                '</div>' +
-					                '<div id="cardDropTestResult" style="background: rgba(0,0,0,0.5); border: 1px solid #222; border-radius: 6px; padding: 10px; max-height: 150px; overflow-y: auto; font-size: 0.75rem; color: #888; display: none;"></div>' +
+					                '<div id="cardDropTestResult" style="background: rgba(0,0,0,0.5); border: 1px solid #222; border-radius: 6px; padding: 8px; max-height: 90px; overflow-y: auto; font-size: 0.72rem; color: #888; display: none;"></div>' +
+					            '</div>' +
 					            '</div>' +
 					
 					            // ===== 关闭按钮 =====
-					            '<button class="btn" onclick="closeModal()" style="width: 100%; background: rgba(255,255,255,0.05); border-color: #444; color: #888;">' +
+					            '<button class="btn" onclick="closeModal()" style="width: 100%; margin-top: 12px; background: rgba(255,255,255,0.05); border-color: #444; color: #888;">' +
 					                '❌ 关闭面板' +
 					            '</button>' +
 					        '</div>';
@@ -241,6 +259,61 @@ if (typeof showToast === 'undefined') {
 					    if (cardTestPanelVisible) {
 					        renderCardUpgradeList();
 					    }
+					}
+
+					// ═══════════════════════════════════════════════════════════════
+					//  4.1 触发卡组奖励测试（制造可领取状态，不直接发奖励）
+					// ═══════════════════════════════════════════════════════════════
+					function adminMakeDeckRewardClaimable() {
+					    if (typeof DECK_CARDS === 'undefined') {
+					        showToast('未找到卡组数据', 'error');
+					        return;
+					    }
+					    var deckId = 'e_zone1';
+					    var deck = DECK_CARDS[deckId];
+					    if (!deck || deck.length === 0) {
+					        showToast('测试卡组不存在', 'error');
+					        return;
+					    }
+					    var cards = window.playerCards || playerCards || {};
+					    var currentStar = (typeof calculateDeckStarLevel === 'function') ? calculateDeckStarLevel(deckId) : 0;
+					    var targetStar = Math.min(5, Math.max(1, currentStar + 1));
+					    var previousClaimed = [];
+					    for (var ps = 0; ps < targetStar; ps++) previousClaimed.push(ps);
+					    for (var i = 0; i < deck.length; i++) {
+					        var card = deck[i];
+					        cards[card.id] = {
+					            count: Math.max(1, cards[card.id] ? (cards[card.id].count || 1) : 1),
+					            starLevel: targetStar,
+					            firstGetTime: (cards[card.id] && cards[card.id].firstGetTime) || new Date().toISOString(),
+					            data: card
+					        };
+					    }
+					    window.playerCards = cards;
+					    playerCards = cards;
+					    if (typeof savePlayerCards === 'function') savePlayerCards();
+
+					    // 设置为：之前档位已领，当前targetStar档位可领取；点击卡组后才发放奖励
+					    if (typeof getClaimedDeckRewards === 'function' && typeof saveClaimedDeckRewards === 'function') {
+					        var claimed = getClaimedDeckRewards();
+					        claimed[deckId] = previousClaimed;
+					        saveClaimedDeckRewards(claimed);
+					    } else {
+					        var userId = (typeof currentUser !== 'undefined' && currentUser && currentUser.id) ? currentUser.id : 'guest';
+					        var key = 'codex_deck_rewards_' + userId;
+					        var data = {};
+					        try { data = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) { data = {}; }
+					        data[deckId] = previousClaimed;
+					        localStorage.setItem(key, JSON.stringify(data));
+					    }
+
+					    if (typeof renderCodexDecks === 'function') {
+					        renderCodexDecks('grineer', 'huanyu');
+					    }
+					    if (typeof updateCodexOverview === 'function') updateCodexOverview();
+					    if (typeof saveGameData === 'function') saveGameData();
+					    if (cardTestPanelVisible) renderCardUpgradeList();
+					    showToast('已触发“游掠凶形”整体' + targetStar + '星奖励可领取状态，请到该卡组卡片点击领取。', 'success');
 					}
 					
 					// ═══════════════════════════════════════════════════════════════

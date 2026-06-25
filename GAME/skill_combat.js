@@ -480,11 +480,11 @@
             enemySkill('nox_charge', '毒罐冲撞', '🧪', 1.45, 5, 860, 480, 'anim-enemy-heavy', '#88ff44', { staggerChance: 0.45, toxinChance: 0.45 })
         ],
         vor: [
-            enemySkill('vor_seer_burst', 'Seer 精准点射', '🔫', 0.86, 2, 620, 330, 'anim-enemy-shot', '#ffcc66'),
-            enemySkill('vor_janus_beam', '雅努斯光束', '🔑', 1.42, 5, 980, 610, 'anim-enemy-boss-special', '#ffd36a', { staggerChance: 0.32, energyDrain: 10 }),
-            enemySkill('vor_nervos_mine', 'Nervos 地雷', '🧨', 1.08, 4, 900, 560, 'anim-enemy-grenade', '#ffaa44', { staggerChance: 0.55 }),
-            enemySkill('vor_teleport_shot', '裂隙传送射击', '🌀', 0.95, 3, 820, 470, 'anim-enemy-elite-skill', '#ff9966'),
-            enemySkill('vor_sphere_shield', '球形护盾', '🛡️', 0.62, 6, 940, 380, 'anim-enemy-boss-special', '#72d7ff', { selfShieldRatio: 0.42 })
+            enemySkill('vor_seer_burst', '三连锁定', '🔫', 0.92, 2, 3200, 2400, 'anim-enemy-shot', '#ffcc66'),
+            enemySkill('vor_janus_beam', '裂隙光束', '🔑', 1.48, 5, 3800, 2800, 'anim-enemy-boss-special', '#ffd36a', { staggerChance: 0.32, energyDrain: 10 }),
+            enemySkill('vor_nervos_mine', '雷网封锁', '🧨', 1.12, 4, 3600, 2700, 'anim-enemy-grenade', '#ffaa44', { staggerChance: 0.55 }),
+            enemySkill('vor_teleport_shot', '裂隙换位', '🌀', 1.02, 3, 3000, 2250, 'anim-enemy-elite-skill', '#ff9966'),
+            enemySkill('vor_sphere_shield', '球形屏障', '🛡️', 0.64, 6, 3600, 2700, 'anim-enemy-boss-special', '#72d7ff', { selfShieldRatio: 0.42 })
         ],
         defaultRanged: ENEMY_SKILLS.ranged,
         defaultMelee: ENEMY_SKILLS.melee
@@ -525,6 +525,18 @@
         enemyTookDirectHitThisRound: false,
         battleInterval: null,
         energyRegenRate: 5,  // 每回合恢复能量
+        vorInteraction: null,
+        vorMechanicSerial: 0,
+        vorPressure: 0,
+        lastVorPhaseName: '',
+        playerActionHistory: [],
+        repeatedPatternStacks: 0,
+        enemyAdaptedOnce: false,
+        vorPhaseTransitionTriggered: false,
+        vorPhaseTransitionPending: false,
+        vorPhaseTransitionPlaying: false,
+        vorAdaptationTriggered: false,
+        vorNextDamageReduction: 0,
         onBattleEnd: null
     };
 
@@ -577,6 +589,7 @@
             isStunned: false,
             stunTurns: 0
         };
+        SkillCombat.player.threatSuppressed = isMechanicPlusThreat(SkillCombat.enemy) && wfLevel < 30;
 
         SkillCombat.isActive = true;
         SkillCombat.isPlayerTurn = true;
@@ -587,9 +600,21 @@
         SkillCombat.playerDebuffs = [];
         SkillCombat.enemyDebuffs = [];
         SkillCombat.turnCount = 0;
+        SkillCombat.vorPressure = 0;
+        SkillCombat.lastVorPhaseName = '';
+        SkillCombat.playerActionHistory = [];
+        SkillCombat.repeatedPatternStacks = 0;
+        SkillCombat.enemyAdaptedOnce = false;
+        SkillCombat.vorPhaseTransitionTriggered = false;
+        SkillCombat.vorPhaseTransitionPending = false;
+        SkillCombat.vorPhaseTransitionPlaying = false;
+        SkillCombat.vorAdaptationTriggered = false;
+        SkillCombat.vorNextDamageReduction = 0;
         SkillCombat.playerTookDirectHitThisRound = false;
         SkillCombat.enemyTookDirectHitThisRound = false;
         SkillCombat.onBattleEnd = (options && options.onBattleEnd) || null;
+        document.body.classList.add('skill-combat-running');
+        document.body.classList.toggle('skill-combat-boss-vor', (SkillCombat.enemy.name || '').indexOf('沃尔上尉') !== -1);
 
         // 注入技能栏 UI
         injectSkillBarUI();
@@ -601,6 +626,12 @@
         appendBattleLog('<div style="color: var(--orokin-cyan); font-weight: 700;">═══ 战斗开始 ═══</div>');
         //appendBattleLog('<div style="color: var(--tenno-gold);">' + SkillCombat.player.name + ' Lv.' + SkillCombat.player.level + ' VS ' + SkillCombat.enemy.name + ' Lv.' + SkillCombat.enemy.level + '</div>');
         appendBattleLog('<div style="color: #888;">选择技能进行攻击，技能模式实验中...</div>');
+        if (isVorBoss(SkillCombat.enemy)) {
+            announceVorPhaseIfChanged(true);
+        }
+        if (SkillCombat.player.threatSuppressed) {
+            appendBattleLog('<div style="color:#ff8844;">⚠️ 等级压制：你当前造成伤害 -25%，受到伤害 +15%。</div>');
+        }
 
         return SkillCombat;
     }
@@ -691,13 +722,173 @@
         return getThreatTagFromLevel(enemy.threatLevel || getThreatLevelFromType(enemy.type));
     }
 
+    function isMechanicPlusThreat(enemy) {
+        var tag = getEnemyThreatTag(enemy);
+        var level = enemy && (enemy.threatLevel || (enemy.combatThreat && enemy.combatThreat.level));
+        return tag === 'mechanic' || tag === 'super' || level >= 4;
+    }
+
     function getEnemySkillThreatWeight(skill) {
         if (!skill) return 1;
         if (skill.id === 'basic_attack') return 0.68;
+        if (isVorSkill(skill)) {
+            if (skill.id === 'vor_janus_beam') return 1.42;
+            if (skill.id === 'vor_nervos_mine') return 1.26;
+            if (skill.id === 'vor_teleport_shot') return 1.18;
+            if (skill.id === 'vor_seer_burst') return 1.08;
+            if (skill.id === 'vor_sphere_shield') return 0.72;
+        }
         if (skill.cooldown >= 6) return 1.24;
         if (skill.cooldown >= 5) return 1.15;
         if (skill.cooldown <= 2) return 0.82;
         return 1;
+    }
+
+    function isVorBoss(enemy) {
+        return !!(enemy && (enemy.name || '').indexOf('沃尔上尉') !== -1);
+    }
+
+    function getEnemyHpPercent(enemy) {
+        if (!enemy || !enemy.maxHp) return 1;
+        return Math.max(0, Math.min(1, enemy.hp / enemy.maxHp));
+    }
+
+    function isVorSkillUnlocked(skill, enemy) {
+        if (!isVorBoss(enemy) || !isVorSkill(skill)) return true;
+        var hpPct = getEnemyHpPercent(enemy);
+        if (skill.id === 'vor_seer_burst') return true;
+        if (skill.id === 'vor_nervos_mine') return hpPct <= 0.75;
+        if (skill.id === 'vor_teleport_shot') return hpPct <= 0.60;
+        if (skill.id === 'vor_sphere_shield') return hpPct <= 0.50;
+        if (skill.id === 'vor_janus_beam') return hpPct <= 0.40;
+        return true;
+    }
+
+    function getVorPhaseName(enemy) {
+        var hpPct = getEnemyHpPercent(enemy);
+        if (hpPct <= 0.40) return '全副武装';
+        if (hpPct <= 0.50) return '场域干扰';
+        if (hpPct <= 0.60) return '裂隙换位';
+        if (hpPct <= 0.75) return '雷网封锁';
+        return '试探射击';
+    }
+
+    function getVorPhaseHint(enemy) {
+        var hpPct = getEnemyHpPercent(enemy);
+        if (hpPct <= 0.40) return '沃尔可使用裂隙光束';
+        if (hpPct <= 0.50) return '出现雅努斯场域，沃尔可使用球形屏障';
+        if (hpPct <= 0.60) return '沃尔可使用裂隙换位';
+        if (hpPct <= 0.75) return '沃尔可使用雷网封锁';
+        return '沃尔正在试探，注意保留能力';
+    }
+
+    function announceVorPhaseIfChanged(force) {
+        var enemy = SkillCombat.enemy;
+        if (!isVorBoss(enemy)) return;
+        var phase = getVorPhaseName(enemy);
+        if (!force && SkillCombat.lastVorPhaseName === phase) return;
+        SkillCombat.lastVorPhaseName = phase;
+        appendBattleLog('<div style="color:#ffd36a;">◆ 风险变量：' + phase + '（HP ' + Math.ceil(getEnemyHpPercent(enemy) * 100) + '%）｜' + getVorPhaseHint(enemy) + '</div>');
+    }
+
+    function recordPlayerActionPattern(actionKey) {
+        SkillCombat.playerActionHistory.push(actionKey);
+        var len = SkillCombat.playerActionHistory.length;
+        // 检测连续重复：最后3个相同即触发识破
+        if (len >= 3) {
+            var last1 = SkillCombat.playerActionHistory[len - 1];
+            var last2 = SkillCombat.playerActionHistory[len - 2];
+            var last3 = SkillCombat.playerActionHistory[len - 3];
+            if (last1 === last2 && last2 === last3) {
+                // 连续4个以上更深识破
+                var isDeep = len >= 4 && SkillCombat.playerActionHistory[len - 4] === last1;
+                if (isDeep) {
+                    SkillCombat.repeatedPatternStacks = Math.min(3, SkillCombat.repeatedPatternStacks + 1);
+                    appendBattleLog('<div style="color:#ff4444; font-weight:700;">👁️ 敌人完全识破了你的固定套路 [' + last1 + ']！伤害大幅降低。</div>');
+                    return Math.max(0.45, 1 - SkillCombat.repeatedPatternStacks * 0.18);
+                } else {
+                    appendBattleLog('<div style="color:#ffaa00;">⚠️ 敌人识破了重复动作 [' + last1 + ']，本次伤害降低。</div>');
+                    return 0.75;
+                }
+            }
+        }
+        return 1;
+    }
+
+    function playVorPhaseTransition(done) {
+        if (!SkillCombat.isActive || !SkillCombat.enemy || SkillCombat.vorPhaseTransitionPlaying) {
+            if (done) done();
+            return;
+        }
+        SkillCombat.vorPhaseTransitionPending = false;
+        SkillCombat.vorPhaseTransitionPlaying = true;
+        SkillCombat.isAnimating = true;
+        document.body.classList.add('skill-combat-vor-janus-awake');
+
+        var arena = document.querySelector('.battle-stage') || document.getElementById('autoBattleArea') || document.getElementById('battleArea');
+        var overlay = document.createElement('div');
+        overlay.id = 'vor-phase-transition-overlay';
+        overlay.style.cssText = 'position:absolute; inset:0; z-index:5000; display:flex; align-items:center; justify-content:center; text-align:center; background:radial-gradient(circle at center, rgba(255,211,106,0.22), rgba(42,12,0,0.86) 58%, rgba(0,0,0,0.96)); border:1px solid rgba(255,211,106,0.5); box-shadow:inset 0 0 70px rgba(255,170,60,0.28); pointer-events:none; animation: vorPhasePulse 2.6s ease-in-out forwards;';
+        overlay.innerHTML =
+            '<div style="padding:22px 26px; max-width:520px; border-radius:16px; background:rgba(0,0,0,0.58); border:1px solid rgba(255,211,106,0.55); box-shadow:0 0 35px rgba(255,170,60,0.28);">' +
+                '<div style="font-size:3rem; filter:drop-shadow(0 0 18px #ffd36a);">🔑</div>' +
+                '<div style="font-family:Orbitron; color:#ffd36a; font-size:1.18rem; margin:8px 0;">雅努斯之钥觉醒</div>' +
+                '<div style="color:#ddd; font-size:0.82rem; line-height:1.8;">沃尔上尉强行开启虚空场地，护盾开始重构。</div>' +
+            '</div>';
+        if (arena) {
+            var oldPos = getComputedStyle(arena).position;
+            if (oldPos === 'static') arena.style.position = 'relative';
+            arena.appendChild(overlay);
+        }
+
+        appendBattleLog('<div style="color:#ffd36a; font-weight:700;">🔑 雅努斯之钥觉醒，沃尔进入二阶段。</div>');
+
+        // 护盾渐进回复：分12次Tick，每次可视化更新
+        var enemy = SkillCombat.enemy;
+        var shieldTarget = Math.min(enemy.maxShield, enemy.shield + Math.floor(enemy.maxShield * 0.45));
+        var shieldGap = shieldTarget - enemy.shield;
+        var tickCount = 12;
+        var tickAmount = Math.max(1, Math.floor(shieldGap / tickCount));
+        var tickIndex = 0;
+        var shieldTimer = setInterval(function() {
+            if (!SkillCombat.isActive || !enemy || enemy.hp <= 0) { clearInterval(shieldTimer); return; }
+            tickIndex++;
+            var add = (tickIndex >= tickCount) ? (shieldTarget - enemy.shield) : tickAmount;
+            enemy.shield = Math.min(enemy.maxShield, enemy.shield + add);
+            updateBattleUI();
+            if (tickIndex >= tickCount) {
+                clearInterval(shieldTimer);
+            }
+        }, 220);
+
+        setTimeout(function() {
+            if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            SkillCombat.vorPhaseTransitionPlaying = false;
+            SkillCombat.isAnimating = false;
+            announceVorPhaseIfChanged(true);
+            updateBattleUI();
+            if (done) done();
+        }, 2700);
+    }
+
+    function continueAfterPlayerAction() {
+        if (SkillCombat.vorPhaseTransitionPending) {
+            playVorPhaseTransition(function() {
+                if (SkillCombat.enemy.hp <= 0) {
+                    onEnemyDeath();
+                    return;
+                }
+                startEnemyTurn();
+            });
+            return;
+        }
+
+        if (SkillCombat.enemy.hp <= 0) {
+            onEnemyDeath();
+            return;
+        }
+
+        startEnemyTurn();
     }
 
     function isManicEnemy(enemy) {
@@ -712,7 +903,7 @@
         if (enemy.isHpLocked) {
             return {
                 triggered: false,
-                damage: Math.min(incomingDamage, Math.max(0, enemy.hp - lockFloor))
+                damage: 0
             };
         }
         if (enemy.manicLockCooldown && enemy.manicLockCooldown > 0) {
@@ -862,7 +1053,7 @@
             }
 
             // 进入敌人回合
-            startEnemyTurn();
+            continueAfterPlayerAction();
         });
     }
 
@@ -895,7 +1086,7 @@
                 return;
             }
 
-            startEnemyTurn();
+            continueAfterPlayerAction();
         });
     }
 
@@ -903,9 +1094,15 @@
     function resolvePlayerSkill(skill, skillIndex) {
         var player = SkillCombat.player;
         var enemy = SkillCombat.enemy;
+        var enemyHpBefore = enemy.hp;
+        var actionKey = skillIndex < 0 ? '0' : String(skillIndex + 1);
+        var patternMultiplier = recordPlayerActionPattern(actionKey);
 
         // 节奏伤害：按敌人总生存值计算，避免不同敌人因为数值差距导致秒杀或刮痧。
         var ratio = getPlayerSkillDamageRatio(skill);
+        if (isVorBoss(enemy) && ratio > 0) {
+            ratio *= SkillCombat.vorPhaseTransitionTriggered ? 0.72 : 0.82;
+        }
         var baseDamage = getEntityTotalMax(enemy) * ratio;
 
         // buff 加成
@@ -921,6 +1118,12 @@
         var variance = 0.90 + Math.random() * 0.2;
         var finalDamage = ratio > 0 ? Math.max(1, Math.floor(baseDamage * variance)) : 0;
         finalDamage = Math.floor(finalDamage * (window.SKILL_COMBAT_PLAYER_DAMAGE_MULT || 1));
+        if (SkillCombat.player.threatSuppressed && finalDamage > 0) {
+            finalDamage = Math.max(1, Math.floor(finalDamage * 0.75));
+        }
+        if (patternMultiplier < 1 && finalDamage > 0) {
+            finalDamage = Math.max(1, Math.floor(finalDamage * patternMultiplier));
+        }
 
         // 暴击
         var isCrit = finalDamage > 0 && Math.random() < Math.max(0.05, Math.min(0.22, 0.08 + (player.level - enemy.level) * 0.01));
@@ -932,9 +1135,57 @@
         if (manicLock.triggered) {
             finalDamage = manicLock.damage;
             appendBattleLog('<div style="color: #aaa;">👹 ' + enemy.name + ' 狂躁锁血！</div>');
+        } else if (isManicEnemy(enemy) && enemy.isHpLocked && finalDamage <= 0) {
+            appendBattleLog('<div style="color: #aaa;">👹 ' + enemy.name + ' 狂躁锁血中，免疫本次伤害。</div>');
+        }
+
+        if (enemy.vorExposedTurns && finalDamage > 0) {
+            finalDamage = Math.floor(finalDamage * 1.35);
+            appendBattleLog('<div style="color: #ffd36a;">🔓 雅努斯节点破裂，沃尔受到暴露增伤！</div>');
         }
 
         var damageResult = applyShieldHealthDamage(enemy, finalDamage);
+        if (isVorBoss(enemy) && !SkillCombat.vorPhaseTransitionTriggered && enemyHpBefore > enemy.maxHp * 0.5 && enemy.hp <= enemy.maxHp * 0.5) {
+            enemy.hp = Math.max(1, Math.ceil(enemy.maxHp * 0.5));
+            SkillCombat.vorPhaseTransitionTriggered = true;
+            SkillCombat.vorPhaseTransitionPending = true;
+            enemy.isStunned = false;
+            enemy.stunTurns = 0;
+        } else if (!SkillCombat.enemyAdaptedOnce && !isVorBoss(enemy) && enemyHpBefore > 1 && enemy.hp <= 0 && SkillCombat.playerActionHistory.length >= 4) {
+            enemy.hp = 1;
+            SkillCombat.enemyAdaptedOnce = true;
+            appendBattleLog('<div style="color:#ffaa00;">⚠️ ' + enemy.name + ' 临场适应并准备反击。</div>');
+        }
+        // ═══════════════════════════════════════════════════════════════
+        //  沃尔上尉·临场适应：同一动作连续3次以上且本次将击杀时保留10HP并反击
+        // ═══════════════════════════════════════════════════════════════
+        if (isVorBoss(enemy) && !SkillCombat.vorAdaptationTriggered && enemyHpBefore > 10 && enemy.hp <= 0) {
+            var hist = SkillCombat.playerActionHistory;
+            var histLen = hist.length;
+            if (histLen >= 3) {
+                var last = hist[histLen - 1];
+                var consecutive = 1;
+                for (var hi = histLen - 2; hi >= 0; hi--) {
+                    if (hist[hi] === last) consecutive++;
+                    else break;
+                }
+                if (consecutive >= 3) {
+                    enemy.hp = 10;
+                    SkillCombat.vorAdaptationTriggered = true;
+                    appendBattleLog('<div style="color:#ff4444; font-weight:700;">👁️ 沃尔上尉临场适应！保留 10 HP 并发动反击！</div>');
+                    // 立即反击：造成基于攻击力的真实伤害
+                    var counterDmg = Math.max(1, Math.floor(enemy.attack * 1.15));
+                    var counterResult = applyShieldHealthDamage(player, counterDmg);
+                    appendBattleLog('<div style="color:#ff4444;">⚔️ 沃尔反击造成 ' + counterResult.hpDamage + ' 伤害' + (counterResult.shieldDamage > 0 ? '，护盾吸收 ' + counterResult.shieldDamage : '') + '</div>');
+                    showSkillDamage(counterResult.totalDamage, 'player', false, '#ff4444');
+                    triggerHitAnimation('player');
+                    SkillCombat.playerTookDirectHitThisRound = true;
+                    // 减少下一次被攻击伤害
+                    SkillCombat.vorNextDamageReduction = 0.25;
+                    appendBattleLog('<div style="color:#72d7ff;">🛡️ 沃尔适应了你的攻击节奏，下一次受到的伤害降低 25%。</div>');
+                }
+            }
+        }
         if (ratio > 0) {
             SkillCombat.enemyTookDirectHitThisRound = true;
         }
@@ -943,11 +1194,13 @@
         var logColor = isCrit ? '#ffd700' : skill.color;
         var critText = isCrit ? ' 💥暴击！' : '';
         var shieldText = damageResult.shieldDamage > 0 ? '，护盾吸收 ' + damageResult.shieldDamage : '';
-        appendBattleLog(
-            '<div style="color: ' + logColor + ';">' +
-            skill.icon + ' ' + player.name + ' 释放【' + skill.name + '】' + critText +
-            ' 造成 ' + damageResult.hpDamage + ' 伤害' + shieldText + '</div>'
-        );
+        if (!(isManicEnemy(enemy) && enemy.isHpLocked && damageResult.totalDamage <= 0)) {
+            appendBattleLog(
+                '<div style="color: ' + logColor + ';">' +
+                skill.icon + ' ' + player.name + ' 释放【' + skill.name + '】' + critText +
+                ' 造成 ' + damageResult.hpDamage + ' 伤害' + shieldText + '</div>'
+            );
+        }
 
         if (skill.energyGain) {
             var beforeEnergy = player.energy;
@@ -959,12 +1212,32 @@
         if (damageResult.totalDamage > 0) {
             showSkillDamage(damageResult.totalDamage, 'enemy', isCrit, skill.color);
         }
+        announceVorPhaseIfChanged(false);
 
         // 敌人受击动画
         triggerHitAnimation('enemy');
 
-        // 处理特殊效果
+        // 处理特殊效果：沃尔这类 BOSS 对硬控有高抗性，致盲/击晕不再稳定生效
         if (skill.stunDuration && enemy.hp > 0) {
+            if (isVorBoss(enemy)) {
+                var resistRoll = Math.random();
+                if (resistRoll < 0.85) {
+                    appendBattleLog('<div style="color: #ffaa00;">⚠️ 沃尔上尉抵抗了硬控，只受到短暂干扰。</div>');
+                    if (skill.id === 'radial_blind') {
+                        var resistedBlindTarget = document.getElementById('battleEnemyIcon');
+                        if (resistedBlindTarget) resistedBlindTarget.classList.add('skill-status-blinded-smoke');
+                        setTimeout(function() {
+                            var target = document.getElementById('battleEnemyIcon');
+                            if (target) target.classList.remove('skill-status-blinded-smoke');
+                        }, 520);
+                    }
+                } else {
+                    enemy.isStunned = true;
+                    enemy.stunTurns = 1;
+                    SkillCombat.enemyDebuffs.push({ type: 'stun', duration: 1 });
+                    appendBattleLog('<div style="color: #ffaa00;">💫 沃尔上尉被短暂打断 1 回合！</div>');
+                }
+            } else {
             enemy.isStunned = true;
             enemy.stunTurns = skill.stunDuration;
             SkillCombat.enemyDebuffs.push({ type: 'stun', duration: skill.stunDuration });
@@ -973,13 +1246,16 @@
                 if (blindTarget) blindTarget.classList.add('skill-status-blinded-smoke');
             }
             appendBattleLog('<div style="color: #ffaa00;">💫 ' + enemy.name + ' 被致盲 ' + skill.stunDuration + ' 回合！</div>');
+            }
         }
 
         if (skill.bleedDuration && skill.bleedDamageRatio && enemy.hp > 0) {
             SkillCombat.enemyDebuffs.push({
                 type: 'bleed',
                 duration: skill.bleedDuration,
-                damage: Math.max(1, Math.floor(damageResult.totalDamage * skill.bleedDamageRatio))
+                damage: Math.max(1, Math.floor(damageResult.totalDamage * skill.bleedDamageRatio)),
+                sourceName: player.name || '玩家',
+                targetName: enemy.name || '敌人'
             });
             var bleedTarget = document.getElementById('battleEnemyIcon');
             if (bleedTarget) bleedTarget.classList.add('skill-status-bleed');
@@ -1034,7 +1310,9 @@
             SkillCombat.enemyDebuffs.push({
                 type: 'magnetized',
                 duration: skill.buffDuration || 3,
-                damage: Math.max(1, Math.floor(player.attack * skill.dotDamageRatio))
+                damage: Math.max(1, Math.floor(player.attack * skill.dotDamageRatio)),
+                sourceName: player.name || '玩家',
+                targetName: enemy.name || '敌人'
             });
             appendBattleLog('<div style="color: #cc44ff;">🌀 ' + enemy.name + ' 被磁化力场锁定</div>');
         }
@@ -1103,7 +1381,7 @@
         // 找出可用技能
         var available = [];
         for (var i = 0; i < skills.length; i++) {
-            if (SkillCombat.enemyCooldowns[i] <= 0) {
+            if (SkillCombat.enemyCooldowns[i] <= 0 && isVorSkillUnlocked(skills[i], enemy)) {
                 available.push({ skill: skills[i], index: i });
             }
         }
@@ -1123,10 +1401,13 @@
             };
         }
 
-        // 30% 概率用强力技能（如果有多个可用）
-        if (available.length > 1 && Math.random() < 0.3) {
+        // BOSS 更倾向使用当前阶段的高级技能
+        var strongSkillChance = isVorBoss(enemy) ? 0.55 : 0.3;
+        if (available.length > 1 && Math.random() < strongSkillChance) {
             // 选冷却最长的（通常是强力技能）
-            available.sort(function(a, b) { return b.skill.cooldown - a.skill.cooldown; });
+            available.sort(function(a, b) {
+                return (b.skill.cooldown * getEnemySkillThreatWeight(b.skill)) - (a.skill.cooldown * getEnemySkillThreatWeight(a.skill));
+            });
             var chosen = available[0];
             SkillCombat.enemyCooldowns[chosen.index] = chosen.skill.cooldown;
             return chosen.skill;
@@ -1147,6 +1428,11 @@
         var threatTag = getEnemyThreatTag(enemy);
         var threatRatio = ENEMY_THREAT_DAMAGE_RATIOS[threatTag] || ENEMY_THREAT_DAMAGE_RATIOS.normal;
         var baseDamage = getEntityTotalMax(player) * threatRatio * getEnemySkillThreatWeight(skill);
+        if (isVorBoss(enemy)) {
+            var hpPct = getEnemyHpPercent(enemy);
+            var phaseDamageBonus = hpPct <= 0.40 ? 1.18 : hpPct <= 0.50 ? 1.10 : hpPct <= 0.75 ? 1.06 : 1.00;
+            baseDamage *= phaseDamageBonus;
+        }
 
         // 敌人等级只做轻微修正，避免高等级直接数值爆炸
         baseDamage += (enemy.level || 1) * 0.6;
@@ -1155,6 +1441,9 @@
         var variance = 0.90 + Math.random() * 0.2;
         var finalDamage = Math.max(1, Math.floor(baseDamage * variance));
         finalDamage = Math.floor(finalDamage * (window.SKILL_COMBAT_ENEMY_DAMAGE_MULT || 1));
+        if (SkillCombat.player.threatSuppressed) {
+            finalDamage = Math.max(1, Math.floor(finalDamage * 1.15));
+        }
 
         // 反弹检查
         var reflectMultiplier = getBuffMultiplier(player, 'reflect');
@@ -1165,6 +1454,15 @@
             if (reflected > 0) {
                 appendBattleLog('<div style="color: #cc44ff;">🌀 磁化反弹 ' + reflected + ' 伤害！</div>');
             }
+        }
+
+        finalDamage = applyVorInteractionToEnemyDamage(skill, finalDamage);
+
+        // 沃尔临场适应：减少下一次受到的玩家伤害
+        if (SkillCombat.vorNextDamageReduction > 0) {
+            finalDamage = Math.max(1, Math.floor(finalDamage * (1 - SkillCombat.vorNextDamageReduction)));
+            appendBattleLog('<div style="color:#72d7ff;">🛡️ 沃尔的临场适应生效，本次伤害被降低。</div>');
+            SkillCombat.vorNextDamageReduction = 0;
         }
 
         var damageResult = applyShieldHealthDamage(player, finalDamage);
@@ -1185,7 +1483,11 @@
         triggerHitAnimation('player');
 
         // 眩晕效果
-        if (skill.staggerChance && Math.random() < skill.staggerChance) {
+        var staggerChance = skill.staggerChance || 0;
+        if (skill.id === 'vor_nervos_mine' && SkillCombat.vorInteraction && SkillCombat.vorInteraction.completed) {
+            staggerChance = 0;
+        }
+        if (staggerChance && Math.random() < staggerChance) {
             SkillCombat.playerDebuffs.push({ type: 'stun', duration: 2 });
             setPlayerStatusVisual('stun', true);
             appendBattleLog('<div style="color: #ff8844;">😵 你被眩晕了！</div>');
@@ -1193,17 +1495,17 @@
 
         // 敌人特色状态效果
         if (skill.bleedChance && Math.random() < skill.bleedChance) {
-            SkillCombat.playerDebuffs.push({ type: 'bleed', duration: 3, damage: Math.max(1, Math.floor(player.maxHp * 0.04)) });
+            SkillCombat.playerDebuffs.push({ type: 'bleed', duration: 3, damage: Math.max(1, Math.floor(player.maxHp * 0.04)), sourceName: enemy.name || '敌人', targetName: player.name || '玩家' });
             setPlayerStatusVisual('bleed', true);
             appendBattleLog('<div style="color: #ff3355;">🩸 你被施加流血！</div>');
         }
         if (skill.burnChance && Math.random() < skill.burnChance) {
-            SkillCombat.playerDebuffs.push({ type: 'burn', duration: 3, damage: Math.max(1, Math.floor(getEntityTotalMax(player) * 0.025)) });
+            SkillCombat.playerDebuffs.push({ type: 'burn', duration: 3, damage: Math.max(1, Math.floor(getEntityTotalMax(player) * 0.025)), sourceName: enemy.name || '敌人', targetName: player.name || '玩家' });
             setPlayerStatusVisual('burn', true);
             appendBattleLog('<div style="color: #ff6633;">🔥 你被点燃！</div>');
         }
         if (skill.toxinChance && Math.random() < skill.toxinChance) {
-            SkillCombat.playerDebuffs.push({ type: 'toxin', duration: 3, damage: Math.max(1, Math.floor(player.maxHp * 0.05)) });
+            SkillCombat.playerDebuffs.push({ type: 'toxin', duration: 3, damage: Math.max(1, Math.floor(player.maxHp * 0.05)), sourceName: enemy.name || '敌人', targetName: player.name || '玩家' });
             setPlayerStatusVisual('toxin', true);
             appendBattleLog('<div style="color: #66ff66;">☣️ 你中了毒素！</div>');
         }
@@ -1213,7 +1515,7 @@
             SkillCombat.playerDebuffs.push({ type: 'disarm', duration: 1 });
             setPlayerStatusVisual('disarm', true);
             appendBattleLog('<div style="color: #ffaa00;">⚡ 能量被削减 ' + drained + ' 点！</div>');
-            appendBattleLog('<div style="color: #ffaa00;">🪃 你被缴械了，普攻锁定中！</div>');
+            appendBattleLog('<div style="color: #ffaa00;">🪃 你被缴械了，无法使用普攻！</div>');
         }
         if (skill.selfShield && enemy.maxShield > 0) {
             enemy.shield = Math.min(enemy.maxShield, enemy.shield + skill.selfShield);
@@ -1221,6 +1523,11 @@
         }
         if (skill.selfShieldRatio && enemy.maxShield > 0) {
             var shieldGain = Math.max(1, Math.floor(enemy.maxShield * skill.selfShieldRatio));
+            if (skill.id === 'vor_sphere_shield' && SkillCombat.vorInteraction && SkillCombat.vorInteraction.completed) {
+                shieldGain = Math.floor(shieldGain * 0.25);
+                enemy.vorExposedTurns = 2;
+                appendBattleLog('<div style="color: #ffd36a;">🔑 你破坏了雅努斯节点，球形护盾被削弱，沃尔短暂暴露！</div>');
+            }
             enemy.shield = Math.min(enemy.maxShield, enemy.shield + shieldGain);
             appendBattleLog('<div style="color: #72d7ff;">🛡️ 雅努斯之钥展开球形护盾，恢复 ' + shieldGain + ' 护盾！</div>');
         }
@@ -1236,6 +1543,7 @@
         }
 
         updateBattleUI();
+        clearVorInteraction(true);
     }
 
     // ========== 回合结束处理 ==========
@@ -1279,6 +1587,9 @@
         }
         for (var i = 0; i < SkillCombat.enemyCooldowns.length; i++) {
             if (SkillCombat.enemyCooldowns[i] > 0) SkillCombat.enemyCooldowns[i]--;
+        }
+        if (SkillCombat.enemy.vorExposedTurns > 0) {
+            SkillCombat.enemy.vorExposedTurns--;
         }
 
         SkillCombat.isPlayerTurn = true;
@@ -1344,13 +1655,17 @@
                 var direct = applyDirectHpDamage(SkillCombat.player, d.damage);
                 var color = d.type === 'toxin' ? '#66ff66' : '#ff3355';
                 var label = d.type === 'toxin' ? '☣' : '🩸';
+                var sourceName = d.sourceName || (SkillCombat.enemy && SkillCombat.enemy.name) || '敌人';
+                var targetName = d.targetName || SkillCombat.player.name || '玩家';
                 showSkillDamage(label + direct.hpDamage, 'player', false, color);
-                appendBattleLog('<div style="color: ' + color + ';">' + label + ' ' + (d.type === 'toxin' ? '毒素' : '切割') + '持续伤害 ' + direct.hpDamage + '</div>');
+                appendBattleLog('<div style="color: ' + color + ';">' + label + ' ' + sourceName + ' 对 ' + targetName + ' 造成' + (d.type === 'toxin' ? '毒素' : '切割') + '持续伤害 ' + direct.hpDamage + '</div>');
             }
             if (d.type === 'burn' && d.damage > 0 && SkillCombat.player.hp > 0) {
                 var burn = applyShieldHealthDamage(SkillCombat.player, d.damage);
+                var burnSource = d.sourceName || (SkillCombat.enemy && SkillCombat.enemy.name) || '敌人';
+                var burnTarget = d.targetName || SkillCombat.player.name || '玩家';
                 showSkillDamage('🔥' + burn.totalDamage, 'player', false, '#ff6633');
-                appendBattleLog('<div style="color: #ff6633;">🔥 灼烧持续伤害 ' + burn.totalDamage + '</div>');
+                appendBattleLog('<div style="color: #ff6633;">🔥 ' + burnSource + ' 对 ' + burnTarget + ' 造成灼烧持续伤害 ' + burn.totalDamage + '</div>');
             }
             if (d.type === 'bleed' || d.type === 'toxin' || d.type === 'burn') {
                 d.duration--;
@@ -1363,12 +1678,18 @@
         // 结算敌人受到的持续伤害
         SkillCombat.enemyDebuffs = SkillCombat.enemyDebuffs.filter(function(d) {
             if ((d.type === 'bleed' || d.type === 'magnetized') && d.damage > 0 && SkillCombat.enemy.hp > 0) {
+                var dotSource = d.sourceName || SkillCombat.player.name || '玩家';
+                var dotTarget = d.targetName || (SkillCombat.enemy && SkillCombat.enemy.name) || '敌人';
+                if (isManicEnemy(SkillCombat.enemy) && SkillCombat.enemy.isHpLocked) {
+                    appendBattleLog('<div style="color:#aaa;">👹 ' + dotTarget + ' 狂躁锁血中，免疫 ' + dotSource + ' 的' + (d.type === 'bleed' ? '切割' : '磁化') + '持续伤害。</div>');
+                } else {
                 var bypass = d.type === 'bleed';
                 var dot = bypass ? applyDirectHpDamage(SkillCombat.enemy, d.damage) : applyShieldHealthDamage(SkillCombat.enemy, d.damage);
                 var color = d.type === 'bleed' ? '#ff3355' : '#ff66ff';
                 var label = d.type === 'bleed' ? '🩸' : '🧲';
                 showSkillDamage(label + dot.totalDamage, 'enemy', false, color);
-                appendBattleLog('<div style="color: ' + color + ';">' + label + ' ' + (d.type === 'bleed' ? '切割' : '磁化') + '持续伤害 ' + dot.totalDamage + '</div>');
+                appendBattleLog('<div style="color: ' + color + ';">' + label + ' ' + dotSource + ' 对 ' + dotTarget + ' 造成' + (d.type === 'bleed' ? '切割' : '磁化') + '持续伤害 ' + dot.totalDamage + '</div>');
+                }
             }
             if (d.type === 'bleed' || d.type === 'magnetized') {
                 d.duration--;
@@ -1403,11 +1724,12 @@
     function onEnemyDeath() {
         SkillCombat.isActive = false;
         SkillCombat.isAnimating = false;
+        document.body.classList.remove('skill-combat-running', 'skill-combat-boss-vor');
 
         clearEnemyCausedEffects();
         triggerDeathAnimation('enemy');
 
-        appendBattleLog('<div style="color: var(--infested-green); font-weight: 700; font-size: 1.1rem;">═══ ' + SkillCombat.enemy.name + ' 被击败！ ═══</div>');
+        appendBattleLog('<div style="color: var(--infested-green); font-weight: 700; font-size: 1.1rem;">═══ ' + ' 肃清结果 ═══</div>');
 
         if (SkillCombat.onBattleEnd) {
             SkillCombat.onBattleEnd('win', SkillCombat.enemy);
@@ -1417,6 +1739,7 @@
     function onPlayerDeath() {
         SkillCombat.isActive = false;
         SkillCombat.isAnimating = false;
+        document.body.classList.remove('skill-combat-running', 'skill-combat-boss-vor');
 
         triggerDeathAnimation('player');
 
@@ -1432,11 +1755,13 @@
         SkillCombat.isActive = false;
         SkillCombat.isAnimating = false;
         SkillCombat.isPlayerTurn = true;
+        document.body.classList.remove('skill-combat-running', 'skill-combat-boss-vor');
 
         var oldBar = document.getElementById('skill-bar-container');
         if (oldBar) oldBar.remove();
 
         clearAllStatusVisuals();
+        clearVorInteraction(false);
 
         // 断开 MutationObserver
         for (var key in _avatarObservers) {
@@ -1464,7 +1789,10 @@
         targetEl.classList.add('casting');
         targetEl.style.setProperty('animation', skill.animClass + ' ' + (skill.castTime / 1000) + 's ease-out forwards', 'important');
         applySkillPictureMotion(side, skill);
-               window.spawnSkillVfx(side, skill);
+        if (side === 'enemy') {
+            setupVorSkillInteraction(skill);
+        }
+        window.spawnSkillVfx(side, skill);
 
         // 命中时间点
         setTimeout(function() {
@@ -1571,15 +1899,20 @@
                 runClass(sourceEl, 'enemy-picture-commander-swap', duration);
                 runClass(targetEl, 'enemy-picture-player-confused', duration);
                 break;
+            case 'vor_seer_burst':
+                runClass(targetEl, 'vor-target-seer-locked', duration);
+                runClass(sourceEl, 'vor-picture-seer-recoil', duration);
+                break;
             case 'vor_janus_beam':
-                runClass(targetEl, 'enemy-target-aim-locked', duration);
-                runClass(sourceEl, 'skill-picture-electric-shield', Math.max(1000, duration));
+                runClass(targetEl, 'vor-target-janus-rifted', duration);
+                runClass(sourceEl, 'vor-picture-janus-channel', Math.max(1200, duration));
                 break;
             case 'vor_nervos_mine':
-                runClass(targetEl, 'enemy-target-explosion-hit', duration);
+                runClass(targetEl, 'vor-target-mine-marked', duration);
+                runClass(sourceEl, 'vor-picture-command-cast', duration);
                 break;
             case 'vor_sphere_shield':
-                runClass(sourceEl, 'skill-picture-electric-shield', Math.max(1200, duration));
+                runClass(sourceEl, 'vor-picture-sphere-shield', Math.max(1300, duration));
                 break;
             case 'manic_cloak_pounce':
             case 'manic_rend':
@@ -1748,8 +2081,18 @@
             case 'shield_lancer_viper':
             case 'commander_grakata_sustain':
             case 'vor_seer_burst':
-                for (var b = 0; b < 5; b++) {
-                    addVfx(baseClass + ' enemy-vfx-bullet-line', startX, startY - 8 + b * 3, '', b * 55, 260);
+                if (skill.id === 'vor_seer_burst') {
+                    addVfx(baseClass + ' vor-vfx-seer-scope', endX, endY, '', 0, Math.floor(duration * 0.52));
+                    addVfx(baseClass + ' vor-vfx-janus-glyph', startX, startY - 38, '🔑', 60, Math.floor(duration * 0.62));
+                    for (var vb = 0; vb < 3; vb++) {
+                        var seerLine = addVfx(baseClass + ' enemy-vfx-bullet-line vor-vfx-seer-bullet', startX, startY - 10 + vb * 9, '', 260 + vb * 150, 360);
+                        seerLine.style.setProperty('--vfx-y', (dy - 16 + vb * 13) + 'px');
+                    }
+                    addVfx(baseClass + ' vor-vfx-hit-sparks', endX, endY, '', Math.floor(duration * 0.78), 420);
+                } else {
+                    for (var b = 0; b < 5; b++) {
+                        addVfx(baseClass + ' enemy-vfx-bullet-line', startX, startY - 8 + b * 3, '', b * 55, 260);
+                    }
                 }
                 break;
             case 'scorch_flamethrower':
@@ -1799,22 +2142,37 @@
                 addVfx(baseClass + ' enemy-vfx-teleport-ring', endX, endY, '', 80, duration - 80);
                 addVfx(baseClass + ' enemy-vfx-switch-beam', startX, startY, '', 120, duration - 180);
                 if (skill.id === 'vor_teleport_shot') {
-                    addVfx(baseClass + ' enemy-vfx-bullet-line enemy-vfx-heavy-bullet', startX, startY, '', 260, 320);
+                    addVfx(baseClass + ' vor-vfx-afterimage', startX, startY, '', 60, duration - 160);
+                    addVfx(baseClass + ' vor-vfx-rift-cut', (startX + endX) / 2, (startY + endY) / 2, '', 180, duration - 240);
+                    addVfx(baseClass + ' enemy-vfx-bullet-line enemy-vfx-heavy-bullet vor-vfx-exec-shot', startX, startY, '', 420, 360);
+                    addVfx(baseClass + ' vor-vfx-hit-sparks', endX, endY, '', Math.floor(duration * 0.72), 420);
                 }
                 break;
             case 'vor_janus_beam':
-                addVfx(baseClass + ' enemy-vfx-teleport-ring', startX, startY, '🔑', 0, Math.floor(duration * 0.42));
-                addVfx(baseClass + ' skill-vfx-electric-line enemy-vfx-switch-beam', startX, startY, '', 160, duration - 120);
-                addVfx(baseClass + ' skill-vfx-electric-spark enemy-vfx-impact-burst', endX, endY, '', Math.floor(duration * 0.58), 520);
+                addVfx(baseClass + ' vor-vfx-janus-glyph vor-vfx-janus-glyph-large', startX, startY - 38, '🔑', 0, Math.floor(duration * 0.62));
+                addVfx(baseClass + ' vor-vfx-rift-ring', endX, endY, '', 120, Math.floor(duration * 0.58));
+                addVfx(baseClass + ' vor-vfx-beam-warmup', startX, startY, '', 170, Math.floor(duration * 0.44));
+                addVfx(baseClass + ' skill-vfx-electric-line enemy-vfx-switch-beam vor-vfx-janus-beam-core', startX, startY, '', 430, duration - 380);
+                addVfx(baseClass + ' vor-vfx-janus-beam-side vor-vfx-janus-beam-side-a', startX, startY - 14, '', 500, duration - 480);
+                addVfx(baseClass + ' vor-vfx-janus-beam-side vor-vfx-janus-beam-side-b', startX, startY + 14, '', 560, duration - 520);
+                addVfx(baseClass + ' skill-vfx-electric-spark enemy-vfx-impact-burst vor-vfx-void-burst', endX, endY, '', Math.floor(duration * 0.72), 620);
                 break;
             case 'vor_nervos_mine':
-                addVfx(baseClass + ' enemy-vfx-latcher', startX, startY + 22, '◆', 0, duration);
-                addVfx(baseClass + ' enemy-vfx-warning-reticle enemy-vfx-danger-reticle', endX, endY, '', 120, Math.floor(duration * 0.58));
-                addVfx(baseClass + ' enemy-vfx-impact-burst enemy-vfx-explosion', endX, endY, '', Math.floor(duration * 0.72), 520);
+                addVfx(baseClass + ' vor-vfx-command-pulse', startX, startY, '', 0, Math.floor(duration * 0.38));
+                for (var mine = 0; mine < 3; mine++) {
+                    var mineEl = addVfx(baseClass + ' enemy-vfx-latcher vor-vfx-nervos-mine', startX, startY + 18, mine === 1 ? '◆' : '◇', mine * 130, duration - 180);
+                    mineEl.style.setProperty('--vfx-y', (dy + 28 - mine * 22) + 'px');
+                    mineEl.style.setProperty('--mine-offset', (-34 + mine * 34) + 'px');
+                }
+                addVfx(baseClass + ' vor-vfx-mine-grid', endX, endY, '', 180, Math.floor(duration * 0.62));
+                addVfx(baseClass + ' enemy-vfx-warning-reticle enemy-vfx-danger-reticle', endX, endY, '', 220, Math.floor(duration * 0.58));
+                addVfx(baseClass + ' enemy-vfx-impact-burst enemy-vfx-explosion vor-vfx-mine-detonation', endX, endY, '', Math.floor(duration * 0.76), 620);
                 break;
             case 'vor_sphere_shield':
-                addVfx(baseClass + ' skill-vfx-shield-dome', startX, startY, '', 0, duration);
-                addVfx(baseClass + ' enemy-vfx-teleport-ring', startX, startY, '🔑', 100, duration - 160);
+                addVfx(baseClass + ' vor-vfx-shield-build', startX, startY, '', 0, duration);
+                addVfx(baseClass + ' skill-vfx-shield-dome vor-vfx-shield-dome-outer', startX, startY, '', 80, duration - 80);
+                addVfx(baseClass + ' vor-vfx-janus-glyph', startX, startY - 38, '🔑', 100, duration - 160);
+                addVfx(baseClass + ' vor-vfx-shield-runes', startX, startY, '', 160, duration - 220);
                 break;
             case 'drahk_master_summon':
                 for (var beast = 0; beast < 3; beast++) {
@@ -2026,6 +2384,194 @@
         document.querySelectorAll('.skill-damage-float').forEach(function(el) { el.remove(); });
     }
 
+    function isVorSkill(skill) {
+        return !!(skill && typeof skill.id === 'string' && skill.id.indexOf('vor_') === 0);
+    }
+
+    function clearVorInteraction(keepSummary) {
+        var panel = document.getElementById('vor-mechanic-panel');
+        if (panel) panel.remove();
+        var eventLayer = document.getElementById('vor-arena-event');
+        if (eventLayer) eventLayer.remove();
+        var nodes = document.querySelectorAll('.vor-interact-node');
+        for (var i = 0; i < nodes.length; i++) nodes[i].remove();
+        var arena = getVorBattleArena();
+        if (arena) {
+            arena.classList.remove('vor-skill-active', 'vor-cast-seer', 'vor-cast-beam', 'vor-cast-mine', 'vor-cast-teleport', 'vor-cast-shield');
+        }
+        if (!keepSummary && SkillCombat.vorInteraction && SkillCombat.vorInteraction.timer) {
+            clearTimeout(SkillCombat.vorInteraction.timer);
+        }
+        SkillCombat.vorInteraction = null;
+    }
+
+    function getVorBattleArena() {
+        var enemyEl = document.getElementById('battleEnemyIcon');
+        return enemyEl ? enemyEl.closest('#page-dashboard') : null;
+    }
+
+    function setupVorSkillInteraction(skill) {
+        if (!isVorSkill(skill) || !SkillCombat.enemy || (SkillCombat.enemy.name || '').indexOf('沃尔上尉') === -1) return;
+        clearVorInteraction(false);
+
+        var config = getVorInteractionConfig(skill);
+        if (!config) return;
+        if (SkillCombat.vorPressure >= 4 && config.required < 6) {
+            config = Object.assign({}, config, {
+                required: config.required + 1,
+                hint: config.hint + '（高压力值：额外节点）'
+            });
+        }
+
+        var serial = ++SkillCombat.vorMechanicSerial;
+        var arena = getVorBattleArena() || document.body;
+        var state = {
+            serial: serial,
+            skillId: skill.id,
+            title: config.title,
+            hint: config.hint,
+            hits: 0,
+            required: config.required,
+            maxHits: config.maxHits || config.required,
+            mitigationPerHit: config.mitigationPerHit || 0,
+            completed: false,
+            counterDamageRatio: config.counterDamageRatio || 0
+        };
+        SkillCombat.vorInteraction = state;
+
+        arena.classList.add('vor-skill-active', config.castClass);
+        triggerVorArenaEvent(arena, config, state);
+
+        var panel = document.createElement('div');
+        panel.id = 'vor-mechanic-panel';
+        panel.className = 'vor-mechanic-panel';
+        panel.innerHTML =
+            '<div class="vor-mechanic-title">' + config.icon + ' ' + config.title + '<span>压力值 ' + SkillCombat.vorPressure + '/5</span></div>' +
+            '<div class="vor-mechanic-hint">' + config.shortHint + '</div>' +
+            '<div class="vor-mechanic-progress"><span id="vor-mechanic-progress-text">0/' + state.required + '</span><i id="vor-mechanic-progress-bar"></i></div>';
+        arena.appendChild(panel);
+
+        for (var i = 0; i < config.required; i++) {
+            createVorInteractNode(arena, state, config, i);
+        }
+
+        appendBattleLog('<div style="color:#ffd36a;">🔑 反制开始【' + config.title + '】：' + config.logGoal + '</div>');
+    }
+
+    function getVorInteractionConfig(skill) {
+        var map = {
+            vor_seer_burst: { icon: '🎯', title: '多点锁定', shortHint: '点准星：减伤', hint: '打掉 4 个移动准星，削弱覆盖射击', logGoal: '点击“准”；每点 1 个都会降低本次射击伤害。', successText: '大幅削弱本次 Seer 射击', required: 4, mitigationPerHit: 0.13, nodeText: '准', castClass: 'vor-cast-seer', eventType: 'seer' },
+            vor_janus_beam: { icon: '🔑', title: '裂隙光束', shortHint: '点钥匙：偏转光束', hint: '击碎 5 个钥匙节点，偏转整屏裂隙光束', logGoal: '点击“钥”；全破后偏转光束，并让雅努斯能量反噬沃尔。', successText: '光束减伤并反噬沃尔', required: 5, mitigationPerHit: 0.15, counterDamageRatio: 0.055, nodeText: '钥', castClass: 'vor-cast-beam', eventType: 'beam' },
+            vor_nervos_mine: { icon: '🧨', title: '雷区扩散', shortHint: '点地雷：拆雷', hint: '拆除 5 枚地雷，阻止雷区覆盖战场', logGoal: '点击“雷”；全拆后本次雷区不会造成眩晕。', successText: '降低爆炸伤害并免除眩晕', required: 5, mitigationPerHit: 0.14, nodeText: '雷', castClass: 'vor-cast-mine', eventType: 'mine' },
+            vor_teleport_shot: { icon: '🌀', title: '裂隙换位', shortHint: '点裂隙：封出口', hint: '连续封锁 3 个裂隙出口，反制处决射击', logGoal: '点击“裂”；封锁出口可削弱传送处决。', successText: '处决减伤并反制沃尔', required: 3, mitigationPerHit: 0.24, counterDamageRatio: 0.045, nodeText: '裂', castClass: 'vor-cast-teleport', eventType: 'teleport' },
+            vor_sphere_shield: { icon: '🛡️', title: '屏障阵列', shortHint: '点护盾：破屏障', hint: '破坏 5 个护盾节点，打开沃尔暴露窗口', logGoal: '点击“盾”；全破后削弱护盾，并让沃尔短暂暴露。', successText: '削弱护盾，玩家后续攻击增伤', required: 5, mitigationPerHit: 0.06, nodeText: '盾', castClass: 'vor-cast-shield', eventType: 'shield' }
+        };
+        return map[skill.id] || null;
+    }
+
+    function triggerVorArenaEvent(arena, config, state) {
+        var old = document.getElementById('vor-arena-event');
+        if (old) old.remove();
+        var layer = document.createElement('div');
+        layer.id = 'vor-arena-event';
+        layer.className = 'vor-arena-event vor-arena-event-' + config.eventType;
+        var html = '<div class="vor-event-title">' + config.title + '</div>';
+        if (config.eventType === 'beam') {
+            html += '<div class="vor-event-beam vor-event-beam-main"></div><div class="vor-event-beam vor-event-beam-sub-a"></div><div class="vor-event-beam vor-event-beam-sub-b"></div><div class="vor-event-rift-door vor-event-rift-left"></div><div class="vor-event-rift-door vor-event-rift-right"></div>';
+        } else if (config.eventType === 'mine') {
+            html += '<div class="vor-event-minefield"></div><div class="vor-event-danger-zone vor-event-danger-a"></div><div class="vor-event-danger-zone vor-event-danger-b"></div><div class="vor-event-danger-zone vor-event-danger-c"></div>';
+        } else if (config.eventType === 'teleport') {
+            html += '<div class="vor-event-rift-path"></div><div class="vor-event-rift-door vor-event-rift-left"></div><div class="vor-event-rift-door vor-event-rift-mid"></div><div class="vor-event-rift-door vor-event-rift-right"></div>';
+        } else if (config.eventType === 'shield') {
+            html += '<div class="vor-event-shield-wall"></div><div class="vor-event-shield-ring vor-event-shield-ring-a"></div><div class="vor-event-shield-ring vor-event-shield-ring-b"></div>';
+        } else {
+            html += '<div class="vor-event-target-sweep"></div><div class="vor-event-target-sweep vor-event-target-sweep-b"></div>';
+        }
+        layer.innerHTML = html;
+        arena.appendChild(layer);
+    }
+
+    function createVorInteractNode(arena, state, config, index) {
+        var node = document.createElement('button');
+        node.type = 'button';
+        node.className = 'vor-interact-node vor-interact-node-' + index;
+        node.textContent = config.nodeText || '击';
+        var points = getVorNodePoints(config.eventType, state.required);
+        var point = points[index % points.length];
+        node.style.left = point[0] + '%';
+        node.style.top = point[1] + '%';
+        node.onclick = function(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            if (!SkillCombat.vorInteraction || SkillCombat.vorInteraction.serial !== state.serial) return;
+            if (node.classList.contains('hit')) return;
+            node.classList.add('hit');
+            state.hits = Math.min(state.maxHits, state.hits + 1);
+            state.completed = state.hits >= state.required;
+            updateVorMechanicPanel(state);
+            showSkillDamage('破', 'enemy', false, '#ffd36a');
+            appendBattleLog('<div style="color:#9be7ff;">↳ 反制进度：' + state.title + ' ' + state.hits + '/' + state.required + '</div>');
+            if (state.completed) {
+                appendBattleLog('<div style="color:#72d7ff;">✅ 反制成功：' + state.title + ' 被破解！</div>');
+                var panel = document.getElementById('vor-mechanic-panel');
+                if (panel) panel.classList.add('completed');
+            }
+        };
+        arena.appendChild(node);
+    }
+
+    function getVorNodePoints(type, count) {
+        var maps = {
+            beam: [[12,24],[30,70],[50,34],[70,68],[88,28]],
+            mine: [[14,66],[28,34],[48,74],[67,38],[84,64]],
+            teleport: [[22,30],[52,70],[80,32]],
+            shield: [[16,24],[34,70],[50,20],[66,70],[84,24]],
+            seer: [[18,32],[38,66],[62,34],[82,66]]
+        };
+        return maps[type] || maps.seer;
+    }
+
+    function updateVorMechanicPanel(state) {
+        var txt = document.getElementById('vor-mechanic-progress-text');
+        var bar = document.getElementById('vor-mechanic-progress-bar');
+        if (txt) txt.textContent = state.hits + '/' + state.required;
+        if (bar) bar.style.width = Math.min(100, Math.floor((state.hits / state.required) * 100)) + '%';
+    }
+
+    function applyVorInteractionToEnemyDamage(skill, damage) {
+        var state = SkillCombat.vorInteraction;
+        if (!state || !isVorSkill(skill) || state.skillId !== skill.id) return damage;
+
+        var pressureBonus = Math.min(0.36, SkillCombat.vorPressure * 0.06);
+        if (pressureBonus > 0) {
+            damage = Math.floor(damage * (1 + pressureBonus));
+            appendBattleLog('<div style="color:#ff8844;">⚠️ 压力值强化了沃尔技能，伤害提高 ' + Math.floor(pressureBonus * 100) + '%。</div>');
+        }
+
+        var reduction = Math.min(0.88, state.hits * state.mitigationPerHit);
+        if (reduction > 0) {
+            damage = Math.max(1, Math.floor(damage * (1 - reduction)));
+            appendBattleLog('<div style="color:#72d7ff;">🌀 反制生效，沃尔本次伤害降低 ' + Math.floor(reduction * 100) + '%。</div>');
+        }
+
+        if (state.completed && state.counterDamageRatio > 0 && SkillCombat.enemy) {
+            var counter = Math.max(1, Math.floor(getEntityTotalMax(SkillCombat.enemy) * state.counterDamageRatio));
+            SkillCombat.enemy.hp = Math.max(0, SkillCombat.enemy.hp - counter);
+            appendBattleLog('<div style="color:#ffd36a;">🔑 雅努斯能量反噬沃尔 ' + counter + ' 伤害！</div>');
+            showSkillDamage(counter, 'enemy', true, '#ffd36a');
+        }
+
+        if (state.completed) {
+            SkillCombat.vorPressure = Math.max(0, SkillCombat.vorPressure - 1);
+            appendBattleLog('<div style="color:#72d7ff;">🔻 完全破解，压力值下降到 ' + SkillCombat.vorPressure + '/5。</div>');
+        } else {
+            SkillCombat.vorPressure = Math.min(5, SkillCombat.vorPressure + 1);
+            appendBattleLog('<div style="color:#ff8844;">🔺 未完全破解，压力值上升到 ' + SkillCombat.vorPressure + '/5。</div>');
+        }
+
+        return damage;
+    }
+
     function clearEnemyCausedEffects() {
         SkillCombat.playerDebuffs = [];
         SkillCombat.enemyDebuffs = [];
@@ -2077,15 +2623,67 @@
         var arena = enemyEl && enemyEl.closest('#page-dashboard');
         if (!arena) return;
 
-        arena.classList.remove('boss-arena-vor', 'boss-arena-vor-stage1', 'boss-arena-vor-stage2', 'boss-arena-vor-stage3');
+        arena.classList.remove('boss-arena-vor', 'boss-arena-vor-stage1', 'boss-arena-vor-stage2', 'boss-arena-vor-stage3', 'boss-arena-vor-awakened');
         if (enemyEl) enemyEl.classList.remove('boss-vor-avatar');
         if (playerEl) playerEl.classList.remove('boss-vor-target');
-        if (!enemy || (enemy.name || '').indexOf('沃尔上尉') === -1) return;
+        if (!enemy || (enemy.name || '').indexOf('沃尔上尉') === -1) {
+            removeVorArenaLayers(arena);
+            setVorStageClasses(arena, false);
+            return;
+        }
 
         var stage = enemy.bossStage || (enemy.name.indexOf('雅努斯觉醒') !== -1 ? 3 : enemy.name.indexOf('护盾相位') !== -1 ? 2 : 1);
+        var awakened = getEnemyHpPercent(enemy) <= 0.50;
         arena.classList.add('boss-arena-vor', 'boss-arena-vor-stage' + stage);
+        arena.classList.toggle('boss-arena-vor-awakened', awakened);
+        arena.setAttribute('data-vor-stage', stage);
+        if (awakened) ensureVorArenaLayers(arena, stage);
+        else removeVorArenaLayers(arena);
+        setVorStageClasses(arena, true);
         if (enemyEl) enemyEl.classList.add('boss-vor-avatar');
         if (playerEl) playerEl.classList.add('boss-vor-target');
+    }
+
+    function removeVorArenaLayers(arena) {
+        var layers = arena.querySelectorAll('.vor-arena-layer');
+        for (var i = 0; i < layers.length; i++) {
+            layers[i].remove();
+        }
+        var events = arena.querySelectorAll('.vor-arena-event');
+        for (var j = 0; j < events.length; j++) {
+            events[j].remove();
+        }
+    }
+
+    function setVorStageClasses(arena, enabled) {
+        var playerEl = document.getElementById('battlePlayerIcon');
+        var enemyEl = document.getElementById('battleEnemyIcon');
+        var playerCard = playerEl && playerEl.parentElement;
+        var enemyCard = enemyEl && enemyEl.parentElement;
+        var row = playerCard && playerCard.parentElement;
+
+        if (row) row.classList.toggle('vor-battle-stage-row', !!enabled);
+        if (playerCard) playerCard.classList.toggle('vor-combatant-card', !!enabled);
+        if (enemyCard) enemyCard.classList.toggle('vor-combatant-card', !!enabled);
+        if (playerCard) playerCard.classList.toggle('vor-player-card', !!enabled);
+        if (enemyCard) enemyCard.classList.toggle('vor-enemy-card', !!enabled);
+    }
+
+    function ensureVorArenaLayers(arena, stage) {
+        var layer = arena.querySelector('.vor-arena-layer');
+        if (!layer) {
+            layer = document.createElement('div');
+            layer.className = 'vor-arena-layer';
+            layer.innerHTML =
+                '<div class="vor-arena-grid"></div>' +
+                '<div class="vor-arena-core"></div>' +
+                '<div class="vor-arena-keymark">JANUS</div>' +
+                '<div class="vor-arena-scan vor-arena-scan-a"></div>' +
+                '<div class="vor-arena-scan vor-arena-scan-b"></div>' +
+                '<div class="vor-arena-warning">VOID LOCK</div>';
+            arena.insertBefore(layer, arena.firstChild);
+        }
+        layer.setAttribute('data-stage', stage || 1);
     }
 
     // 统一的 HP+护盾 条更新（护盾覆盖在HP条上）
@@ -3739,17 +4337,26 @@
 .boss-arena-vor {\
     position: relative;\
     isolation: isolate;\
+    overflow: hidden;\
+    min-height: 660px;\
+    padding-top: 22px;\
 }\
 .boss-arena-vor::before {\
     content: "";\
     position: absolute;\
-    inset: 52px 16px 168px 16px;\
-    border-radius: 18px;\
+    inset: 8px -28px 70px -28px;\
+    border-radius: 28px;\
     pointer-events: none;\
-    z-index: -1;\
-    background: radial-gradient(circle at 70% 34%, rgba(255,190,80,0.22), transparent 28%), radial-gradient(circle at 30% 64%, rgba(139,0,0,0.34), transparent 36%), linear-gradient(135deg, rgba(80,22,0,0.34), rgba(10,8,6,0.06));\
-    border: 1px solid rgba(255,160,72,0.28);\
-    box-shadow: inset 0 0 46px rgba(255,120,40,0.18), 0 0 28px rgba(255,120,40,0.08);\
+    z-index: 0;\
+    background: linear-gradient(135deg, rgba(15,18,24,0.38), rgba(0,0,0,0.08));\
+    border: 1px solid rgba(255,255,255,0.08);\
+    box-shadow: inset 0 0 34px rgba(0,0,0,0.32);\
+}\
+.boss-arena-vor-awakened::before {\
+    background: radial-gradient(circle at 72% 34%, rgba(255,210,90,0.30), transparent 24%), radial-gradient(circle at 28% 62%, rgba(139,0,0,0.46), transparent 34%), linear-gradient(135deg, rgba(80,22,0,0.46), rgba(10,8,6,0.08));\
+    border-color: rgba(255,176,78,0.42);\
+    box-shadow: inset 0 0 70px rgba(255,130,40,0.24), 0 0 36px rgba(255,120,40,0.12);\
+    animation: vorArenaBreath 2600ms ease-in-out infinite alternate;\
 }\
 .boss-arena-vor::after {\
     content: "JANUS KEY LOCK";\
@@ -3764,7 +4371,87 @@
     text-shadow: 0 0 14px rgba(255,190,80,0.7);\
     pointer-events: none;\
     animation: vorArenaSignal 1800ms ease-in-out infinite alternate;\
+    z-index: 2;\
+    opacity: 0;\
 }\
+.boss-arena-vor-awakened::after { opacity: 1; }\
+.vor-arena-layer {\
+    position: absolute;\
+    inset: 8px -28px 70px -28px;\
+    border-radius: 28px;\
+    overflow: hidden;\
+    pointer-events: none;\
+    z-index: 1;\
+}\
+.vor-arena-grid {\
+    position: absolute;\
+    inset: 0;\
+    background-image: linear-gradient(rgba(255,190,80,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,190,80,0.10) 1px, transparent 1px);\
+    background-size: 34px 34px;\
+    opacity: 0.34;\
+    transform: perspective(320px) rotateX(58deg) translateY(22px) scale(1.35);\
+    animation: vorGridDrift 3600ms linear infinite;\
+}\
+.vor-arena-core {\
+    position: absolute;\
+    right: 15%;\
+    top: 24%;\
+    width: 92px;\
+    height: 92px;\
+    border-radius: 50%;\
+    background: radial-gradient(circle, rgba(255,245,180,0.9), rgba(255,170,50,0.42) 40%, transparent 66%);\
+    box-shadow: 0 0 30px rgba(255,210,90,0.85), 0 0 72px rgba(255,120,40,0.45);\
+    animation: vorCorePulse 1500ms ease-in-out infinite alternate;\
+}\
+.vor-arena-core::before, .vor-arena-core::after {\
+    content: "";\
+    position: absolute;\
+    inset: -18px;\
+    border-radius: 50%;\
+    border: 2px dashed rgba(255,220,130,0.58);\
+    animation: vorCoreSpin 3200ms linear infinite;\
+}\
+.vor-arena-core::after {\
+    inset: -32px;\
+    border-style: solid;\
+    border-color: rgba(114,215,255,0.28);\
+    animation-duration: 5200ms;\
+    animation-direction: reverse;\
+}\
+.vor-arena-keymark {\
+    position: absolute;\
+    right: 12%;\
+    top: 14%;\
+    font-family: Orbitron, monospace;\
+    color: rgba(255,220,130,0.44);\
+    font-size: 0.78rem;\
+    letter-spacing: 6px;\
+    text-shadow: 0 0 12px rgba(255,210,100,0.9);\
+}\
+.vor-arena-scan {\
+    position: absolute;\
+    left: -20%;\
+    right: -20%;\
+    height: 2px;\
+    background: linear-gradient(90deg, transparent, rgba(255,215,120,0.78), transparent);\
+    box-shadow: 0 0 14px rgba(255,215,120,0.7);\
+    animation: vorScanSweep 2200ms linear infinite;\
+}\
+.vor-arena-scan-a { top: 28%; }\
+.vor-arena-scan-b { top: 62%; animation-delay: 780ms; opacity: 0.55; }\
+.vor-arena-warning {\
+    position: absolute;\
+    left: 24px;\
+    bottom: 18px;\
+    color: rgba(255,120,70,0.54);\
+    font-family: Orbitron, monospace;\
+    letter-spacing: 4px;\
+    font-size: 0.68rem;\
+    animation: vorWarningBlink 980ms steps(2,end) infinite;\
+}\
+.boss-arena-vor-stage2 .vor-arena-core { filter: hue-rotate(18deg) brightness(1.12); }\
+.boss-arena-vor-stage3 .vor-arena-core { filter: hue-rotate(70deg) brightness(1.25); animation-duration: 900ms; }\
+.boss-arena-vor-stage3::before { box-shadow: inset 0 0 90px rgba(255,90,220,0.26), 0 0 48px rgba(255,80,180,0.18); }\
 .boss-vor-avatar {\
     filter: drop-shadow(0 0 16px rgba(255,190,80,0.9)) drop-shadow(0 0 28px rgba(139,0,0,0.8));\
 }\
@@ -3780,8 +4467,482 @@
 .boss-vor-target {\
     filter: drop-shadow(0 0 10px rgba(0,212,255,0.45));\
 }\
+.vor-mechanic-panel {\
+    position: absolute;\
+    left: auto;\
+    right: 10px;\
+    top: 10px;\
+    transform: none;\
+    width: 210px;\
+    max-width: calc(100% - 20px);\
+    box-sizing: border-box;\
+    overflow: hidden;\
+    padding: 8px 10px;\
+    border-radius: 10px;\
+    border: 1px solid rgba(255,215,110,0.72);\
+    background: linear-gradient(135deg, rgba(15,8,0,0.88), rgba(92,22,0,0.66));\
+    box-shadow: 0 0 24px rgba(255,180,70,0.32), inset 0 0 22px rgba(255,215,110,0.12);\
+    z-index: 18;\
+    pointer-events: none;\
+    animation: vorMechanicPanelIn 260ms ease both;\
+}\
+.vor-mechanic-panel.completed {\
+    border-color: rgba(114,215,255,0.95);\
+    box-shadow: 0 0 30px rgba(114,215,255,0.42), inset 0 0 24px rgba(255,215,110,0.16);\
+}\
+.vor-mechanic-title {\
+    color: #ffd36a;\
+    font-family: Orbitron, monospace;\
+    font-size: 0.6rem;\
+    letter-spacing: 1px;\
+    margin-bottom: 4px;\
+    text-align: left;\
+    display: flex;\
+    justify-content: space-between;\
+    align-items: center;\
+    gap: 8px;\
+    min-width: 0;\
+}\
+.vor-mechanic-title span { color: #ff8844; font-size: 0.58rem; flex: 0 0 auto; }\
+.vor-mechanic-hint {\
+    color: rgba(230,235,255,0.82);\
+    font-size: 0.52rem;\
+    text-align: left;\
+    margin-bottom: 6px;\
+    line-height: 1.35;\
+    white-space: normal;\
+}\
+.vor-mechanic-progress {\
+    position: relative;\
+    height: 8px;\
+    border-radius: 999px;\
+    overflow: hidden;\
+    background: rgba(0,0,0,0.48);\
+    border: 1px solid rgba(255,215,110,0.28);\
+}\
+.vor-mechanic-progress span {\
+    position: absolute;\
+    inset: -5px 0 0 0;\
+    color: #fff2b8;\
+    font-family: Orbitron, monospace;\
+    font-size: 0.62rem;\
+    text-align: center;\
+    z-index: 2;\
+    text-shadow: 0 0 8px #000;\
+}\
+.vor-mechanic-progress i {\
+    display: block;\
+    width: 0%;\
+    height: 100%;\
+    background: linear-gradient(90deg, #ff8844, #ffd36a, #72d7ff);\
+    box-shadow: 0 0 16px rgba(255,215,110,0.8);\
+    transition: width 180ms ease;\
+}\
+.vor-interact-node {\
+    position: absolute;\
+    width: 64px;\
+    height: 64px;\
+    margin-left: -32px;\
+    margin-top: -32px;\
+    border-radius: 50%;\
+    border: 2px solid rgba(255,215,110,0.9);\
+    background: radial-gradient(circle, rgba(255,245,180,0.92), rgba(255,145,46,0.75) 45%, rgba(90,20,0,0.72));\
+    color: #2a1000;\
+    font-family: Orbitron, monospace;\
+    font-weight: 800;\
+    cursor: pointer;\
+    z-index: 22;\
+    box-shadow: 0 0 18px rgba(255,215,110,0.92), 0 0 36px rgba(255,90,40,0.38);\
+    animation: vorInteractNodePulse 850ms ease-in-out infinite alternate;\
+}\
+.vor-arena-event {\
+    position: absolute;\
+    inset: 8px -28px 70px -28px;\
+    border-radius: 28px;\
+    overflow: hidden;\
+    pointer-events: none;\
+    z-index: 14;\
+}\
+.vor-event-title {\
+    position: absolute;\
+    left: 50%;\
+    top: 18px;\
+    transform: translateX(-50%);\
+    color: rgba(255,245,190,0.72);\
+    font-family: Orbitron, monospace;\
+    font-size: 0.82rem;\
+    letter-spacing: 6px;\
+    text-shadow: 0 0 18px #ffd36a;\
+}\
+.vor-skill-active {\
+    animation: vorArenaShake 240ms linear 6;\
+}\
+.vor-event-beam {\
+    position: absolute;\
+    left: -10%;\
+    width: 120%;\
+    height: 34px;\
+    border-radius: 999px;\
+    background: linear-gradient(90deg, transparent, rgba(255,245,180,0.9), rgba(114,215,255,0.7), transparent);\
+    box-shadow: 0 0 34px rgba(255,215,110,0.9), 0 0 70px rgba(114,215,255,0.45);\
+    transform-origin: center;\
+    animation: vorArenaBeamSweep 1280ms ease-in-out both;\
+}\
+.vor-event-beam-main { top: 46%; transform: rotate(-10deg); }\
+.vor-event-beam-sub-a { top: 28%; height: 16px; animation-delay: 160ms; transform: rotate(14deg); opacity: 0.72; }\
+.vor-event-beam-sub-b { top: 66%; height: 16px; animation-delay: 280ms; transform: rotate(5deg); opacity: 0.62; }\
+.vor-event-rift-door {\
+    position: absolute;\
+    width: 150px;\
+    height: 220px;\
+    border-radius: 50%;\
+    border: 3px solid rgba(114,215,255,0.66);\
+    background: radial-gradient(circle, rgba(114,215,255,0.30), rgba(255,215,110,0.18), transparent 70%);\
+    box-shadow: 0 0 42px rgba(114,215,255,0.7), inset 0 0 34px rgba(255,215,110,0.22);\
+    animation: vorRiftDoorOpen 1180ms ease both;\
+}\
+.vor-event-rift-left { left: 6%; top: 28%; }\
+.vor-event-rift-mid { left: 43%; top: 18%; }\
+.vor-event-rift-right { right: 6%; top: 34%; }\
+.vor-event-minefield {\
+    position: absolute;\
+    inset: 18% 6% 10% 6%;\
+    background-image: radial-gradient(circle, rgba(255,80,50,0.52) 0 7px, transparent 8px), linear-gradient(rgba(255,80,50,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,80,50,0.15) 1px, transparent 1px);\
+    background-size: 86px 72px, 34px 34px, 34px 34px;\
+    border: 1px solid rgba(255,80,50,0.42);\
+    border-radius: 24px;\
+    animation: vorMinefieldPulse 920ms ease-in-out infinite alternate;\
+}\
+.vor-event-danger-zone {\
+    position: absolute;\
+    width: 30%;\
+    height: 34%;\
+    border-radius: 50%;\
+    background: radial-gradient(circle, rgba(255,70,40,0.38), transparent 68%);\
+    border: 2px dashed rgba(255,92,60,0.62);\
+    animation: vorDangerZone 760ms ease-in-out infinite alternate;\
+}\
+.vor-event-danger-a { left: 10%; top: 48%; }\
+.vor-event-danger-b { left: 38%; top: 22%; animation-delay: 180ms; }\
+.vor-event-danger-c { right: 8%; top: 50%; animation-delay: 320ms; }\
+.vor-event-rift-path {\
+    position: absolute;\
+    left: 8%;\
+    right: 8%;\
+    top: 48%;\
+    height: 20px;\
+    border-radius: 999px;\
+    background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,215,110,0.68) 18px 34px, rgba(114,215,255,0.58) 34px 52px, transparent 52px 70px);\
+    filter: drop-shadow(0 0 18px #ffd36a);\
+    transform: rotate(-7deg);\
+    animation: vorRiftPath 980ms linear infinite;\
+}\
+.vor-event-shield-wall {\
+    position: absolute;\
+    inset: 12% 7% 12% 7%;\
+    border-radius: 38px;\
+    border: 4px solid rgba(114,215,255,0.72);\
+    background: radial-gradient(circle at 50% 50%, rgba(114,215,255,0.10), rgba(255,215,110,0.12), transparent 70%);\
+    box-shadow: inset 0 0 60px rgba(114,215,255,0.35), 0 0 44px rgba(114,215,255,0.5);\
+    animation: vorShieldWall 1100ms ease-in-out infinite alternate;\
+}\
+.vor-event-shield-ring {\
+    position: absolute;\
+    left: 50%;\
+    top: 50%;\
+    width: 420px;\
+    height: 420px;\
+    margin-left: -210px;\
+    margin-top: -210px;\
+    border-radius: 50%;\
+    border: 2px dashed rgba(255,215,110,0.58);\
+    animation: vorCoreSpin 3600ms linear infinite;\
+}\
+.vor-event-shield-ring-b { width: 560px; height: 560px; margin-left: -280px; margin-top: -280px; animation-duration: 5600ms; animation-direction: reverse; }\
+.vor-event-target-sweep {\
+    position: absolute;\
+    inset: 18% 8%;\
+    border: 2px solid rgba(255,215,110,0.48);\
+    clip-path: polygon(0 0, 100% 0, 100% 18%, 0 18%, 0 0, 0 82%, 100% 82%, 100% 100%, 0 100%);\
+    animation: vorTargetSweep 880ms ease-in-out infinite alternate;\
+}\
+.vor-event-target-sweep-b { transform: rotate(90deg); opacity:0.58; }\
+.vor-interact-node::before {\
+    content: "";\
+    position: absolute;\
+    inset: -10px;\
+    border-radius: 50%;\
+    border: 1px dashed rgba(114,215,255,0.62);\
+    animation: vorCoreSpin 1500ms linear infinite;\
+}\
+.vor-interact-node.hit {\
+    pointer-events: none;\
+    color: #dfffff;\
+    background: radial-gradient(circle, #dfffff, #72d7ff 42%, transparent 70%);\
+    border-color: rgba(114,215,255,0.98);\
+    animation: vorInteractNodeHit 360ms ease both;\
+}\
+.vor-interact-node-1 { animation-delay: 120ms; }\
+.vor-interact-node-2 { animation-delay: 240ms; }\
+.vor-interact-node-3 { animation-delay: 360ms; }\
+.vor-target-seer-locked::before, .vor-target-janus-rifted::before, .vor-target-mine-marked::before {\
+    content: "";\
+    position: absolute;\
+    inset: -14px;\
+    pointer-events: none;\
+    z-index: 8;\
+}\
+.vor-target-seer-locked::before {\
+    border: 2px solid rgba(255,210,90,0.9);\
+    box-shadow: 0 0 18px rgba(255,210,90,0.8), inset 0 0 18px rgba(255,210,90,0.2);\
+    clip-path: polygon(0 0,34% 0,34% 8%,8% 8%,8% 34%,0 34%,0 0,66% 0,100% 0,100% 34%,92% 34%,92% 8%,66% 8%,66% 0,100% 66%,100% 100%,66% 100%,66% 92%,92% 92%,92% 66%,100% 66%,34% 100%,0 100%,0 66%,8% 66%,8% 92%,34% 92%,34% 100%);\
+    animation: vorAimLock 980ms ease both;\
+}\
+.vor-target-janus-rifted::before {\
+    border-radius: 50%;\
+    background: conic-gradient(from 0deg, transparent, rgba(255,215,110,0.56), transparent, rgba(114,215,255,0.42), transparent);\
+    filter: blur(1px) drop-shadow(0 0 18px #ffd36a);\
+    animation: vorRiftOnTarget 1320ms ease both;\
+}\
+.vor-target-mine-marked::before {\
+    background: radial-gradient(circle, rgba(255,68,40,0.38), transparent 58%);\
+    border: 2px dashed rgba(255,90,60,0.72);\
+    border-radius: 50%;\
+    animation: vorMineTargetPulse 1100ms ease both;\
+}\
+.vor-picture-seer-recoil { animation: vorSeerRecoil 980ms cubic-bezier(.17,.8,.22,1) both !important; }\
+.vor-picture-janus-channel { animation: vorJanusChannel 1420ms ease both !important; }\
+.vor-picture-command-cast { animation: vorCommandCast 1260ms ease both !important; }\
+.vor-picture-sphere-shield { animation: vorSphereShieldPose 1280ms ease both !important; }\
+.vor-vfx-seer-scope { width: 92px; height: 92px; margin-left: -46px; margin-top: -46px; border-radius: 50%; border: 2px solid rgba(255,220,100,0.82); box-shadow: 0 0 22px rgba(255,210,80,0.75), inset 0 0 22px rgba(255,210,80,0.18); animation-name: vorSeerScope !important; }\
+.vor-vfx-seer-bullet { height: 5px !important; box-shadow: 0 0 12px #ffd36a, 0 0 22px #ff8844; }\
+.vor-vfx-hit-sparks { width: 64px; height: 64px; margin-left: -32px; margin-top: -32px; border-radius: 50%; background: radial-gradient(circle, #fff3b0, #ffaa44 34%, transparent 68%); box-shadow: 0 0 24px #ffd36a; animation-name: vorHitSparks !important; }\
+.vor-vfx-janus-glyph { width: 58px; height: 58px; margin-left: -29px; margin-top: -29px; border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size:1.35rem; color:#ffd36a; border: 1px solid rgba(255,215,110,0.52); box-shadow: 0 0 24px rgba(255,215,110,0.75), inset 0 0 18px rgba(255,215,110,0.2); animation-name: vorJanusGlyph !important; }\
+.vor-vfx-janus-glyph-large { width: 86px; height: 86px; margin-left: -43px; margin-top: -43px; font-size: 1.8rem; }\
+.vor-vfx-rift-ring { width: 112px; height: 112px; margin-left: -56px; margin-top: -56px; border-radius:50%; border: 2px dashed rgba(114,215,255,0.7); box-shadow: 0 0 26px rgba(114,215,255,0.72), inset 0 0 24px rgba(255,215,110,0.25); animation-name: vorRiftRing !important; }\
+.vor-vfx-beam-warmup { width: 70px; height: 70px; margin-left: -35px; margin-top: -35px; border-radius:50%; background: radial-gradient(circle, #fff8c8, rgba(255,180,60,0.58), transparent 70%); box-shadow: 0 0 34px #ffd36a; animation-name: vorBeamWarmup !important; }\
+.vor-vfx-janus-beam-core { height: 10px !important; box-shadow: 0 0 22px #ffd36a, 0 0 42px #72d7ff; }\
+.vor-vfx-janus-beam-side { height: 4px; width: var(--vfx-distance); margin-left: 0; margin-top: -2px; transform-origin: left center; background: linear-gradient(90deg, transparent, rgba(114,215,255,0.76), rgba(255,215,110,0.92), transparent); animation-name: enemySwitchBeam !important; }\
+.vor-vfx-janus-beam-side-a { filter: drop-shadow(0 0 12px #72d7ff); }\
+.vor-vfx-janus-beam-side-b { filter: drop-shadow(0 0 12px #ffd36a); }\
+.vor-vfx-void-burst { background: radial-gradient(circle, #fff8c8, #ffd36a 24%, rgba(114,215,255,0.55) 42%, transparent 72%) !important; }\
+.vor-vfx-afterimage { width: 92px; height: 46px; margin-left: -46px; margin-top: -23px; border-radius: 999px; background: repeating-linear-gradient(90deg, transparent 0 10px, rgba(255,210,90,0.48) 10px 18px, transparent 18px 28px); filter: drop-shadow(0 0 16px #ffd36a); animation-name: vorAfterimageDash !important; }\
+.vor-vfx-rift-cut { width: 120px; height: 120px; margin-left: -60px; margin-top: -60px; border-radius:50%; background: conic-gradient(transparent, rgba(255,215,110,0.62), transparent, rgba(114,215,255,0.42), transparent); animation-name: vorRiftCut !important; }\
+.vor-vfx-exec-shot { height: 7px !important; filter: drop-shadow(0 0 16px #ff9966); }\
+.vor-vfx-command-pulse { width: 92px; height: 92px; margin-left:-46px; margin-top:-46px; border-radius:50%; border: 2px solid rgba(255,170,68,0.64); box-shadow: 0 0 22px #ffaa44; animation-name: vorCommandPulse !important; }\
+.vor-vfx-nervos-mine { animation-name: vorNervosMineRun !important; filter: drop-shadow(0 0 12px #ffaa44); }\
+.vor-vfx-mine-grid { width: 126px; height: 126px; margin-left:-63px; margin-top:-63px; border-radius: 18px; background-image: linear-gradient(rgba(255,90,60,0.32) 1px, transparent 1px), linear-gradient(90deg, rgba(255,90,60,0.32) 1px, transparent 1px); background-size: 18px 18px; border: 1px solid rgba(255,100,70,0.56); animation-name: vorMineGrid !important; }\
+.vor-vfx-mine-detonation { background: radial-gradient(circle, #fff0aa, #ff8844 26%, #ff3355 46%, transparent 74%) !important; }\
+.vor-vfx-shield-build { width: 118px; height: 118px; margin-left:-59px; margin-top:-59px; border-radius:50%; background: conic-gradient(rgba(114,215,255,0.15), rgba(255,215,110,0.65), rgba(114,215,255,0.2), rgba(255,215,110,0.62)); box-shadow: 0 0 26px rgba(114,215,255,0.84); animation-name: vorShieldBuild !important; }\
+.vor-vfx-shield-dome-outer { border-color: rgba(255,215,110,0.72) !important; box-shadow: 0 0 36px rgba(114,215,255,0.9), inset 0 0 28px rgba(255,215,110,0.32) !important; }\
+.vor-vfx-shield-runes { width: 148px; height: 148px; margin-left:-74px; margin-top:-74px; border-radius:50%; border: 2px dashed rgba(255,215,110,0.58); animation-name: vorShieldRunes !important; }\
+/* ===== 沃尔 BOSS 战：重新构图，避免战场挤压技能栏 ===== */\
+.boss-arena-vor {\
+    min-height: 390px;\
+    height: clamp(330px, 48vh, 430px);\
+    padding: 0 !important;\
+    margin-bottom: 12px;\
+    border-radius: 18px;\
+}\
+.boss-arena-vor::before, .vor-arena-layer, .vor-arena-event {\
+    inset: 0 !important;\
+    border-radius: 18px !important;\
+}\
+.boss-arena-vor::after {\
+    top: 16px;\
+    font-size: 0.68rem;\
+}\
+.vor-battle-stage-row {\
+    position: relative !important;\
+    width: 100%;\
+    height: 100%;\
+    min-height: inherit;\
+    display: block !important;\
+    z-index: 5;\
+}\
+.vor-combatant-card {\
+    position: absolute !important;\
+    width: min(30%, 190px);\
+    min-width: 98px;\
+    padding: 8px 6px;\
+    border-radius: 16px;\
+    background: linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0.12));\
+    border: 1px solid rgba(255,255,255,0.10);\
+    backdrop-filter: blur(2px);\
+    z-index: 8;\
+}\
+.vor-player-card {\
+    left: 5%;\
+    bottom: 24px;\
+}\
+.vor-enemy-card {\
+    right: 5%;\
+    top: 62px;\
+}\
+.boss-arena-vor .skill-combat-avatar {\
+    width: clamp(68px, 12vw, 108px);\
+    height: clamp(68px, 12vw, 108px);\
+}\
+.boss-vor-avatar {\
+    transform: scale(1.02);\
+}\
+.vor-arena-core {\
+    right: 43%;\
+    top: 38%;\
+    width: 76px;\
+    height: 76px;\
+    opacity: 0.72;\
+}\
+.vor-mechanic-panel {\
+    top: 10px;\
+    left: auto;\
+    right: 10px;\
+    width: 210px;\
+    max-width: calc(100% - 20px);\
+    box-sizing: border-box;\
+    z-index: 19;\
+}\
+.vor-interact-node {\
+    width: clamp(46px, 8vw, 58px);\
+    height: clamp(46px, 8vw, 58px);\
+    margin-left: -29px;\
+    margin-top: -29px;\
+    z-index: 23;\
+}\
+.skill-combat-running .skill-bar-panel {\
+    position: sticky;\
+    bottom: 8px;\
+    z-index: 80;\
+    margin: 8px 0 10px;\
+    padding: 10px;\
+    background: linear-gradient(180deg, rgba(5,16,24,0.96), rgba(0,0,0,0.94));\
+    backdrop-filter: blur(6px);\
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.36), 0 0 22px rgba(0,212,255,0.14);\
+}\
+.skill-combat-running .skill-bar-buttons {\
+    grid-template-columns: repeat(5, minmax(64px, 1fr));\
+    gap: 8px;\
+}\
+.skill-combat-running .skill-btn {\
+    min-height: 72px;\
+}\
+.skill-combat-running #autoBattleLog {\
+    max-height: 150px !important;\
+}\
+@media (max-width: 768px) {\
+    body.skill-combat-running { padding-bottom: 172px !important; }\
+    .boss-arena-vor {\
+        height: 280px;\
+        min-height: 280px;\
+        margin-left: -12px;\
+        margin-right: -12px;\
+    }\
+    .vor-player-card { left: 3%; bottom: 14px; }\
+    .vor-enemy-card { right: 3%; top: 48px; }\
+    .vor-combatant-card {\
+        width: 35%;\
+        min-width: 86px;\
+        padding: 5px 3px;\
+    }\
+    .boss-arena-vor .skill-combat-avatar {\
+        width: 58px;\
+        height: 58px;\
+    }\
+    .vor-mechanic-panel {\
+        top: 8px;\
+        left: auto;\
+        right: 8px;\
+        width: 170px;\
+        max-width: calc(100% - 16px);\
+        box-sizing: border-box;\
+        padding: 6px 8px;\
+    }\
+    .vor-mechanic-title { font-size: 0.58rem; }\
+    .vor-mechanic-hint { font-size: 0.52rem; }\
+    .skill-combat-running .skill-bar-panel {\
+        display: block !important;\
+        visibility: visible !important;\
+        opacity: 1 !important;\
+        position: fixed !important;\
+        left: 0 !important;\
+        right: 0 !important;\
+        bottom: calc(62px + env(safe-area-inset-bottom)) !important;\
+        width: 100vw !important;\
+        max-width: 100vw !important;\
+        margin: 0 !important;\
+        padding: 7px 8px 8px !important;\
+        border-radius: 14px 14px 0 0;\
+        border-left: none;\
+        border-right: none;\
+        border-bottom: none;\
+        z-index: 3000 !important;\
+        transform: none !important;\
+        overflow: visible !important;\
+    }\
+    .skill-combat-running .skill-bar-title {\
+        margin-bottom: 6px;\
+        font-size: 0.72rem;\
+    }\
+    .skill-combat-running .skill-bar-hint { display: none; }\
+    .skill-combat-running .skill-bar-buttons {\
+        display: grid !important;\
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;\
+        gap: 4px;\
+    }\
+    .skill-combat-running .skill-btn {\
+        display: flex !important;\
+        min-height: 54px;\
+        border-width: 1px;\
+        border-radius: 9px;\
+        padding: 2px 1px !important;\
+    }\
+    .skill-combat-running .skill-btn-icon { font-size: 1.12rem !important; }\
+    .skill-combat-running .skill-btn-name { font-size: 0.5rem !important; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\
+    .skill-combat-running .skill-btn-cost { font-size: 0.48rem !important; }\
+    .skill-combat-running .skill-btn-key { display: none !important; }\
+    .skill-combat-running #autoBattleLog {\
+        height: 120px !important;\
+        margin-bottom: 8px !important;\
+    }\
+}\
 @keyframes vorArenaSignal { 0% { opacity:0.28; letter-spacing:4px; } 100% { opacity:0.72; letter-spacing:7px; } }\
 @keyframes vorKeyOrbit { 0% { transform:rotate(0deg) translateX(0); } 50% { transform:rotate(10deg) translateX(6px); } 100% { transform:rotate(0deg) translateX(0); } }\
+@keyframes vorMechanicPanelIn { 0% { opacity:0; transform:translate(-50%, -12px) scale(0.96); } 100% { opacity:1; transform:translate(-50%, 0) scale(1); } }\
+@keyframes vorInteractNodePulse { 0% { transform:scale(0.92); filter:brightness(0.9); } 100% { transform:scale(1.12); filter:brightness(1.3); } }\
+@keyframes vorInteractNodeHit { 0% { opacity:1; transform:scale(1); } 100% { opacity:0; transform:scale(2.2) rotate(120deg); } }\
+@keyframes vorArenaBreath { 0% { opacity:0.78; filter:brightness(1); } 100% { opacity:1; filter:brightness(1.18); } }\
+@keyframes vorGridDrift { 0% { background-position:0 0; } 100% { background-position:34px 34px; } }\
+@keyframes vorCorePulse { 0% { transform:scale(0.92); opacity:0.55; } 100% { transform:scale(1.12); opacity:0.95; } }\
+@keyframes vorCoreSpin { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }\
+@keyframes vorScanSweep { 0% { transform:translateY(-80px) skewX(-18deg); opacity:0; } 22% { opacity:1; } 100% { transform:translateY(180px) skewX(-18deg); opacity:0; } }\
+@keyframes vorWarningBlink { 0%,48% { opacity:0.25; } 50%,100% { opacity:0.82; } }\
+@keyframes vorAimLock { 0% { opacity:0; transform:scale(1.55) rotate(0deg); } 34% { opacity:1; transform:scale(1) rotate(0deg); } 70% { opacity:0.95; transform:scale(1.08) rotate(2deg); } 100% { opacity:0; transform:scale(0.86) rotate(-2deg); } }\
+@keyframes vorRiftOnTarget { 0% { opacity:0; transform:scale(0.42) rotate(0deg); } 42% { opacity:0.95; transform:scale(1.18) rotate(180deg); } 100% { opacity:0; transform:scale(1.55) rotate(360deg); } }\
+@keyframes vorMineTargetPulse { 0% { opacity:0; transform:scale(1.35) rotate(0deg); } 38% { opacity:1; transform:scale(0.92) rotate(80deg); } 100% { opacity:0; transform:scale(1.22) rotate(180deg); } }\
+@keyframes vorSeerRecoil { 0%,100% { transform:translate(0,0); filter:brightness(1); } 22% { transform:translateX(-8px); filter:brightness(1.8) drop-shadow(0 0 18px #ffd36a); } 42% { transform:translateX(7px); } 62% { transform:translateX(-5px); filter:brightness(1.55); } }\
+@keyframes vorJanusChannel { 0% { transform:scale(1); filter:brightness(1); } 34% { transform:scale(1.08); filter:brightness(2.2) drop-shadow(0 0 30px #ffd36a); } 76% { transform:scale(1.12); filter:brightness(2.5) drop-shadow(0 0 36px #72d7ff); } 100% { transform:scale(1); filter:brightness(1); } }\
+@keyframes vorCommandCast { 0%,100% { transform:translateY(0); filter:brightness(1); } 35% { transform:translateY(-10px) rotate(-3deg); filter:brightness(1.8) drop-shadow(0 0 22px #ffaa44); } 65% { transform:translateY(4px) rotate(3deg); } }\
+@keyframes vorSphereShieldPose { 0%,100% { transform:scale(1); filter:brightness(1); } 30% { transform:scale(0.96); } 58% { transform:scale(1.14); filter:brightness(2.2) drop-shadow(0 0 30px #72d7ff); } }\
+@keyframes vorSeerScope { 0% { opacity:0; transform:scale(1.8) rotate(0deg); } 34% { opacity:1; transform:scale(0.9) rotate(90deg); } 76% { opacity:.88; transform:scale(1.06) rotate(180deg); } 100% { opacity:0; transform:scale(0.72) rotate(260deg); } }\
+@keyframes vorHitSparks { 0% { opacity:0; transform:scale(0.2); } 32% { opacity:1; transform:scale(1.25); } 100% { opacity:0; transform:scale(2.4); } }\
+@keyframes vorJanusGlyph { 0% { opacity:0; transform:scale(0.35) rotate(-90deg); } 35% { opacity:1; transform:scale(1.1) rotate(24deg); } 100% { opacity:0; transform:scale(1.65) rotate(180deg); } }\
+@keyframes vorRiftRing { 0% { opacity:0; transform:scale(0.3) rotate(0deg); } 35% { opacity:1; transform:scale(1.08) rotate(160deg); } 100% { opacity:0; transform:scale(1.75) rotate(360deg); } }\
+@keyframes vorBeamWarmup { 0% { opacity:0; transform:scale(0.18); } 55% { opacity:1; transform:scale(1.2); } 100% { opacity:0; transform:scale(0.82); } }\
+@keyframes vorAfterimageDash { 0% { opacity:0; transform:translateX(0) scaleX(0.2); } 30% { opacity:.88; } 100% { opacity:0; transform:translate(calc(var(--vfx-x) * .58), calc(var(--vfx-y) * .2)) scaleX(1.4); } }\
+@keyframes vorRiftCut { 0% { opacity:0; transform:scale(0.25) rotate(0deg); } 45% { opacity:.95; transform:scale(1.15) rotate(200deg); } 100% { opacity:0; transform:scale(1.8) rotate(360deg); } }\
+@keyframes vorCommandPulse { 0% { opacity:0; transform:scale(0.4); } 45% { opacity:1; transform:scale(1.25); } 100% { opacity:0; transform:scale(2.05); } }\
+@keyframes vorNervosMineRun { 0% { opacity:0; transform:translate(0,0) rotate(0deg); } 18% { opacity:1; } 62% { transform:translate(calc(var(--vfx-x) * .62 + var(--mine-offset, 0px)), calc(var(--vfx-y) * .55 - 20px)) rotate(560deg); } 100% { opacity:0; transform:translate(calc(var(--vfx-x) + var(--mine-offset, 0px)), var(--vfx-y)) rotate(980deg); } }\
+@keyframes vorMineGrid { 0% { opacity:0; transform:scale(1.45) rotate(0deg); } 35% { opacity:1; transform:scale(1) rotate(2deg); } 100% { opacity:0; transform:scale(0.72) rotate(-4deg); } }\
+@keyframes vorShieldBuild { 0% { opacity:0; transform:scale(0.35) rotate(0deg); } 42% { opacity:1; transform:scale(1.08) rotate(180deg); } 100% { opacity:0; transform:scale(1.4) rotate(360deg); } }\
+@keyframes vorShieldRunes { 0% { opacity:0; transform:scale(0.65) rotate(0deg); } 36% { opacity:0.9; transform:scale(1) rotate(120deg); } 100% { opacity:0; transform:scale(1.25) rotate(360deg); } }\
+@keyframes vorArenaShake { 0%,100% { transform:translate(0,0); } 25% { transform:translate(2px,-1px); } 50% { transform:translate(-2px,1px); } 75% { transform:translate(1px,2px); } }\
+@keyframes vorArenaBeamSweep { 0% { opacity:0; transform:translateX(-35%) rotate(var(--beam-rot, -10deg)) scaleX(.3); } 30% { opacity:1; } 100% { opacity:0; transform:translateX(35%) rotate(var(--beam-rot, -10deg)) scaleX(1.25); } }\
+@keyframes vorRiftDoorOpen { 0% { opacity:0; transform:scale(.25) rotate(0deg); } 40% { opacity:1; transform:scale(1.08) rotate(160deg); } 100% { opacity:0.55; transform:scale(.96) rotate(360deg); } }\
+@keyframes vorMinefieldPulse { 0% { opacity:.36; filter:brightness(.9); } 100% { opacity:.88; filter:brightness(1.45); } }\
+@keyframes vorDangerZone { 0% { opacity:.28; transform:scale(.88); } 100% { opacity:.86; transform:scale(1.18); } }\
+@keyframes vorRiftPath { 0% { background-position:0 0; opacity:.45; } 100% { background-position:70px 0; opacity:.92; } }\
+@keyframes vorShieldWall { 0% { opacity:.44; transform:scale(.96); } 100% { opacity:.9; transform:scale(1.03); } }\
+@keyframes vorTargetSweep { 0% { opacity:.28; transform:scale(.94); } 100% { opacity:.86; transform:scale(1.04); } }\
 ';
 
         document.head.appendChild(style);

@@ -1,47 +1,4 @@
-//防开发者和右键工具
-
-(function() {
-    var destroyed = false;
-    
-    function destroy() {
-        if (destroyed) return;
-        destroyed = true;
-        document.body.innerHTML = '<div style="position:fixed;inset:0;background:#000;color:#ff4444;display:flex;align-items:center;justify-content:center;font-size:2rem;">请关闭开发者工具并刷新游戏</div>';
-    }
-    
-    // F12
-    document.addEventListener('keydown', function(e) {
-        if (e.keyCode === 123) {
-            e.preventDefault();
-            destroy();
-        }
-    });
-    
-    // 右键
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // 选择文本
-    document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // 拖拽
-    document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-    // 复制
-    document.addEventListener('copy', function(e) {
-        e.preventDefault();
-        return false;
-    });
-    
-})();
+	
 
 
 // 变量名兼容（音频控制台使用currentTrack，用户代码使用currentTrackIndex）
@@ -1370,6 +1327,39 @@ async function redeemCodeServer(code) {
     }
 }
 
+// 管理员维护：清理注册后超过指定天数仍未登录/未初始化数据的账号
+async function cleanupInactiveAccounts(days) {
+    if (!isAdmin()) {
+        showToast('权限不足，需要管理员权限', 'error');
+        return false;
+    }
+    var keepDays = parseInt(days || 10);
+    try {
+        const { data: preview, error: previewError } = await sb.rpc('preview_inactive_accounts', { p_days: keepDays });
+        if (previewError) throw previewError;
+        var count = Array.isArray(preview) ? preview.length : 0;
+        if (count <= 0) {
+            showToast('没有符合清理条件的账号', 'info');
+            return true;
+        }
+        var sampleNames = preview.slice(0, 5).map(function(u) { return u.username || u.id; }).join('、');
+        if (!confirm('将软清理 ' + count + ' 个超过 ' + keepDays + ' 天未登录的账号：' + sampleNames + (count > 5 ? ' 等' : '') + '。确认继续？')) {
+            showToast('已取消清理', 'info');
+            return false;
+        }
+        const { data, error } = await sb.rpc('cleanup_inactive_accounts', { p_days: keepDays });
+        if (error) throw error;
+        var deleted = 0;
+        if (typeof data === 'number') deleted = data;
+        else if (Array.isArray(data) && data[0]) deleted = data[0].deleted_count || data[0].cleanup_inactive_accounts || 0;
+        showToast('已软清理 ' + deleted + ' 个超过 ' + keepDays + ' 天未登录的账号', 'success');
+        return true;
+    } catch (err) {
+        showToast('清理失败：请先在数据库执行 supabase_maintenance.sql（' + err.message + '）', 'error');
+        return false;
+    }
+}
+
 
 
 // 辅助函数：更新兑换结果显示
@@ -1514,6 +1504,9 @@ function showRedeemAdmin() {
                 '<button class="btn" onclick="loadRedeemStats()" style="background: linear-gradient(135deg, var(--orokin-cyan-dim), var(--orokin-cyan));">' +
                     '📊 查看统计' +
                 '</button>' +
+                '<button class="btn" onclick="cleanupInactiveAccounts(10)" style="background: linear-gradient(135deg, #5a1a1a, var(--grineer-red));">' +
+                    '🧹 清理10天未登录' +
+                '</button>' +
             '</div>' +
             '<div id="adminContent" style="max-height: 400px; overflow-y: auto;">' +
                 '<div style="color: #666; text-align: center; padding: 40px;">点击上方按钮操作</div>' +
@@ -1555,6 +1548,10 @@ function showAddCodeForm() {
                     '<label style="color: #888; font-size: 0.8rem;">最大兑换次数</label>' +
                     '<input type="number" id="adminMaxUses" value="100" min="1">' +
                 '</div>' +
+                '<div class="input-group">' +
+                    '<label style="color: #888; font-size: 0.8rem;">有效天数（0=永久）</label>' +
+                    '<input type="number" id="adminExpireDays" value="0" min="0">' +
+                '</div>' +
             '</div>' +
             '<button class="btn" onclick="submitNewCode()" style="width: 100%; background: linear-gradient(135deg, var(--infested-green), #88ff88); color: #000;">' +
                 '✅ 确认添加' +
@@ -1576,6 +1573,7 @@ async function submitNewCode() {
     var points = parseInt(document.getElementById('adminPoints').value) || 0;
     var staminaVal = parseInt(document.getElementById('adminStamina').value) || 0;
     var maxUses = parseInt(document.getElementById('adminMaxUses').value) || 1;
+    var expireDays = parseInt(document.getElementById('adminExpireDays').value) || 0;
     
     var resultDiv = document.getElementById('adminResult');
     
@@ -1614,7 +1612,8 @@ async function submitNewCode() {
             max_uses: maxUses,
             used_count: 0,
             is_active: true,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
+            expires_at: expireDays > 0 ? new Date(Date.now() + expireDays * 24 * 60 * 60 * 1000).toISOString() : null
         };
         
         const { data: inserted, error: insertError } = await sb
@@ -1633,7 +1632,7 @@ async function submitNewCode() {
         }
         
         resultDiv.innerHTML = '<span style="color: var(--infested-green);">✅ 兑换码 ' + code + ' 添加成功！</span>' +
-            '<div style="color: #666; font-size: 0.8rem; margin-top: 8px;">奖励: 💰' + credits + ' 💎' + points + ' ⚡' + staminaVal + ' | 限' + maxUses + '次</div>';
+            '<div style="color: #666; font-size: 0.8rem; margin-top: 8px;">奖励: 💰' + credits + ' 💎' + points + ' ⚡' + staminaVal + ' | 限' + maxUses + '次 | ' + (expireDays > 0 ? '有效' + expireDays + '天' : '永久有效') + '</div>';
         
         // 清空输入
         document.getElementById('adminCodeInput').value = '';
@@ -1667,7 +1666,7 @@ async function loadRedeemStats() {
         // 正确的代码
         const { data, error } = await sb
             .from('redeem_codes')
-            .select('code, credits, points, stamina, max_uses, used_count, is_active, created_at');
+            .select('code, credits, points, stamina, max_uses, used_count, is_active, created_at, expires_at');
         
         if (error) throw error;
         
@@ -1692,6 +1691,7 @@ async function loadRedeemStats() {
             '<th style="padding: 10px; text-align: center;">奖励</th>' +
             '<th style="padding: 10px; text-align: center;">使用</th>' +
             '<th style="padding: 10px; text-align: center;">剩余</th>' +
+            '<th style="padding: 10px; text-align: center;">有效期</th>' +
             '<th style="padding: 10px; text-align: center;">状态</th>' +
             '<th style="padding: 10px; text-align: center;">操作</th>' +
             '</tr>' +
@@ -1701,6 +1701,7 @@ async function loadRedeemStats() {
         data.forEach(function(item) {
             var remaining = item.max_uses - item.used_count;
             var isExpired = item.expires_at && new Date(item.expires_at) < new Date();
+            var expireText = item.expires_at ? new Date(item.expires_at).toLocaleDateString() : '永久';
             var status = item.is_active && !isExpired ? 
                 '<span style="color: var(--infested-green);">✓ 有效</span>' : 
                 '<span style="color: var(--grineer-red);">✗ 失效</span>';
@@ -1715,6 +1716,7 @@ async function loadRedeemStats() {
                 '<td style="padding: 10px; text-align: center;">' + reward.join(' ') + '</td>' +
                 '<td style="padding: 10px; text-align: center;">' + item.used_count + '/' + item.max_uses + '</td>' +
                 '<td style="padding: 10px; text-align: center; color: ' + (remaining > 0 ? 'var(--infested-green)' : 'var(--grineer-red)') + ';">' + remaining + '</td>' +
+                '<td style="padding: 10px; text-align: center; color: #888;">' + expireText + '</td>' +
                 '<td style="padding: 10px; text-align: center;">' + status + '</td>' +
                 '<td style="padding: 10px; text-align: center;">' +
                     '<button onclick="deleteRedeemCode(\'' + item.code + '\')" style="background: rgba(255,68,68,0.2); border: 1px solid var(--grineer-red); color: var(--grineer-red); padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">删除</button>' +
@@ -2221,7 +2223,15 @@ window.recordCashEarned = function(amount) {
 						pressing: false,
 						timer: null,
 						longPressThreshold: 800, // 800ms 触发长按
-						autoMode: false
+						autoMode: false,
+						ignoreNextClick: false
+					};
+					let battleThreatConfirmState = {
+						key: null,
+						contextKey: null,
+						enemy: null,
+						confirmed: false,
+						confirmedContexts: {}
 					};
 					let autoBattleState = {
 						active: false,
@@ -2560,6 +2570,12 @@ setTimeout(createStars, 1000);
 					        if (now - last >= thirtyMinutes) {
 					            showToast(`欢迎回来， ${user.username}`, 'success');
 					        }
+					        if (typeof grantWarframeLevelCards === 'function' && gameData.warframe_levels) {
+					            Object.keys(gameData.warframe_levels).forEach(function(wfKey) {
+					                var wfData = gameData.warframe_levels[wfKey];
+					                if (wfData && wfData.level) grantWarframeLevelCards(wfKey, wfData.level);
+					            });
+					        }
 					        gameData.last_login = new Date().toISOString();
 					        await saveGameData();
 					    } catch (err) {
@@ -2753,6 +2769,8 @@ async function saveGameData() {
             warehouse: warehouse || [],
             player_cards: playerCards || {},
             card_shards: cardShards || {},
+            warframe_card_claims: gameData.warframe_card_claims || {},
+            codex_deck_rewards: gameData.codex_deck_rewards || {},
             codex: gameData.codex || { grineer: 0, corpus: 0, infested: 0, sentient: 0 },
             missions: gameData.missions || {},
             foundry: gameData.foundry || {},
@@ -2904,6 +2922,11 @@ today_stats: todayStats,
 
 							if (error || !data) {
 								showToast('代号或密钥错误', 'error');
+								showLoading(false);
+								return;
+							}
+							if (data.deleted_at) {
+								showToast('该账号已被清理，如需恢复请联系管理员', 'error');
 								showLoading(false);
 								return;
 							}
@@ -3704,6 +3727,9 @@ function adminOverchargeStamina() {
 						gameData.warframe_level = maxLevel;
 						gameData.warframe_xp = 0;
 						gameData.warframe_max_xp = 999999;
+						if (typeof grantWarframeLevelCards === 'function') {
+							grantWarframeLevelCards(type, maxLevel);
+						}
 						saveGameData();
 						updateUI();
 						showToast("战甲已升至 " + maxLevel + " 级（最大上限）！", "success");
@@ -4666,6 +4692,92 @@ function cleanupMusicConsole() {
     }
 }
 
+function getBattleThreatTag(enemy) {
+    if (!enemy) return 'normal';
+    if (enemy.combatThreat && enemy.combatThreat.tag) return enemy.combatThreat.tag;
+    if (enemy.threatTag) return enemy.threatTag;
+    if (enemy.cardType) return enemy.cardType;
+    if (enemy.type) return enemy.type;
+    return 'normal';
+}
+
+function getBattleThreatLevel(enemy) {
+    if (!enemy) return 1;
+    if (enemy.combatThreat && enemy.combatThreat.level) return enemy.combatThreat.level;
+    if (enemy.threatLevel) return enemy.threatLevel;
+    const tag = getBattleThreatTag(enemy);
+    const map = { normal: 1, elite: 2, boss: 3, mechanic: 4, super: 5 };
+    return map[tag] || map[enemy.type] || 1;
+}
+
+function isMechanicPlusThreatEnemy(enemy) {
+    const tag = getBattleThreatTag(enemy);
+    return tag === 'mechanic' || tag === 'super' || getBattleThreatLevel(enemy) >= 4;
+}
+
+function getBattleThreatContextKey(planet, zone) {
+    return String(planet && (planet.id || planet.name) || 'unknown') + '|' + String(zone && (zone.id || zone.name) || 'planet');
+}
+
+function getBattleThreatEnemyKey(enemy, planet, zone) {
+    return getBattleThreatContextKey(planet, zone) + '|' + String(enemy && (enemy.id || enemy.name) || 'enemy');
+}
+
+function getConfirmedThreatEnemyForCurrentContext(planet, zone) {
+    const contextKey = getBattleThreatContextKey(planet, zone);
+    if (battleThreatConfirmState.confirmed && battleThreatConfirmState.contextKey === contextKey && battleThreatConfirmState.enemy) {
+        return battleThreatConfirmState.enemy;
+    }
+    return null;
+}
+
+function resetThreatConfirmButton() {
+    const text = document.getElementById('continueBattleBtnText');
+    if (text && !battleBtnPressState.autoMode) text.textContent = `⚔️ 肃清(-${getBattlePreviewStaminaCost()}⚡) ️️`;
+}
+
+function getBattleStaminaCost(enemy) {
+    return isMechanicPlusThreatEnemy(enemy) ? 30 : STAMINA_BATTLE_COST;
+}
+
+function getBattlePreviewStaminaCost() {
+    if (selectedZone && selectedZone.bossEnemyId && typeof ENEMIES !== 'undefined') {
+        const bossTemplate = (ENEMIES || []).find(function(e) { return e.id === selectedZone.bossEnemyId; });
+        if (bossTemplate && isMechanicPlusThreatEnemy(bossTemplate)) return 30;
+    }
+    return STAMINA_BATTLE_COST;
+}
+
+function shouldBlockForThreatConfirm(enemy, playerLevel, planet, zone) {
+    if (!enemy || !isMechanicPlusThreatEnemy(enemy)) {
+        return false;
+    }
+
+    const contextKey = getBattleThreatContextKey(planet, zone);
+    if (battleThreatConfirmState.confirmedContexts[contextKey]) {
+        return false;
+    }
+
+    const key = getBattleThreatEnemyKey(enemy, planet, zone);
+    if (battleThreatConfirmState.confirmed && battleThreatConfirmState.key === key) {
+        return false;
+    }
+
+    battleThreatConfirmState.key = key;
+    battleThreatConfirmState.contextKey = contextKey;
+    battleThreatConfirmState.enemy = enemy;
+    battleThreatConfirmState.confirmed = true;
+
+    const threatTag = getBattleThreatTag(enemy);
+    const text = document.getElementById('continueBattleBtnText');
+    if (text) text.textContent = '⚠️ 再次确认';
+    const levelText = playerLevel < 30
+        ? `当前战甲 Lv.${playerLevel} 未达到高危作战标准，战斗中会被压制；`
+        : `当前战甲 Lv.${playerLevel} 已达到高危作战标准；`;
+    showToast(`风险变量：当前 ${enemy.name} 具有威胁性，再次确认并 ⚡-30 对其宣战`, 'warning');
+    return true;
+}
+
 function startAutoBattleWithPlanet(planet) {
 	
     if (autoBattleState.active) return;
@@ -4675,14 +4787,6 @@ function startAutoBattleWithPlanet(planet) {
         showToast('【星渊】链接中断，请恢复网络', 'error');
         return;
     }
-
-    if (stamina < STAMINA_BATTLE_COST) {
-        
-        showToast(`负荷不足！需要 ${STAMINA_BATTLE_COST} 点负荷`, 'error');
-        return;
-    }
-
-        modifyStamina(-STAMINA_BATTLE_COST);
 
     // ═══════════════════════════════════════════════════════════════
     //  1. 获取玩家属性（使用新公式）
@@ -4697,30 +4801,57 @@ function startAutoBattleWithPlanet(planet) {
     // ═══════════════════════════════════════════════════════════════
     //  2. 获取敌人（模板+公式生成属性）
     // ═══════════════════════════════════════════════════════════════
-    var enemyTemplate = selectedZone && selectedZone.bossEnemyId
-        ? (ENEMIES || []).find(e => e.id === selectedZone.bossEnemyId)
-        : getRandomEnemy(planet, selectedZone);
-    if (!enemyTemplate) {
-        showToast('生成敌人失败', 'error');
-        return;
-    }
-    
-    // 使用spawnEnemy生成完整属性
-    var enemy = (typeof spawnEnemy === 'function')
-        ? spawnEnemy(enemyTemplate.id, selectedZone && selectedZone.bossBattle ? (selectedZone.level || playerLevel) : playerLevel)
-        : null;
-    if (!enemy && selectedZone && selectedZone.bossBattle) {
-        enemy = Object.assign({}, enemyTemplate);
-        enemy.level = selectedZone.level || enemy.level || playerLevel;
-        enemy.maxHp = enemy.maxHp || enemy.hp || 500;
-        enemy.hp = enemy.maxHp;
-        enemy.maxShield = enemy.maxShield || enemy.shield || 0;
-        enemy.shield = enemy.maxShield;
+    var enemy = getConfirmedThreatEnemyForCurrentContext(planet, selectedZone);
+    var enemyTemplate = null;
+    if (!enemy) {
+        enemyTemplate = selectedZone && selectedZone.bossEnemyId
+            ? (ENEMIES || []).find(e => e.id === selectedZone.bossEnemyId)
+            : getRandomEnemy(planet, selectedZone);
+        if (!enemyTemplate) {
+            showToast('生成敌人失败', 'error');
+            return;
+        }
+        
+        // 使用spawnEnemy生成完整属性
+        enemy = (typeof spawnEnemy === 'function')
+            ? spawnEnemy(enemyTemplate.id, selectedZone && selectedZone.bossBattle ? (selectedZone.level || playerLevel) : playerLevel)
+            : null;
+        if (!enemy && selectedZone && selectedZone.bossBattle) {
+            enemy = Object.assign({}, enemyTemplate);
+            enemy.level = selectedZone.level || enemy.level || playerLevel;
+            enemy.maxHp = enemy.maxHp || enemy.hp || 500;
+            enemy.hp = enemy.maxHp;
+            enemy.maxShield = enemy.maxShield || enemy.shield || 0;
+            enemy.shield = enemy.maxShield;
+        }
     }
     if (!enemy) {
         showToast('初始化敌人属性失败', 'error');
         return;
     }
+
+    if (shouldBlockForThreatConfirm(enemy, playerLevel, planet, selectedZone)) {
+        return;
+    }
+    const battleCost = getBattleStaminaCost(enemy);
+    if (stamina < battleCost) {
+        showToast(`负荷不足！需要 ${battleCost} 点负荷`, 'error');
+        return;
+    }
+
+    if (isMechanicPlusThreatEnemy(enemy)) {
+        const contextKey = getBattleThreatContextKey(planet, selectedZone);
+        battleThreatConfirmState.confirmedContexts[contextKey] = true;
+    }
+
+    battleThreatConfirmState.key = null;
+    battleThreatConfirmState.contextKey = null;
+    battleThreatConfirmState.enemy = null;
+    battleThreatConfirmState.confirmed = false;
+    // confirmedContexts 保留用于 session 级别去重，刷新页面才重置
+    resetThreatConfirmButton();
+
+    modifyStamina(-battleCost);
 
     // ═══════════════════════════════════════════════════════════════
     //  3. 初始化肃清状态
@@ -5011,6 +5142,47 @@ if (enemy.type === 'boss' || enemy.cardType === 'boss') {
         }
     }
 }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  沃尔上尉特殊掉落
+    // ═══════════════════════════════════════════════════════════════
+    if ((enemy.name || '').indexOf('沃尔上尉') !== -1) {
+        // 必掉战甲铸造部件（从 FOUNDRY_RECIPES 中筛选）
+        if (typeof FOUNDRY_RECIPES !== 'undefined') {
+            var warframeParts = FOUNDRY_RECIPES.filter(function(r) {
+                return r.category === 'warframe' &&
+                    (r.name.indexOf('头部神经光元') !== -1 || r.name.indexOf('机体') !== -1 || r.name.indexOf('系统') !== -1) &&
+                    r.name.indexOf('蓝图') === -1;
+            });
+            if (warframeParts.length > 0) {
+                var part = warframeParts[Math.floor(Math.random() * warframeParts.length)];
+                drops.push({ name: part.name, icon: part.icon || '⚙️', amount: 1, type: 'warframe_part', image: part.image });
+                addToWarehouse(part.name, part.icon || '⚙️', 1, 'warframe_part', part.image);
+                addBattleLog('🎁 沃尔上尉掉落: ' + (part.icon || '⚙️') + ' ' + part.name, 'drop');
+            }
+        }
+        // 低概率 💰20 (10%)
+        if (Math.random() < 0.10) {
+            var extraCash = 20;
+            var canEarnExtra = canEarnCashToday(extraCash);
+            if (canEarnExtra === false) {
+                addBattleLog('💰 沃尔上尉额外掉落 0 Rout（已达日上限）', 'warning');
+            } else {
+                var actualExtraCash = (typeof canEarnExtra === 'number') ? canEarnExtra : extraCash;
+                currentUser.rout_points = (currentUser.rout_points || 0) + actualExtraCash;
+                gameData.rout_points = currentUser.rout_points;
+                recordCashEarned(actualExtraCash);
+                addBattleLog('💰 沃尔上尉额外掉落 ' + actualExtraCash + ' Rout' + (actualExtraCash < extraCash ? '（已达日上限）' : ''), actualExtraCash > 0 ? 'drop' : 'warning');
+            }
+        }
+        // 低概率 💎1 (5%)
+        if (Math.random() < 0.05) {
+            var diamondReward = 1;
+            gameData.prime_points = (gameData.prime_points || 0) + diamondReward;
+            currentUser.prime_points = gameData.prime_points;
+            addBattleLog('💎 沃尔上尉额外掉落 ' + diamondReward + ' Prime', 'drop');
+        }
+    }
 
     // 经验奖励
     const xpReward = getEnemyXP(enemy);
@@ -5313,7 +5485,7 @@ function getEnemyXP(enemy) {
 						}
 
 						div.className = colorClass;
-						div.textContent = text;
+						div.innerHTML = text;
 						div.style.marginBottom = '4px';
 
 						log.appendChild(div);
@@ -6583,7 +6755,7 @@ function addGatheringLog(text, type) {
     }
     
     div.className = colorClass;
-    div.textContent = text;
+    div.innerHTML = text;
     div.style.marginBottom = '4px';
     
     log.appendChild(div);
@@ -9028,7 +9200,7 @@ function showMiningConfirm() {
     document.getElementById('page-mining-confirm').classList.remove('hidden');
     
     // 填充确认信息
-    document.getElementById('miningConfirmIcon').textContent = selectedMiningZone.icon;
+    document.getElementById('miningConfirmIcon').innerHTML = selectedMiningZone.icon;
     document.getElementById('miningConfirmName').textContent = selectedMiningZone.name;
     document.getElementById('miningConfirmDesc').textContent = selectedMiningZone.desc;
     
@@ -9047,7 +9219,7 @@ function showGatheringConfirm() {
     document.getElementById('page-gathering-confirm').classList.remove('hidden');
     
     // 填充确认信息
-    document.getElementById('gatheringConfirmIcon').textContent = selectedGatheringZone.icon;
+    document.getElementById('gatheringConfirmIcon').innerHTML = selectedGatheringZone.icon;
     document.getElementById('gatheringConfirmName').textContent = selectedGatheringZone.name;
     document.getElementById('gatheringConfirmDesc').textContent = selectedGatheringZone.desc;
     
@@ -9602,7 +9774,7 @@ function backToGatheringPlanets() {
 						const factionEl = document.getElementById('selectedPlanetFaction-' + factionId);
 						const dropEl = document.getElementById('selectedPlanetDrop-' + factionId);
 
-						if (iconEl) iconEl.textContent = planet.icon;
+						if (iconEl) iconEl.innerHTML = planet.icon;
 						if (nameEl) nameEl.textContent = planet.name;
 						if (descEl) descEl.textContent = planet.desc;
 						if (levelEl) levelEl.textContent = planet.level;
@@ -9689,6 +9861,41 @@ function backToGatheringPlanets() {
 						renderFactionZones(factionId, parentZone, parentZone.subZones);
 					}
 
+					function renderFactionBossIntro(factionId, zone) {
+						const infoEl = document.getElementById('selectedZoneInfo-' + factionId);
+						if (!infoEl) return;
+
+						let introEl = document.getElementById('selectedZoneBossIntro-' + factionId);
+						if (!introEl) {
+							introEl = document.createElement('div');
+							introEl.id = 'selectedZoneBossIntro-' + factionId;
+							const dropsEl = document.getElementById('selectedZoneDrops-' + factionId);
+							if (dropsEl && dropsEl.parentNode) {
+								dropsEl.parentNode.insertBefore(introEl, dropsEl);
+							} else {
+								infoEl.insertBefore(introEl, infoEl.querySelector('button'));
+							}
+						}
+
+						if (!zone || !zone.bossBattle || (zone.bossEnemyId || '').indexOf('vor') === -1) {
+							introEl.style.display = 'none';
+							introEl.innerHTML = '';
+							return;
+						}
+
+						introEl.style.display = 'block';
+						introEl.style.cssText = 'display:block; margin: 12px auto 14px; padding: 12px; max-width: 760px; text-align:left; background: linear-gradient(135deg, rgba(255,190,80,0.08), rgba(0,0,0,0.35)); border: 1px solid rgba(255,190,80,0.35); border-radius: 10px; color:#aaa; font-size:0.78rem; line-height:1.7;';
+						introEl.innerHTML = `
+							<div style="color: var(--tenno-gold); font-family:'Orbitron'; font-size:0.86rem; margin-bottom:8px; text-align:center;">当前 BOSS 机制</div>
+							<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+								<div><span style="color:#ffd36a;">阶段性：</span>会出现三连锁定，雷网封锁，裂隙换位，球形屏障，裂隙光束等技能</div>
+								<div><span style="color:#ffd36a;">异常抗性：</span>沃尔大多会抵抗击晕/致盲，只会偶尔被短暂打断</div>
+								<div><span style="color:#ffd36a;">反制机制：</span>战场中出现可点击的节点，可减伤、拆雷、破盾或反噬沃尔</div>
+								<div><span style="color:#ff8844;">压力值：</span>反制失败 +1，每层使沃尔技能伤害 +6%；压力 4+ 会追加节点</div>
+							</div>
+						`;
+					}
+
 					// 选择区域
 					function selectFactionZone(factionId, zoneId) {
 						const config = FACTION_CONFIG[factionId];
@@ -9717,9 +9924,10 @@ function backToGatheringPlanets() {
 
 						selectedFactionZone = zone;
 
-						document.getElementById('selectedZoneIcon-' + factionId).textContent = zone.icon;
+						document.getElementById('selectedZoneIcon-' + factionId).innerHTML = zone.icon;
 						document.getElementById('selectedZoneName-' + factionId).textContent = zone.name;
 						document.getElementById('selectedZoneDesc-' + factionId).textContent = zone.desc;
+						renderFactionBossIntro(factionId, zone);
 						
 						
 
@@ -9937,6 +10145,7 @@ function addXP(amount) {
     }
 
     const wfData = gameData.warframe_levels[type];
+    const levelBefore = wfData.level || 1;
     
     // 等级上限50级
     const MAX_LEVEL = 50;
@@ -9976,6 +10185,10 @@ function addXP(amount) {
     gameData.warframe_level = wfData.level;
     gameData.warframe_xp = wfData.xp;
     gameData.warframe_max_xp = wfData.max_xp;
+
+    if (wfData.level > levelBefore && typeof grantWarframeLevelCards === 'function') {
+        grantWarframeLevelCards(type, wfData.level);
+    }
 }
 
 					// ═══════════════════════════════════════════════════════════════
@@ -11174,13 +11387,13 @@ function claimWarframeAsItem(craftKey) {
 							'<tr><td colspan="5" style="text-align: center; color: #666; padding: 40px;">加载中...</td></tr>';
 
 						try {
-							// 从 game_data 表读取 player_cards 和 streak 数据
+							// 从 game_data 表读取 player_cards、streak 和 warframe_levels 数据
 							const {
 								data,
 								error
 							} = await sb
 								.from('game_data')
-								.select('user_id, username, player_cards, streak, warframe_level')
+								.select('user_id, username, player_cards, streak, warframe_levels')
 								.limit(50);
 
 							if (error) throw error;
@@ -11191,27 +11404,39 @@ function claimWarframeAsItem(craftKey) {
 								return;
 							}
 
-							// 计算每个用户的回响收集数量
-							const usersWithCardCount = data.map(user => {
+							// 计算每个用户的回响收集数量和战甲总等级
+							const usersWithStats = data.map(user => {
 								let cardCount = 0;
 								if (user.player_cards) {
-									// player_cards 是对象，键是回响ID，值是回响信息
 									for (var key in user.player_cards) {
 										if (key !== '_shards' && user.player_cards[key] && user.player_cards[key].count > 0) {
 											cardCount++;
 										}
 									}
 								}
+
+								// 计算所有战甲等级总和
+								var totalLevel = 0;
+								if (user.warframe_levels) {
+									for (var wfKey in user.warframe_levels) {
+										var wf = user.warframe_levels[wfKey];
+										if (wf && wf.level) {
+											totalLevel += wf.level;
+										}
+									}
+								}
+
 								return {
 									...user,
-									cardCount: cardCount
+									cardCount: cardCount,
+									totalLevel: totalLevel
 								};
 							});
 
-							// 按回响数量降序排序
-							usersWithCardCount.sort((a, b) => b.cardCount - a.cardCount);
+							// 按战甲总等级降序排序
+							usersWithStats.sort((a, b) => b.totalLevel - a.totalLevel);
 
-							tbody.innerHTML = usersWithCardCount.map((user, index) => {
+							tbody.innerHTML = usersWithStats.map((user, index) => {
 								const rank = index + 1;
 								let rankClass = 'rank-other';
 								if (rank === 1) rankClass = 'rank-1';
@@ -11226,18 +11451,19 @@ function claimWarframeAsItem(craftKey) {
 								const streakColor = streakDays >= 7 ? 'var(--infested-green)' : 
 														streakDays >= 3 ? 'var(--tenno-gold)' : '#888';
 
-								// 段位显示
-								const level = user.warframe_level || 1;
-								let rankTitle = '觉醒者';
-								if (level >= 30) rankTitle = '传奇';
-								else if (level >= 20) rankTitle = '大师';
-								else if (level >= 10) rankTitle = '精英';
+								// 总等级显示
+								var tl = user.totalLevel || 0;
+								var tlColor = tl >= 300 ? 'var(--tenno-gold)' : tl >= 150 ? '#5adfff' : tl >= 50 ? '#65f0a3' : '#888';
+
+								// Tenno 名字截断
+								var rawName = user.username || '未知Tenno';
+								var displayName = rawName.length > 10 ? rawName.substring(0, 10) + '...' : rawName;
 
 								return `
                 <tr>
                     <td><div class="leaderboard-rank ${rankClass}">${rank}</div></td>
-                    <td>${user.username || '未知Tenno'}</td>
-                    <td>${rankTitle} <span style="color: #555; font-size: 0.75rem;">(Lv.${level})</span></td>
+                    <td title="${rawName}" style="max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${displayName}</td>
+                    <td style="color: ${tlColor}; font-family: 'Orbitron'; font-weight: bold;">Lv.${tl}</td>
                     <td style="color: var(--tenno-gold); font-family: 'Orbitron';">${user.cardCount}</td>
                     <td style="color: ${streakColor}; font-size: 0.85rem;">${streakText}</td>
                 </tr>
@@ -12225,6 +12451,22 @@ onConfirm: function() {
 					        modalOverlay.style.display = '';  // ← 重置，让 CSS 控制
 					        modalOverlay.style.zIndex = '';     // ← 重置
 					    }
+					    const modalContent = document.getElementById('modalContent');
+					    const modalBox = modalContent ? modalContent.closest('.modal') : null;
+					    if (modalContent) {
+					        modalContent.style.maxWidth = '';
+					        modalContent.style.width = '';
+					        modalContent.style.maxHeight = '';
+					        modalContent.style.overflow = '';
+					    }
+					    if (modalBox) {
+					        modalBox.style.maxWidth = '';
+					        modalBox.style.width = '';
+					        modalBox.style.minWidth = '';
+					        modalBox.style.maxHeight = '';
+					        modalBox.style.overflow = '';
+					        modalBox.style.padding = '';
+					    }
 					}
 					
 					function handleModalOverlayClick(event) {
@@ -12382,6 +12624,10 @@ onConfirm: function() {
 					}
 
 					function handleBattleBtnClick(e) {
+						if (battleBtnPressState.ignoreNextClick) {
+							battleBtnPressState.ignoreNextClick = false;
+							return;
+						}
 						// 短点击：如果不在自动模式下，执行普通继续肃清
 						if (!battleBtnPressState.autoMode && !battleBtnPressState.pressing) {
 							continueLastBattle();
@@ -12413,6 +12659,7 @@ onConfirm: function() {
 
 						// 短按执行普通继续肃清（仅在非自动模式下）
 						if (!battleBtnPressState.longPressTriggered && !battleBtnPressState.autoMode) {
+							battleBtnPressState.ignoreNextClick = true;
 							continueLastBattle();
 						}
 					}
@@ -12442,7 +12689,7 @@ onConfirm: function() {
 							startAutoBattleLoop();
 						} else {
 							btn.classList.remove('btn-auto-mode');
-							if (text) text.textContent = '⚔️ 肃清(-3⚡)';
+							if (text) text.textContent = `⚔️ 肃清(-${getBattlePreviewStaminaCost()}⚡)`;
 							if (indicator) indicator.style.display = 'none';
 							// 重置停止请求标记
 							battleStopRequested = false;
@@ -12472,7 +12719,7 @@ onConfirm: function() {
 							return;
 						}
 
-						if (selectedPlanet && stamina >= STAMINA_BATTLE_COST && !autoBattleState.active) {
+						if (selectedPlanet && stamina >= getBattlePreviewStaminaCost() && !autoBattleState.active) {
 							startAutoBattleWithPlanet(selectedPlanet);
 						}
 
@@ -12488,7 +12735,8 @@ onConfirm: function() {
 								stopAutoBattleLoop();
 								return;
 							}
-							if (!autoBattleState.active && selectedPlanet && stamina >= STAMINA_BATTLE_COST) {
+							const previewCost = getBattlePreviewStaminaCost();
+							if (!autoBattleState.active && selectedPlanet && stamina >= previewCost) {
 								if (battleStopRequested) {
 									stopAutoBattleLoop();
 									toggleAutoBattleMode(false);
@@ -12496,7 +12744,7 @@ onConfirm: function() {
 									return;
 								}
 								startAutoBattleWithPlanet(selectedPlanet);
-							} else if (stamina < STAMINA_BATTLE_COST && !autoBattleState.active) {
+							} else if (stamina < previewCost && !autoBattleState.active) {
 								addBattleLog('⚡ 负荷不足，自动巡航已暂停', 'warning');
 								showToast('负荷不足，自动巡航已暂停', 'warning');
 								toggleAutoBattleMode(false);
@@ -12799,6 +13047,7 @@ window.adminPromoteCardStar = adminPromoteCardStar;
 					window.deleteRedeemCode = deleteRedeemCode;
 					window.redeemCode = redeemCode;
 					window.showRedeemCodeModal = showRedeemCodeModal;
+					window.cleanupInactiveAccounts = cleanupInactiveAccounts;
 					window.submitNewCode = submitNewCode;
 					window.cancelFoundryCraft = cancelFoundryCraft;
 					

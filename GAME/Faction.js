@@ -14,9 +14,9 @@ var PLANETS = [
 
 // 第2页 - 各派系下属的星球（独立配置）
 var PLANETS_GRINEER = [
-    { id: 'earth', name: '寰宇-Grineer', icon: '🌍', image: 'GAME/Faction/earth.jpg', minLevel: 1, maxLevel: 5, faction: 'grineer', factionName: 'Grineer', dropMult: 1.0, desc: '起源系统的摇篮', color: '#4a8c4a', locked: false },
-    { id: 'sedna', name: '夜灵之墓', icon: '🔴', image: 'GAME/Faction/sedna.jpg', minLevel: 15, maxLevel: 25, faction: 'grineer', factionName: 'Grineer', dropMult: 1.5, desc: 'Grineer女皇的领地', color: '#cc4444', locked: true },
-    { id: 'kuva', name: '星域凶顽', icon: '💀', image: 'GAME/Faction/kuva.jpg', minLevel: 25, maxLevel: 35, faction: 'grineer', factionName: 'Grineer', dropMult: 2.0, desc: '赤毒Grineer的核心要塞', color: '#8b0000', locked: false }
+    { id: 'earth', name: '寰宇-Grineer', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/earth.jpg', minLevel: 1, maxLevel: 5, faction: 'grineer', factionName: 'Grineer', dropMult: 1.0, desc: '起源系统的摇篮', color: '#4a8c4a', locked: false },
+    { id: 'sedna', name: '夜灵之墓',icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/sedna.jpg', minLevel: 15, maxLevel: 25, faction: 'grineer', factionName: 'Grineer', dropMult: 1.5, desc: 'Grineer女皇的领地', color: '#cc4444', locked: true },
+    { id: 'kuva', name: '星域凶顽', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/kuva.jpg', minLevel: 25, maxLevel: 35, faction: 'grineer', factionName: 'Grineer', dropMult: 2.0, desc: '赤毒Grineer的核心要塞', color: '#8b0000', locked: false }
 ];
 
 var PLANETS_CORPUS = [
@@ -48,14 +48,14 @@ var PLANETS_WHISPER = [
 // 第3页 - 各派系下属星球的区域配置
 var PLANET_ZONES_GRINEER = {
     earth: [
-        { id: 'e_zone1', name: '☿️游掠凶形☿️', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 5, minLevel: 5, maxLevel: 10, faction: 'grineer', factionName: 'Grineer', dropMult: 1.2, desc: 'Grineer巡逻区域', color: '#4a8c4a', locked: false },
-        { id: 'e_zone2', name: '☿交锋异士☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: false },
-        { id: 'e_zone3', name: '☿暴戾战将☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: false },
-        { id: 'e_zone4', name: '☿畸变造物☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
-        { id: 'e_zone5', name: '☿长空掠影☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
-        { id: 'e_zone6', name: '☿澜下械躯☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
-        { id: 'e_zone7', name: '☿工坊役众☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
-        { id: 'e_zone8', name: '☿统御凶僚☿', icon: '☿️', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true }
+        { id: 'e_zone1', name: '☿️游掠凶形☿️', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 5, minLevel: 5, maxLevel: 10, faction: 'grineer', factionName: 'Grineer', dropMult: 1.2, desc: 'Grineer巡逻区域', color: '#4a8c4a', locked: false },
+        { id: 'e_zone2', name: '☿交锋异士☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: false },
+        { id: 'e_zone3', name: '☿暴戾战将☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: false },
+        { id: 'e_zone4', name: '☿畸变造物☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
+        { id: 'e_zone5', name: '☿长空掠影☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
+        { id: 'e_zone6', name: '☿澜下械躯☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
+        { id: 'e_zone7', name: '☿工坊役众☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true },
+        { id: 'e_zone8', name: '☿统御凶僚☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', image: 'GAME/Faction/Infested.jpg', level: 8, minLevel: 8, maxLevel: 12, faction: 'grineer', factionName: 'Grineer', dropMult: 1.3, desc: 'Grineer精英交战区', color: '#4a8c4a', locked: true }
     ],
     sedna: [
         { id: 's_zone1', name: '女皇禁地', icon: '👑', image: 'GAME/Faction/sedna.jpg', level: 18, minLevel: 18, maxLevel: 25, faction: 'grineer', factionName: 'Grineer', dropMult: 1.8, desc: 'Grineer女皇的私人领地', color: '#cc4444', locked: true }
@@ -64,7 +64,7 @@ var PLANET_ZONES_GRINEER = {
         {
             id: 'k_zone1',
             name: '雅努斯之钥',
-            icon: '🔑',
+            icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">',
             image: 'GAME/Faction/kuva.jpg',
             level: 28,
             minLevel: 28,
@@ -74,12 +74,12 @@ var PLANET_ZONES_GRINEER = {
             dropMult: 2.5,
             desc: '',
             color: '#8b0000',
-            locked: true,
+            locked: false,
             subZones: [
                 {
                     id: 'vor_duel_1',
-                    name: '沃尔上尉对决1',
-                    icon: '🔑',
+                    name: '沃尔上尉',
+                    icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">',
                     image: 'GAME/Faction/kuva.jpg',
                     level: 28,
                     minLevel: 28,
@@ -87,17 +87,17 @@ var PLANET_ZONES_GRINEER = {
                     faction: 'grineer',
                     factionName: 'Grineer',
                     dropMult: 2.8,
-                    desc: '赤毒核心前厅，沃尔上尉以 Seer 与雅努斯之钥试探 Tenno。',
+                    desc: '雅努斯之钥的试探',
                     color: '#ff8844',
-                    locked: true,
+                    locked: false,
                     bossBattle: true,
                     bossEnemyId: 'boss_vor_01',
                     battlefieldType: 'janus_key_duel_1'
                 },
                 {
                     id: 'vor_duel_2',
-                    name: '沃尔上尉对决2',
-                    icon: '🛡️',
+                    name: '堕落·沃尔',
+                    icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">',
                     image: 'GAME/Faction/kuva.jpg',
                     level: 31,
                     minLevel: 31,
@@ -105,7 +105,7 @@ var PLANET_ZONES_GRINEER = {
                     faction: 'grineer',
                     factionName: 'Grineer',
                     dropMult: 3.0,
-                    desc: '球形护盾阶段，沃尔会频繁传送并利用护盾拖延战斗。',
+                    desc: '',
                     color: '#ffaa44',
                     locked: true,
                     bossBattle: true,
@@ -114,8 +114,8 @@ var PLANET_ZONES_GRINEER = {
                 },
                 {
                     id: 'vor_duel_3',
-                    name: '沃尔上尉对决3',
-                    icon: '☄️',
+                    name: '雅努斯·沃尔上尉',
+                    icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">',
                     image: 'GAME/Faction/kuva.jpg',
                     level: 34,
                     minLevel: 34,
@@ -123,7 +123,7 @@ var PLANET_ZONES_GRINEER = {
                     faction: 'grineer',
                     factionName: 'Grineer',
                     dropMult: 3.5,
-                    desc: '雅努斯之钥完全启动，虚空光束、地雷和传送压迫同时出现。',
+                    desc: '',
                     color: '#ffcc66',
                     locked: true,
                     bossBattle: true,
@@ -230,34 +230,34 @@ let selectedGatheringPlanet = null;
 
 var MINING_ZONES = {
     earth_mine: [
-        { id: 'em_z1', name: '巨兽之骸', icon: '⛏️', level: 1, minLevel: 1, dropMult: 1.0, desc: '地球表面的浅层矿脉，适合新手', locked: false },
-        { id: 'em_z2', name: '希图斯的守望', icon: '🏔️', level: 3, minLevel: 3, dropMult: 1.2, desc: '峡谷深处的裂隙矿脉', locked: true },
+        { id: 'em_z1', name: '巨兽之骸', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 1, minLevel: 1, dropMult: 1.0, desc: '地球表面的浅层矿脉，适合新手', locked: false },
+        { id: 'em_z2', name: '希图斯的守望', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 3, minLevel: 3, dropMult: 1.2, desc: '峡谷深处的裂隙矿脉', locked: true },
     ],
     mars_mine: [
-        { id: 'mm_z1', name: '蓝晶与赤晶', icon: '🔥', level: 5, minLevel: 5, dropMult: 1.3, desc: '火星地下的熔岩隧道', locked: false  },
-        { id: 'mm_z2', name: 'Corpus利润之霜', icon: '🌋', level: 8, minLevel: 8, dropMult: 1.6, desc: '火山深处的核心矿脉', locked: true },
+        { id: 'mm_z1', name: '蓝晶与赤晶', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 5, minLevel: 5, dropMult: 1.3, desc: '火星地下的熔岩隧道', locked: false  },
+        { id: 'mm_z2', name: 'Corpus利润之霜', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 8, minLevel: 8, dropMult: 1.6, desc: '火山深处的核心矿脉', locked: true },
 
     ],
     void_mine: [
-        { id: 'vm_z1', name: '共生结晶协议', icon: '💠', level: 10, minLevel: 10, dropMult: 1.5, desc: '虚空边缘的表层矿脉', locked: false },
-        { id: 'vm_z2', name: '双生蠕虫的低语', icon: '🌀', level: 15, minLevel: 15, dropMult: 1.8, desc: '虚空裂隙的深层矿脉', locked: true },
+        { id: 'vm_z1', name: '共生结晶协议', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 10, minLevel: 10, dropMult: 1.5, desc: '虚空边缘的表层矿脉', locked: false },
+        { id: 'vm_z2', name: '双生蠕虫的低语', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 15, minLevel: 15, dropMult: 1.8, desc: '虚空裂隙的深层矿脉', locked: true },
     ],
     lua_mine: [
-        { id: 'lm_z1', name: '月面陨石坑', icon: '🌑', level: 15, minLevel: 15, dropMult: 1.8, desc: '月球表面的陨石坑矿区', locked: true },
-        { id: 'lm_z2', name: '月核隧道', icon: '🕳️', level: 20, minLevel: 20, dropMult: 2.1, desc: '通往月球核心的隧道', locked: true },
+        { id: 'lm_z1', name: '月面陨石坑', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 15, minLevel: 15, dropMult: 1.8, desc: '月球表面的陨石坑矿区', locked: true },
+        { id: 'lm_z2', name: '月核隧道', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 20, minLevel: 20, dropMult: 2.1, desc: '通往月球核心的隧道', locked: true },
     ]
 };
 
 var GATHERING_ZONES = {
     earth_gather: [
-        { id: 'eg_z1', name: '高压断层', icon: '🗻', level: 1, dropMult: 1.0, desc: '茂密的原始雨林', locked: false },
-        { id: 'eg_z2', name: '硅基熔炉', icon: '♨️', level: 3, dropMult: 1.2, desc: '潮湿的沼泽地带', locked: true },
-        { id: 'eg_z3', name: '地心暗流', icon: '🌋', level: 5, dropMult: 1.4, desc: '千年古树环绕的森林', locked: true }
+        { id: 'eg_z1', name: '高压断层', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 1, dropMult: 1.0, desc: '茂密的原始雨林', locked: false },
+        { id: 'eg_z2', name: '硅基熔炉', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 3, dropMult: 1.2, desc: '潮湿的沼泽地带', locked: true },
+        { id: 'eg_z3', name: '地心暗流', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 5, dropMult: 1.4, desc: '千年古树环绕的森林', locked: true }
     ],
     venus_gather: [
-        { id: 'vg_z1', name: '迷雾林', icon: '🌸', level: 5, dropMult: 1.3, desc: 'Corpus控制的温室花房', locked: false },
-        { id: 'vg_z2', name: '荧光菌毯', icon: '☣️', level: 8, dropMult: 1.6, desc: '酸性气体弥漫的平原', locked: true },
-        { id: 'vg_z3', name: '畸变地带', icon: '☁️', level: 12, dropMult: 1.9, desc: '漂浮在云端的空中花园', locked: true }
+        { id: 'vg_z1', name: '迷雾林', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 5, dropMult: 1.3, desc: 'Corpus控制的温室花房', locked: false },
+        { id: 'vg_z2', name: '荧光菌毯', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 8, dropMult: 1.6, desc: '酸性气体弥漫的平原', locked: true },
+        { id: 'vg_z3', name: '畸变地带', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', level: 12, dropMult: 1.9, desc: '漂浮在云端的空中花园', locked: true }
     ],
     deimos_gather: [
         { id: 'dg_z1', name: '感染沼泽', icon: '🦠', level: 10, dropMult: 1.5, desc: '被Infested感染的沼泽', locked: true },
@@ -280,9 +280,9 @@ let selectedGatheringZone = null;
 // 肃清区域掉落（共用 BATTLE_DROPS）
 var ZONE_DROP_TABLES = {
     grineer: {
-        e_zone1: { drops: ['Excalibur蓝图部件', 'Volt蓝图部件', 'Mag蓝图部件'], rare: ['奥席金属'] },
-        e_zone2: { drops: ['Excalibur蓝图部件', 'Volt蓝图部件', 'Mag蓝图部件'], rare: ['奥席金属'] },
-        e_zone3: { drops: ['Excalibur蓝图部件', 'Volt蓝图部件', 'Mag蓝图部件'], rare: ['奥席金属']  },
+        e_zone1: { drops: ['Excalibur蓝图部件', 'Volt蓝图部件', 'Mag蓝图部件'], rare: ['奥席金属','💰 Rout'] },
+        e_zone2: { drops: ['Excalibur蓝图部件', 'Volt蓝图部件', 'Mag蓝图部件'], rare: ['奥席金属','💰 Rout'] },
+        e_zone3: { drops: ['Excalibur蓝图部件', 'Volt蓝图部件', 'Mag蓝图部件'], rare: ['奥席金属','💰 Rout']  },
         e_zone4: { drops: ['合金板', '控制模块', '红化结晶', '生物质'], rare: ['神经传感器', '奥罗金电池', 'Excalibur系统蓝图'] },
         e_zone5: { drops: ['聚合物束', '红化结晶', '回收金属', '奥席金属'], rare: ['控制模块', '氩结晶'] },
         e_zone6: { drops: ['铁氧体', '纳米孢子', '电路', '回收金属'], rare: ['合金板', '神经元', 'Volt蓝图'] },
@@ -290,7 +290,7 @@ var ZONE_DROP_TABLES = {
         e_zone8: { drops: ['红化结晶', '生物质', '奥罗金电池', '合金板'], rare: ['神经传感器', '神经元', 'Volt机体蓝图'] },
         s_zone1: { drops: ['合金板', '电路', '控制模块', '奥罗金电池'], rare: ['神经传感器', '神经元', '氩结晶', 'Volt系统蓝图'] },
         k_zone1: { drops: ['合金板', '控制模块', '神经传感器', '奥罗金电池'], rare: ['虚空光体', '神经元', 'Mag蓝图'] },
-        vor_duel_1: { drops: ['克洛诺斯蓝图', 'Seer蓝图', 'Seer枪管', 'Seer机匣'], rare: ['沃尔印记', '奥罗金电池', '雅努斯残片'] },
+        vor_duel_1: { drops: ['Excalibur 部件', 'Volt 部件', 'Mag 部件'], rare: ['💰 Rout', '💎 Prime'] },
         vor_duel_2: { drops: ['Seer蓝图', 'Seer枪管', 'Seer机匣', '克洛诺斯蓝图'], rare: ['沃尔印记', '虚空光体', '雅努斯残片'] },
         vor_duel_3: { drops: ['Seer蓝图', 'Seer枪管', 'Seer机匣', '克洛诺斯蓝图'], rare: ['沃尔印记', '雅努斯之钥裂片', '奥罗金电池'] }
     }

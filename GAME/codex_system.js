@@ -4,9 +4,35 @@
 
 // 图鉴层级结构：大条目(派系) -> 中条目(星球) -> 小条目(卡组) -> 卡片
 var CODEX_STRUCTURE = {
+	warframe: {
+	    name: 'Warframe',
+	    icon: '⚔️',
+	    color: '#c8a84b',
+	    image: 'GAME/Wf/mg/1.jpg',
+	    blocks: {
+	        normal: {
+	            name: '⚔️️Base⚔️',
+	            icon: '',
+	            image: 'GAME/Wf/mg/2.jpg',
+	            desc: '成长',
+	            decks: {
+	                'warframe_normal': { name: '⚔️Base⚔️', icon: '<img src="GAME/Lo/Tenno.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '普通版本战甲成长回响' }
+	            }
+	        },
+	        prime: {
+	            name: '👑Prime👑',
+	            icon: '',
+	            image: 'GAME/Wf/mg/3.jpg',
+	            desc: '传承',
+	            decks: {
+	                'warframe_prime': { name: '👑Prime👑',icon: '<img src="GAME/Lo/Tenno.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: 'Prime版本战甲传承回响' }
+	            }
+	        }
+	    }
+	},
     grineer: {
         name: 'Grineer',
-        icon: '🔴',
+        icon: '',
         color: '#ff4444',
         image: 'GAME/Faction/Grineer.jpg',
         blocks: {
@@ -16,14 +42,23 @@ var CODEX_STRUCTURE = {
                 image: 'GAME/Faction/Grineer.jpg',
                 desc: 'Grineer帝国的核心领地',
                 decks: {
-                    'e_zone1': { name: '☿️游掠凶形☿️', icon: '☿️', desc: '基础步兵与游掠单位' },
-                    'e_zone2': { name: '☿交锋异士☿', icon: '☿', desc: '精英战斗单位' },
-                    'e_zone3': { name: '☿暴戾战将☿', icon: '☿', desc: '重型突击单位' },
-                    'e_zone4': { name: '☿畸变造物☿', icon: '☿', desc: '实验性生物武器' },
-                    'e_zone5': { name: '☿长空掠影☿', icon: '☿', desc: '空中作战单位' },
-                    'e_zone6': { name: '☿澜下械躯☿', icon: '☿', desc: '水下机械单位' },
-                    'e_zone7': { name: '☿工坊役众☿', icon: '☿', desc: '工程与维护单位' },
-                    'e_zone8': { name: '☿统御凶僚☿', icon: '☿', desc: '指挥与统治阶层' }
+                    'e_zone1': { name: '☿️游掠凶形☿️', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '基础步兵与游掠单位' },
+                    'e_zone2': { name: '☿交锋异士☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '精英战斗单位' },
+                    'e_zone3': { name: '☿暴戾战将☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '重型突击单位' },
+                    'e_zone4': { name: '☿畸变造物☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '实验性生物武器' },
+                    'e_zone5': { name: '☿长空掠影☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '空中作战单位' },
+                    'e_zone6': { name: '☿澜下械躯☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '水下机械单位' },
+                    'e_zone7': { name: '☿工坊役众☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '工程与维护单位' },
+                    'e_zone8': { name: '☿统御凶僚☿', icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '指挥与统治阶层' }
+                }
+            },
+            xingyu_xiongwang: {
+                name: '⭐星域凶顽⭐',
+                icon: '',
+                image: 'GAME/Faction/Grineer.jpg',
+                desc: 'Grineer星域中的凶悍头目与特殊目标',
+                decks: {
+                    'janus_key': { name: '🔑雅努斯之钥🔑',  icon: '<img src="GAME/Lo/GrineerLo.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '沃尔与他的雅努斯之钥' }
                 }
             }
         }
@@ -32,7 +67,6 @@ var CODEX_STRUCTURE = {
     infested: { name: 'Infested', icon: '🟢', color: '#4eff4e', image: 'GAME/Faction/Infested.jpg', blocks: {} },
     sentient: { name: 'Sentient', icon: '🟣', color: '#ff66ff', image: 'GAME/Faction/Sentient.jpg', blocks: {} },
     orokin: { name: 'Orokin', icon: '👑', color: '#ffd700', image: 'GAME/Faction/Orokin.jpg', blocks: {} },
-    // ========== 新增：矿物与采集卡包 ==========
     // ========== 新增：矿物与采集卡包 ==========
     mining: {
         name: '渊岩',
@@ -46,9 +80,9 @@ var CODEX_STRUCTURE = {
                 image: 'GAME/items/1/c/Necrathene.jpg',
                 desc: '蕴含宇宙能量的稀有矿物与结晶',
                 decks: { 
-                    'm_zone1': { name: '☿️晨潮矿坑☿️', icon: '☿️', desc: '基础矿物与伴生矿的采集点' },
-                    'm_zone2': { name: '☿️冷却液与矿尘☿️', icon: '☿️', desc: '工业废料与特殊矿尘的回收点' },
-                    'm_zone3': { name: '☿️Infested摇篮☿️', icon: '☿️', desc: '感染区深处的异化矿物' }
+                    'm_zone1': { name: '☿️晨潮矿坑☿️', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '基础矿物与伴生矿的采集点' },
+                    'm_zone2': { name: '☿️冷却液与矿尘☿️',icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '工业废料与特殊矿尘的回收点' },
+                    'm_zone3': { name: '☿️Infested摇篮☿️',icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">', desc: '感染区深处的异化矿物' }
                 }
             }
         }
@@ -65,17 +99,8 @@ var CODEX_STRUCTURE = {
                 image: 'GAME/items/2/Neurodes.jpg',
                 desc: '',
                 decks: {
-                    'g_zone1': { 
-                        name: '☿地核裂谷☿', 
-                        icon: '☿️', 
-                        desc: '' 
-                    },
-                    'g_zone2': { 
-                        name: '☿异星生态☿', 
-                        icon: '☿️', 
-                        desc: '' 
-                    }
-                
+                    'g_zone1': {name: '☿地核裂谷☿', icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">',desc: '' },
+                    'g_zone2': {name: '☿异星生态☿',icon: '<img src="GAME/Lo/Resource.jpg" style="width:2.8rem;height:2.8rem;filter:drop-shadow(0 0 6px rgba(200,168,75,0.5));">',desc: '' } 
                 }
             }
         }
@@ -142,39 +167,39 @@ var DECK_CARDS = {
     // ═══════════════════════════════════════════════════════════════
     'e_zone2': [
         // 弩炮系列
-        { id: 'c_jfys_01', name: '弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista.jpg', cardType: 'elite', rarity: 2, desc: '装备重型弩炮的远程精英，可在极远距离造成致命伤害', faction: 'grineer' },
-        { id: 'c_jfys_02', name: '龙舰弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-1.jpg', cardType: 'elite', rarity: 2, desc: '龙舰舰队的弩炮手，弩箭可在真空中飞行', faction: 'grineer' },
-        { id: 'c_jfys_03', name: '赤毒弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-2.jpg', cardType: 'elite', rarity: 3, desc: '赤毒强化的弩炮，弩箭带有爆炸效果', faction: 'grineer' },
-        { id: 'c_jfys_04', name: '巨牙弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-3.jpg', cardType: 'elite', rarity: 2, desc: '巨牙部落的狩猎弩炮，精准度极高', faction: 'grineer' },
-        { id: 'c_jfys_05', name: '合一众弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-4.jpg', cardType: 'elite', rarity: 4, desc: '合一众的虚空弩炮，弩箭可穿透维度', faction: 'grineer' },
+        { id: 'c_jfys_01', name: '弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista.jpg', cardType: 'normal', rarity: 2, desc: '装备重型弩炮的远程精英，可在极远距离造成致命伤害', faction: 'grineer' },
+        { id: 'c_jfys_02', name: '龙舰弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-1.jpg', cardType: 'normal', rarity: 2, desc: '龙舰舰队的弩炮手，弩箭可在真空中飞行', faction: 'grineer' },
+        { id: 'c_jfys_03', name: '赤毒弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-2.jpg', cardType: 'normal', rarity: 3, desc: '赤毒强化的弩炮，弩箭带有爆炸效果', faction: 'grineer' },
+        { id: 'c_jfys_04', name: '巨牙弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-3.jpg', cardType: 'normal', rarity: 2, desc: '巨牙部落的狩猎弩炮，精准度极高', faction: 'grineer' },
+        { id: 'c_jfys_05', name: '合一众弩炮', image: 'GAME/enemies/Grineer/P1/b/1Ballista1-4.jpg', cardType: 'normal', rarity: 4, desc: '合一众的虚空弩炮，弩箭可穿透维度', faction: 'grineer' },
         
         // 爪喀系列
         { id: 'c_jfys_06', name: '爪喀', image: 'GAME/enemies/Grineer/P1/b/2GrnArm.jpg', cardType: 'normal', rarity: 1, desc: 'Grineer驯化的凶猛野兽，成群出没时极具威胁', faction: 'grineer' },
         { id: 'c_jfys_07', name: '堕落爪喀', image: 'GAME/enemies/Grineer/P1/b/2GrnArm1-1.jpg', cardType: 'elite', rarity: 4, desc: '被虚空能量腐化的爪喀，身体发生诡异变异', faction: 'grineer' },
         
         // 开膛者系列
-        { id: 'c_jfys_08', name: '开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter.jpg', cardType: 'elite', rarity: 2, desc: '装备链锯剑的残忍战士，以撕裂敌人肉体为乐', faction: 'grineer' },
-        { id: 'c_jfys_09', name: '沙漠开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-1.jpg', cardType: 'elite', rarity: 2, desc: '沙漠地带的开膛者，链锯经过防沙处理', faction: 'grineer' },
-        { id: 'c_jfys_10', name: '前线开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-2.jpg', cardType: 'elite', rarity: 2, desc: '战线前沿的开膛者，杀戮效率经过实战检验', faction: 'grineer' },
-        { id: 'c_jfys_11', name: '龙舰开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-3.jpg', cardType: 'elite', rarity: 3, desc: '龙舰舰队的开膛者，链锯可在失重环境下使用', faction: 'grineer' },
-        { id: 'c_jfys_12', name: '赤毒开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-4.jpg', cardType: 'elite', rarity: 3, desc: '赤毒强化的开膛者，链锯带有腐蚀性能量', faction: 'grineer' },
-        { id: 'c_jfys_13', name: '巨牙开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-5.jpg', cardType: 'elite', rarity: 2, desc: '巨牙部落的开膛者，链锯由野兽牙齿打造', faction: 'grineer' },
-        { id: 'c_jfys_14', name: '深空开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-6.jpg', cardType: 'elite', rarity: 3, desc: '深空哨站的开膛者，装备有真空密封装甲', faction: 'grineer' },
-        { id: 'c_jfys_15', name: '回旋开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-7.jpg', cardType: 'elite', rarity: 3, desc: '机动性极强的开膛者，可边移动边攻击', faction: 'grineer' },
-        { id: 'c_jfys_16', name: '邃域开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-8.jpg', cardType: 'elite', rarity: 4, desc: '来自虚空边缘的开膛者，链锯可切割空间', faction: 'grineer' },
+        { id: 'c_jfys_08', name: '开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter.jpg', cardType: 'normal', rarity: 2, desc: '装备链锯剑的残忍战士，以撕裂敌人肉体为乐', faction: 'grineer' },
+        { id: 'c_jfys_09', name: '沙漠开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-1.jpg', cardType: 'normal', rarity: 2, desc: '沙漠地带的开膛者，链锯经过防沙处理', faction: 'grineer' },
+        { id: 'c_jfys_10', name: '前线开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-2.jpg', cardType: 'normal', rarity: 2, desc: '战线前沿的开膛者，杀戮效率经过实战检验', faction: 'grineer' },
+        { id: 'c_jfys_11', name: '龙舰开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-3.jpg', cardType: 'normal', rarity: 3, desc: '龙舰舰队的开膛者，链锯可在失重环境下使用', faction: 'grineer' },
+        { id: 'c_jfys_12', name: '赤毒开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-4.jpg', cardType: 'normal', rarity: 3, desc: '赤毒强化的开膛者，链锯带有腐蚀性能量', faction: 'grineer' },
+        { id: 'c_jfys_13', name: '巨牙开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-5.jpg', cardType: 'normal', rarity: 2, desc: '巨牙部落的开膛者，链锯由野兽牙齿打造', faction: 'grineer' },
+        { id: 'c_jfys_14', name: '深空开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-6.jpg', cardType: 'normal', rarity: 3, desc: '深空哨站的开膛者，装备有真空密封装甲', faction: 'grineer' },
+        { id: 'c_jfys_15', name: '回旋开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-7.jpg', cardType: 'normal', rarity: 3, desc: '机动性极强的开膛者，可边移动边攻击', faction: 'grineer' },
+        { id: 'c_jfys_16', name: '邃域开膛者', image: 'GAME/enemies/Grineer/P1/b/3Eliter1-8.jpg', cardType: 'normal', rarity: 4, desc: '来自虚空边缘的开膛者，链锯可切割空间', faction: 'grineer' },
         
         // 恶徒系列
-        { id: 'c_jfys_17', name: '恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE.jpg', cardType: 'elite', rarity: 2, desc: '装备火焰喷射器的精英单位，擅长区域控制', faction: 'grineer' },
-        { id: 'c_jfys_18', name: '沙漠恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-1.jpg', cardType: 'elite', rarity: 2, desc: '沙漠地带的火焰专家，火焰温度可达数千度', faction: 'grineer' },
-        { id: 'c_jfys_19', name: '前线恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-2.jpg', cardType: 'elite', rarity: 2, desc: '战线前沿的火焰支援，可有效封锁通道', faction: 'grineer' },
-        { id: 'c_jfys_20', name: '龙舰恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-3.jpg', cardType: 'elite', rarity: 3, desc: '龙舰舰队的火焰兵，喷射器使用特殊燃料', faction: 'grineer' },
-        { id: 'c_jfys_21', name: '赤毒恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-4.jpg', cardType: 'elite', rarity: 3, desc: '赤毒强化的恶徒，火焰呈现深红色', faction: 'grineer' },
-        { id: 'c_jfys_22', name: '巨牙恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-5.jpg', cardType: 'elite', rarity: 2, desc: '巨牙部落的火焰萨满，火焰中带有部落符文', faction: 'grineer' },
-        { id: 'c_jfys_23', name: '合一众恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-6.jpg', cardType: 'elite', rarity: 4, desc: '合一众的虚空火焰使者，火焰可燃烧灵魂', faction: 'grineer' },
+        { id: 'c_jfys_17', name: '恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE.jpg', cardType: 'normal', rarity: 2, desc: '装备火焰喷射器的精英单位，擅长区域控制', faction: 'grineer' },
+        { id: 'c_jfys_18', name: '沙漠恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-1.jpg', cardType: 'normal', rarity: 2, desc: '沙漠地带的火焰专家，火焰温度可达数千度', faction: 'grineer' },
+        { id: 'c_jfys_19', name: '前线恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-2.jpg', cardType: 'normal', rarity: 2, desc: '战线前沿的火焰支援，可有效封锁通道', faction: 'grineer' },
+        { id: 'c_jfys_20', name: '龙舰恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-3.jpg', cardType: 'normal', rarity: 3, desc: '龙舰舰队的火焰兵，喷射器使用特殊燃料', faction: 'grineer' },
+        { id: 'c_jfys_21', name: '赤毒恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-4.jpg', cardType: 'normal', rarity: 3, desc: '赤毒强化的恶徒，火焰呈现深红色', faction: 'grineer' },
+        { id: 'c_jfys_22', name: '巨牙恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-5.jpg', cardType: 'normal', rarity: 2, desc: '巨牙部落的火焰萨满，火焰中带有部落符文', faction: 'grineer' },
+        { id: 'c_jfys_23', name: '合一众恶徒', image: 'GAME/enemies/Grineer/P1/b/4HellionDE1-6.jpg', cardType: 'normal', rarity: 4, desc: '合一众的虚空火焰使者，火焰可燃烧灵魂', faction: 'grineer' },
         
         // 鬣猫系列
         { id: 'c_jfys_24', name: '鬣猫', image: 'GAME/enemies/Grineer/P1/b/5Combat.jpg', cardType: 'normal', rarity: 2, desc: 'Grineer驯化的另一种野兽，比爪喀更加狡猾', faction: 'grineer' },
-        { id: 'c_jfys_25', name: '赤毒鬣猫', image: 'GAME/enemies/Grineer/P1/b/5Combat1-1.jpg', cardType: 'elite', rarity: 3, desc: '赤毒强化的鬣猫，速度和攻击性大幅提升', faction: 'grineer' },
+        { id: 'c_jfys_25', name: '赤毒鬣猫', image: 'GAME/enemies/Grineer/P1/b/5Combat1-1.jpg', cardType: 'normal', rarity: 3, desc: '赤毒强化的鬣猫，速度和攻击性大幅提升', faction: 'grineer' },
         
         // 枪兵系列
         { id: 'c_jfys_26', name: '枪兵', image: 'GAME/enemies/Grineer/P1/b/6LancerDE.jpg', cardType: 'normal', rarity: 1, desc: 'Grineer最基础的远程单位，装备制式步枪', faction: 'grineer' },
@@ -188,9 +213,9 @@ var DECK_CARDS = {
         { id: 'c_jfys_34', name: '枪兵幸存者', image: 'GAME/enemies/Grineer/P1/b/6LancerDE1-8.jpg', cardType: 'elite', rarity: 4, desc: '从无数次战斗中幸存的枪兵，战斗直觉极其敏锐', faction: 'grineer' },
         
         // 怒焚者系列
-        { id: 'c_jfys_35', name: '怒焚者', image: 'GAME/enemies/Grineer/P1/b/7FlameL.jpg', cardType: 'elite', rarity: 3, desc: '极度狂暴的火焰战士，全身缠绕着永不熄灭的烈焰', faction: 'grineer' },
-        { id: 'c_jfys_36', name: '赤毒怒焚者', image: 'GAME/enemies/Grineer/P1/b/7FlameL1-1.jpg', cardType: 'elite', rarity: 3, desc: '赤毒与火焰融合的产物，触碰即被焚烧殆尽', faction: 'grineer' },
-        { id: 'c_jfys_37', name: '合一众怒焚者', image: 'GAME/enemies/Grineer/P1/b/7FlameL1-2.jpg', cardType: 'elite', rarity: 4, desc: '合一众的终极火焰兵器，火焰中蕴含虚空毁灭之力', faction: 'grineer' },
+        { id: 'c_jfys_35', name: '怒焚者', image: 'GAME/enemies/Grineer/P1/b/7FlameL.jpg', cardType: 'normal', rarity: 3, desc: '极度狂暴的火焰战士，全身缠绕着永不熄灭的烈焰', faction: 'grineer' },
+        { id: 'c_jfys_36', name: '赤毒怒焚者', image: 'GAME/enemies/Grineer/P1/b/7FlameL1-1.jpg', cardType: 'normal', rarity: 3, desc: '赤毒与火焰融合的产物，触碰即被焚烧殆尽', faction: 'grineer' },
+        { id: 'c_jfys_37', name: '合一众怒焚者', image: 'GAME/enemies/Grineer/P1/b/7FlameL1-2.jpg', cardType: 'normal', rarity: 4, desc: '合一众的终极火焰兵器，火焰中蕴含虚空毁灭之力', faction: 'grineer' },
         
         // 追踪者系列
         { id: 'c_jfys_38', name: '追踪者', image: 'GAME/enemies/Grineer/P1/b/8SeekerDE.jpg', cardType: 'normal', rarity: 2, desc: '装备追踪弹药的精英射手，擅长锁定移动目标', faction: 'grineer' },
@@ -202,13 +227,13 @@ var DECK_CARDS = {
         { id: 'c_jfys_44', name: '夜巡者追踪兵', image: 'GAME/enemies/Grineer/P1/b/8SeekerDE1-6.jpg', cardType: 'normal', rarity: 3, desc: '夜巡部队的追踪专家，可在完全黑暗中锁定目标', faction: 'grineer' },
         
         // 骑兵系列
-        { id: 'c_jfys_45', name: '骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun.jpg', cardType: 'elite', rarity: 2, desc: '装备喷气背包的空中单位，可从空中发动突袭', faction: 'grineer' },
-        { id: 'c_jfys_46', name: '沙漠骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-1.jpg', cardType: 'elite', rarity: 2, desc: '沙漠地带的骑兵，喷气背包经过防沙改装', faction: 'grineer' },
-        { id: 'c_jfys_47', name: '前线骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-2.jpg', cardType: 'elite', rarity: 2, desc: '战线前沿的骑兵，负责快速支援和包抄', faction: 'grineer' },
-        { id: 'c_jfys_48', name: '龙舰骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-3.jpg', cardType: 'elite', rarity: 3, desc: '龙舰舰队的骑兵，可在零重力环境中自由飞行', faction: 'grineer' },
-        { id: 'c_jfys_49', name: '赤毒骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-4.jpg', cardType: 'elite', rarity: 3, desc: '赤毒强化的骑兵，飞行轨迹带有腐蚀性尾迹', faction: 'grineer' },
-        { id: 'c_jfys_50', name: '巨牙骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-5.jpg', cardType: 'elite', rarity: 2, desc: '巨牙部落的空中猎手，使用野兽皮革制作的飞行翼', faction: 'grineer' },
-        { id: 'c_jfys_51', name: '合一众骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-6.jpg', cardType: 'elite', rarity: 4, desc: '合一众的虚空骑兵，飞行时可短暂穿越维度', faction: 'grineer' },
+        { id: 'c_jfys_45', name: '骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun.jpg', cardType: 'normal', rarity: 2, desc: '装备喷气背包的空中单位，可从空中发动突袭', faction: 'grineer' },
+        { id: 'c_jfys_46', name: '沙漠骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-1.jpg', cardType: 'normal', rarity: 2, desc: '沙漠地带的骑兵，喷气背包经过防沙改装', faction: 'grineer' },
+        { id: 'c_jfys_47', name: '前线骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-2.jpg', cardType: 'normal', rarity: 2, desc: '战线前沿的骑兵，负责快速支援和包抄', faction: 'grineer' },
+        { id: 'c_jfys_48', name: '龙舰骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-3.jpg', cardType: 'normal', rarity: 3, desc: '龙舰舰队的骑兵，可在零重力环境中自由飞行', faction: 'grineer' },
+        { id: 'c_jfys_49', name: '赤毒骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-4.jpg', cardType: 'normal', rarity: 3, desc: '赤毒强化的骑兵，飞行轨迹带有腐蚀性尾迹', faction: 'grineer' },
+        { id: 'c_jfys_50', name: '巨牙骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-5.jpg', cardType: 'normal', rarity: 2, desc: '巨牙部落的空中猎手，使用野兽皮革制作的飞行翼', faction: 'grineer' },
+        { id: 'c_jfys_51', name: '合一众骑兵', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-6.jpg', cardType: 'normal', rarity: 4, desc: '合一众的虚空骑兵，飞行时可短暂穿越维度', faction: 'grineer' },
         { id: 'c_jfys_52', name: '骑兵幸存者', image: 'GAME/enemies/Grineer/P1/b/9Shotgun1-7.jpg', cardType: 'elite', rarity: 4, desc: '从无数次空战中幸存的骑兵，飞行技巧出神入化', faction: 'grineer' }
     ],
     
@@ -218,10 +243,10 @@ var DECK_CARDS = {
     'e_zone3': [
         // 执法员系列
         { id: 'c_blzj_01', name: '执法员', image: 'GAME/enemies/Grineer/P1/c/1Crusher.jpg', cardType: 'boss', rarity: 3, desc: 'Grineer的执法精英，装备重型护甲和能量武器', faction: 'grineer' },
-        { id: 'c_blzj_02', name: '巨牙掠夺者', image: 'GAME/enemies/Grineer/P1/c/1Crusher1-1.jpg', cardType: 'super', rarity: 3, desc: '巨牙部落的掠夺专家，擅长搜刮和破坏', faction: 'grineer' },
+        { id: 'c_blzj_02', name: '巨牙掠夺者', image: 'GAME/enemies/Grineer/P1/c/1Crusher1-1.jpg', cardType: 'boss', rarity: 3, desc: '巨牙部落的掠夺专家，擅长搜刮和破坏', faction: 'grineer' },
         { id: 'c_blzj_03', name: '夜巡执法员', image: 'GAME/enemies/Grineer/P1/c/1Crusher1-2.jpg', cardType: 'boss', rarity: 3, desc: '夜巡部队的执法者，在黑暗中如同死神', faction: 'grineer' },
         { id: 'c_blzj_04', name: '夜巡掠夺者', image: 'GAME/enemies/Grineer/P1/c/1Crusher1-3.jpg', cardType: 'boss', rarity: 4, desc: '夜巡部队的掠夺精英，从不留下活口', faction: 'grineer' },
-        { id: 'c_blzj_05', name: '爆破型执法员', image: 'GAME/enemies/Grineer/P1/c/1Crusher1-4.jpg', cardType: 'mechanic', rarity: 4, desc: '装备自爆装置的执法员，死亡时引发大规模爆炸', faction: 'grineer' },
+        { id: 'c_blzj_05', name: '爆破型执法员', image: 'GAME/enemies/Grineer/P1/c/1Crusher1-4.jpg', cardType: 'boss', rarity: 4, desc: '装备自爆装置的执法员，死亡时引发大规模爆炸', faction: 'grineer' },
         
         // 轰击者系列
         { id: 'c_blzj_06', name: '轰击者', image: 'GAME/enemies/Grineer/P1/c/2BombardDE.jpg', cardType: 'boss', rarity: 3, desc: '装备重型火箭发射器的毁灭者，一击可摧毁整片区域', faction: 'grineer' },
@@ -332,7 +357,27 @@ var DECK_CARDS = {
     { id: 'g_sediment_6', name: '红化结晶', image: 'GAME/items/2/Rubedo1.jpg', cardType: 'normal', rarity: 1, desc: '含有红化结晶的矿物构造，红化结晶具有独特的光学特性。', faction: 'gathering' },
     { id: 'g_storage_box_5', name: '回收金属', image: 'GAME/items/2/Salvage1.jpg', cardType: 'normal', rarity: 1, desc: '压缩处理的废旧金属块，回收金属是资源回收再利用的产物。', faction: 'gathering' },
     { id: 'g_storage_box_6', name: '碲', image: 'GAME/items/2/3Tellurium.jpg', cardType: 'boss', rarity: 4, desc: '仅能在水下 Archwing 任务中获取的极稀有金属，碲是深海科技的必需品。', faction: 'gathering' },
-]
+],
+
+    // ═══════════════════════════════════════════════════════════════
+    //  雅努斯之钥卡组 - 星域凶顽
+    // ═══════════════════════════════════════════════════════════════
+    'janus_key': [
+        { id: 'c_vor_01', name: '沃尔上尉', image: 'GAME/enemies/Grineer/CaptainVor.jpg', cardType: 'mechanic', rarity: 4, desc: 'Grineer双子女皇麾下大将，雅努斯之钥的守护者。手持灵能之钥，可操控雅努斯能量场压制敌人。', faction: 'grineer' }
+    ],
+
+    // ═══════════════════════════════════════════════════════════════
+    //  Warframe 普通版卡组 - 由战甲等级达标获得
+    // ═══════════════════════════════════════════════════════════════
+    'warframe_normal': [
+        { id: 'c_wf_excalibur', name: 'Excalibur', icon: '🥷', image: 'GAME/Wf/Excalibur.jpg', cardType: 'warframe', rarity: 4, desc: '均衡型Tenno战甲，剑技与致盲能力兼具', faction: 'warframe', warframeType: 'excalibur' },
+        { id: 'c_wf_volt', name: 'Volt', icon: '⚡', image: 'GAME/Wf/Volt.jpg', cardType: 'warframe', rarity: 4, desc: '操控电流与速度的Tenno战甲', faction: 'warframe', warframeType: 'volt' },
+        { id: 'c_wf_mag', name: 'Mag', icon: '🧲', image: 'GAME/Wf/Mag.jpg', cardType: 'warframe', rarity: 4, desc: '操控磁力与护盾的Tenno战甲', faction: 'warframe', warframeType: 'mag' }
+    ],
+
+    // Prime卡组先预留，不设置卡片与奖励
+    'warframe_prime': [
+    ]
 			
 };
 
@@ -399,7 +444,8 @@ var STAR_UPGRADE_REQUIREMENTS = {
     elite:    { 1: 15, 2: 40, 3: 60, 4: 80 },    // 蓝卡
     boss:     { 1: 10, 2: 30, 3: 50, 4: 70 },    // 红卡
     mechanic: { 1: 8,  2: 25, 3: 40, 4: 60 },    // 金卡
-    super:    { 1: 5,  2: 15, 3: 25, 4: 40 }     // 闪红卡
+    super:    { 1: 5,  2: 15, 3: 25, 4: 40 },    // 闪红卡
+    warframe: { 1: 1,  2: 1,  3: 1,  4: 1 }      // 战甲卡：每级升星只需1张
 };
 
 // 获取升星所需数量
@@ -419,268 +465,512 @@ function canUpgradeStar(cardData, currentStarLevel, count) {
 
 // 星级样式配置：5种类型 × 5个星级 = 25种纯 CSS 样式
 var CARD_STAR_STYLES = {
-    // 遗落绿卡（基础单位）
+    // ═══════════════════════════════════════════════════════════════
+    //  华丽版卡片星级样式 - 5种类型 × 5个星级 = 25种特效
+    //  每个星级使用双色(c/c2)径向渐变 + 纹理 + 强内光 + 主题粒子
+    // ═══════════════════════════════════════════════════════════════
+
+    // 遗落系（绿/铜色 - 旧遗物苏醒主题）
     normal: {
         name: '遗落',
-        color: '#4eff4e',
-        glow: '0 0 10px rgba(78,255,78,0.3)',
+        color: '#65f0a3',
+        color2: '#b08c52',
+        glow: '0 0 15px rgba(101,240,163,0.35)',
         stars: {
-            1: { 
-                bg: 'linear-gradient(180deg, #1a2a1a 0%, #0a1a0a 100%)',
-                border: '#4eff4e',
-                borderWidth: 1,
-                shadow: '0 0 5px rgba(78,255,78,0.2)',
-                particle: '●',
-                particleColor: '#4eff4e',
+            1: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(176,140,82,0.12), transparent 32%), radial-gradient(circle at 82% 78%, rgba(101,240,163,0.08), transparent 30%), linear-gradient(145deg, rgba(101,240,163,0.08), #111018)',
+                border: 'rgba(101,240,163,0.55)',
+                border2: 'rgba(176,140,82,0.35)',
+                borderWidth: 2,
+                shadow: '0 0 16px rgba(101,240,163,0.20), inset 0 0 18px rgba(176,140,82,0.08)',
+                innerBorder: '1px solid rgba(176,140,82,0.32)',
+                innerShadow: 'inset 0 0 20px rgba(101,240,163,0.10), 0 0 18px rgba(101,240,163,0.10)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(101,240,163,0.03) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.36,
+                particle: '✦',
+                particleColor: '#b08c52',
+                particleOpacity: 0,
                 desc: '低语'
             },
-            2: { 
-                bg: 'linear-gradient(180deg, #1a3a1a 0%, #0a2a0a 100%)',
-                border: '#66ff66',
+            2: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(176,140,82,0.16), transparent 32%), radial-gradient(circle at 82% 78%, rgba(101,240,163,0.12), transparent 30%), linear-gradient(145deg, rgba(101,240,163,0.12), #111018)',
+                border: 'rgba(101,240,163,0.63)',
+                border2: 'rgba(176,140,82,0.40)',
                 borderWidth: 2,
-                shadow: '0 0 10px rgba(78,255,78,0.3)',
+                shadow: '0 0 20px rgba(101,240,163,0.26), inset 0 0 25px rgba(176,140,82,0.10)',
+                innerBorder: '1px solid rgba(176,140,82,0.40)',
+                innerShadow: 'inset 0 0 28px rgba(101,240,163,0.13), 0 0 25px rgba(101,240,163,0.13)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(101,240,163,0.05) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.46,
                 particle: '◆',
-                particleColor: '#66ff66',
+                particleColor: '#b08c52',
+                particleOpacity: 0.16,
                 desc: '呢喃'
             },
-            3: { 
-                bg: 'linear-gradient(180deg, #1a4a1a 0%, #0a3a0a 100%)',
-                border: '#88ff88',
-                borderWidth: 2,
-                shadow: '0 0 15px rgba(78,255,78,0.4), inset 0 0 10px rgba(78,255,78,0.1)',
-                particle: '★',
-                particleColor: '#88ff88',
+            3: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(176,140,82,0.20), transparent 32%), radial-gradient(circle at 82% 78%, rgba(101,240,163,0.16), transparent 30%), linear-gradient(145deg, rgba(101,240,163,0.16), #111018)',
+                border: 'rgba(101,240,163,0.71)',
+                border2: 'rgba(176,140,82,0.48)',
+                borderWidth: 3,
+                shadow: '0 0 28px rgba(101,240,163,0.32), inset 0 0 32px rgba(176,140,82,0.13)',
+                innerBorder: '1px solid rgba(176,140,82,0.50)',
+                innerShadow: 'inset 0 0 36px rgba(101,240,163,0.16), 0 0 32px rgba(101,240,163,0.16)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(101,240,163,0.07) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.56,
+                particle: '✦',
+                particleColor: '#b08c52',
+                particleOpacity: 0.35,
                 desc: '窥视'
             },
-            4: { 
-                bg: 'linear-gradient(180deg, #2a5a2a 0%, #1a4a1a 100%)',
-                border: '#aaffaa',
+            4: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(176,140,82,0.24), transparent 32%), radial-gradient(circle at 82% 78%, rgba(101,240,163,0.20), transparent 30%), linear-gradient(145deg, rgba(101,240,163,0.20), #111018)',
+                border: 'rgba(101,240,163,0.80)',
+                border2: 'rgba(176,140,82,0.55)',
                 borderWidth: 3,
-                shadow: '0 0 20px rgba(78,255,78,0.5), inset 0 0 15px rgba(78,255,78,0.15)',
+                shadow: '0 0 36px rgba(101,240,163,0.38), inset 0 0 38px rgba(176,140,82,0.16)',
+                innerBorder: '1px solid rgba(176,140,82,0.58)',
+                innerShadow: 'inset 0 0 44px rgba(101,240,163,0.19), 0 0 40px rgba(101,240,163,0.19)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(101,240,163,0.09) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.66,
                 particle: '✦',
-                particleColor: '#aaffaa',
+                particleColor: '#b08c52',
+                particleOpacity: 0.55,
                 desc: '凝视'
             },
-            5: { 
-                bg: 'linear-gradient(180deg, #3a6a3a 0%, #2a5a2a 100%)',
-                border: '#ccffcc',
-                borderWidth: 3,
-                shadow: '0 0 30px rgba(78,255,78,0.6), inset 0 0 20px rgba(78,255,78,0.2)',
+            5: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(176,140,82,0.28), transparent 32%), radial-gradient(circle at 82% 78%, rgba(101,240,163,0.24), transparent 30%), linear-gradient(145deg, rgba(101,240,163,0.24), #111018)',
+                border: 'rgba(101,240,163,0.90)',
+                border2: 'rgba(176,140,82,0.62)',
+                borderWidth: 4,
+                shadow: '0 0 44px rgba(101,240,163,0.44), inset 0 0 44px rgba(176,140,82,0.19)',
+                innerBorder: '1px solid rgba(176,140,82,0.68)',
+                innerShadow: 'inset 0 0 52px rgba(101,240,163,0.22), 0 0 48px rgba(101,240,163,0.22)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(101,240,163,0.11) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.76,
                 particle: '✪',
-                particleColor: '#ccffcc',
+                particleColor: '#b08c52',
+                particleOpacity: 0.72,
                 desc: '⭐苏醒⭐'
             }
         }
     },
-    // 异变蓝卡（精英单位）
+    // 异变系（蓝/紫色 - 感染同化主题）
     elite: {
         name: '异变',
-        color: '#4488ff',
-        glow: '0 0 15px rgba(68,136,255,0.4)',
+        color: '#5adfff',
+        color2: '#b56cff',
+        glow: '0 0 18px rgba(90,223,255,0.4)',
         stars: {
-            1: { 
-                bg: 'linear-gradient(180deg, #1a1a3a 0%, #0a0a2a 100%)',
-                border: '#4488ff',
-                borderWidth: 1,
-                shadow: '0 0 5px rgba(68,136,255,0.2)',
-                particle: '●',
-                particleColor: '#4488ff',
+            1: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(181,108,255,0.12), transparent 32%), radial-gradient(circle at 82% 78%, rgba(90,223,255,0.08), transparent 30%), linear-gradient(145deg, rgba(90,223,255,0.08), #0e0818)',
+                border: 'rgba(90,223,255,0.55)',
+                border2: 'rgba(181,108,255,0.35)',
+                borderWidth: 2,
+                shadow: '0 0 16px rgba(90,223,255,0.20), inset 0 0 18px rgba(181,108,255,0.08)',
+                innerBorder: '1px solid rgba(181,108,255,0.32)',
+                innerShadow: 'inset 0 0 20px rgba(90,223,255,0.10), 0 0 18px rgba(90,223,255,0.10)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(90,223,255,0.03) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.36,
+                particle: '✦',
+                particleColor: '#b56cff',
+                particleOpacity: 0,
                 desc: '畸变'
             },
-            2: { 
-                bg: 'linear-gradient(180deg, #1a2a4a 0%, #0a1a3a 100%)',
-                border: '#6699ff',
+            2: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(181,108,255,0.16), transparent 32%), radial-gradient(circle at 82% 78%, rgba(90,223,255,0.12), transparent 30%), linear-gradient(145deg, rgba(90,223,255,0.12), #0e0818)',
+                border: 'rgba(90,223,255,0.63)',
+                border2: 'rgba(181,108,255,0.40)',
                 borderWidth: 2,
-                shadow: '0 0 10px rgba(68,136,255,0.3)',
+                shadow: '0 0 20px rgba(90,223,255,0.26), inset 0 0 25px rgba(181,108,255,0.10)',
+                innerBorder: '1px solid rgba(181,108,255,0.40)',
+                innerShadow: 'inset 0 0 28px rgba(90,223,255,0.13), 0 0 25px rgba(90,223,255,0.13)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(90,223,255,0.05) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.46,
                 particle: '◆',
-                particleColor: '#6699ff',
+                particleColor: '#b56cff',
+                particleOpacity: 0.16,
                 desc: '腐化'
             },
-            3: { 
-                bg: 'linear-gradient(180deg, #1a3a5a 0%, #0a2a4a 100%)',
-                border: '#88bbff',
-                borderWidth: 2,
-                shadow: '0 0 15px rgba(68,136,255,0.4), inset 0 0 10px rgba(68,136,255,0.1)',
-                particle: '★',
-                particleColor: '#88bbff',
+            3: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(181,108,255,0.20), transparent 32%), radial-gradient(circle at 82% 78%, rgba(90,223,255,0.16), transparent 30%), linear-gradient(145deg, rgba(90,223,255,0.16), #0e0818)',
+                border: 'rgba(90,223,255,0.71)',
+                border2: 'rgba(181,108,255,0.48)',
+                borderWidth: 3,
+                shadow: '0 0 28px rgba(90,223,255,0.32), inset 0 0 32px rgba(181,108,255,0.13)',
+                innerBorder: '1px solid rgba(181,108,255,0.50)',
+                innerShadow: 'inset 0 0 36px rgba(90,223,255,0.16), 0 0 32px rgba(90,223,255,0.16)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(90,223,255,0.07) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.56,
+                particle: '✹',
+                particleColor: '#b56cff',
+                particleOpacity: 0.35,
                 desc: '侵蚀'
             },
-            4: { 
-                bg: 'linear-gradient(180deg, #2a4a6a 0%, #1a3a5a 100%)',
-                border: '#aaddff',
+            4: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(181,108,255,0.24), transparent 32%), radial-gradient(circle at 82% 78%, rgba(90,223,255,0.20), transparent 30%), linear-gradient(145deg, rgba(90,223,255,0.20), #0e0818)',
+                border: 'rgba(90,223,255,0.80)',
+                border2: 'rgba(181,108,255,0.55)',
                 borderWidth: 3,
-                shadow: '0 0 20px rgba(68,136,255,0.5), inset 0 0 15px rgba(68,136,255,0.15)',
-                particle: '✦',
-                particleColor: '#aaddff',
+                shadow: '0 0 36px rgba(90,223,255,0.38), inset 0 0 38px rgba(181,108,255,0.16)',
+                innerBorder: '1px solid rgba(181,108,255,0.58)',
+                innerShadow: 'inset 0 0 44px rgba(90,223,255,0.19), 0 0 40px rgba(90,223,255,0.19)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(90,223,255,0.09) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.66,
+                particle: '✹',
+                particleColor: '#b56cff',
+                particleOpacity: 0.55,
                 desc: '同化'
             },
-            5: { 
-                bg: 'linear-gradient(180deg, #3a5a7a 0%, #2a4a6a 100%)',
-                border: '#cceeff',
-                borderWidth: 3,
-                shadow: '0 0 30px rgba(68,136,255,0.6), inset 0 0 20px rgba(68,136,255,0.2)',
-                particle: '✪',
-                particleColor: '#cceeff',
+            5: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(181,108,255,0.28), transparent 32%), radial-gradient(circle at 82% 78%, rgba(90,223,255,0.24), transparent 30%), linear-gradient(145deg, rgba(90,223,255,0.24), #0e0818)',
+                border: 'rgba(90,223,255,0.90)',
+                border2: 'rgba(181,108,255,0.62)',
+                borderWidth: 4,
+                shadow: '0 0 44px rgba(90,223,255,0.44), inset 0 0 44px rgba(181,108,255,0.19)',
+                innerBorder: '1px solid rgba(181,108,255,0.68)',
+                innerShadow: 'inset 0 0 52px rgba(90,223,255,0.22), 0 0 48px rgba(90,223,255,0.22)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(90,223,255,0.11) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.76,
+                particle: '✷',
+                particleColor: '#b56cff',
+                particleOpacity: 0.72,
                 desc: '⭐降临⭐'
             }
         }
     },
-    // 古神红卡（Boss单位）
+    // 古神系（红/绿色 - 恐惧凝视主题）
     boss: {
         name: '古神',
-        color: '#ff4444',
-        glow: '0 0 20px rgba(255,68,68,0.5)',
+        color: '#ff4e5f',
+        color2: '#42f5b3',
+        glow: '0 0 22px rgba(255,78,95,0.45)',
         stars: {
-            1: { 
-                bg: 'linear-gradient(180deg, #3a1a1a 0%, #2a0a0a 100%)',
-                border: '#ff4444',
-                borderWidth: 1,
-                shadow: '0 0 5px rgba(255,68,68,0.2)',
-                particle: '●',
-                particleColor: '#ff4444',
+            1: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(66,245,179,0.12), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,78,95,0.08), transparent 30%), linear-gradient(145deg, rgba(255,78,95,0.08), #180810)',
+                border: 'rgba(255,78,95,0.55)',
+                border2: 'rgba(66,245,179,0.35)',
+                borderWidth: 2,
+                shadow: '0 0 16px rgba(255,78,95,0.20), inset 0 0 18px rgba(66,245,179,0.08)',
+                innerBorder: '1px solid rgba(66,245,179,0.32)',
+                innerShadow: 'inset 0 0 20px rgba(255,78,95,0.10), 0 0 18px rgba(255,78,95,0.10)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,78,95,0.03) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.36,
+                particle: '☽',
+                particleColor: '#42f5b3',
+                particleOpacity: 0,
                 desc: '深潜'
             },
-            2: { 
-                bg: 'linear-gradient(180deg, #4a1a1a 0%, #3a0a0a 100%)',
-                border: '#ff6666',
+            2: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(66,245,179,0.16), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,78,95,0.12), transparent 30%), linear-gradient(145deg, rgba(255,78,95,0.12), #180810)',
+                border: 'rgba(255,78,95,0.63)',
+                border2: 'rgba(66,245,179,0.40)',
                 borderWidth: 2,
-                shadow: '0 0 10px rgba(255,68,68,0.3)',
-                particle: '◆',
-                particleColor: '#ff6666',
+                shadow: '0 0 20px rgba(255,78,95,0.26), inset 0 0 25px rgba(66,245,179,0.10)',
+                innerBorder: '1px solid rgba(66,245,179,0.40)',
+                innerShadow: 'inset 0 0 28px rgba(255,78,95,0.13), 0 0 25px rgba(255,78,95,0.13)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,78,95,0.05) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.46,
+                particle: '✶',
+                particleColor: '#42f5b3',
+                particleOpacity: 0.16,
                 desc: '星之彩'
             },
-            3: { 
-                bg: 'linear-gradient(180deg, #5a1a1a 0%, #4a0a0a 100%)',
-                border: '#ff8888',
-                borderWidth: 2,
-                shadow: '0 0 15px rgba(255,68,68,0.4), inset 0 0 10px rgba(255,68,68,0.1)',
-                particle: '★',
-                particleColor: '#ff8888',
+            3: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(66,245,179,0.20), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,78,95,0.16), transparent 30%), linear-gradient(145deg, rgba(255,78,95,0.16), #180810)',
+                border: 'rgba(255,78,95,0.71)',
+                border2: 'rgba(66,245,179,0.48)',
+                borderWidth: 3,
+                shadow: '0 0 28px rgba(255,78,95,0.32), inset 0 0 32px rgba(66,245,179,0.13)',
+                innerBorder: '1px solid rgba(66,245,179,0.50)',
+                innerShadow: 'inset 0 0 36px rgba(255,78,95,0.16), 0 0 32px rgba(255,78,95,0.16)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,78,95,0.07) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.56,
+                particle: '⌁',
+                particleColor: '#42f5b3',
+                particleOpacity: 0.35,
                 desc: '廷达罗斯'
             },
-            4: { 
-                bg: 'linear-gradient(180deg, #6a2a2a 0%, #5a1a1a 100%)',
-                border: '#ffaaaa',
+            4: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(66,245,179,0.24), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,78,95,0.20), transparent 30%), linear-gradient(145deg, rgba(255,78,95,0.20), #180810)',
+                border: 'rgba(255,78,95,0.80)',
+                border2: 'rgba(66,245,179,0.55)',
                 borderWidth: 3,
-                shadow: '0 0 20px rgba(255,68,68,0.5), inset 0 0 15px rgba(255,68,68,0.15)',
-                particle: '✦',
-                particleColor: '#ffaaaa',
+                shadow: '0 0 36px rgba(255,78,95,0.38), inset 0 0 38px rgba(66,245,179,0.16)',
+                innerBorder: '1px solid rgba(66,245,179,0.58)',
+                innerShadow: 'inset 0 0 44px rgba(255,78,95,0.19), 0 0 40px rgba(255,78,95,0.19)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,78,95,0.09) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.66,
+                particle: 'ψ',
+                particleColor: '#42f5b3',
+                particleOpacity: 0.55,
                 desc: '莎布'
             },
-            5: { 
-                bg: 'linear-gradient(180deg, #7a3a3a 0%, #6a2a2a 100%)',
-                border: '#ffcccc',
-                borderWidth: 3,
-                shadow: '0 0 30px rgba(255,68,68,0.6), inset 0 0 20px rgba(255,68,68,0.2)',
-                particle: '✪',
-                particleColor: '#ffcccc',
+            5: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(66,245,179,0.28), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,78,95,0.24), transparent 30%), linear-gradient(145deg, rgba(255,78,95,0.24), #180810)',
+                border: 'rgba(255,78,95,0.90)',
+                border2: 'rgba(66,245,179,0.62)',
+                borderWidth: 4,
+                shadow: '0 0 44px rgba(255,78,95,0.44), inset 0 0 44px rgba(66,245,179,0.19)',
+                innerBorder: '1px solid rgba(66,245,179,0.68)',
+                innerShadow: 'inset 0 0 52px rgba(255,78,95,0.22), 0 0 48px rgba(255,78,95,0.22)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,78,95,0.11) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.76,
+                particle: '☄',
+                particleColor: '#42f5b3',
+                particleOpacity: 0.72,
                 desc: '⭐克苏鲁⭐'
             }
         }
     },
-    // 混沌金卡（机制Boss）
+    // 混沌系（金/白色 - 金色秘仪主题）
     mechanic: {
         name: '混沌',
-        color: '#ffd700',
-        glow: '0 0 25px rgba(255,215,0,0.6)',
+        color: '#ffd36a',
+        color2: '#fff0bd',
+        glow: '0 0 25px rgba(255,211,106,0.55)',
         stars: {
-            1: { 
-                bg: 'linear-gradient(180deg, #3a3a1a 0%, #2a2a0a 100%)',
-                border: '#ffd700',
-                borderWidth: 1,
-                shadow: '0 0 5px rgba(255,215,0,0.2)',
-                particle: '●',
-                particleColor: '#ffd700',
+            1: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.12), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,211,106,0.08), transparent 30%), linear-gradient(145deg, rgba(255,211,106,0.08), #141008)',
+                border: 'rgba(255,211,106,0.55)',
+                border2: 'rgba(255,240,189,0.35)',
+                borderWidth: 2,
+                shadow: '0 0 16px rgba(255,211,106,0.20), inset 0 0 18px rgba(255,240,189,0.08)',
+                innerBorder: '1px solid rgba(255,240,189,0.32)',
+                innerShadow: 'inset 0 0 20px rgba(255,211,106,0.10), 0 0 18px rgba(255,211,106,0.10)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,211,106,0.03) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.36,
+                particle: '△',
+                particleColor: '#fff0bd',
+                particleOpacity: 0,
                 desc: '奈亚'
             },
-            2: { 
-                bg: 'linear-gradient(180deg, #4a4a1a 0%, #3a3a0a 100%)',
-                border: '#ffdd33',
+            2: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.16), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,211,106,0.12), transparent 30%), linear-gradient(145deg, rgba(255,211,106,0.12), #141008)',
+                border: 'rgba(255,211,106,0.63)',
+                border2: 'rgba(255,240,189,0.40)',
                 borderWidth: 2,
-                shadow: '0 0 10px rgba(255,215,0,0.3)',
-                particle: '◆',
-                particleColor: '#ffdd33',
+                shadow: '0 0 20px rgba(255,211,106,0.26), inset 0 0 25px rgba(255,240,189,0.10)',
+                innerBorder: '1px solid rgba(255,240,189,0.40)',
+                innerShadow: 'inset 0 0 28px rgba(255,211,106,0.13), 0 0 25px rgba(255,211,106,0.13)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,211,106,0.05) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.46,
+                particle: '◇',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.16,
                 desc: '犹格'
             },
-            3: { 
-                bg: 'linear-gradient(180deg, #5a5a1a 0%, #4a4a0a 100%)',
-                border: '#ffee66',
-                borderWidth: 2,
-                shadow: '0 0 15px rgba(255,215,0,0.4), inset 0 0 10px rgba(255,215,0,0.1)',
-                particle: '★',
-                particleColor: '#ffee66',
+            3: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.20), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,211,106,0.16), transparent 30%), linear-gradient(145deg, rgba(255,211,106,0.16), #141008)',
+                border: 'rgba(255,211,106,0.71)',
+                border2: 'rgba(255,240,189,0.48)',
+                borderWidth: 3,
+                shadow: '0 0 28px rgba(255,211,106,0.32), inset 0 0 32px rgba(255,240,189,0.13)',
+                innerBorder: '1px solid rgba(255,240,189,0.50)',
+                innerShadow: 'inset 0 0 36px rgba(255,211,106,0.16), 0 0 32px rgba(255,211,106,0.16)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,211,106,0.07) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.56,
+                particle: '✦',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.35,
                 desc: '阿撒托斯'
             },
-            4: { 
-                bg: 'linear-gradient(180deg, #6a6a2a 0%, #5a5a1a 100%)',
-                border: '#ffff99',
+            4: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.24), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,211,106,0.20), transparent 30%), linear-gradient(145deg, rgba(255,211,106,0.20), #141008)',
+                border: 'rgba(255,211,106,0.80)',
+                border2: 'rgba(255,240,189,0.55)',
                 borderWidth: 3,
-                shadow: '0 0 20px rgba(255,215,0,0.5), inset 0 0 15px rgba(255,215,0,0.15)',
-                particle: '✦',
-                particleColor: '#ffff99',
+                shadow: '0 0 36px rgba(255,211,106,0.38), inset 0 0 38px rgba(255,240,189,0.16)',
+                innerBorder: '1px solid rgba(255,240,189,0.58)',
+                innerShadow: 'inset 0 0 44px rgba(255,211,106,0.19), 0 0 40px rgba(255,211,106,0.19)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,211,106,0.09) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.66,
+                particle: '✧',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.55,
                 desc: '盲目'
             },
-            5: { 
-                bg: 'linear-gradient(180deg, #7a7a3a 0%, #6a6a2a 100%)',
-                border: '#ffffcc',
-                borderWidth: 3,
-                shadow: '0 0 30px rgba(255,215,0,0.6), inset 0 0 20px rgba(255,215,0,0.2)',
-                particle: '✪',
-                particleColor: '#ffffcc',
+            5: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.28), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,211,106,0.24), transparent 30%), linear-gradient(145deg, rgba(255,211,106,0.24), #141008)',
+                border: 'rgba(255,211,106,0.90)',
+                border2: 'rgba(255,240,189,0.62)',
+                borderWidth: 4,
+                shadow: '0 0 44px rgba(255,211,106,0.44), inset 0 0 44px rgba(255,240,189,0.19)',
+                innerBorder: '1px solid rgba(255,240,189,0.68)',
+                innerShadow: 'inset 0 0 52px rgba(255,211,106,0.22), 0 0 48px rgba(255,211,106,0.22)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,211,106,0.11) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.76,
+                particle: '✺',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.72,
                 desc: '⭐原初混沌⭐'
             }
         }
     },
-    // 终焉闪红卡（终极Boss）
+    // 终焉系（黑红/白色 - 虚无崩坏主题）
     super: {
         name: '终焉',
-        color: '#ff0000',
-        glow: '0 0 30px rgba(255,0,0,0.8), 0 0 60px rgba(255,0,0,0.4)',
+        color: '#ff335f',
+        color2: '#c7d2ff',
+        glow: '0 0 30px rgba(255,51,95,0.5), 0 0 60px rgba(255,51,95,0.25)',
         stars: {
-            1: { 
-                bg: 'linear-gradient(180deg, #4a0a0a 0%, #3a0000 100%)',
-                border: '#ff0000',
-                borderWidth: 1,
-                shadow: '0 0 8px rgba(255,0,0,0.3)',
-                particle: '●',
-                particleColor: '#ff0000',
+            1: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(199,210,255,0.12), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,51,95,0.08), transparent 30%), linear-gradient(145deg, rgba(255,51,95,0.08), #0a0608)',
+                border: 'rgba(255,51,95,0.55)',
+                border2: 'rgba(199,210,255,0.35)',
+                borderWidth: 2,
+                shadow: '0 0 16px rgba(255,51,95,0.20), inset 0 0 18px rgba(199,210,255,0.08)',
+                innerBorder: '1px solid rgba(199,210,255,0.32)',
+                innerShadow: 'inset 0 0 20px rgba(255,51,95,0.10), 0 0 18px rgba(255,51,95,0.10)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,51,95,0.03) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.36,
+                particle: '◼',
+                particleColor: '#c7d2ff',
+                particleOpacity: 0,
                 desc: '熵增'
             },
-            2: { 
-                bg: 'linear-gradient(180deg, #5a0a0a 0%, #4a0000 100%)',
-                border: '#ff3333',
+            2: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(199,210,255,0.16), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,51,95,0.12), transparent 30%), linear-gradient(145deg, rgba(255,51,95,0.12), #0a0608)',
+                border: 'rgba(255,51,95,0.63)',
+                border2: 'rgba(199,210,255,0.40)',
                 borderWidth: 2,
-                shadow: '0 0 15px rgba(255,0,0,0.4)',
-                particle: '◆',
-                particleColor: '#ff3333',
+                shadow: '0 0 20px rgba(255,51,95,0.26), inset 0 0 25px rgba(199,210,255,0.10)',
+                innerBorder: '1px solid rgba(199,210,255,0.40)',
+                innerShadow: 'inset 0 0 28px rgba(255,51,95,0.13), 0 0 25px rgba(255,51,95,0.13)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,51,95,0.05) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.46,
+                particle: '◫',
+                particleColor: '#c7d2ff',
+                particleOpacity: 0.16,
                 desc: '热寂'
             },
-            3: { 
-                bg: 'linear-gradient(180deg, #6a0a0a 0%, #5a0000 100%)',
-                border: '#ff6666',
-                borderWidth: 2,
-                shadow: '0 0 25px rgba(255,0,0,0.5), inset 0 0 15px rgba(255,0,0,0.15)',
-                particle: '★',
-                particleColor: '#ff6666',
+            3: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(199,210,255,0.20), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,51,95,0.16), transparent 30%), linear-gradient(145deg, rgba(255,51,95,0.16), #0a0608)',
+                border: 'rgba(255,51,95,0.71)',
+                border2: 'rgba(199,210,255,0.48)',
+                borderWidth: 3,
+                shadow: '0 0 28px rgba(255,51,95,0.32), inset 0 0 32px rgba(199,210,255,0.13)',
+                innerBorder: '1px solid rgba(199,210,255,0.50)',
+                innerShadow: 'inset 0 0 36px rgba(255,51,95,0.16), 0 0 32px rgba(255,51,95,0.16)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,51,95,0.07) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.56,
+                particle: '⊘',
+                particleColor: '#c7d2ff',
+                particleOpacity: 0.35,
                 desc: '归零'
             },
-            4: { 
-                bg: 'linear-gradient(180deg, #7a1a1a 0%, #6a0a0a 100%)',
-                border: '#ff9999',
+            4: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(199,210,255,0.24), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,51,95,0.20), transparent 30%), linear-gradient(145deg, rgba(255,51,95,0.20), #0a0608)',
+                border: 'rgba(255,51,95,0.80)',
+                border2: 'rgba(199,210,255,0.55)',
                 borderWidth: 3,
-                shadow: '0 0 35px rgba(255,0,0,0.6), inset 0 0 20px rgba(255,0,0,0.2)',
-                particle: '✦',
-                particleColor: '#ff9999',
+                shadow: '0 0 36px rgba(255,51,95,0.38), inset 0 0 38px rgba(199,210,255,0.16)',
+                innerBorder: '1px solid rgba(199,210,255,0.58)',
+                innerShadow: 'inset 0 0 44px rgba(255,51,95,0.19), 0 0 40px rgba(255,51,95,0.19)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,51,95,0.09) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.66,
+                particle: '◌',
+                particleColor: '#c7d2ff',
+                particleOpacity: 0.55,
                 desc: '虚无'
             },
-            5: { 
-                bg: 'linear-gradient(180deg, #8a2a2a 0%, #7a1a1a 100%)',
-                border: '#ffcccc',
-                borderWidth: 3,
-                shadow: '0 0 50px rgba(255,0,0,0.8), inset 0 0 30px rgba(255,0,0,0.25)',
-                particle: '✪',
-                particleColor: '#ffcccc',
+            5: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(199,210,255,0.28), transparent 32%), radial-gradient(circle at 82% 78%, rgba(255,51,95,0.24), transparent 30%), linear-gradient(145deg, rgba(255,51,95,0.24), #0a0608)',
+                border: 'rgba(255,51,95,0.90)',
+                border2: 'rgba(199,210,255,0.62)',
+                borderWidth: 4,
+                shadow: '0 0 44px rgba(255,51,95,0.44), inset 0 0 44px rgba(199,210,255,0.19)',
+                innerBorder: '1px solid rgba(199,210,255,0.68)',
+                innerShadow: 'inset 0 0 52px rgba(255,51,95,0.22), 0 0 48px rgba(255,51,95,0.22)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(255,51,95,0.11) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.76,
+                particle: '◉',
+                particleColor: '#c7d2ff',
+                particleOpacity: 0.72,
                 desc: '⭐阿撒托斯之梦⭐'
+            }
+        }
+    },
+    // 战甲金卡（Warframe成长回响 - 铜金主题）
+    warframe: {
+        name: '战甲',
+        color: '#c8a84b',
+        color2: '#fff0bd',
+        glow: '0 0 22px rgba(200,168,75,0.5)',
+        stars: {
+            1: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.10), transparent 32%), radial-gradient(circle at 82% 78%, rgba(200,168,75,0.08), transparent 30%), linear-gradient(145deg, rgba(200,168,75,0.10), #12100a)',
+                border: 'rgba(200,168,75,0.55)',
+                border2: 'rgba(255,240,189,0.30)',
+                borderWidth: 2,
+                shadow: '0 0 16px rgba(200,168,75,0.20), inset 0 0 18px rgba(255,240,189,0.06)',
+                innerBorder: '1px solid rgba(255,240,189,0.28)',
+                innerShadow: 'inset 0 0 20px rgba(200,168,75,0.08), 0 0 18px rgba(200,168,75,0.08)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(200,168,75,0.03) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.36,
+                particle: '⚔️',
+                particleColor: '#fff0bd',
+                particleOpacity: 0,
+                desc: '初醒'
+            },
+            2: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.14), transparent 32%), radial-gradient(circle at 82% 78%, rgba(200,168,75,0.12), transparent 30%), linear-gradient(145deg, rgba(200,168,75,0.14), #12100a)',
+                border: 'rgba(200,168,75,0.63)',
+                border2: 'rgba(255,240,189,0.38)',
+                borderWidth: 2,
+                shadow: '0 0 20px rgba(200,168,75,0.26), inset 0 0 25px rgba(255,240,189,0.08)',
+                innerBorder: '1px solid rgba(255,240,189,0.38)',
+                innerShadow: 'inset 0 0 28px rgba(200,168,75,0.10), 0 0 25px rgba(200,168,75,0.10)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(200,168,75,0.05) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.46,
+                particle: '◆',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.16,
+                desc: '熟练'
+            },
+            3: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.18), transparent 32%), radial-gradient(circle at 82% 78%, rgba(200,168,75,0.16), transparent 30%), linear-gradient(145deg, rgba(200,168,75,0.18), #12100a)',
+                border: 'rgba(200,168,75,0.71)',
+                border2: 'rgba(255,240,189,0.46)',
+                borderWidth: 3,
+                shadow: '0 0 28px rgba(200,168,75,0.32), inset 0 0 32px rgba(255,240,189,0.10)',
+                innerBorder: '1px solid rgba(255,240,189,0.48)',
+                innerShadow: 'inset 0 0 36px rgba(200,168,75,0.13), 0 0 32px rgba(200,168,75,0.13)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(200,168,75,0.07) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.56,
+                particle: '★',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.35,
+                desc: '共鸣'
+            },
+            4: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.22), transparent 32%), radial-gradient(circle at 82% 78%, rgba(200,168,75,0.20), transparent 30%), linear-gradient(145deg, rgba(200,168,75,0.22), #12100a)',
+                border: 'rgba(200,168,75,0.80)',
+                border2: 'rgba(255,240,189,0.54)',
+                borderWidth: 3,
+                shadow: '0 0 36px rgba(200,168,75,0.38), inset 0 0 38px rgba(255,240,189,0.13)',
+                innerBorder: '1px solid rgba(255,240,189,0.56)',
+                innerShadow: 'inset 0 0 44px rgba(200,168,75,0.16), 0 0 40px rgba(200,168,75,0.16)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(200,168,75,0.09) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.66,
+                particle: '✦',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.55,
+                desc: '超频'
+            },
+            5: {
+                bg: 'radial-gradient(circle at 18% 12%, rgba(255,240,189,0.26), transparent 32%), radial-gradient(circle at 82% 78%, rgba(200,168,75,0.24), transparent 30%), linear-gradient(145deg, rgba(200,168,75,0.26), #12100a)',
+                border: 'rgba(200,168,75,0.90)',
+                border2: 'rgba(255,240,189,0.62)',
+                borderWidth: 4,
+                shadow: '0 0 44px rgba(200,168,75,0.44), inset 0 0 44px rgba(255,240,189,0.16)',
+                innerBorder: '1px solid rgba(255,240,189,0.66)',
+                innerShadow: 'inset 0 0 52px rgba(200,168,75,0.19), 0 0 48px rgba(200,168,75,0.19)',
+                pattern: 'repeating-conic-gradient(from 25deg, rgba(200,168,75,0.11) 0deg 8deg, transparent 8deg 24deg)',
+                patternOpacity: 0.76,
+                particle: '✪',
+                particleColor: '#fff0bd',
+                particleOpacity: 0.72,
+                desc: '⭐完全同调⭐'
             }
         }
     }
@@ -909,6 +1199,70 @@ function addPlayerCard(cardData) {
     };
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  Warframe等级卡片奖励
+// ═══════════════════════════════════════════════════════════════
+var WARFRAME_LEVEL_CARD_THRESHOLDS = [30, 50, 70, 90, 100];
+var WARFRAME_CARD_ID_MAP = {
+    excalibur: 'c_wf_excalibur',
+    volt: 'c_wf_volt',
+    mag: 'c_wf_mag'
+};
+
+function getWarframeCardClaimStorageKey() {
+    var userId = (typeof currentUser !== 'undefined' && currentUser && currentUser.id) ? currentUser.id : 'guest';
+    return 'warframe_level_card_claims_' + userId;
+}
+
+function getWarframeCardClaims() {
+    if (typeof gameData !== 'undefined' && gameData && gameData.warframe_card_claims) {
+        return gameData.warframe_card_claims;
+    }
+    try {
+        return JSON.parse(localStorage.getItem(getWarframeCardClaimStorageKey()) || '{}');
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveWarframeCardClaims(data) {
+    if (typeof gameData !== 'undefined' && gameData) {
+        gameData.warframe_card_claims = data || {};
+    }
+    localStorage.setItem(getWarframeCardClaimStorageKey(), JSON.stringify(data || {}));
+}
+
+function getWarframeCardData(warframeType) {
+    var cardId = WARFRAME_CARD_ID_MAP[warframeType];
+    return cardId ? findCardById(cardId) : null;
+}
+
+function grantWarframeLevelCards(warframeType, level) {
+    initPlayerCards();
+    var cardData = getWarframeCardData(warframeType);
+    if (!cardData || !level) return;
+
+    var claims = getWarframeCardClaims();
+    if (!claims[warframeType]) claims[warframeType] = {};
+
+    for (var i = 0; i < WARFRAME_LEVEL_CARD_THRESHOLDS.length; i++) {
+        var threshold = WARFRAME_LEVEL_CARD_THRESHOLDS[i];
+        if (level >= threshold && !claims[warframeType][threshold]) {
+            var result = addPlayerCard(cardData);
+            claims[warframeType][threshold] = new Date().toISOString();
+            saveWarframeCardClaims(claims);
+            if (typeof saveGameData === 'function') saveGameData();
+            if (typeof showCardAcquireModal === 'function') {
+                showCardAcquireModal(cardData, (cardData.name || 'Warframe') + ' Lv.' + threshold + ' 达成');
+            }
+            if (typeof showToast === 'function') {
+                showToast('🎴 ' + (cardData.name || '战甲') + ' 等级回响卡片已获得（Lv.' + threshold + '）', 'success');
+            }
+        }
+    }
+}
+window.grantWarframeLevelCards = grantWarframeLevelCards;
+
 // 手动升星
 function upgradeCardStar(cardId) {
     var cardInfo = playerCards[cardId];
@@ -946,106 +1300,85 @@ function getCardStarStyle(cardData, starLevel) {
     var level = Math.min(5, Math.max(1, starLevel || 1));
     
     // ═══════════════════════════════════════════════════════════════
-    //  星级视觉升级系统：高星级可跨级改变颜色/特效
+    //  华丽版星级视觉升级系统
     // ═══════════════════════════════════════════════════════════════
     
-    // 星级颜色升级表：当星级足够高时，颜色向更高级别进化
-    // 例如：绿卡3星→青绿，4星→蓝绿，5星→金绿（传奇蜕变）
-    var starColorEvolution = {
-        normal: {    // 绿卡进化路径
-            1: '#4eff4e', 2: '#66ff66', 3: '#88ff88', 
-            4: '#aaffaa', 5: '#ccffcc'
-        },
-        elite: {     // 蓝卡进化路径
-            1: '#4488ff', 2: '#6699ff', 3: '#88bbff', 
-            4: '#aaddff', 5: '#e0f0ff'
-        },
-        boss: {      // 红卡进化路径
-            1: '#ff4444', 2: '#ff6666', 3: '#ff8888', 
-            4: '#ffaaaa', 5: '#ffdddd'
-        },
-        mechanic: {  // 金卡进化路径
-            1: '#ffd700', 2: '#ffdd33', 3: '#ffee66', 
-            4: '#ffff99', 5: '#ffffcc'
-        },
-        super: {     // 闪红卡进化路径（最高级）
-            1: '#ff0000', 2: '#ff3333', 3: '#ff6666', 
-            4: '#ff9999', 5: '#ffcccc'
-        }
-    };
-    
-    // 星级特效强度系数：1.0 ~ 3.0
-    var intensityMult = 1 + (level - 1) * 0.5; // 1星=1.0, 3星=2.0, 5星=3.0
-    
-    // 星级类型进化：4星卡片类型名称变化，5星完全蜕变
     // 星级类型进化名称
     var typeNameEvolution = {
         normal: ['遗落', '遗落·改', '窥视', '凝视', '⭐苏醒⭐'],
         elite: ['异变', '异变·改', '侵蚀', '同化', '⭐降临⭐'],
         boss: ['古神', '星之彩', '廷达罗斯', '莎布', '⭐克苏鲁⭐'],
         mechanic: ['混沌', '犹格', '阿撒托斯', '盲目', '⭐原初混沌⭐'],
-        super: ['终焉', '热寂', '归零', '虚无', '⭐阿撒托斯之梦⭐']
+        super: ['终焉', '热寂', '归零', '虚无', '⭐阿撒托斯之梦⭐'],
+        warframe: ['战甲', '战甲·熟练', '战甲·共鸣', '战甲·超频', '⭐完全同调⭐']
     };
     
     var typeConfig = CARD_STAR_STYLES[type];
-    if (!typeConfig) return null;
+    if (!typeConfig) {
+        type = 'normal';
+        typeConfig = CARD_STAR_STYLES.normal;
+    }
     
     var starConfig = typeConfig.stars[level];
     if (!starConfig) return null;
     
-    // 获取进化后的颜色
-    var evolvedColor = starColorEvolution[type] ? starColorEvolution[type][level] : typeConfig.color;
     var evolvedName = typeNameEvolution[type] ? typeNameEvolution[type][level - 1] : typeConfig.name;
+    var primaryColor = typeConfig.color;
+    var secondaryColor = typeConfig.color2 || typeConfig.color;
     
-    // 动态增强背景：高星级背景更亮更华丽
-    var bgBrightness = 1 + (level - 1) * 0.15; // 1星=1.0, 5星=1.6
-    var enhancedBg = starConfig.bg.replace(/#([0-9a-f]{2})/gi, function(match, hex) {
-        var val = Math.min(255, Math.floor(parseInt(hex, 16) * bgBrightness));
-        return '#' + val.toString(16).padStart(2, '0');
-    });
+    // 星级特效强度系数：1.0 ~ 3.0
+    var intensityMult = 1 + (level - 1) * 0.5;
     
-    // 动态增强发光：星级越高发光越强
-    var glowBlur = Math.floor(10 * intensityMult);
-    var glowSpread = Math.floor(5 * intensityMult);
-    var enhancedGlow = '0 0 ' + glowBlur + 'px ' + evolvedColor + Math.floor(80 * intensityMult).toString(16).padStart(2,'0') + 
-                       ', 0 0 ' + (glowBlur * 2) + 'px ' + evolvedColor + Math.floor(40 * intensityMult).toString(16).padStart(2,'0');
+    // 粒子数量：1星无粒子，2星少量，3星+随等级增加
+    var particleCount = level >= 3 ? Math.floor(level * 2 + 3) : 0;
+    // 粒子透明度
+    var particleOpacity = starConfig.particleOpacity || (level >= 3 ? 0.35 : 0);
     
-    // 5星专属：添加彩虹边缘发光
-    if (level >= 5) {
-        enhancedGlow += ', 0 0 ' + (glowBlur * 3) + 'px rgba(255,215,0,0.3)' +
-                        ', inset 0 0 ' + glowBlur + 'px ' + evolvedColor + '20';
-    }
+    // 5星专属：脉冲呼吸效果
+    var hasAura = level >= 5;
     
-    // 动态增强边框：星级越高边框越粗越亮
-    var enhancedBorderWidth = Math.min(5, starConfig.borderWidth + Math.floor((level - 1) / 2));
-    
-    // 粒子进化：高星级粒子变成更华丽的符号
-    var particleEvolution = {
-        1: '●', 2: '◆', 3: '★', 4: '✦', 5: '✪'
-    };
-    var enhancedParticle = particleEvolution[level] || starConfig.particle;
+    // 4星+：内发光层
+    var hasInnerGlow = level >= 4;
+    // 5星：流光线条
+    var hasFlowLine = level >= 5;
+    // 3星+：边框脉冲动画
+    var hasBorderPulse = level >= 3;
     
     return {
         type: type,
-        typeName: evolvedName,  // ← 使用进化后的名称
-        color: evolvedColor,    // ← 使用进化后的颜色
-        glow: enhancedGlow,     // ← 使用增强后的发光
+        typeName: evolvedName,
+        color: primaryColor,
+        color2: secondaryColor,
+        glow: starConfig.shadow,
         starLevel: level,
-        // CSS 样式属性
-        bg: enhancedBg,
-        border: evolvedColor,   // ← 边框颜色也进化
-        borderWidth: enhancedBorderWidth,
-        shadow: enhancedGlow,
-        particle: enhancedParticle,
-        particleColor: evolvedColor,
+        // 华丽版 CSS 样式属性 - 直接使用配置值
+        bg: starConfig.bg,
+        border: starConfig.border,
+        border2: starConfig.border2 || starConfig.border,
+        borderWidth: starConfig.borderWidth,
+        shadow: starConfig.shadow,
+        innerBorder: starConfig.innerBorder || '',
+        innerShadow: starConfig.innerShadow || '',
+        pattern: starConfig.pattern || '',
+        patternOpacity: starConfig.patternOpacity || 0,
+        // 粒子
+        particle: starConfig.particle,
+        particleColor: starConfig.particleColor,
+        particleOpacity: particleOpacity,
+        particleCount: particleCount,
+        // 描述
         desc: starConfig.desc,
         // 动态增强效果
         effects: {
-            borderWidth: enhancedBorderWidth,
-            shadowBlur: Math.floor(10 * level * intensityMult),
-            particleCount: Math.floor(2 * level * intensityMult),
+            borderWidth: starConfig.borderWidth,
+            shadowBlur: Math.floor(16 * level * intensityMult / 2),
+            particleCount: particleCount,
             animationSpeed: Math.max(0.3, 1 / level),
-            intensity: intensityMult  // ← 新增：特效强度系数
+            intensity: intensityMult,
+            hasAura: hasAura,
+            hasInnerGlow: hasInnerGlow,
+            hasFlowLine: hasFlowLine,
+            hasBorderPulse: hasBorderPulse
         }
     };
 }
@@ -1252,6 +1585,296 @@ function updateCodexCategoryStats() {
     if (codexPct) codexPct.textContent = totalCards > 0 ? Math.floor(totalCollected / totalCards * 100) + '%' : '0%';
 }
 
+function getCodexCategoryProgress(categoryKey) {
+    var cards = window.playerCards || playerCards || {};
+    var total = 0;
+    var collected = 0;
+    if (typeof DECK_CARDS !== 'undefined') {
+        for (var deckId in DECK_CARDS) {
+            var deck = DECK_CARDS[deckId] || [];
+            for (var i = 0; i < deck.length; i++) {
+                var card = deck[i];
+                if (getCardCategory(card) !== categoryKey) continue;
+                total++;
+                if (cards[card.id] && cards[card.id].count > 0) collected++;
+            }
+        }
+    }
+    return { total: total, collected: collected };
+}
+
+function getCodexRewardStorageKey() {
+    var userId = (typeof currentUser !== 'undefined' && currentUser && currentUser.id) ? currentUser.id : 'guest';
+    return 'codex_category_rewards_' + userId;
+}
+
+function getClaimedCodexRewards() {
+    try {
+        return JSON.parse(localStorage.getItem(getCodexRewardStorageKey()) || '{}');
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveClaimedCodexRewards(data) {
+    localStorage.setItem(getCodexRewardStorageKey(), JSON.stringify(data || {}));
+}
+
+function claimCodexCategoryReward(categoryKey) {
+    initPlayerCards();
+    var names = {
+        battle: '肃清',
+        mining: '勘探',
+        gathering: '回收'
+    };
+    var rewards = {
+        battle: { rout: 120, prime: 3, label: '💰120 + 💎3' },
+        mining: { rout: 40, prime: 4, label: '💰40 + 💎4' },
+        gathering: { rout: 80, prime: 2, label: '💰80 + 💎2' }
+    };
+    var progress = getCodexCategoryProgress(categoryKey);
+    var displayName = names[categoryKey] || '图鉴';
+    if (!progress.total || progress.collected < progress.total) {
+        showToast(displayName + '卡组尚未集齐：' + progress.collected + '/' + progress.total, 'warning');
+        return false;
+    }
+
+    var claimed = getClaimedCodexRewards();
+    if (claimed[categoryKey]) {
+        showToast(displayName + '集齐奖励已领取', 'info');
+        return false;
+    }
+
+    var reward = rewards[categoryKey] || rewards.battle;
+    if (typeof gameData !== 'undefined') {
+        gameData.rout_points = (gameData.rout_points || 0) + reward.rout;
+        gameData.prime_points = (gameData.prime_points || 0) + reward.prime;
+    }
+    if (typeof currentUser !== 'undefined' && currentUser) {
+        currentUser.rout_points = (currentUser.rout_points || 0) + reward.rout;
+        currentUser.prime_points = (currentUser.prime_points || 0) + reward.prime;
+    }
+    claimed[categoryKey] = new Date().toISOString();
+    saveClaimedCodexRewards(claimed);
+
+    if (typeof saveGameData === 'function') saveGameData();
+    if (typeof updateUI === 'function') updateUI();
+    showToast('🎁 ' + displayName + '卡组集齐奖励已领取：' + reward.label, 'success');
+    return true;
+}
+window.claimCodexCategoryReward = claimCodexCategoryReward;
+
+// ═══════════════════════════════════════════════════════════════
+//  卡组星级奖励系统
+// ═══════════════════════════════════════════════════════════════
+function getDeckRewardStorageKey() {
+    var userId = (typeof currentUser !== 'undefined' && currentUser && currentUser.id) ? currentUser.id : 'guest';
+    return 'codex_deck_rewards_' + userId;
+}
+function getClaimedDeckRewards() {
+    if (typeof gameData !== 'undefined' && gameData && gameData.codex_deck_rewards) {
+        return gameData.codex_deck_rewards;
+    }
+    try {
+        return JSON.parse(localStorage.getItem(getDeckRewardStorageKey()) || '{}');
+    } catch (e) {
+        return {};
+    }
+}
+function saveClaimedDeckRewards(data) {
+    if (typeof gameData !== 'undefined' && gameData) {
+        gameData.codex_deck_rewards = data || {};
+    }
+    localStorage.setItem(getDeckRewardStorageKey(), JSON.stringify(data || {}));
+}
+
+// 计算卡组当前星级 = 所有卡片最低starLevel（未集齐则为0）
+function calculateDeckStarLevel(deckId) {
+    var cards = DECK_CARDS[deckId] || [];
+    if (cards.length === 0) return 0;
+    var minStar = 5;
+    var allCollected = true;
+    for (var i = 0; i < cards.length; i++) {
+        var info = playerCards[cards[i].id];
+        if (!info) { allCollected = false; break; }
+        minStar = Math.min(minStar, info.starLevel || 1);
+    }
+    return allCollected ? minStar : 0;
+}
+
+// 卡组视觉星级：只有对应奖励领取后，才显示该星级外观
+function calculateDeckVisualStarLevel(deckId) {
+    if (DECK_REWARD_DISABLED[deckId]) return 0;
+    var actualStar = calculateDeckStarLevel(deckId);
+    if (actualStar <= 0) return 0;
+    var claimed = getClaimedDeckRewards();
+    var list = claimed[deckId] || [];
+    var visual = 0;
+    for (var i = 0; i < list.length; i++) {
+        var tier = parseInt(list[i], 10);
+        if (!isNaN(tier)) visual = Math.max(visual, tier);
+    }
+    return Math.min(actualStar, Math.max(0, visual));
+}
+
+// 获取卡组下一个可领取的星级奖励档位（0=集齐奖励，1-5=升星奖励，null=无）
+function getDeckNextClaimableStar(deckId) {
+    if (DECK_REWARD_DISABLED[deckId]) return null;
+    var star = calculateDeckStarLevel(deckId);
+    if (star <= 0) return null;
+    var claimed = getClaimedDeckRewards();
+    var list = claimed[deckId] || [];
+    // 0星奖励：卡组首次集齐即可领取
+    if (list.indexOf(0) === -1) return 0;
+    // 1-5星奖励：整体达到对应星级即可领取
+    var maxRewardTier = Math.min(5, star);
+    for (var s = 1; s <= maxRewardTier; s++) {
+        if (list.indexOf(s) === -1) return s;
+    }
+    return null;
+}
+
+// 是否可以领取奖励
+function canClaimDeckReward(deckId) {
+    return getDeckNextClaimableStar(deckId) !== null;
+}
+
+var DECK_REWARD_DISABLED = {
+    janus_key: true,
+    warframe_normal: true,
+    warframe_prime: true
+};
+
+var FIXED_DECK_STAR_REWARDS = {
+    0: { rout: 100, prime: 0, label: '💰100' },
+    1: { rout: 150, prime: 0, label: '💰150' },
+    2: { rout: 200, prime: 0, label: '💰200' },
+    3: { rout: 150, prime: 2, label: '💰150 + 💎2' },
+    4: { rout: 200, prime: 5, label: '💰200 + 💎5' },
+    5: { rout: 250, prime: 10, label: '💰250 + 💎10' }
+};
+
+// 生成卡组星级奖励（根据卡组和星级）
+function getDeckStarReward(deckId, starLevel) {
+    if (DECK_REWARD_DISABLED[deckId]) return null;
+    return FIXED_DECK_STAR_REWARDS[starLevel] || null;
+}
+
+// 领取卡组星级奖励
+async function claimDeckReward(deckId, factionKey, blockKey) {
+    initPlayerCards();
+    var star = getDeckNextClaimableStar(deckId);
+    if (star === null) {
+        showToast('当前没有可领取的奖励', 'info');
+        return false;
+    }
+    var reward = getDeckStarReward(deckId, star);
+    if (!reward) {
+        showToast('该卡组暂未设置奖励', 'info');
+        return false;
+    }
+
+    // 数据库级防重复：成功写入唯一领取记录后，才真正发奖励。
+    // 如果数据库未部署 claim_codex_reward_once，则前端会提示执行 SQL，而不是继续发奖励。
+    if (typeof sb !== 'undefined' && typeof currentUser !== 'undefined' && currentUser && currentUser.id) {
+        try {
+            var rpcResult = await sb.rpc('claim_codex_reward_once', {
+                p_user_id: currentUser.id,
+                p_deck_id: deckId,
+                p_reward_tier: star,
+                p_reward: reward
+            });
+            if (rpcResult.error) throw rpcResult.error;
+            if (rpcResult.data !== true) {
+                showToast('该卡组奖励已领取，不能重复领取', 'warning');
+                var alreadyClaimed = getClaimedDeckRewards();
+                if (!alreadyClaimed[deckId]) alreadyClaimed[deckId] = [];
+                if (alreadyClaimed[deckId].indexOf(star) === -1) alreadyClaimed[deckId].push(star);
+                saveClaimedDeckRewards(alreadyClaimed);
+                renderCodexDecks(factionKey, blockKey);
+                return false;
+            }
+        } catch (e) {
+            showToast('数据库奖励防重复未启用：请先执行 supabase_maintenance.sql', 'error');
+            console.error('claim_codex_reward_once failed:', e);
+            return false;
+        }
+    }
+
+    if (typeof gameData !== 'undefined') {
+        gameData.rout_points = (gameData.rout_points || 0) + reward.rout;
+        gameData.prime_points = (gameData.prime_points || 0) + reward.prime;
+    }
+    if (typeof currentUser !== 'undefined' && currentUser) {
+        currentUser.rout_points = (currentUser.rout_points || 0) + reward.rout;
+        currentUser.prime_points = (currentUser.prime_points || 0) + reward.prime;
+    }
+    var claimed = getClaimedDeckRewards();
+    if (!claimed[deckId]) claimed[deckId] = [];
+    claimed[deckId].push(star);
+    saveClaimedDeckRewards(claimed);
+    if (typeof saveGameData === 'function') saveGameData();
+    if (typeof updateUI === 'function') updateUI();
+
+    // 播放领取动画后再刷新界面
+    showDeckClaimAnimation(deckId, star, reward.label, function() {
+        renderCodexDecks(factionKey, blockKey);
+    });
+    return true;
+}
+window.claimDeckReward = claimDeckReward;
+
+// 星级指示器HTML
+function renderDeckStarDots(starLevel) {
+    var html = '<div class="deck-star-bar">';
+    for (var s = 1; s <= 5; s++) {
+        var cls = s <= starLevel ? (starLevel >= 5 ? 'active max' : 'active') : '';
+        html += '<div class="deck-star-dot ' + cls + '"></div>';
+    }
+    html += '</div>';
+    return html;
+}
+
+// 升星进度（用于已集齐的卡组）
+function getDeckStarUpgradeProgress(deckId) {
+    var cards = DECK_CARDS[deckId] || [];
+    if (cards.length === 0) return { current: 0, target: 0, percent: 0, targetStar: 0 };
+    var currentDeckStar = calculateDeckStarLevel(deckId);
+    var targetStar = currentDeckStar >= 5 ? 5 : currentDeckStar + 1;
+    var reached = 0;
+    for (var i = 0; i < cards.length; i++) {
+        var info = playerCards[cards[i].id];
+        if (info && (info.starLevel || 1) >= targetStar) reached++;
+    }
+    var percent = cards.length > 0 ? Math.min(100, Math.floor((reached / cards.length) * 100)) : 0;
+    return { current: reached, target: cards.length, percent: percent, deckStar: currentDeckStar, targetStar: targetStar };
+}
+
+// 奖励领取动画
+function showDeckClaimAnimation(deckId, star, label, onDone) {
+    var grid = document.getElementById('codexGrid');
+    if (!grid) { if (onDone) onDone(); return; }
+    var card = grid.querySelector('[data-deck-id="' + deckId + '"]');
+    if (!card) { if (onDone) onDone(); return; }
+
+    var overlay = document.createElement('div');
+    overlay.className = 'deck-reward-overlay active';
+    overlay.innerHTML =
+        '<div class="deck-reward-icon">🎁</div>' +
+        '<div class="deck-reward-text">' + star + '星奖励</div>' +
+        '<div style="color:#ccc;font-size:0.8rem;margin-top:4px;">' + label + '</div>';
+    card.appendChild(overlay);
+
+    setTimeout(function() {
+        overlay.classList.remove('active');
+        setTimeout(function() {
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            showToast('🎁 卡组 ' + star + ' 星奖励已领取：' + label, 'success');
+            if (onDone) onDone();
+        }, 400);
+    }, 1400);
+}
+
 function renderCodexBlocks(factionKey) {
     var grid = document.getElementById('codexGrid');
     var faction = CODEX_STRUCTURE[factionKey];
@@ -1269,6 +1892,7 @@ function renderCodexBlocks(factionKey) {
 }
 
 function renderCodexDecks(factionKey, blockKey) {
+    initPlayerCards();
     var grid = document.getElementById('codexGrid');
     var faction = CODEX_STRUCTURE[factionKey];
     var block = faction && faction.blocks ? faction.blocks[blockKey] : null;
@@ -1279,8 +1903,89 @@ function renderCodexDecks(factionKey, blockKey) {
     for (var deckId in block.decks) {
         var deck = block.decks[deckId];
         var stats = calculateDeckProgress(deckId);
-        var percent = stats.total > 0 ? Math.floor((stats.collected / stats.total) * 100) : 0;
-        html += '<div onclick="enterCodexDeck(\'' + factionKey + '\', \'' + blockKey + '\', \'' + deckId + '\')" style="background: var(--panel-bg); border: 2px solid ' + faction.color + '25; border-radius: 14px; padding: 25px; cursor: pointer; transition: all 0.3s; text-align: center;" onmouseover="this.style.borderColor=\'' + faction.color + '80\'; this.style.transform=\'translateY(-5px)\'; this.style.boxShadow=\'0 10px 30px ' + faction.color + '15\';" onmouseout="this.style.borderColor=\'' + faction.color + '25\'; this.style.transform=\'none\'; this.style.boxShadow=\'none\';"><div style="font-size: 3rem; margin-bottom: 12px;">' + deck.icon + '</div><div style="font-family: Orbitron; font-size: 1.1rem; color: #fff; margin-bottom: 6px;">' + deck.name + '</div><div style="color: #888; font-size: 0.8rem; margin-bottom: 15px;">' + deck.desc + '</div><div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;"><div style="flex: 1; height: 6px; background: #222; border-radius: 3px; overflow: hidden;"><div style="width: ' + percent + '%; height: 100%; background: linear-gradient(90deg, ' + faction.color + '80, ' + faction.color + '); border-radius: 3px;"></div></div><span style="font-family: Orbitron; font-size: 0.8rem; color: ' + faction.color + '; min-width: 40px;">' + percent + '%</span></div><div style="color: #666; font-size: 0.75rem;">' + stats.collected + ' / ' + stats.total + ' 卡片已收集</div></div>';
+        var star = calculateDeckStarLevel(deckId);
+        var visualStar = calculateDeckVisualStarLevel(deckId);
+        var claimable = canClaimDeckReward(deckId);
+        var starCls = 'deck-star-' + visualStar + (claimable ? ' deck-can-claim' : '');
+
+        // 点击行为：可领取时领奖励，否则进入卡组
+        var clickAction = claimable
+            ? 'claimDeckReward(\'' + deckId + '\', \'' + factionKey + '\', \'' + blockKey + '\')'
+            : 'enterCodexDeck(\'' + factionKey + '\', \'' + blockKey + '\', \'' + deckId + '\')';
+
+        // 进度条与文字（严格基于已领取的视觉星级，不提前暴露）
+        var progressHtml = '';
+        var infoHtml = '';
+
+        if (visualStar === 0) {
+            if (star > 0 && claimable) {
+                // 已达成0星条件且可领取：提示领取
+                progressHtml =
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                        '<div class="deck-star-progress-bg"><div class="deck-star-progress-fill s1" style="width: 0%;"></div></div>' +
+                        '<span style="font-family: Orbitron; font-size: 0.8rem; color: var(--tenno-gold); min-width: 52px;">待领取</span>' +
+                    '</div>';
+                infoHtml = '<div style="color: var(--tenno-gold); font-size: 0.75rem;">🎁 领取回响进度奖励</div>';
+            } else if (star > 0) {
+                // 已达成0星但不可领取（极端情况）：不暴露真实进度
+                progressHtml =
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                        '<div class="deck-star-progress-bg"><div class="deck-star-progress-fill s1" style="width: 0%;"></div></div>' +
+                        '<span style="font-family: Orbitron; font-size: 0.8rem; color: #666; min-width: 40px;">???</span>' +
+                    '</div>';
+                infoHtml = '<div style="color: #555; font-size: 0.75rem;">回响收集中...</div>';
+            } else {
+                // 未达成0星：正常显示收集进度
+                var percent = stats.total > 0 ? Math.floor((stats.collected / stats.total) * 100) : 0;
+                progressHtml =
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                        '<div class="deck-star-progress-bg"><div class="deck-star-progress-fill s1" style="width: ' + percent + '%;"></div></div>' +
+                        '<span style="font-family: Orbitron; font-size: 0.8rem; color: ' + faction.color + '; min-width: 40px;">' + percent + '%</span>' +
+                    '</div>';
+                infoHtml = '<div style="color: #666; font-size: 0.75rem;">' + stats.collected + ' / ' + stats.total + ' 回响已收集</div>';
+            }
+        } else {
+            // 已有领取记录：显示当前已领取的最高星级状态
+            if (visualStar >= 5) {
+                progressHtml =
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                        '<div class="deck-star-progress-bg"><div class="deck-star-progress-fill s5" style="width: 100%;"></div></div>' +
+                        '<span style="font-family: Orbitron; font-size: 0.8rem; color: var(--tenno-gold); min-width: 45px;">100%</span>' +
+                    '</div>';
+                infoHtml = '<div style="color: #888; font-size: 0.72rem;">⭐ 已达到最高星级 ⭐</div>';
+            } else if (claimable) {
+                // 下一星级条件已达成且可领取：提示领取，不暴露进度细节
+                var nextClaimStar = visualStar + 1;
+                progressHtml =
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                        '<div class="deck-star-progress-bg"><div class="deck-star-progress-fill s' + nextClaimStar + '" style="width: 0%;"></div></div>' +
+                        '<span style="font-family: Orbitron; font-size: 0.8rem; color: var(--tenno-gold); min-width: 52px;">待领取</span>' +
+                    '</div>';
+                infoHtml = '<div style="color: var(--tenno-gold); font-size: 0.72rem;">🎁 点击领取 ' + nextClaimStar + '星奖励</div>';
+            } else {
+                // 显示已领取的最高星级信息（不显示下一级未领取的进度）
+                progressHtml =
+                    '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">' +
+                        '<div class="deck-star-progress-bg"><div class="deck-star-progress-fill s' + visualStar + '" style="width: 100%;"></div></div>' +
+                        '<span style="font-family: Orbitron; font-size: 0.8rem; color: var(--tenno-gold); min-width: 45px;">100%</span>' +
+                    '</div>';
+                infoHtml = '<div style="color: #888; font-size: 0.72rem;">已达成全 ' + visualStar + '星</div>';
+            }
+        }
+
+        var badgeHtml = claimable ? '<div class="deck-claim-badge">领取</div>' : '';
+
+        html += '<div data-deck-id="' + deckId + '" onclick="' + clickAction + '" class="deck-card-wrap ' + starCls + '">' +
+            badgeHtml +
+            '<div class="deck-card-content">' +
+                '<div style="font-size: 3rem; margin-bottom: 10px;">' + deck.icon + '</div>' +
+                '<div style="font-family: Orbitron; font-size: 1.1rem; color: #fff; margin-bottom: 4px;">' + deck.name + '</div>' +
+                '<div style="color: #888; font-size: 0.78rem; margin-bottom: 10px;">' + deck.desc + '</div>' +
+                renderDeckStarDots(visualStar) +
+                progressHtml +
+                infoHtml +
+            '</div>' +
+        '</div>';
     }
     grid.innerHTML = html || '<div style="grid-column: 1 / -1; text-align: center; color: #666; padding: 60px;">该区域暂无卡组数据</div>';
 }
@@ -1372,6 +2077,12 @@ function renderCodexCards(factionKey, blockKey, deckId) {
             var displayStarLevel = cardInfo ? (cardInfo.starLevel || 1) : 1;
             displayStarLevel = Math.min(5, Math.max(1, displayStarLevel));
 
+            // 【关键】卡片星级显示受限于卡组已领取的视觉星级
+            var deckVisualStar = calculateDeckVisualStarLevel(deckId);
+            if (deckVisualStar > 0) {
+                displayStarLevel = Math.min(displayStarLevel, deckVisualStar);
+            }
+
             // 【修改2】获取卡片类型和升星需求
             var cardType = card.cardType || CARD_TYPE_MAP[card.rarity] || 'normal';
             var upgradeCost = getUpgradeRequirement(cardType, displayStarLevel);
@@ -1380,36 +2091,40 @@ function renderCodexCards(factionKey, blockKey, deckId) {
             // 【修改3】使用 displayStarLevel 获取星级样式
             var starStyle = getCardStarStyle(card, displayStarLevel);
             var styleColor = starStyle ? starStyle.color : rarity.color;
+            var styleColor2 = starStyle ? starStyle.color2 : styleColor;
             var styleGlow = starStyle ? starStyle.shadow : rarity.glow;
             var cardBg = starStyle ? starStyle.bg : 'linear-gradient(180deg, #1a1a2e 0%, #0a0a1a 100%)';
             var cardBorderWidth = starStyle ? starStyle.borderWidth : 2;
             var sParticle = starStyle ? starStyle.particle : '✦';
             var sParticleColor = starStyle ? starStyle.particleColor : styleColor;
+            var sParticleOpacity = starStyle ? starStyle.particleOpacity : 0;
             var sTypeName = starStyle ? starStyle.typeName : rarity.name;
             var sDesc = starStyle ? starStyle.desc : '';
+            var sInnerBorder = starStyle ? starStyle.innerBorder : '';
+            var sInnerShadow = starStyle ? starStyle.innerShadow : '';
+            var sPattern = starStyle ? starStyle.pattern : '';
+            var sPatternOpacity = starStyle ? starStyle.patternOpacity : 0;
+            var sBorderVal = starStyle ? starStyle.border : styleColor;
 
             // 星级特效强度
             var isHighStar = displayStarLevel >= 3;
             var isMaxStar = displayStarLevel >= 5;
             var isEliteStar = displayStarLevel >= 4;
 
-            // 动态阴影
+            // 华丽版：直接使用配置的shadow，不再手动拼接hex suffix
             var dynamicShadow = styleGlow;
-            if (isHighStar) {
-                dynamicShadow += ', 0 0 ' + (displayStarLevel * 8) + 'px ' + styleColor + '30';
-            }
-            if (isEliteStar) {
-                dynamicShadow += ', 0 0 ' + (displayStarLevel * 12) + 'px ' + styleColor + '20';
-            }
             if (isMaxStar) {
-                dynamicShadow += ', 0 0 ' + (displayStarLevel * 20) + 'px ' + styleColor + '15, inset 0 0 ' + (displayStarLevel * 8) + 'px ' + styleColor + '10';
+                dynamicShadow += ', 0 0 60px rgba(0,0,0,0.4)';
             }
 
-            // 动态边框
-            var dynamicBorder = cardBorderWidth + 'px solid ' + styleColor;
+            // 华丽版：使用配置的rgba边框值
+            var dynamicBorder = cardBorderWidth + 'px solid ' + sBorderVal;
 
             // 3星以上添加边框发光动画
             var borderAnim = isHighStar ? 'animation: cardBorderPulse' + displayStarLevel + ' 2s ease-in-out infinite alternate;' : '';
+
+            // 5星：呼吸光环
+            var auraAnim = isMaxStar ? 'animation: cardStarAura 3s ease-in-out infinite;' : '';
 
             // 卡片容器开始
             html += '<div onclick="showCardDetailModal(' + "'" + card.id + "'" + ', ' + "'" + deckId + "'" + ')" ' +
@@ -1422,16 +2137,31 @@ function renderCodexCards(factionKey, blockKey, deckId) {
                 'cursor: pointer; ' +
                 'transition: all 0.3s; ' +
                 'box-shadow: ' + dynamicShadow + '; ' +
+                'isolation: isolate; ' +
                 borderAnim +
+                auraAnim +
                 '" ' +
                 'onmouseover="this.style.transform=' + "'" + 'translateY(-8px) scale(1.02)' + "'" + '; ' +
-                'this.style.boxShadow=' + "'" + dynamicShadow + ', 0 20px 40px rgba(0,0,0,0.5), 0 0 ' + (displayStarLevel * 15) + 'px ' + styleColor + '40' + "'" + ';" ' +
+                'this.style.boxShadow=' + "'" + dynamicShadow + ', 0 20px 40px rgba(0,0,0,0.5)' + "'" + ';" ' +
                 'onmouseout="this.style.transform=' + "'" + 'none' + "'" + '; ' +
                 'this.style.boxShadow=' + "'" + dynamicShadow + "'" + ';">';
 
+            // 华丽版：纹理背景层 (::before 模拟)
+            if (sPattern) {
+                html += '<div style="position: absolute; inset: 0; background: ' + sPattern + '; opacity: ' + sPatternOpacity + '; border-radius: inherit; pointer-events: none; z-index: 0;"></div>';
+            }
+
+            // 华丽版：内发光边框层 (::after 模拟)
+            if (sInnerBorder || sInnerShadow) {
+                var innerDivStyle = 'position: absolute; inset: 4px; pointer-events: none; border-radius: 10px; z-index: 1;';
+                if (sInnerBorder) innerDivStyle += ' border: ' + sInnerBorder + ';';
+                if (sInnerShadow) innerDivStyle += ' box-shadow: ' + sInnerShadow + ';';
+                html += '<div style="' + innerDivStyle + '"></div>';
+            }
+
             // 3-5星专属：背景粒子层
-            if (isHighStar) {
-                var particleCount = displayStarLevel * 2 + 3;
+            if (isHighStar && sParticleOpacity > 0) {
+                var particleCount = starStyle ? starStyle.particleCount : (displayStarLevel * 2 + 3);
                 var particles = '';
                 for (var pi = 0; pi < particleCount; pi++) {
                     var px = 5 + (Math.random() * 90);
@@ -1439,7 +2169,7 @@ function renderCodexCards(factionKey, blockKey, deckId) {
                     var pDelay = (Math.random() * 3).toFixed(2);
                     var pDuration = (2 + Math.random() * 3).toFixed(2);
                     var pSize = (0.4 + Math.random() * 0.8).toFixed(2);
-                    var pOpacity = (0.2 + Math.random() * 0.4).toFixed(2);
+                    var pOpacity = Math.min(1, parseFloat(sParticleOpacity) + (Math.random() * 0.2)).toFixed(2);
 
                     var pColor = isMaxStar ? 
                         'linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff)' : 
@@ -1464,9 +2194,9 @@ function renderCodexCards(factionKey, blockKey, deckId) {
                 html += '<div style="position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden;">' + particles + '</div>';
             }
 
-            // 4-5星专属：内发光层
-            if (isEliteStar) {
-                var innerGlowIntensity = isMaxStar ? 'inset 0 0 30px ' + styleColor + '20, inset 0 0 60px ' + styleColor + '10' : 'inset 0 0 20px ' + styleColor + '15';
+            // 4-5星专属：内发光层（华丽版使用 innerShadow）
+            if (isEliteStar && sInnerShadow) {
+                var innerGlowIntensity = sInnerShadow;
                 html += '<div style="position: absolute; inset: 0; z-index: 3; pointer-events: none; box-shadow: ' + innerGlowIntensity + '; border-radius: inherit;"></div>';
             }
 
@@ -1474,11 +2204,11 @@ function renderCodexCards(factionKey, blockKey, deckId) {
             if (isMaxStar) {
                 html += 
                     '<div style="position: absolute; top: 0; left: -100%; width: 50%; height: 2px; ' +
-                    'background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); ' +
-                    'animation: cardBorderFlow 2s linear infinite; z-index: 6;"></div>' +
+                    'background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent); ' +
+                    'animation: cardBorderFlow 2.4s linear infinite; z-index: 6;"></div>' +
                     '<div style="position: absolute; bottom: 0; right: -100%; width: 50%; height: 2px; ' +
-                    'background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); ' +
-                    'animation: cardBorderFlow 2s linear infinite reverse; z-index: 6;"></div>';
+                    'background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent); ' +
+                    'animation: cardBorderFlow 2.4s linear infinite reverse; z-index: 6;"></div>';
             }
 
             // 卡片图片区域
@@ -1662,35 +2392,26 @@ function _showNextCardAcquire() {
     var sGlow = starStyle ? starStyle.shadow : '0 0 50px ' + styleColor + '40';
     var sParticle = starStyle ? starStyle.particle : '✦';
     var sParticleColor = starStyle ? starStyle.particleColor : styleColor;
+    var sParticleOpacity = starStyle ? starStyle.particleOpacity : 0.5;
     var sTypeName = starStyle ? starStyle.typeName : '遗落';
     var sDesc = starStyle ? starStyle.desc : '';
+    var sInnerShadow = starStyle ? starStyle.innerShadow : '';
+    var sPattern = starStyle ? starStyle.pattern : '';
+    var sPatternOpacity = starStyle ? starStyle.patternOpacity : 0;
+    var sInnerBorder = starStyle ? starStyle.innerBorder : '';
 
     var starLevel = actualStarLevel;
     var isHighStar = starLevel >= 3;
     var isMaxStar = starLevel >= 5;
     var isEliteStar = starLevel >= 4;
 
-    // 动态样式
-    var borderWidth = starLevel;
-    var glowIntensityArr = [
-        '0 0 5px ' + sBorder + '30',
-        '0 0 10px ' + sBorder + '50, 0 0 20px ' + sBorder + '20',
-        '0 0 15px ' + sBorder + '70, 0 0 30px ' + sBorder + '40, 0 0 45px ' + sBorder + '15',
-        '0 0 20px ' + sBorder + '90, 0 0 40px ' + sBorder + '60, 0 0 60px ' + sBorder + '30, inset 0 0 20px ' + sBorder + '20',
-        '0 0 25px ' + sBorder + '100, 0 0 50px ' + sBorder + '80, 0 0 80px ' + sBorder + '50, 0 0 120px ' + sBorder + '25, inset 0 0 30px ' + sBorder + '30'
-    ];
-    var glowIntensity = glowIntensityArr[starLevel - 1] || glowIntensityArr[0];
+    // 华丽版：直接使用配置的shadow
+    var borderWidth = starStyle ? starStyle.borderWidth : starLevel;
+    var glowIntensity = sGlow;
+    if (isMaxStar) glowIntensity += ', 0 0 60px rgba(0,0,0,0.4)';
+    var innerGlow = sInnerShadow || 'inset 0 0 10px ' + styleColor + '05';
 
-    var innerGlowArr = [
-        'inset 0 0 10px ' + sBorder + '05',
-        'inset 0 0 15px ' + sBorder + '10',
-        'inset 0 0 25px ' + sBorder + '15, inset 0 0 40px ' + sBorder + '08',
-        'inset 0 0 35px ' + sBorder + '20, inset 0 0 60px ' + sBorder + '10, inset 0 0 80px ' + sBorder + '05',
-        'inset 0 0 50px ' + sBorder + '25, inset 0 0 80px ' + sBorder + '15, inset 0 0 120px ' + sBorder + '08, inset 0 0 150px ' + sBorder + '03'
-    ];
-    var innerGlow = innerGlowArr[starLevel - 1] || innerGlowArr[0];
-
-    var particleCount = starLevel * 3 + 2;
+    var particleCount = isHighStar ? (starStyle ? starStyle.particleCount : (starLevel * 2 + 3)) : 0;
 
     // 动态CSS
     var styleId = 'cardAcquireDynamicStyle';
@@ -1719,9 +2440,9 @@ function _showNextCardAcquire() {
             0% { left: -100%; }
             100% { left: 200%; }
         }
-        @keyframes cardRainbowRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        @keyframes cardStarAura {
+            0%, 100% { filter: brightness(1) saturate(1); }
+            50% { filter: brightness(1.12) saturate(1.18); }
         }
         @keyframes cardAcquirePop {
             0% { transform: scale(0.5) translateY(50px); opacity: 0; }
@@ -1729,35 +2450,37 @@ function _showNextCardAcquire() {
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
         .card-acquire-glow-${starLevel} {
-            animation: ${isMaxStar ? 'cardRainbowGlow 4s ease-in-out infinite' : (starLevel >= 4 ? 'cardBorderPulse' + starLevel + ' 2s ease-in-out infinite alternate' : 'none')};
+            animation: ${isMaxStar ? 'cardRainbowGlow 4s ease-in-out infinite' : (starLevel >= 3 ? 'cardBorderPulse' + starLevel + ' 2s ease-in-out infinite alternate' : 'none')};
         }
     `;
     document.head.appendChild(dynamicStyle);
 
     // 粒子HTML
     var particlesHtml = '';
-    for (var pi = 0; pi < particleCount; pi++) {
-        var px = 5 + Math.random() * 90;
-        var py = 5 + Math.random() * 90;
-        var pDelay = (Math.random() * 2).toFixed(2);
-        var pDuration = (1.5 + Math.random() * 2).toFixed(2);
-        var pSize = (0.5 + Math.random() * 0.8).toFixed(2);
-        var pOpacity = (0.3 + Math.random() * 0.5).toFixed(2);
-        var particleStyle = isMaxStar ? 
-            'background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;' : 
-            'color: ' + sParticleColor + ';';
-        particlesHtml += '<span style="' +
-            'position: absolute;' +
-            'left: ' + px + '%;' +
-            'top: ' + py + '%;' +
-            'font-size: ' + pSize + 'rem;' +
-            'opacity: ' + pOpacity + ';' +
-            'animation: cardStarFloat ' + pDuration + 's ease-in-out ' + pDelay + 's infinite;' +
-            'z-index: 10;' +
-            'pointer-events: none;' +
-            particleStyle +
-            'text-shadow: 0 0 ' + (starLevel * 2) + 'px ' + sParticleColor + ';' +
-            '">' + sParticle + '</span>';
+    if (isHighStar && sParticleOpacity > 0) {
+        for (var pi = 0; pi < particleCount; pi++) {
+            var px = 5 + Math.random() * 90;
+            var py = 5 + Math.random() * 90;
+            var pDelay = (Math.random() * 2).toFixed(2);
+            var pDuration = (1.5 + Math.random() * 2).toFixed(2);
+            var pSize = (0.5 + Math.random() * 0.8).toFixed(2);
+            var pOpacity = Math.min(1, parseFloat(sParticleOpacity) + (Math.random() * 0.2)).toFixed(2);
+            var particleStyle = isMaxStar ? 
+                'background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;' : 
+                'color: ' + sParticleColor + ';';
+            particlesHtml += '<span style="' +
+                'position: absolute;' +
+                'left: ' + px + '%;' +
+                'top: ' + py + '%;' +
+                'font-size: ' + pSize + 'rem;' +
+                'opacity: ' + pOpacity + ';' +
+                'animation: cardStarFloat ' + pDuration + 's ease-in-out ' + pDelay + 's infinite;' +
+                'z-index: 10;' +
+                'pointer-events: none;' +
+                particleStyle +
+                'text-shadow: 0 0 ' + (starLevel * 2) + 'px ' + sParticleColor + ';' +
+                '">' + sParticle + '</span>';
+        }
     }
 
     // 卡片容器样式
@@ -1806,16 +2529,35 @@ function _showNextCardAcquire() {
     titleEl.textContent = '🎴 获得卡片';
     modalBox.appendChild(titleEl);
 
-    // ========== 卡片展示区域（图鉴风格）==========
+    // ========== 卡片展示区域（华丽版图鉴风格）==========
     var cardBox = document.createElement('div');
     cardBox.className = containerClass;
-    cardBox.style.cssText = containerStyle + 'margin: 0 auto 20px; position: relative;';
+    cardBox.style.cssText = containerStyle + 'margin: 0 auto 20px; position: relative; isolation: isolate;';
+
+    // 华丽版：纹理层
+    if (sPattern) {
+        var patternLayer = document.createElement('div');
+        patternLayer.style.cssText = 'position: absolute; inset: 0; background: ' + sPattern + '; opacity: ' + sPatternOpacity + '; border-radius: inherit; pointer-events: none; z-index: 0;';
+        cardBox.appendChild(patternLayer);
+    }
+
+    // 华丽版：内发光边框层
+    if (sInnerBorder || sInnerShadow) {
+        var innerDiv = document.createElement('div');
+        var innerStyle2 = 'position: absolute; inset: 4px; pointer-events: none; border-radius: 12px; z-index: 1;';
+        if (sInnerBorder) innerStyle2 += ' border: ' + sInnerBorder + ';';
+        if (sInnerShadow) innerStyle2 += ' box-shadow: ' + sInnerShadow + ';';
+        innerDiv.style.cssText = innerStyle2;
+        cardBox.appendChild(innerDiv);
+    }
 
     // 粒子层
-    var particleLayer = document.createElement('div');
-    particleLayer.style.cssText = 'position: absolute; inset: 0; z-index: 10; pointer-events: none; overflow: hidden;';
-    particleLayer.innerHTML = particlesHtml;
-    cardBox.appendChild(particleLayer);
+    if (particlesHtml) {
+        var particleLayer = document.createElement('div');
+        particleLayer.style.cssText = 'position: absolute; inset: 0; z-index: 10; pointer-events: none; overflow: hidden;';
+        particleLayer.innerHTML = particlesHtml;
+        cardBox.appendChild(particleLayer);
+    }
 
     // 内发光层
     var innerGlowLayer = document.createElement('div');
@@ -1999,18 +2741,98 @@ function showCardDetailModal(cardId, deckId) {
     var type = card.cardType || CARD_TYPE_MAP[card.rarity] || 'normal';
     var cost = getUpgradeRequirement(type, currentStar);
     var canUpgrade = cost !== null && count >= cost;
+    var detailColor = currentStyle ? currentStyle.color : '#888';
+    var detailColor2 = currentStyle ? currentStyle.color2 : detailColor;
+    var detailShadow = currentStyle ? currentStyle.shadow : '0 0 20px rgba(136,136,136,0.25)';
+    var detailBg = currentStyle ? currentStyle.bg : 'linear-gradient(180deg, #1a1a2e 0%, #0a0a1a 100%)';
+    var detailBorder = currentStyle ? currentStyle.border : detailColor;
+    var detailBorderWidth = currentStyle ? currentStyle.borderWidth : 2;
+    var detailParticle = currentStyle ? currentStyle.particle : '✦';
+    var detailParticleColor = currentStyle ? currentStyle.particleColor : detailColor;
+    var detailParticleOpacity = currentStyle ? currentStyle.particleOpacity : 0;
+    var detailTypeName = currentStyle ? currentStyle.typeName : '遗落';
+    var detailInnerBorder = currentStyle ? currentStyle.innerBorder : '';
+    var detailInnerShadow = currentStyle ? currentStyle.innerShadow : '';
+    var detailPattern = currentStyle ? currentStyle.pattern : '';
+    var detailPatternOpacity = currentStyle ? currentStyle.patternOpacity : 0;
+    var detailHighStar = currentStar >= 3;
+    var detailEliteStar = currentStar >= 4;
+    var detailMaxStar = currentStar >= 5;
+
+    // 华丽版：直接使用配置的shadow
+    var detailDynamicShadow = detailShadow;
+    if (detailMaxStar) detailDynamicShadow += ', 0 0 60px rgba(0,0,0,0.4)';
+    var detailBorderCss = detailBorderWidth + 'px solid ' + detailBorder;
+    var detailBorderAnim = detailHighStar ? 'animation: cardBorderPulse' + currentStar + ' 2s ease-in-out infinite alternate;' : '';
+    var detailAuraAnim = detailMaxStar ? 'animation: cardStarAura 3s ease-in-out infinite;' : '';
 
     var overlay = document.createElement('div');
     overlay.id = 'cardDetailOverlay';
     overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 3000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease;';
 
-    // ========== 静态卡片展示（无翻转）==========
+    // ========== 静态卡片展示（华丽版）==========
     var cardBox = document.createElement('div');
-    cardBox.style.cssText = 'width: 320px; background: ' + currentStyle.bg + '; border: ' + currentStyle.borderWidth + 'px solid ' + currentStyle.border + '; border-radius: 16px; overflow: hidden; box-shadow: ' + currentStyle.shadow + '; margin: 0 auto 20px; position: relative;';
+    cardBox.style.cssText = 'width: 300px; height: 450px; background: ' + detailBg + '; border: ' + detailBorderCss + '; border-radius: 16px; overflow: hidden; box-shadow: ' + detailDynamicShadow + '; margin: 0 auto 20px; position: relative; isolation: isolate; display: flex; flex-direction: column; ' + detailBorderAnim + detailAuraAnim;
+
+    // 华丽版：纹理层
+    if (detailPattern) {
+        var patternLayer = document.createElement('div');
+        patternLayer.style.cssText = 'position:absolute; inset:0; background:' + detailPattern + '; opacity:' + detailPatternOpacity + '; border-radius:inherit; pointer-events:none; z-index:0;';
+        cardBox.appendChild(patternLayer);
+    }
+
+    // 华丽版：内发光边框层
+    if (detailInnerBorder || detailInnerShadow) {
+        var innerDiv = document.createElement('div');
+        var innerStyle = 'position:absolute; inset:4px; pointer-events:none; border-radius:12px; z-index:1;';
+        if (detailInnerBorder) innerStyle += ' border:' + detailInnerBorder + ';';
+        if (detailInnerShadow) innerStyle += ' box-shadow:' + detailInnerShadow + ';';
+        innerDiv.style.cssText = innerStyle;
+        cardBox.appendChild(innerDiv);
+    }
+
+    // 3-5星粒子层
+    if (detailHighStar && detailParticleOpacity > 0) {
+        var particleLayer = document.createElement('div');
+        particleLayer.style.cssText = 'position:absolute; inset:0; pointer-events:none; z-index:4; overflow:hidden;';
+        var particleCount = currentStyle ? currentStyle.particleCount : (currentStar * 2 + 3);
+        var particles = '';
+        for (var pi = 0; pi < particleCount; pi++) {
+            var px = 5 + (Math.random() * 90);
+            var py = 5 + (Math.random() * 90);
+            var pDelay = (Math.random() * 3).toFixed(2);
+            var pDuration = (2 + Math.random() * 3).toFixed(2);
+            var pSize = (0.4 + Math.random() * 0.8).toFixed(2);
+            var pOpacity = Math.min(1, parseFloat(detailParticleOpacity) + (Math.random() * 0.2)).toFixed(2);
+            var pStyle = detailMaxStar
+                ? 'background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;'
+                : 'color: ' + detailParticleColor + ';';
+            particles += '<span style="position:absolute; left:' + px + '%; top:' + py + '%; font-size:' + pSize + 'rem; opacity:' + pOpacity + '; animation: cardStarFloat ' + pDuration + 's ease-in-out ' + pDelay + 's infinite; z-index:4; pointer-events:none; text-shadow:0 0 ' + (currentStar * 2) + 'px ' + detailParticleColor + '; ' + pStyle + '">' + detailParticle + '</span>';
+        }
+        particleLayer.innerHTML = particles;
+        cardBox.appendChild(particleLayer);
+    }
+
+    // 4-5星内发光
+    if (detailEliteStar && detailInnerShadow) {
+        var detailInnerGlow = document.createElement('div');
+        detailInnerGlow.style.cssText = 'position:absolute; inset:0; z-index:3; pointer-events:none; box-shadow:' + detailInnerShadow + '; border-radius:inherit;';
+        cardBox.appendChild(detailInnerGlow);
+    }
+
+    // 5星流光线条
+    if (detailMaxStar) {
+        var flowTop = document.createElement('div');
+        flowTop.style.cssText = 'position:absolute; top:0; left:-100%; width:50%; height:2px; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent); animation:cardBorderFlow 2.4s linear infinite; z-index:6;';
+        var flowBottom = document.createElement('div');
+        flowBottom.style.cssText = 'position:absolute; bottom:0; right:-100%; width:50%; height:2px; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent); animation:cardBorderFlow 2.4s linear infinite reverse; z-index:6;';
+        cardBox.appendChild(flowTop);
+        cardBox.appendChild(flowBottom);
+    }
 
     // 图片区域
     var imgWrap = document.createElement('div');
-    imgWrap.style.cssText = 'height: 240px; background: #0a0a0f; position: relative; overflow: hidden;';
+    imgWrap.style.cssText = 'height: 60%; background: #0a0a0f; position: relative; overflow: hidden;';
 
     var img = document.createElement('img');
     img.src = card.image;
@@ -2018,20 +2840,20 @@ function showCardDetailModal(cardId, deckId) {
     img.onerror = function() {
         this.style.display = 'none';
         var placeholder = document.createElement('div');
-        placeholder.style.cssText = 'font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 100%; color: ' + currentStyle.color + ';';
+        placeholder.style.cssText = 'font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 100%; color: ' + detailColor + ';';
         placeholder.textContent = '🎴';
         imgWrap.appendChild(placeholder);
     };
     imgWrap.appendChild(img);
 
     var gradient = document.createElement('div');
-    gradient.style.cssText = 'position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(180deg, transparent 0%, ' + currentStyle.bg + ' 100%);';
+    gradient.style.cssText = 'position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(180deg, transparent 0%, ' + detailBg + ' 100%);';
     imgWrap.appendChild(gradient);
 
     // 星级角标
     var starBadge = document.createElement('div');
     var starsStr = '★'.repeat(currentStar) + '☆'.repeat(5 - currentStar);
-    starBadge.style.cssText = 'position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.8); border: 2px solid ' + currentStyle.border + '; border-radius: 10px; padding: 6px 10px; font-size: 0.9rem; color: ' + currentStyle.color + '; font-family: Orbitron;';
+    starBadge.style.cssText = 'position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.8); border: 2px solid ' + detailColor + '; border-radius: 10px; padding: 6px 10px; font-size: 0.9rem; color: ' + detailColor + '; font-family: Orbitron; box-shadow: 0 0 14px ' + detailColor + ';';
     starBadge.textContent = starsStr;
     imgWrap.appendChild(starBadge);
 
@@ -2039,16 +2861,16 @@ function showCardDetailModal(cardId, deckId) {
 
     // 信息区域
     var infoWrap = document.createElement('div');
-    infoWrap.style.cssText = 'padding: 18px; text-align: center;';
+    infoWrap.style.cssText = 'padding: 18px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center;';
 
     var nameEl = document.createElement('div');
-    nameEl.style.cssText = 'font-family: Orbitron; font-size: 1.2rem; color: #fff; margin-bottom: 6px; text-shadow: 0 0 10px ' + currentStyle.color + '50;';
+    nameEl.style.cssText = 'font-family: Orbitron; font-size: 1.2rem; color: #fff; margin-bottom: 6px; text-shadow: 0 0 10px ' + detailColor + ';';
     nameEl.textContent = card.name;
     infoWrap.appendChild(nameEl);
 
     var typeEl = document.createElement('div');
-    typeEl.style.cssText = 'font-size: 0.9rem; color: ' + currentStyle.color + '; font-weight: 700; margin-bottom: 8px;';
-    typeEl.textContent = currentStyle.typeName + ' · ' + currentStar + '星';
+    typeEl.style.cssText = 'font-size: 0.9rem; color: ' + detailColor + '; font-weight: 700; margin-bottom: 8px;';
+    typeEl.textContent = detailTypeName + ' · ' + currentStar + '星';
     infoWrap.appendChild(typeEl);
 
     var descEl = document.createElement('div');
@@ -2065,11 +2887,11 @@ function showCardDetailModal(cardId, deckId) {
     
     var progressFill = document.createElement('div');
     var progressPercent = cost ? Math.min(100, (count / cost) * 100) : 100;
-    progressFill.style.cssText = 'height: 100%; width: ' + progressPercent + '%; background: linear-gradient(90deg, ' + currentStyle.color + '60, ' + currentStyle.color + '); border-radius: 3px;';
+    progressFill.style.cssText = 'height: 100%; width: ' + progressPercent + '%; background: linear-gradient(90deg, ' + detailColor + '60, ' + detailColor + '); border-radius: 3px;';
     progressBar.appendChild(progressFill);
     
     var progressText = document.createElement('span');
-    progressText.style.cssText = 'font-size: 0.8rem; color: ' + currentStyle.color + '; font-family: Orbitron; min-width: 50px;';
+    progressText.style.cssText = 'font-size: 0.8rem; color: ' + detailColor + '; font-family: Orbitron; min-width: 50px;';
     progressText.textContent = count + '/' + (cost || 'MAX');
     
     progressWrap.appendChild(progressBar);
@@ -2097,10 +2919,10 @@ function showCardDetailModal(cardId, deckId) {
     if (canUpgrade) {
         var btnUpgrade = document.createElement('button');
         btnUpgrade.textContent = '✨ 升星 (消耗 ' + cost + ' 张)';
-        btnUpgrade.style.cssText = 'padding: 10px 24px; background: linear-gradient(135deg, ' + currentStyle.color + '60, ' + currentStyle.color + '); border: 2px solid ' + currentStyle.border + '; border-radius: 10px; color: #fff; font-family: Orbitron; font-size: 0.9rem; cursor: pointer; transition: all 0.3s;';
+        btnUpgrade.style.cssText = 'padding: 10px 24px; background: linear-gradient(135deg, ' + detailColor + '60, ' + detailColor + '); border: 2px solid ' + detailBorder + '; border-radius: 10px; color: #fff; font-family: Orbitron; font-size: 0.9rem; cursor: pointer; transition: all 0.3s;';
         btnUpgrade.onmouseover = function() {
             this.style.transform = 'scale(1.05)';
-            this.style.boxShadow = '0 0 30px ' + currentStyle.color + '60';
+            this.style.boxShadow = '0 0 30px ' + detailColor + '60';
         };
         btnUpgrade.onmouseout = function() {
             this.style.transform = 'none';
@@ -2243,12 +3065,12 @@ function openUpgradeModal(cardId) {
         imgWrap.appendChild(gradient);
 
         var starBadge = document.createElement('div');
-        starBadge.style.cssText = 'position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.8); border: 2px solid ' + style.border + '; border-radius: 10px; padding: 6px 10px; font-size: 0.9rem; color: ' + style.color + '; text-shadow: 0 0 8px ' + style.color + '60; font-family: Orbitron;';
+        starBadge.style.cssText = 'position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.8); border: 2px solid ' + style.color + '; border-radius: 10px; padding: 6px 10px; font-size: 0.9rem; color: ' + style.color + '; text-shadow: 0 0 8px ' + style.color + '; font-family: Orbitron;';
         starBadge.textContent = starsStr;
         imgWrap.appendChild(starBadge);
 
         var faceLabel = document.createElement('div');
-        faceLabel.style.cssText = 'position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.7); border: 1px solid ' + style.border + '80; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; color: ' + style.color + '; font-weight: bold;';
+        faceLabel.style.cssText = 'position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.7); border: 1px solid ' + style.color + '; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; color: ' + style.color + '; font-weight: bold;';
         faceLabel.textContent = isFront ? '【当前】' : '【升星后】';
         imgWrap.appendChild(faceLabel);
 
@@ -2258,7 +3080,7 @@ function openUpgradeModal(cardId) {
         infoWrap.style.cssText = 'flex: 1; padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center;';
 
         var nameEl = document.createElement('div');
-        nameEl.style.cssText = 'font-family: Orbitron; font-size: 1.2rem; color: #fff; margin-bottom: 8px; text-shadow: 0 0 10px ' + style.color + '50;';
+        nameEl.style.cssText = 'font-family: Orbitron; font-size: 1.2rem; color: #fff; margin-bottom: 8px; text-shadow: 0 0 10px ' + style.color + ';';
         nameEl.textContent = card.name;
         infoWrap.appendChild(nameEl);
 
@@ -2296,7 +3118,7 @@ function openUpgradeModal(cardId) {
         }
 
         var hintEl = document.createElement('div');
-        hintEl.style.cssText = 'padding: 6px 16px; background: ' + style.color + '15; border: 1px solid ' + style.border + '60; border-radius: 20px; font-size: 0.75rem; color: ' + style.color + '; margin-top: 8px;';
+        hintEl.style.cssText = 'padding: 6px 16px; background: rgba(0,0,0,0.5); border: 1px solid ' + style.color + '; border-radius: 20px; font-size: 0.75rem; color: ' + style.color + '; margin-top: 8px;';
         hintEl.textContent = hint;
         infoWrap.appendChild(hintEl);
 
@@ -2467,3 +3289,12 @@ window.calculateTotalProgress = calculateTotalProgress;
 window.calculateFactionProgress = calculateFactionProgress;
 window.calculateBlockProgress = calculateBlockProgress;
 window.calculateDeckProgress = calculateDeckProgress;
+window.calculateDeckStarLevel = calculateDeckStarLevel;
+window.calculateDeckVisualStarLevel = calculateDeckVisualStarLevel;
+window.getDeckNextClaimableStar = getDeckNextClaimableStar;
+window.canClaimDeckReward = canClaimDeckReward;
+window.getDeckStarReward = getDeckStarReward;
+window.getDeckStarUpgradeProgress = getDeckStarUpgradeProgress;
+window.renderDeckStarDots = renderDeckStarDots;
+window.showDeckClaimAnimation = showDeckClaimAnimation;
+window.getClaimedDeckRewards = getClaimedDeckRewards;
