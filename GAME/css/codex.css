@@ -1,0 +1,1697 @@
+/* 基础样式 */
+#plantTarget img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* 小屏手机 (<= 480px) */
+@media (max-width: 480px) {
+    #plantTarget img {
+        width: 36px;
+        height: 36px;
+    }
+    #maturityWindow {
+        width: 60px !important;
+        height: 60px !important;
+    }
+	
+	
+	
+}
+
+/* 平板 (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    #plantTarget img {
+        width: 44px;
+        height: 44px;
+    }
+	
+
+	
+	
+}
+
+/* 大屏 (> 768px) */
+@media (min-width: 769px) {
+    #plantTarget img {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    /* 图鉴描述文字 - 单行省略 */
+    #codexGrid > div:not([style*="grid-column"]) div[style*="color: #888"],
+    #codexGrid > div:not([style*="grid-column"]) div[style*="color: rgb(136, 136, 136)"] {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 100% !important;
+    }
+
+    /* 图鉴卡片高度 - 减少40% */
+    #codexGrid div[style*="height: 150px"] {
+        height: 90px !important;
+    }
+    #codexGrid div[style*="height: 165px"] {
+        height: 100px !important;
+    }
+    #codexGrid div[style*="height: 200px"] {
+        height: 120px !important;
+    }
+
+    /* 图鉴卡片 - 两列 */
+    #codexGrid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+        padding: 0 6px !important;
+    }
+
+    /* 卡片容器：限制最小高度，避免文字过多撑开 */
+    #codexGrid > div:not([style*="grid-column"]) {
+        min-height: 0 !important;
+    }
+
+    /* 卡片内部图片保持比例 */
+    #codexGrid > div:not([style*="grid-column"]) > div:first-child img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    /* ===== deck 卡片响应式（提高特异性 #codexGrid） ===== */
+    #codexGrid .deck-card-wrap {
+        padding: 10px 7px !important;
+    }
+    #codexGrid .deck-card-wrap .deck-card-content > div:first-child {
+        font-size: 2.2rem !important;
+        margin-bottom: 5px !important;
+    }
+    #codexGrid .deck-card-wrap .deck-card-content > div:first-child img {
+        width: 2.2rem !important;
+        height: 2.2rem !important;
+    }
+    #codexGrid .deck-card-wrap .deck-card-content > div:nth-child(2) {
+        font-size: 1.0rem !important;
+        margin-bottom: 3px !important;
+    }
+    #codexGrid .deck-card-wrap .deck-card-content > div:nth-child(3) {
+        font-size: 0.8rem !important;
+        margin-bottom: 5px !important;
+        line-height: 1.2 !important;
+    }
+    #codexGrid .deck-card-wrap .deck-star-bar {
+        margin-bottom: 5px !important;
+    }
+    #codexGrid .deck-card-wrap .deck-star-dot {
+        width: 8px !important;
+        height: 8px !important;
+    }
+    #codexGrid .deck-card-wrap .deck-star-progress-bg {
+        height: 4px !important;
+    }
+    #codexGrid .deck-card-wrap .deck-star-progress-bg + span,
+    #codexGrid .deck-card-wrap [style*="min-width: 40px"],
+    #codexGrid .deck-card-wrap [style*="min-width: 45px"],
+    #codexGrid .deck-card-wrap [style*="min-width: 52px"] {
+        font-size: 0.85rem !important;
+    }
+    #codexGrid .deck-card-wrap > div:last-child,
+    #codexGrid .deck-card-wrap [style*="font-size: 0.75rem"] {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* 隐藏玩家名字 */
+    #battlePlayerNameContainer {
+        display: none !important;
+    }
+    
+
+    /* 敌方名字移到图片上方（已通过HTML结构调整） */
+    /* 等级移到图片下方（已通过HTML结构调整） */
+    
+    /* 战斗图标缩小 */
+    #battlePlayerIcon, #battleEnemyIcon {
+        font-size: 2.5rem !important;
+    }
+    
+    /* 等级字体 */
+    #battlePlayerLevel, #battleEnemyLevel {
+        font-size: 0.75rem !important;
+    }
+	
+	    .top-bar {
+	        display: flex !important;
+	        flex-direction: row !important;
+	        justify-content: space-between !important;
+	        align-items: center !important;
+	        padding: 10px 15px !important;
+	    }
+	    
+	    .player-info {
+	        display: flex !important;
+	        align-items: center !important;
+	        gap: 10px !important;
+	        flex: 0 0 auto !important;
+	    }
+	    
+	    .player-avatar {
+	        width: 40px !important;
+	        height: 40px !important;
+	        font-size: 1.2rem !important;
+	        border-radius: 50% !important;
+	        border: 2px solid var(--tenno-gold) !important;
+	        display: flex !important;
+	        align-items: center !important;
+	        justify-content: center !important;
+	    }
+	    
+	    .player-name {
+	        font-size: 0.9rem !important;
+	        color: var(--tenno-gold) !important;
+	        font-family: 'Orbitron' !important;
+	    }
+	    
+	    .resources-bar {
+	        display: flex !important;
+	        flex-direction: row !important;
+	        justify-content: flex-end !important;
+	        align-items: center !important;
+	        gap: 8px !important;
+	        flex: 1 !important;
+	    }
+	    
+	    .resource-item {
+	        display: flex !important;
+	        align-items: center !important;
+	        gap: 4px !important;
+	        padding: 4px 8px !important;
+	        font-size: 0.75rem !important;
+	        background: rgba(0,0,0,0.3) !important;
+	        border-radius: 20px !important;
+	        border: 1px solid #333 !important;
+	    }
+	    
+	    .resource-icon {
+	        width: 16px !important;
+	        height: 16px !important;
+	        font-size: 0.7rem !important;
+	    }
+	    
+	    .resource-value {
+	        font-size: 0.75rem !important;
+	        font-family: 'Orbitron' !important;
+	    }
+}
+
+
+	
+@media (max-width: 768px) {
+    /* 默认隐藏 */
+    #battleEnemyHpText {
+        display: none !important;
+    }
+    
+    /* 战斗状态显示 */
+    .battle-active #battleEnemyHpText {
+        display: block !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   虚空图鉴系统样式
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ===== 图鉴页面布局 ===== */
+.codex-page {
+    padding: 20px;
+}
+
+/* 总进度概览 */
+.codex-overview {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: var(--panel-bg);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid #222;
+}
+
+.codex-progress-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.codex-progress-ring svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.progress-bg {
+    fill: none;
+    stroke: #222;
+    stroke-width: 8;
+}
+
+.progress-fill {
+    fill: none;
+    stroke: var(--orokin-cyan);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.progress-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-text .percent {
+    font-family: 'Orbitron';
+    font-size: 1.8rem;
+    color: var(--orokin-cyan);
+    font-weight: 700;
+}
+
+.progress-text .label {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 2px;
+}
+
+.codex-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.codex-stats .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.codex-stats .stat-bar {
+    flex: 1;
+    height: 8px;
+    background: #222;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.codex-stats .stat-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.stat-fill.enemies { background: var(--grineer-red); }
+.stat-fill.minerals { background: var(--tenno-gold); }
+.stat-fill.plants { background: var(--infested-green); }
+
+/* ===== 分类标签 ===== */
+.codex-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.codex-tab {
+    padding: 10px 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+    border-radius: 24px;
+    color: #888;
+    font-family: 'Orbitron';
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.codex-tab:hover {
+    border-color: var(--orokin-cyan-dim);
+    color: var(--orokin-cyan-dim);
+}
+
+.codex-tab.active {
+    background: rgba(0, 212, 255, 0.15);
+    border-color: var(--orokin-cyan);
+    color: var(--orokin-cyan);
+}
+
+/* ===== 卡片网格 ===== */
+.codex-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* ===== 图鉴卡片 ===== */
+.codex-card {
+    position: relative;
+    background: linear-gradient(180deg, #1a1a2e 0%, #0a0a1a 100%);
+    border-radius: 12px;
+    border: 2px solid #333;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.codex-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 派系色 */
+.codex-card[data-faction="grineer"] { border-color: rgba(255, 68, 68, 0.5); }
+.codex-card[data-faction="corpus"] { border-color: rgba(68, 136, 255, 0.5); }
+.codex-card[data-faction="infested"] { border-color: rgba(78, 255, 78, 0.5); }
+.codex-card[data-faction="sentient"] { border-color: rgba(255, 102, 255, 0.5); }
+
+.codex-card[data-faction="grineer"]:hover { border-color: var(--grineer-red); }
+.codex-card[data-faction="corpus"]:hover { border-color: var(--corpus-blue); }
+.codex-card[data-faction="infested"]:hover { border-color: var(--infested-green); }
+.codex-card[data-faction="sentient"]:hover { border-color: var(--sentient-purple); }
+
+/* 稀有度光效 */
+.codex-card[data-rarity="legendary"] {
+    animation: legendaryPulse 2s ease-in-out infinite;
+}
+
+@keyframes legendaryPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 170, 0, 0.2); }
+    50% { box-shadow: 0 0 25px rgba(255, 170, 0, 0.4); }
+}
+
+/* 顶部信息条 */
+.card-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.card-stars {
+    color: var(--tenno-gold);
+    font-size: 0.85rem;
+    text-shadow: 0 0 5px rgba(200, 168, 75, 0.5);
+    letter-spacing: 2px;
+}
+
+.card-status {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--infested-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: #000;
+    font-weight: 700;
+}
+
+/* ===== 图片区域 ===== */
+.card-image {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    background: #0a0a0f;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.codex-card:hover .card-image img {
+    transform: scale(1.08);
+}
+
+/* 派系色叠加 */
+.card-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    mix-blend-mode: overlay;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+.codex-card[data-faction="grineer"] .card-image::before { background: var(--grineer-red); }
+.codex-card[data-faction="corpus"] .card-image::before { background: var(--corpus-blue); }
+.codex-card[data-faction="infested"] .card-image::before { background: var(--infested-green); }
+.codex-card[data-faction="sentient"] .card-image::before { background: var(--sentient-purple); }
+
+/* 底部渐变 */
+.card-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, transparent 0%, #0a0a1a 100%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* ===== 未解锁状态 ===== */
+.codex-card.locked .card-image img {
+    filter: blur(10px) brightness(0.35) grayscale(0.7);
+    transform: none !important;
+}
+
+.codex-card.locked .card-image::before {
+    opacity: 0.7;
+    background: #000 !important;
+    mix-blend-mode: normal;
+}
+
+.lock-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    gap: 10px;
+}
+
+.lock-icon {
+    font-size: 3rem;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+}
+
+.lock-text {
+    font-family: 'Orbitron';
+    font-size: 0.8rem;
+    color: #666;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* ===== 信息区域 ===== */
+.card-info {
+    padding: 14px;
+    position: relative;
+    z-index: 5;
+}
+
+.card-name {
+    font-family: 'Orbitron';
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 6px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.card-meta {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 12px;
+}
+
+.card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 进度条 */
+.card-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-track {
+    flex: 1;
+    height: 6px;
+    background: #222;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+/* 进度条颜色按派系 */
+.codex-card[data-faction="grineer"] .progress-fill { background: var(--grineer-red); }
+.codex-card[data-faction="corpus"] .progress-fill { background: var(--corpus-blue); }
+.codex-card[data-faction="infested"] .progress-fill { background: var(--infested-green); }
+.codex-card[data-faction="sentient"] .progress-fill { background: var(--sentient-purple); }
+
+.progress-text {
+    font-size: 0.75rem;
+    color: var(--tenno-gold);
+    font-family: 'Orbitron';
+    min-width: 40px;
+    text-align: right;
+}
+
+/* ===== 收集完成 ===== */
+.codex-card.completed {
+    border-color: var(--infested-green);
+}
+
+.codex-card.completed .card-status {
+    background: var(--infested-green);
+}
+
+/* ===== 动画 ===== */
+@keyframes legendaryPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 170, 0, 0.2); }
+    50% { box-shadow: 0 0 25px rgba(255, 170, 0, 0.5); }
+}
+
+/* 新获得动画 */
+.codex-card.newly-acquired {
+    animation: cardAcquire 0.8s ease;
+}
+
+@keyframes cardAcquire {
+    0% { transform: scale(0) rotateY(180deg); opacity: 0; }
+    60% { transform: scale(1.1) rotateY(0); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* 光泽扫过 */
+.card-shine {
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.04) 50%,
+        transparent 60%
+    );
+    transform: rotate(30deg);
+    transition: transform 0.6s;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.codex-card:hover .card-shine {
+    transform: rotate(30deg) translate(10%, 10%);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .codex-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .codex-overview {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .codex-progress-ring {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   Deck 卡包样式（星级边框/光效/动画）
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Deck 卡片容器 */
+.deck-card-wrap {
+    position: relative;
+    border-radius: 14px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+}
+.deck-card-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    z-index: 0;
+}
+.deck-card-wrap:hover {
+    transform: translateY(-6px);
+}
+.deck-card-wrap:hover::before {
+    opacity: 1;
+}
+.deck-card-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* 0星 - 暗灰金属网格 */
+.deck-star-0 {
+    background: linear-gradient(180deg, rgba(22,22,34,0.98) 0%, rgba(14,14,20,0.98) 100%);
+    border: 2px solid #3a3a4a;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.06);
+}
+.deck-star-0::before {
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(60,60,80,0.08) 18px, rgba(60,60,80,0.08) 19px),
+        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(60,60,80,0.08) 18px, rgba(60,60,80,0.08) 19px);
+}
+.deck-star-0::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 30% 20%, rgba(100,100,140,0.06) 0%, transparent 60%);
+    pointer-events: none;
+}
+.deck-star-0:hover {
+    border-color: #555;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.3), 0 0 15px rgba(100,100,130,0.12);
+}
+
+/* 1星 - 铜绿菱格纹 */
+.deck-star-1 {
+    background: linear-gradient(180deg, rgba(14,30,18,0.98) 0%, rgba(10,18,10,0.98) 100%);
+    border: 2px solid rgba(101,240,163,0.5);
+    box-shadow: 0 0 15px rgba(101,240,163,0.1), inset 0 0 25px rgba(101,240,163,0.03);
+}
+.deck-star-1::before {
+    background:
+        repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(101,240,163,0.04) 12px, rgba(101,240,163,0.04) 13px),
+        repeating-linear-gradient(-45deg, transparent, transparent 12px, rgba(101,240,163,0.04) 12px, rgba(101,240,163,0.04) 13px);
+}
+.deck-star-1::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(101,240,163,0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+.deck-star-1:hover {
+    border-color: rgba(101,240,163,0.8);
+    box-shadow: 0 0 25px rgba(101,240,163,0.2);
+}
+
+/* 2星 - 蓝色电路线条 */
+.deck-star-2 {
+    background: linear-gradient(180deg, rgba(18,18,46,0.98) 0%, rgba(10,10,30,0.98) 100%);
+    border: 2px solid rgba(68,136,255,0.55);
+    box-shadow: 0 0 18px rgba(68,136,255,0.12);
+}
+.deck-star-2::before {
+    background:
+        linear-gradient(90deg, transparent 48%, rgba(68,136,255,0.06) 48%, rgba(68,136,255,0.06) 52%, transparent 52%),
+        linear-gradient(0deg, transparent 48%, rgba(68,136,255,0.04) 48%, rgba(68,136,255,0.04) 52%, transparent 52%),
+        radial-gradient(circle at 50% 50%, rgba(68,136,255,0.08) 0%, rgba(68,136,255,0.04) 30%, transparent 31%);
+    background-size: 30px 30px, 30px 30px, 30px 30px;
+}
+.deck-star-2::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 70% 10%, rgba(68,136,255,0.1) 0%, transparent 55%);
+    pointer-events: none;
+}
+.deck-star-2:hover {
+    border-color: rgba(68,136,255,0.85);
+    box-shadow: 0 0 30px rgba(68,136,255,0.25);
+}
+
+/* 3星 - 紫红六边形 */
+.deck-star-3 {
+    background: linear-gradient(180deg, rgba(36,14,36,0.98) 0%, rgba(20,6,20,0.98) 100%);
+    border: 3px solid rgba(255,78,95,0.65);
+    box-shadow: 0 0 22px rgba(255,78,95,0.15);
+}
+.deck-star-3::before {
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(255,78,95,0.04) 22px, rgba(255,78,95,0.04) 23px),
+        repeating-linear-gradient(60deg, transparent, transparent 22px, rgba(255,78,95,0.04) 22px, rgba(255,78,95,0.04) 23px),
+        repeating-linear-gradient(120deg, transparent, transparent 22px, rgba(255,78,95,0.04) 22px, rgba(255,78,95,0.04) 23px);
+}
+.deck-star-3::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 30% 80%, rgba(255,78,95,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255,78,95,0.06) 0%, transparent 45%);
+    pointer-events: none;
+}
+.deck-star-3:hover {
+    border-color: rgba(255,78,95,0.9);
+    box-shadow: 0 0 35px rgba(255,78,95,0.3);
+}
+
+/* 4星 - 金色齿轮辐射 */
+.deck-star-4 {
+    background: linear-gradient(180deg, rgba(36,30,14,0.98) 0%, rgba(20,14,6,0.98) 100%);
+    border: 3px solid rgba(255,180,40,0.75);
+    box-shadow: 0 0 28px rgba(255,180,40,0.18);
+}
+.deck-star-4::before {
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 8px, rgba(255,180,40,0.03) 8px, rgba(255,180,40,0.03) 9px),
+        repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(255,180,40,0.03) 8px, rgba(255,180,40,0.03) 9px),
+        conic-gradient(from 0deg at 50% 50%, transparent 0%, rgba(255,180,40,0.04) 10%, transparent 20%, rgba(255,180,40,0.04) 30%, transparent 40%, rgba(255,180,40,0.04) 50%, transparent 60%, rgba(255,180,40,0.04) 70%, transparent 80%, rgba(255,180,40,0.04) 90%, transparent 100%);
+}
+.deck-star-4::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,180,40,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+.deck-star-4:hover {
+    border-color: rgba(255,180,40,1);
+    box-shadow: 0 0 45px rgba(255,180,40,0.35);
+}
+
+/* 5星 - 粉白炫彩涟漪 */
+.deck-star-5 {
+    background: linear-gradient(180deg, rgba(36,16,32,0.98) 0%, rgba(18,6,18,0.98) 100%);
+    border: 4px solid rgba(255,51,95,0.85);
+    box-shadow: 0 0 35px rgba(255,51,95,0.25), 0 0 60px rgba(200,168,75,0.15);
+    animation: deckStar5Aura 3s ease-in-out infinite;
+}
+.deck-star-5::before {
+    background:
+        repeating-radial-gradient(circle at 50% 50%, transparent 0px, transparent 15px, rgba(255,51,95,0.04) 15px, rgba(255,51,95,0.04) 16px),
+        repeating-radial-gradient(circle at 30% 70%, transparent 0px, transparent 20px, rgba(200,168,75,0.03) 20px, rgba(200,168,75,0.03) 21px);
+}
+.deck-star-5::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgba(255,51,95,0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 70%, rgba(200,168,75,0.08) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 40%);
+    pointer-events: none;
+}
+.deck-star-5:hover {
+    border-color: rgba(255,51,95,1);
+    box-shadow: 0 0 50px rgba(255,51,95,0.4), 0 0 80px rgba(200,168,75,0.25);
+}
+@keyframes deckStar5Aura {
+    0%, 100% { box-shadow: 0 0 35px rgba(255,51,95,0.25), 0 0 60px rgba(200,168,75,0.15); }
+    50% { box-shadow: 0 0 50px rgba(255,51,95,0.4), 0 0 90px rgba(200,168,75,0.25); }
+}
+
+/* 星级点 */
+.deck-star-bar {
+    display: inline-flex;
+    gap: 3px;
+    margin-top: 6px;
+    justify-content: center;
+}
+.deck-star-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+    transition: all 0.3s;
+    position: relative;
+}
+.deck-star-dot.active {
+    background: linear-gradient(135deg, #ffd700, #c8a84b);
+    box-shadow: 0 0 6px rgba(255,215,0,0.5);
+}
+.deck-star-dot.max {
+    background: linear-gradient(135deg, #ffaa22, #ff8800);
+    box-shadow: 0 0 10px rgba(255,170,40,0.6);
+}
+
+/* 进度条 */
+.deck-star-progress-bg {
+    background: #222;
+    border-radius: 3px;
+    overflow: hidden;
+    height: 6px;
+    flex: 1;
+}
+.deck-star-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s;
+}
+.deck-star-progress-fill.s1 { background: linear-gradient(90deg, rgba(200,168,75,0.5), #c8a84b); }
+.deck-star-progress-fill.s2 { background: linear-gradient(90deg, rgba(68,136,255,0.5), #4488ff); }
+.deck-star-progress-fill.s3 { background: linear-gradient(90deg, rgba(255,78,95,0.5), #ff4e5f); }
+.deck-star-progress-fill.s4 { background: linear-gradient(90deg, rgba(255,180,40,0.5), #ffb428); }
+.deck-star-progress-fill.s5 { background: linear-gradient(90deg, rgba(255,51,95,0.5), #ff335f); }
+
+/* 可领取脉冲 */
+.deck-can-claim {
+    animation: deckClaimPulse 2s ease-in-out infinite;
+}
+@keyframes deckClaimPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(200,168,75,0.3); }
+    50% { box-shadow: 0 0 25px rgba(200,168,75,0.6); }
+}
+
+/* 领取徽章 */
+.deck-claim-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #c8a84b, #ffd700);
+    color: #1a1200;
+    font-family: 'Orbitron';
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   领取动画
+   ═══════════════════════════════════════════════════════════════ */
+.deck-reward-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: 14px;
+}
+.deck-reward-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.deck-reward-icon {
+    font-size: 3rem;
+    animation: deckRewardBounce 0.6s ease infinite alternate;
+    filter: drop-shadow(0 0 15px rgba(255,215,0,0.5));
+}
+.deck-reward-text {
+    font-family: 'Orbitron';
+    font-size: 1rem;
+    color: var(--tenno-gold);
+    margin-top: 10px;
+    text-shadow: 0 0 10px rgba(200,168,75,0.5);
+}
+@keyframes deckRewardBounce {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   升星动画
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes deckStarUpgrade {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255,215,0,0.4); }
+    60% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+.deck-star-upgrading {
+    animation: deckStarUpgrade 0.8s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   卡片样式（弹窗/详情页）
+   ═══════════════════════════════════════════════════════════════ */
+/* ===== 星级粒子浮动动画 ===== */
+@keyframes starFloat {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.4; 
+    }
+    50% { 
+        transform: translateY(-10px) scale(1.2); 
+        opacity: 0.8; 
+    }
+}
+
+/* ===== 卡片星级光效 ===== */
+.codex-card[data-star-level="1"] { animation: none; }
+.codex-card[data-star-level="2"] { animation: starPulse 3s ease-in-out infinite; }
+.codex-card[data-star-level="3"] { animation: starPulse 2.5s ease-in-out infinite; }
+.codex-card[data-star-level="4"] { animation: starPulse 2s ease-in-out infinite; }
+.codex-card[data-star-level="5"] { animation: starPulse 1.5s ease-in-out infinite; }
+
+
+
+/* ===== 卡片弹窗星级特效动画 ===== */
+@keyframes starFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
+}
+
+@keyframes borderFlow {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+@keyframes borderPulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes rainbowBorder {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes rainbowGlow {
+    0%, 100% { box-shadow: 0 0 30px rgba(255,0,0,0.6), 0 0 60px rgba(255,128,0,0.4), 0 0 90px rgba(255,255,0,0.2); }
+    25% { box-shadow: 0 0 30px rgba(0,255,0,0.6), 0 0 60px rgba(0,255,255,0.4), 0 0 90px rgba(0,128,255,0.2); }
+    50% { box-shadow: 0 0 30px rgba(0,0,255,0.6), 0 0 60px rgba(128,0,255,0.4), 0 0 90px rgba(255,0,128,0.2); }
+    75% { box-shadow: 0 0 30px rgba(255,0,128,0.6), 0 0 60px rgba(255,0,0,0.4), 0 0 90px rgba(255,128,0,0.2); }
+}
+
+/* ===== 高星级卡片专属动画 ===== */
+@keyframes starPulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes legendaryGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 0 40px rgba(255,215,0,0.2); }
+    25% { box-shadow: 0 0 25px rgba(255,100,0,0.5), 0 0 50px rgba(255,100,0,0.3); }
+    50% { box-shadow: 0 0 30px rgba(255,0,100,0.5), 0 0 60px rgba(255,0,100,0.3); }
+    75% { box-shadow: 0 0 25px rgba(100,0,255,0.5), 0 0 50px rgba(100,0,255,0.3); }
+}
+
+/* 5星卡片容器动画 */
+.codex-card-legendary {
+    animation: legendaryGlow 3s ease-in-out infinite;
+}
+
+/* 星级标识闪烁 */
+.star-badge-max {
+    animation: starPulse 1.5s ease-in-out infinite;
+}
+
+/* ===== 图鉴卡片星级特效动画 ===== */
+@keyframes cardStarFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
+}
+
+@keyframes cardBorderFlow {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+@keyframes cardBorderPulse3 {
+    0% { box-shadow: 0 0 15px currentColor30, 0 0 30px currentColor15; }
+    100% { box-shadow: 0 0 25px currentColor50, 0 0 50px currentColor25; }
+}
+
+@keyframes cardBorderPulse4 {
+    0% { box-shadow: 0 0 20px currentColor40, 0 0 40px currentColor20, 0 0 60px currentColor10; }
+    100% { box-shadow: 0 0 35px currentColor60, 0 0 70px currentColor35, 0 0 100px currentColor20; }
+}
+
+@keyframes cardBorderPulse5 {
+    0% { box-shadow: 0 0 25px currentColor50, 0 0 50px currentColor30, 0 0 80px currentColor15, 0 0 120px currentColor10, inset 0 0 30px currentColor10; }
+    100% { box-shadow: 0 0 40px currentColor70, 0 0 80px currentColor50, 0 0 120px currentColor30, 0 0 180px currentColor15, inset 0 0 50px currentColor20; }
+}
+
+
+
+
+
+
+
+
+
+
+/* 音乐播放时的头像反馈 */
+.player-avatar.music-playing {
+				animation: musicPulse 1.2s ease-in-out infinite;
+}
+.player-avatar.music-playing::after {
+				border-color: var(--orokin-cyan);
+				opacity: 0.8;
+				animation: musicRing 1.2s ease-in-out infinite;
+}
+@keyframes musicPulse {
+				0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(0, 212, 255, 0); }
+				50% { transform: scale(1.08); box-shadow: 0 0 15px rgba(0, 212, 255, 0.4); }
+}
+@keyframes musicRing {
+				0%, 100% { inset: -4px; opacity: 0.5; }
+				50% { inset: -8px; opacity: 0.9; }
+}
+
+
+
+/* 音乐播放器控制台 */
+.music-player-widget {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.music-player-widget.active .music-control-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* 音乐信息 */
+.music-info {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.music-title {
+    color: #00ffff;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.music-artist {
+    color: #888;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* 进度条 */
+.progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 10px 0;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00ffff, #0088ff);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: -3px;
+    width: 12px;
+    height: 12px;
+    background: #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.progress-container:hover .progress-bar::after {
+    opacity: 1;
+}
+
+/* 时间显示 */
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+/* 控制按钮 */
+.music-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.music-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.2s;
+    opacity: 0.7;
+}
+
+.music-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    color: #00ffff;
+}
+
+.play-btn {
+    font-size: 28px;
+    opacity: 1;
+    color: #00ffff;
+}
+
+/* 音量控制 */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.volume-icon {
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.volume-icon:hover {
+    opacity: 1;
+}
+
+.volume-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #00ffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #00ffff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* 播放列表 */
+.playlist-toggle {
+    color: #888;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: color 0.2s;
+}
+
+.playlist-toggle:hover {
+    color: #00ffff;
+}
+
+.playlist-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.playlist-panel.show {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.playlist-item {
+    padding: 8px 12px;
+    color: #ccc;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playlist-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+}
+
+.playlist-item.active {
+    background: rgba(0, 255, 255, 0.15);
+    color: #00ffff;
+    border-left: 3px solid #00ffff;
+}
+
+/* 头像播放状态 */
+.player-avatar.music-playing {
+    animation: musicPulse 2s infinite;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
+
+@keyframes musicPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+
+
+
+/* ===== 互动式植物采集系统样式 ===== */
+
+@keyframes plantGrow {
+    0% { transform: translateX(-50%) scale(0.8); filter: brightness(0.5); }
+    50% { transform: translateX(-50%) scale(1.1); filter: brightness(1.2); }
+    100% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+}
+
+@keyframes plantMature {
+    0% { filter: drop-shadow(0 0 10px currentColor); }
+    50% { filter: drop-shadow(0 0 25px currentColor) brightness(1.3); }
+    100% { filter: drop-shadow(0 0 15px currentColor); }
+}
+
+@keyframes pointerGlow {
+    0%, 100% { box-shadow: 0 0 5px var(--tenno-gold); }
+    50% { box-shadow: 0 0 15px var(--tenno-gold), 0 0 25px rgba(200,168,75,0.5); }
+}
+
+#plantTarget { animation: plantGrow 0.5s ease; }
+#plantTarget.mature { animation: plantMature 2s ease-in-out infinite; }
+#timingPointer { animation: pointerGlow 1s ease-in-out infinite; }
+
+#maturityWindow.active {
+    border-color: var(--infested-green);
+    box-shadow: 0 0 20px rgba(78,255,78,0.4);
+    animation: pulse 1.5s infinite;
+}
+
+#weatherOverlay.rainy {
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(68,136,255,0.1) 2px, rgba(68,136,255,0.1) 4px);
+}
+#weatherOverlay.storm {
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,68,68,0.05) 10px, rgba(255,68,68,0.05) 20px);
+    animation: weatherFlash 0.5s ease-in-out infinite;
+}
+#weatherOverlay.foggy {
+    background: radial-gradient(ellipse at center, rgba(170,170,170,0.3) 0%, transparent 70%);
+}
+#weatherOverlay.toxic {
+    background: radial-gradient(ellipse at center, rgba(78,255,78,0.15) 0%, transparent 70%);
+}
+
+.gather-quality-perfect {
+    color: var(--infested-green);
+    text-shadow: 0 0 15px rgba(78,255,78,0.5);
+}
+.gather-quality-good {
+    color: var(--tenno-gold);
+    text-shadow: 0 0 15px rgba(200,168,75,0.3);
+}
+.gather-quality-normal { color: var(--orokin-cyan); }
+
+.gathering-drop-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--infested-green-dim);
+    animation: dropPop 0.5s ease;
+    font-size: 0.85rem;
+    color: var(--infested-green);
+}
+
+#growthProgressBar { position: relative; overflow: hidden; }
+#growthProgressBar::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 20px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== 科技细胞终幕者 - 打碟台样式 ===== */
+:root {
+    --techrot-red: #8b0000;
+    --techrot-red-glow: #ff1a1a;
+    --techrot-dark: #1a0505;
+    --techrot-panel: rgba(26, 5, 5, 0.95);
+    --techrot-border: #4a0000;
+    --techrot-cyan: #00d4ff;
+    --techrot-gold: #c8a84b;
+    --techrot-green: #4eff4e;
+}
+
+/* 打碟台主容器 */
+.dj-console {
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(26, 5, 5, 0.95));
+    border: 1px solid var(--techrot-border);
+    border-radius: 16px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dj-console::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--techrot-red-glow), var(--techrot-cyan), var(--techrot-red-glow), transparent);
+    animation: techrotPulse 3s ease-in-out infinite;
+}
+
+@keyframes techrotPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* 腐蚀纹理背景 */
+.techrot-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 30% 20%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 打碟台控制面板 */
+.dj-control-panel {
+    background: var(--techrot-panel);
+    border: 1px solid var(--techrot-border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 唱片/转盘样式 */
+.dj-turntable {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #1a0505, #4a0000, #1a0505, #4a0000, #1a0505);
+    border: 3px solid var(--techrot-red-glow);
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8);
+    position: relative;
+    animation: turntableSpin 4s linear infinite;
+    animation-play-state: paused;
+}
+
+.dj-turntable.playing {
+    animation-play-state: running;
+}
+
+@keyframes turntableSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.dj-turntable::after {
+    content: '🎵';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    filter: drop-shadow(0 0 10px var(--techrot-red-glow));
+}
+
+/* 音频可视化器 - 科技细胞风格 */
+.dj-visualizer-bar {
+    background: linear-gradient(180deg, var(--techrot-red-glow), var(--techrot-cyan));
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 26, 26, 0.5);
+    transition: height 0.1s ease;
+}
+
+/* 歌单列表 - 科技细胞风格 */
+.dj-playlist-item {
+    background: rgba(26, 5, 5, 0.8);
+    border: 1px solid var(--techrot-border);
+    border-left: 3px solid transparent;
+    border-radius: 8px;
+    padding: 12px 15px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.dj-playlist-item:hover {
+    background: rgba(139, 0, 0, 0.2);
+    border-left-color: var(--techrot-red-glow);
+    transform: translateX(5px);
+}
+
+.dj-playlist-item.active {
+    background: rgba(0, 212, 255, 0.1);
+    border-left-color: var(--techrot-cyan);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+.dj-playlist-item.selected {
+    background: rgba(139, 0, 0, 0.3);
+    border-color: var(--techrot-red-glow);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+}
+
+/* 选用按钮 - 科技细胞风格 */
+.dj-select-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--techrot-red-glow);
+    background: transparent;
+    color: var(--techrot-red-glow);
+    font-family: 'Orbitron';
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+}
+
+.dj-select-btn:hover {
+    background: var(--techrot-red-glow);
+    color: var(--void-black);
+    box-shadow: 0 0 15px rgba(255, 26, 26, 0.5);
+}
+
+.dj-select-btn.selected {
+    background: var(--techrot-cyan);
+    border-color: var(--techrot-cyan);
+    color: var(--void-black);
+}
+
+/* 播放按钮 - 科技细胞风格 */
+.dj-play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--techrot-red), var(--techrot-red-glow));
+    border: 2px solid var(--techrot-red-glow);
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dj-play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 26, 26, 0.8);
+}
+
+.dj-play-btn:active {
+    transform: scale(0.95);
+}
+
+/* 进度条 - 科技细胞风格 */
+.dj-progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(26, 5, 5, 0.8);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--techrot-border);
+}
+
+.dj-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--techrot-red), var(--techrot-red-glow), var(--techrot-cyan));
+    border-radius: 3px;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(255, 26, 26, 0.5);
+}
+
+/* 模式按钮 - 科技细胞风格 */
+.dj-mode-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--techrot-border);
+    background: rgba(26, 5, 5, 0.5);
+    color: #888;
+    font-family: 'Orbitron';
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dj-mode-btn:hover {
+    border-color: var(--techrot-red-glow);
+    color: var(--techrot-red-glow);
+}
+
+.dj-mode-btn.active {
+    background: rgba(139, 0, 0, 0.3);
+    border-color: var(--techrot-red-glow);
+    color: var(--techrot-red-glow);
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+}
+
+/* 音量控制 - 科技细胞风格 */
+.dj-volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgba(26, 5, 5, 0.8);
+    border-radius: 2px;
+    outline: none;
+}
+
+.dj-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--techrot-red-glow);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 26, 26, 0.8);
+    border: 2px solid var(--techrot-cyan);
+}
+
+/* 封面图片 */
+.dj-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    filter: contrast(1.2) saturate(1.5);
+}
+
+/* 标题样式 */
+.dj-title {
+    font-family: 'Orbitron';
+    color: var(--techrot-red-glow);
+    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+    letter-spacing: 4px;
+}
+
+.dj-subtitle {
+    color: var(--techrot-cyan);
+    font-family: 'Orbitron';
+    letter-spacing: 2px;
+}
+#musicConsoleVolumeSlider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--orokin-cyan); cursor: pointer; box-shadow: 0 0 8px rgba(0,212,255,0.5); }
+#musicConsoleVolumeSlider::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--orokin-cyan); cursor: pointer; border: none; box-shadow: 0 0 8px rgba(0,212,255,0.5); }
+			
+
+
