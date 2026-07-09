@@ -97,7 +97,7 @@ const FOUNDRY_RECIPES = [
 		warframeKey: 'excalibur',
         desc: '电能大师战甲，擅长护盾与电击',
         cost: {
-
+			'Volt蓝图': 1,
             'Volt头部神经光元': 1,
             'Volt机体': 1,
             'Volt系统': 1,
@@ -115,7 +115,7 @@ const FOUNDRY_RECIPES = [
         category: 'warframe',
         desc: 'Volt战甲的头部神经光元组件',
         cost: {
-
+			'Volt头部神经光元蓝图': 1,
             '合金板': 225,
             '神经传感器': 1,
             '聚合物束': 225,
@@ -133,7 +133,7 @@ const FOUNDRY_RECIPES = [
         category: 'warframe',
         desc: 'Volt战甲的机体组件',
         cost: {
-
+			'Volt机体蓝图': 1,
             '铁氧体': 225,
             '非晶态合金': 1,
             '控制模块': 1,
@@ -151,7 +151,7 @@ const FOUNDRY_RECIPES = [
         category: 'warframe',
         desc: 'Volt战甲的系统组件',
         cost: {
-
+			'Volt系统蓝图': 1,
             '生物质': 150,
             '聚合物束': 60,
             '神经传感器': 1,
@@ -173,7 +173,7 @@ const FOUNDRY_RECIPES = [
 		warframeKey: 'excalibur',
         desc: '磁力大师战甲，操控磁场与金属',
         cost: {
-
+			'Mag蓝图': 1,
             'Mag头部神经光元': 1,
             'Mag机体': 1,
             'Mag系统': 1,
@@ -191,7 +191,7 @@ const FOUNDRY_RECIPES = [
         category: 'warframe',
         desc: 'Mag战甲的头部神经光元组件',
         cost: {
-
+			'Mag头部神经光元蓝图': 1,
             '合金板': 225,
             '神经传感器': 1,
             '聚合物束': 225,
@@ -209,7 +209,7 @@ const FOUNDRY_RECIPES = [
         category: 'warframe',
         desc: 'Mag战甲的机体组件',
         cost: {
-
+			'Mag机体蓝图': 1,
             '铁氧体': 225,
             '非晶态合金': 1,
             '控制模块': 1,
@@ -227,7 +227,7 @@ const FOUNDRY_RECIPES = [
         category: 'warframe',
         desc: 'Mag战甲的系统组件',
         cost: {
-
+			'Mag系统蓝图': 1,
             '生物质': 150,
             '聚合物束': 60,
             '神经传感器': 1,
