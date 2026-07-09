@@ -8019,7 +8019,7 @@ var MUSIC_PLAYLISTS = [
         name: '织屿人 OST',
         desc: 'Isleweaver 官方原声带',
         icon: '🕸️',
-        cover: 'GAME/IMGs/sic/1.jpg',
+        cover: 'GAME/IMGs/music/1.jpg',
         tracks: [
             { title: "Dust’s Dominion", artist: '织屿人 OST', src: 'GAME/IMGs/music/织屿人/Dust’s Dominion.mp3', duration: '3:42' },
             //{ title: 'Silk and Steel', artist: '织屿人 OST', src: 'GAME/IMGs/music/isleweaver/02.mp3', duration: '4:15' },
