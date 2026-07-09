@@ -1763,13 +1763,15 @@ function showAddCodeForm() {
             '</div>' +
             '<div id="echoFragmentField" style="display:none; margin-bottom:12px;" class="input-group">' +
                 '<label style="color: #888; font-size: 0.8rem;">碎片类型</label>' +
-                '<select id="adminFragmentType" style="background:#1a1a2e;color:#fff;border:1px solid #333;padding:8px;border-radius:6px;width:100%;">' +
+                '<select id="adminFragmentType" style="background:#1a1a2e;color:#fff;border:1px solid #333;padding:8px;border-radius:6px;width:100%;margin-bottom:8px;">' +
                     '<option value="1">◆遗落碎片</option>' +
                     '<option value="2">◆异变碎片</option>' +
                     '<option value="3">◆古神碎片</option>' +
                     '<option value="4">◆混沌碎片</option>' +
                     '<option value="5">◆终焉碎片</option>' +
                 '</select>' +
+                '<label style="color: #888; font-size: 0.8rem;">碎片数量</label>' +
+                '<input type="number" id="adminFragmentAmount" value="10" min="1" style="background:#1a1a2e;color:#fff;border:1px solid #333;padding:8px;border-radius:6px;width:100%;">' +
             '</div>' +
             '<div id="expiryField" class="input-group" style="margin-bottom: 15px;">' +
                 '<label style="color: #888; font-size: 0.8rem;">有效天数（0=永不过期）</label>' +
@@ -1789,10 +1791,19 @@ function onRewardTypeChange() {
     var echoField = document.getElementById('echoPackField');
     var fragmentField = document.getElementById('echoFragmentField');
     var rewardAmountField = document.getElementById('rewardAmountField');
-    // 所有类型都显示数量和最大兑换次数
-    rewardAmountField.style.display = 'grid';
-    echoField.style.display = (type === 'echo_pack') ? 'block' : 'none';
-    fragmentField.style.display = (type === 'echo_fragment') ? 'block' : 'none';
+    if (type === 'echo_pack') {
+        echoField.style.display = 'block';
+        fragmentField.style.display = 'none';
+        rewardAmountField.style.display = 'none';
+    } else if (type === 'echo_fragment') {
+        echoField.style.display = 'none';
+        fragmentField.style.display = 'block';
+        rewardAmountField.style.display = 'none';
+    } else {
+        echoField.style.display = 'none';
+        fragmentField.style.display = 'none';
+        rewardAmountField.style.display = 'grid';
+    }
 }
 
 // 提交新兑换码
@@ -1866,11 +1877,11 @@ async function submitNewCode() {
             insertData.stamina = 1;
             var packType = document.getElementById('adminEchoPackType') ? document.getElementById('adminEchoPackType').value : '0';
             insertData.echo_pack_deck_id = echoPackDeck + '|' + packType;
-            insertData.reward_value = rewardAmount; // 盲盒数量
         } else if (rewardType === 'echo_fragment') {
             var fragType = document.getElementById('adminFragmentType') ? document.getElementById('adminFragmentType').value : '1';
+            var fragAmount = document.getElementById('adminFragmentAmount') ? parseInt(document.getElementById('adminFragmentAmount').value) || 1 : 1;
             insertData.reward_type = 'echo_fragment_' + fragType;
-            insertData.reward_value = rewardAmount; // 碎片数量（复用奖励数量字段）
+            insertData.reward_value = fragAmount;
         } else if (rewardType === 'vip') {
             insertData.reward_value = rewardAmount;
         }
@@ -1891,10 +1902,11 @@ async function submitNewCode() {
         }
         
         var displayAmount = rewardAmount;
-        if (rewardType === 'echo_pack') displayAmount = rewardAmount + '个盲盒';
-        if (rewardType.startsWith('echo_fragment')) {
+        if (rewardType === 'echo_pack') displayAmount = 1;
+        if (rewardType === 'echo_fragment') {
             var ft = document.getElementById('adminFragmentType') ? document.getElementById('adminFragmentType').value : '1';
-            displayAmount = '◆' + ft + 'x' + rewardAmount;
+            var fa = document.getElementById('adminFragmentAmount') ? document.getElementById('adminFragmentAmount').value : '1';
+            displayAmount = '◆' + ft + 'x' + fa;
         }
         resultDiv.innerHTML = '<span style="color: var(--infested-green);">✅ 兑换码 ' + code + ' 添加成功！</span>' +
             '<div style="color: #666; font-size: 0.8rem; margin-top: 8px;">奖励类型: ' + rewardType + ' | 数量: ' + displayAmount + ' | 限' + maxUses + '次</div>';
@@ -2066,9 +2078,8 @@ const newData = {
     foundry: {},
     today_stats: { battles: 0, kills: 0, mining: 0, gathering: 0 },
     total_stats: { kills: 0, mining: 0, gathering: 0, miningTime: 0, gatheringTime: 0 },
-    streak: 0,
+    streak: 1,
     last_login: new Date().toISOString(),
-    last_login_reward_date: '',
     today_completed: 0,
     today_points: 0
 };
@@ -2946,9 +2957,9 @@ setTimeout(createStars, 1000);
 								gatheringTime: 0
 							},
 
-							streak: 0,
-						last_login: new Date().toISOString(),
-						last_login_reward_date: '',
+							streak: 1,
+							last_login: new Date().toISOString(),
+							last_login_reward_date: new Date().toISOString().split('T')[0],
 							today_completed: 0,
 							today_points: 0
 						};
@@ -3058,10 +3069,10 @@ async function saveGameData() {
 today_stats: todayStats,
             total_stats: totalStats,
             today_cash_earned: gameData.today_cash_earned || 0,
-            last_login_reward_date: gameData.last_login_reward_date || '1970-01-01',
+            last_login_reward_date: gameData.last_login_reward_date || gameData.last_login || new Date().toISOString().split('T')[0],  // ← 添加这行
                 last_weekly_reward_date: gameData.last_weekly_reward_date || null,  // ← 同时添加这行（如果存在）
             codex_reward_claimed: gameData.codexRewardClaimed === true,
-            streak: gameData.streak ?? 0,
+            streak: gameData.streak || 1,
             last_login: gameData.last_login || new Date().toISOString(),
             today_completed: gameData.today_completed || 0,
             today_points: gameData.today_points || 0,
@@ -3446,7 +3457,7 @@ async function checkDailyReset() {
 }
 					
 					// ═══════════════════════════════════════════════════════════════
-					//  每日签到奖励弹窗（+100负荷）
+					//  每日登录奖励弹窗（+100负荷）
 					// ═══════════════════════════════════════════════════════════════
 function showDailyLoginRewardModal(recover, oldVal, newVal) {
     var overlay = document.createElement('div');
@@ -3459,7 +3470,7 @@ function showDailyLoginRewardModal(recover, oldVal, newVal) {
         rewardHtml = 
             '<div style="color: #888; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.6;">' +
             '欢迎回来，Tenno！<br>' +
-            '每日签到奖励<br>' +
+            '每日登录奖励<br>' +
             '<span style="color: var(--infested-green); font-family: Orbitron; font-size: 1.4rem; font-weight: 700;">+' + recover + ' 负荷</span>' +
             '</div>' +
             '<div style="background: rgba(78,255,78,0.1); border: 1px solid rgba(78,255,78,0.3); border-radius: 10px; padding: 12px; margin-bottom: 20px;">' +
@@ -3481,7 +3492,7 @@ function showDailyLoginRewardModal(recover, oldVal, newVal) {
     overlay.innerHTML = 
         '<div style="background: linear-gradient(135deg, #1a1a1a, #0a0a0a); border: 2px solid var(--infested-green); border-radius: 16px; padding: 35px; max-width: 380px; width: 90%; text-align: center; animation: cardPopIn 0.5s ease;">' +
         '<div style="font-size: 3.5rem; margin-bottom: 15px; filter: drop-shadow(0 0 15px rgba(78,255,78,0.5));">⚡</div>' +
-        '<div style="font-family: Orbitron; color: var(--infested-green); font-size: 1.3rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(78,255,78,0.3);">每日签到奖励</div>' +
+        '<div style="font-family: Orbitron; color: var(--infested-green); font-size: 1.3rem; margin-bottom: 10px; text-shadow: 0 0 10px rgba(78,255,78,0.3);">每日登录奖励</div>' +
         rewardHtml +
         '<button id="dailyLoginRewardBtn" style="padding: 12px 35px; background: linear-gradient(135deg, var(--infested-green), #88ff88); color: #000; border: none; border-radius: 8px; font-family: Orbitron; font-size: 0.9rem; cursor: pointer; font-weight: 700; transition: all 0.3s;">' +
         '✨ 领取奖励' +
@@ -3492,7 +3503,7 @@ function showDailyLoginRewardModal(recover, oldVal, newVal) {
 document.getElementById('dailyLoginRewardBtn').addEventListener('click', function() {
     overlay.remove();
     if (recover > 0) {
-        showToast('⚡ 每日签到奖励已领取：+' + recover + ' 负荷', 'success');
+        showToast('⚡ 每日登录奖励已领取：+' + recover + ' 负荷', 'success');
     }
 });
 }
@@ -5622,8 +5633,14 @@ function getEnemyXP(enemy) {
 						}
 						var autoBtn5 = document.getElementById('autoBattleBtn');
 						if (autoBtn5) {
-							// 自动战斗仅在特定 Grineer 区域显示（earth zone1/2/3）
-							var showAuto5 = selectedPlanet && selectedPlanet.id === 'earth' && ['zone1','zone2','zone3'].indexOf(selectedPlanet.zone) !== -1;
+							// 自动战斗仅在特定 Grineer 区域显示（earth e_zone1/e_zone2/e_zone3）
+							var showAuto5 = false;
+							if (selectedFactionPlanet && selectedFactionPlanet.id === 'earth' && selectedFactionZone) {
+								var autoZones5 = ['e_zone1', 'e_zone2', 'e_zone3'];
+								if (autoZones5.indexOf(selectedFactionZone.id) !== -1) {
+									showAuto5 = true;
+								}
+							}
 							autoBtn5.style.display = showAuto5 ? 'block' : 'none';
 							autoBattleLoopActive = false;
 							var autoCost5 = getCurrentBattleStaminaCost() * 3;
@@ -7995,17 +8012,17 @@ window.updateDeckRewardBadge = function() {
 };
 
 
-// 音乐播放器数据 - 4个原声带
+// 音乐播放器数据 - 4个歌单
 var MUSIC_PLAYLISTS = [
     {
         id: 'isleweaver',
         name: '织屿人 OST',
         desc: 'Isleweaver 官方原声带',
         icon: '🕸️',
-        cover: 'GAME/IMGs/music/1.jpg',
+        cover: 'GAME/IMGs/sic/1.jpg',
         tracks: [
             { title: "Dust’s Dominion", artist: '织屿人 OST', src: 'GAME/IMGs/music/织屿人/Dust’s Dominion.mp3', duration: '3:42' },
-            { title: 'Tethra Jahrak', artist: '织屿人 OST', src: 'GAME/IMGs/music/织屿人/Tethra Jahrak.mp3', duration: '4:47' }
+            //{ title: 'Silk and Steel', artist: '织屿人 OST', src: 'GAME/IMGs/music/isleweaver/02.mp3', duration: '4:15' },
             //{ title: 'Web of Lies', artist: '织屿人 OST', src: 'GAME/IMGs/music/isleweaver/03.mp3', duration: '3:28' },
             //{ title: "Arachne's Dance", artist: '织屿人 OST', src: 'GAME/IMGs/music/isleweaver/04.mp3', duration: '5:01' },
             //{ title: 'The Final Thread', artist: '织屿人 OST', src: 'GAME/IMGs/music/isleweaver/05.mp3', duration: '4:33' }
@@ -8022,8 +8039,7 @@ var MUSIC_PLAYLISTS = [
             { title: 'Sanctum Anatomica', artist: '墙中低语 OST', src: 'GAME/IMGs/music/墙中低语/Sanctum Anatomica.mp3', duration: '4:22' },
             { title: 'Fragmented', artist: '墙中低语 OST', src: 'GAME/IMGs/music/墙中低语/The Fragmented.mp3', duration: '3:47' },
             { title: "The Master Returns", artist: '墙中低语 OST', src: 'GAME/IMGs/music/墙中低语/The Master Returns.mp3', duration: '4:58' },
-            { title: 'Yara Jeliira', artist: '墙中低语 OST', src: 'GAME/IMGs/music/墙中低语/Yara Jeliira.mp3', duration: '5:12' },
-			{ title: 'Murmur Combat', artist: '墙中低语 OST', src: 'GAME/IMGs/music/墙中低语/Murmur Combat.mp3', duration: '2:22' }
+            { title: 'Yara Jeliira', artist: '墙中低语 OST', src: 'GAME/IMGs/music墙中低语/Yara Jeliira.mp3', duration: '5:12' }
         ]
     },
     {
@@ -8033,13 +8049,11 @@ var MUSIC_PLAYLISTS = [
         icon: '💿',
         cover: 'GAME/IMGs/music/3.jpg',
         tracks: [
-            { title: 'PARTY OF YOUR LIFETIME', artist: '1999 OST', src: 'GAME/IMGs/music/1999/PARTY OF YOUR LIFETIME/PARTY OF YOUR LIFETIME.mp3', duration: '3:36' },
-            { title: 'Party Of Your Lifetime-Mix版', artist: '1999 OST', src: 'GAME/IMGs/music/1999/PARTY OF YOUR LIFETIME/Party Of Your LifetimeMix版.mp3', duration: '3:44' },
-            { title: 'Party Of Your Lifetime-伴奏版', artist: '1999 OST', src: 'GAME/IMGs/music/1999/PARTY OF YOUR LIFETIME/Party Of Your Lifetime伴奏循环版.mp3', duration: '2:21' },
-            { title: 'PARTY OF YOUR LIFETIME-现场版', artist: '1999 OST', src: 'GAME/IMGs/music/1999/PARTY OF YOUR LIFETIME/PARTY OF YOUR LIFETIME-现场版.mp3', duration: '4:14' },
-            { title: 'Core Containment', artist: '1999 OST', src: 'GAME/IMGs/music/1999/Core Containment.mp3', duration: '8:01' },
-			{ title: 'THE GREAT DESPAIR', artist: '1999 OST', src: 'GAME/IMGs/music/1999/THE GREAT DESPAIR.mp3', duration: '3:19' },
-			{ title: 'THE GREAT DESPAIR-TennoConcert', artist: '1999 OST', src: 'GAME/IMGs/music/1999/THE GREAT DESPAIR-TennoConcert.mp3', duration: '3:50' }
+            { title: 'Core Containment', artist: '1999 OST', src: 'GAME/IMGs/music/1999/Core Containment.mp3', duration: '3:33' },
+            { title: 'PARTY OF YOUR LIFETIME', artist: '1999 OST', src: 'GAME/IMGs/music/1999/PARTY OF YOUR LIFETIME.mp3', duration: '4:05' },
+            { title: 'PARTY OF YOUR LIFETIME-现场版', artist: '1999 OST', src: 'GAME/IMGs/music/1999/PARTY OF YOUR LIFETIME-现场版.mp3', duration: '3:18' },
+            { title: 'THE GREAT DESPAIR', artist: '1999 OST', src: 'GAME/IMGs/music/1999/THE GREAT DESPAIR.mp3', duration: '4:44' },
+            { title: 'THE GREAT DESPAIR-TennoConcert', artist: '1999 OST', src: 'GAME/IMGs/music/1999/THE GREAT DESPAIR-TennoConcert.mp3', duration: '5:01' }
         ]
     },
     {
@@ -8054,6 +8068,7 @@ var MUSIC_PLAYLISTS = [
             { title: "Lullaby of the Manifold (Piano Version)", artist: '旧日和平 OST', src: 'GAME/IMGs/music/旧日和平/Lullaby of the Manifold (Piano Version).mp3', duration: '4:28' },
             { title: 'Lullaby of the Manifold', artist: '旧日和平 OST', src: 'GAME/IMGs/music/旧日和平/Lullaby of the Manifold.mp3', duration: '5:33' },
             { title: 'Roses from the Abyss', artist: '旧日和平 OST', src: 'GAME/IMGs/music/旧日和平/Roses from the Abyss.mp3', duration: '4:47' },
+			{ title: 'Tethra Jahrak', artist: '旧日和平 OST', src: 'GAME/IMGs/music/旧日和平/Tethra Jahrak.mp3', duration: '4:47' }
         ]
     }
 ];
@@ -10929,9 +10944,9 @@ function addXP(amount) {
 										packStyleAttr = 'border-color:' + packStar1.border + '; box-shadow:' + packStar1.shadow + '; background:' + packStar1.bg + ';';
 									}
 									packIconContent = '<span style="font-size: 2.5rem; filter: drop-shadow(0 0 10px ' + packTypeColor + ');">🎁</span>';
-									useBtn = `<button onclick="openEchoPack(warehouse.find(i=>i.name===\'${item.name.replace(/'/g, "\\'")}\'&&i.type==='pack'))" style="margin-top:6px; padding:4px 14px; background:${packTypeColor}22; border:1px solid ${packTypeColor}; border-radius:6px; color:${packTypeColor}; font-size:0.7rem; cursor:pointer; font-family:Orbitron;" onmouseover="this.style.background='${packTypeColor}44'" onmouseout="this.style.background='${packTypeColor}22'">🎁 开启</button>`;
+									useBtn = `<button onclick="openEchoPack(warehouse.find(i=>i.name===\'${item.name.replace(/'/g, "\\'")}\'&&i.packData))" style="margin-top:6px; padding:4px 14px; background:${packTypeColor}22; border:1px solid ${packTypeColor}; border-radius:6px; color:${packTypeColor}; font-size:0.7rem; cursor:pointer; font-family:Orbitron;" onmouseover="this.style.background='${packTypeColor}44'" onmouseout="this.style.background='${packTypeColor}22'">🎁 开启</button>`;
 								} else if (item.consumableData) {
-									useBtn = `<button onclick="useConsumableItem(warehouse.find(i=>i.name===\'${item.name.replace(/'/g, "\\'")}\'&&i.type==='consumable'))" style="margin-top:6px; padding:4px 14px; background:${color}22; border:1px solid ${color}; border-radius:6px; color:${color}; font-size:0.7rem; cursor:pointer; font-family:Orbitron;" onmouseover="this.style.background='${color}44'" onmouseout="this.style.background='${color}22'">⚡ 使用</button>`;
+									useBtn = `<button onclick="useConsumableItem(warehouse.find(i=>i.name===\'${item.name.replace(/'/g, "\\'")}\'&&i.consumableData))" style="margin-top:6px; padding:4px 14px; background:${color}22; border:1px solid ${color}; border-radius:6px; color:${color}; font-size:0.7rem; cursor:pointer; font-family:Orbitron;" onmouseover="this.style.background='${color}44'" onmouseout="this.style.background='${color}22'">⚡ 使用</button>`;
 								}
 								var iconHtml = packIconContent || (item.image ? `<img src="${item.image}" style="width: 50px; height: 50px; object-fit: contain; filter: drop-shadow(0 0 5px rgba(0,212,255,0.3));" onerror="this.onerror=null;this.style.display='none';var fallback=document.createElement('span');fallback.style.cssText='font-size:2.5rem;';fallback.textContent='${item.icon}';this.parentElement.appendChild(fallback);">` : `<span style="font-size: 2.5rem;">${item.icon}</span>`);
 								return `
@@ -11891,7 +11906,7 @@ function claimWarframeAsItem(craftKey) {
 								else if (rank === 3) rankClass = 'rank-3';
 
 								// 连续登录天数图标（50天一套，每5天换）
-								const streakDays = user.streak || 0;
+								const streakDays = user.streak || 1;
 								var streakIcon = '📅';
 								var streakColor = '#888';
 								if (streakDays >= 50) { streakIcon = '👑'; streakColor = '#ffd700'; }
@@ -13467,12 +13482,10 @@ onConfirm: function() {
 						var year = now.getFullYear();
 						var month = now.getMonth();
 						var today = now.getDate();
-						var streak = (gameData && gameData.streak) ?? 0;
+						var streak = (gameData && gameData.streak) || 1;
 						var lastDate = (gameData && gameData.last_login_reward_date) || '';
-						// 未签到过的新帐号显示 0 天
-						var displayStreak = streak;
 
-						document.getElementById('signInStreakText').textContent = '连续 ' + displayStreak + ' 天';
+						document.getElementById('signInStreakText').textContent = '连续 ' + streak + ' 天';
 						document.getElementById('signInMonthLabel').textContent = year + '年' + (month + 1) + '月';
 
 						// 计算当月天数和起始星期
