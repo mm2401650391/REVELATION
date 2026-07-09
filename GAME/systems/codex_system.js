@@ -1169,15 +1169,9 @@ function tryDropCardFromEnemy(codexId, chance) {
     var card = findCardById(codexId);
     if (!card) return null;
 
-    // 从 DROP_CONFIG 读取全局配置，或默认 35%
-    var defaultChance = (typeof DROP_CONFIG !== 'undefined' && DROP_CONFIG.card && typeof DROP_CONFIG.card.baseChance === 'number')
+    // 严格只由 DROP_CONFIG.card.baseChance 控制，忽略传入的 chance 和敌人的 cardDrop.chance
+    var dropChance = (typeof DROP_CONFIG !== 'undefined' && DROP_CONFIG.card && typeof DROP_CONFIG.card.baseChance === 'number')
         ? DROP_CONFIG.card.baseChance : 0.35;
-    // DROP_CONFIG 优先（允许全局覆盖），若配置为 100% 则强制必掉
-    var dropChance = defaultChance;
-    // 仅当未配置全局覆盖（<1）且传入的 chance 更高时才使用传入值
-    if (typeof chance === 'number' && defaultChance < 1 && chance > dropChance) {
-        dropChance = chance;
-    }
 
     // 战斗次数+1
     _battlePityCounter++;
