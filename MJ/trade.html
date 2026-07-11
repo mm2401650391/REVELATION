@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1B3TNTK43W"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-1B3TNTK43W');
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>REVELATION/交易行</title>
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				background:
+					linear-gradient(180deg, rgba(5,8,20,0.50) 0%, rgba(8,12,30,0.50) 50%, rgba(5,8,20,0.60) 100%),
+					url('../IMGs/01.jpg') center/cover no-repeat fixed;
+				color: #c8d4e0;
+				font-family: 'Rajdhani', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+				min-height: 100vh;
+				padding: 2vw;
+				position: relative;
+			}
+
+			body::before {
+				content: '';
+				position: fixed;
+				top: 0; left: 0; right: 0; bottom: 0;
+				background:
+					radial-gradient(ellipse at 20% 50%, rgba(0, 180, 255, 0.08) 0%, transparent 50%),
+					radial-gradient(ellipse at 80% 50%, rgba(255, 60, 0, 0.06) 0%, transparent 50%),
+					radial-gradient(ellipse at 50% 100%, rgba(0, 255, 200, 0.05) 0%, transparent 40%);
+				pointer-events: none;
+				z-index: 0;
+				animation: bgPulse 8s ease-in-out infinite alternate;
+			}
+
+			@keyframes bgPulse {
+				0% { opacity: 0.8; }
+				100% { opacity: 1; }
+			}
+
+			body::after {
+				content: '';
+				position: fixed;
+				top: 0; left: 0; right: 0; bottom: 0;
+				background: repeating-linear-gradient(
+					0deg,
+					transparent,
+					transparent 2px,
+					rgba(0, 180, 255, 0.015) 2px,
+					rgba(0, 180, 255, 0.015) 4px
+				);
+				pointer-events: none;
+				z-index: 1;
+			}
+
+			/* ===== Logo 区域 ===== */
+			.d2 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 2vw;
+				padding: 2vw 0;
+				margin-bottom: 2vw;
+				position: relative;
+				z-index: 2;
+			}
+
+			.d2::before {
+				content: '';
+				position: absolute;
+				top: 0; left: 0; right: 0; bottom: 0;
+				background: url('../IMGs/01.jpg') center/cover no-repeat;
+				opacity: 0.3;
+				border-radius: 4px;
+				z-index: 0;
+				border: 1px solid rgba(0, 200, 255, 0.15);
+				box-shadow: 0 0 30px rgba(0, 150, 255, 0.1);
+			}
+
+			.d2>a {
+				position: absolute;
+				left: 2vw;
+				z-index: 1;
+			}
+
+			.d2>h2 {
+				position: relative;
+				z-index: 1;
+			}
+
+			.d2 a img {
+				width: 5vw;
+				height: 5vw;
+				object-fit: cover;
+				border-radius: 50%;
+				filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.6));
+				transition: all 0.4s ease;
+				border: 2px solid rgba(0, 200, 255, 0.3);
+			}
+
+			.d2 a img:hover {
+				transform: scale(1.15) rotate(8deg);
+				filter: drop-shadow(0 0 25px rgba(0, 200, 255, 0.9));
+				border-color: rgba(0, 200, 255, 0.8);
+			}
+
+			.d2 h2 {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 4vw;
+				font-weight: 900;
+				color: #FF9800;
+				text-shadow:
+					0 0 10px rgba(255, 152, 0, 0.8),
+					0 0 30px rgba(255, 152, 0, 0.5),
+					0 0 60px rgba(255, 152, 0, 0.3);
+				letter-spacing: 0.15em;
+				text-align: center;
+				line-height: 1;
+				min-width: 12em;
+				white-space: nowrap;
+				display: inline-block;
+			}
+
+			hr {
+				border: none;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.3), transparent);
+				margin: 2vw 0;
+				position: relative;
+				z-index: 2;
+			}
+
+			/* ===== 首页区域 ===== */
+			#tradeHome {
+				position: relative;
+				z-index: 2;
+				max-width: 800px;
+				margin: 0 auto 2vw;
+				padding: 3vw 4vw;
+				text-align: center;
+			}
+
+			.home-card {
+				background: rgba(5, 10, 25, 0.8);
+				border: 1px solid rgba(0, 200, 255, 0.15);
+				border-radius: 8px;
+				padding: 3vw;
+				position: relative;
+				overflow: hidden;
+				clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+				box-shadow:
+					0 0 40px rgba(0, 150, 255, 0.08),
+					inset 0 0 60px rgba(0, 100, 200, 0.03);
+			}
+
+			.home-card::before {
+				content: '';
+				position: absolute;
+				top: 0; left: 0; right: 0;
+				height: 2px;
+				background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.5), rgba(255, 152, 0, 0.5), transparent);
+			}
+
+			.home-card::after {
+				content: '';
+				position: absolute;
+				bottom: 0; left: 0; right: 0;
+				height: 2px;
+				background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.3), rgba(0, 200, 255, 0.3), transparent);
+			}
+
+			.home-title {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 2.5vw;
+				font-weight: 900;
+				color: #FF9800;
+				text-shadow:
+					0 0 15px rgba(255, 152, 0, 0.8),
+					0 0 40px rgba(255, 152, 0, 0.4),
+					0 0 80px rgba(255, 152, 0, 0.2);
+				letter-spacing: 0.15em;
+				margin-bottom: 2vw;
+			}
+
+			.home-disclaimer {
+				font-size: 0.85vw;
+				color: rgba(150, 180, 200, 0.45);
+				line-height: 1.6;
+				margin-bottom: 2vw;
+				padding-bottom: 1.5vw;
+				border-bottom: 1px solid rgba(0, 200, 255, 0.06);
+			}
+
+			.home-section-title {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1vw;
+				font-weight: 600;
+				color: rgba(0, 200, 255, 0.7);
+				letter-spacing: 0.1em;
+				margin-bottom: 1.2vw;
+				text-transform: uppercase;
+			}
+
+			.home-steps {
+				display: flex;
+				flex-direction: column;
+				gap: 0.8vw;
+				margin-bottom: 2.5vw;
+				text-align: left;
+				max-width: 600px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.home-step {
+				display: flex;
+				align-items: flex-start;
+				gap: 1vw;
+				padding: 0.8vw 1.2vw;
+				background: rgba(0, 30, 60, 0.3);
+				border-left: 2px solid rgba(0, 200, 255, 0.2);
+				border-radius: 0 4px 4px 0;
+				transition: all 0.3s ease;
+			}
+
+			.home-step:hover {
+				background: rgba(0, 40, 80, 0.4);
+				border-left-color: rgba(0, 200, 255, 0.5);
+			}
+
+			.home-step-num {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.9vw;
+				font-weight: 700;
+				color: #FF9800;
+				min-width: 2.5vw;
+				text-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+			}
+
+			.home-step-text {
+				font-size: 0.95vw;
+				color: rgba(200, 210, 225, 0.75);
+				line-height: 1.5;
+			}
+
+			.home-step-text strong {
+				color: #00c8ff;
+				font-weight: 600;
+			}
+
+			.home-enter-btn {
+				display: inline-block;
+				padding: 1vw 3vw;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.2vw;
+				font-weight: 700;
+				color: #16c79a;
+				background: rgba(22, 199, 154, 0.1);
+				border: 1px solid rgba(22, 199, 154, 0.4);
+				cursor: pointer;
+				transition: all 0.3s ease;
+				letter-spacing: 0.1em;
+				clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+				box-shadow: 0 0 20px rgba(22, 199, 154, 0.15);
+				text-shadow: 0 0 10px rgba(22, 199, 154, 0.4);
+			}
+
+			.home-enter-btn:hover {
+				background: rgba(22, 199, 154, 0.2);
+				border-color: rgba(22, 199, 154, 0.6);
+				box-shadow: 0 0 35px rgba(22, 199, 154, 0.3);
+				transform: translateY(-2px);
+			}
+
+			/* ===== 交易市场区域（默认隐藏） ===== */
+			#tradeMarket {
+				display: none;
+				position: relative;
+				z-index: 2;
+			}
+
+			/* ===== WM 风格 Tab 筛选栏 ===== */
+			.filter-tabs {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 0;
+				margin-bottom: 1.5vw;
+				position: relative;
+				z-index: 2;
+				background: rgba(5, 10, 25, 0.7);
+				border: 1px solid rgba(0, 200, 255, 0.12);
+				border-radius: 4px;
+				overflow: hidden;
+				max-width: 1400px;
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+			}
+
+			.filter-tab {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.85vw;
+				font-weight: 500;
+				padding: 0.8vw 2vw;
+				cursor: pointer;
+				transition: all 0.25s ease;
+				letter-spacing: 0.06em;
+				color: rgba(150, 180, 200, 0.6);
+				background: transparent;
+				border: none;
+				border-bottom: 2px solid transparent;
+				position: relative;
+				white-space: nowrap;
+			}
+
+			.filter-tab:hover {
+				color: #c8d4e0;
+				background: rgba(0, 100, 200, 0.08);
+			}
+
+			.filter-tab.active {
+				color: #00c8ff;
+				background: rgba(0, 100, 200, 0.12);
+				border-bottom: 2px solid #00c8ff;
+				text-shadow: 0 0 8px rgba(0, 200, 255, 0.4);
+			}
+
+			.filter-tab .tab-count {
+				display: inline-block;
+				background: rgba(0, 150, 255, 0.15);
+				color: rgba(0, 200, 255, 0.7);
+				font-size: 0.7vw;
+				padding: 1px 6px;
+				border-radius: 8px;
+				margin-left: 6px;
+				vertical-align: middle;
+			}
+
+			.filter-tab.active .tab-count {
+				background: rgba(0, 200, 255, 0.25);
+				color: #00c8ff;
+			}
+
+		/* Tab 栏右侧搜索 */
+			.filter-tabs .search-box {
+				margin-left: auto;
+				padding: 0.4vw 1vw;
+				display: flex;
+				align-items: center;
+				gap: 0.5vw;
+				border-left: 1px solid rgba(0, 200, 255, 0.08);
+			}
+
+			.filter-tabs .search-box input {
+				font-family: 'Rajdhani', 'Microsoft YaHei', sans-serif;
+				font-size: 0.9vw;
+				padding: 0.4vw 0.8vw;
+				width: 16vw;
+				background: rgba(0, 30, 60, 0.5);
+				border: 1px solid rgba(0, 200, 255, 0.15);
+				color: #fff;
+				outline: none;
+				border-radius: 2px;
+				transition: border-color 0.3s;
+			}
+
+			.filter-tabs .search-box input::placeholder {
+				color: rgba(150, 180, 200, 0.4);
+			}
+
+			.filter-tabs .search-box input:focus {
+				border-color: rgba(0, 200, 255, 0.4);
+				box-shadow: 0 0 8px rgba(0, 150, 255, 0.12);
+			}
+
+			/* ===== 物品展示区 (WM 风格) ===== */
+			#itemShowcase {
+				display: none;
+				max-width: 1400px;
+				margin: 0 auto 2vw;
+				position: relative;
+				z-index: 2;
+				background: rgba(5, 10, 25, 0.7);
+				border: 1px solid rgba(0, 200, 255, 0.12);
+				border-radius: 4px;
+				overflow: hidden;
+			}
+
+			#itemShowcase.visible {
+				display: flex;
+			}
+
+			.showcase-image {
+				width: 200px;
+				min-height: 160px;
+				flex-shrink: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: linear-gradient(135deg, rgba(0, 30, 60, 0.8) 0%, rgba(0, 60, 100, 0.4) 50%, rgba(5, 15, 35, 0.9) 100%);
+				border-right: 1px solid rgba(0, 200, 255, 0.08);
+				position: relative;
+			}
+
+			.showcase-icon {
+			width: 120px;
+			height: 120px;
+				border-radius: 12px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 2.5vw;
+				font-weight: 900;
+				color: rgba(0, 200, 255, 0.6);
+				position: relative;
+				overflow: hidden;
+			}
+
+			.showcase-icon::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: 12px;
+				border: 2px solid rgba(0, 200, 255, 0.2);
+			}
+
+			.showcase-icon .icon-letter {
+				position: relative;
+				z-index: 1;
+				text-shadow: 0 0 20px rgba(0, 200, 255, 0.5);
+			}
+
+			.showcase-info {
+				flex: 1;
+				padding: 1.5vw 2vw;
+				display: flex;
+				flex-direction: column;
+				gap: 0.6vw;
+			}
+
+			.showcase-info .sc-name {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.8vw;
+				font-weight: 700;
+				color: #00c8ff;
+				text-shadow: 0 0 15px rgba(0, 200, 255, 0.4);
+				letter-spacing: 0.06em;
+			}
+
+			.showcase-info .sc-type {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.75vw;
+				font-weight: 500;
+				color: rgba(0, 200, 255, 0.5);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.showcase-info .sc-stats {
+				display: flex;
+				gap: 2vw;
+				margin-top: 0.5vw;
+			}
+
+			.showcase-info .sc-stat {
+				display: flex;
+				flex-direction: column;
+				gap: 2px;
+			}
+
+			.showcase-info .sc-stat-label {
+				font-size: 0.7vw;
+				color: rgba(150, 180, 200, 0.5);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+			}
+
+			.showcase-info .sc-stat-value {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.3vw;
+				font-weight: 700;
+				color: #FF9800;
+				text-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+			}
+
+			.showcase-info .sc-stat-value.cyan {
+				color: #00c8ff;
+				text-shadow: 0 0 10px rgba(0, 200, 255, 0.4);
+			}
+
+			.showcase-info .sc-ducat {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.8vw;
+			color: rgba(180, 160, 100, 0.6);
+			letter-spacing: 0.05em;
+		}
+
+		.sc-subcat-link {
+			cursor: pointer;
+			color: rgba(180, 160, 100, 0.6);
+			transition: all 0.2s ease;
+			padding: 1px 4px;
+			border-radius: 2px;
+		}
+
+		.sc-subcat-link:hover {
+			color: #fff;
+			background: rgba(0, 200, 255, 0.15);
+		}
+
+		.sc-subcat-link.active {
+			color: #00c8ff;
+			background: rgba(0, 200, 255, 0.12);
+			text-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+			border-bottom: 1px solid rgba(0, 200, 255, 0.4);
+		}
+
+			/* ===== 悬浮发布按钮 ===== */
+			.fab-btn {
+				position: fixed;
+				bottom: 30px;
+				right: 30px;
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				background: rgba(22, 199, 154, 0.2);
+				border: 2px solid rgba(22, 199, 154, 0.5);
+				color: #16c79a;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 14px;
+				font-weight: 700;
+				cursor: pointer;
+				z-index: 99998;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: 0 0 25px rgba(22, 199, 154, 0.25);
+				transition: all 0.3s ease;
+				text-shadow: 0 0 10px rgba(22, 199, 154, 0.5);
+				letter-spacing: 0;
+				line-height: 1;
+			}
+
+			.fab-btn:hover {
+				transform: scale(1.15);
+				background: rgba(22, 199, 154, 0.35);
+				border-color: rgba(22, 199, 154, 0.8);
+				box-shadow: 0 0 40px rgba(22, 199, 154, 0.4);
+			}
+
+			/* ===== WM 风格订单列表 ===== */
+			.orders-list-wrapper {
+				max-width: 1400px;
+				margin: 0 auto;
+				position: relative;
+				z-index: 2;
+				background: rgba(5, 10, 25, 0.5);
+				border: 1px solid rgba(0, 200, 255, 0.1);
+				border-radius: 4px;
+				overflow: hidden;
+			}
+
+			.orders-list-wrapper table {
+				width: 100%;
+				border-collapse: collapse;
+				table-layout: fixed;
+			}
+
+			.orders-list-wrapper thead {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+			}
+
+			.orders-list-wrapper thead th {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.75vw;
+				font-weight: 600;
+				color: rgba(150, 180, 200, 0.6);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				padding: 1vw 1.2vw;
+				text-align: center;
+				background: rgba(8, 15, 30, 0.95);
+				border-bottom: 1px solid rgba(0, 200, 255, 0.12);
+				white-space: nowrap;
+			}
+
+			/* 列宽分配（5列：卖家 物品 价格 操作 时间） */
+			.orders-list-wrapper col.col-seller { width: 15%; }
+			.orders-list-wrapper col.col-item { width: 30%; }
+			.orders-list-wrapper col.col-price { width: 13%; }
+			.orders-list-wrapper col.col-actions { width: 22%; }
+			.orders-list-wrapper col.col-time { width: 20%; }
+
+			.orders-list-wrapper tbody tr {
+				transition: background 0.2s ease;
+				border-bottom: 1px solid rgba(0, 200, 255, 0.04);
+			}
+
+			.orders-list-wrapper tbody tr:nth-child(even) {
+				background: rgba(0, 20, 45, 0.25);
+			}
+
+			.orders-list-wrapper tbody tr:nth-child(odd) {
+				background: rgba(0, 15, 35, 0.15);
+			}
+
+			.orders-list-wrapper tbody tr:hover {
+				background: rgba(0, 60, 120, 0.25);
+			}
+
+			.orders-list-wrapper tbody tr:hover td {
+				color: #e0e8f0;
+			}
+
+			.orders-list-wrapper tbody td {
+				padding: 0.8vw 1.2vw;
+				font-size: 0.95vw;
+				vertical-align: middle;
+				color: #b0bcc8;
+				transition: color 0.2s;
+				text-align: center;
+			}
+
+			/* 卖家列 */
+			td.cell-seller .seller-name {
+				color: #16c79a;
+				font-weight: 600;
+				font-size: 0.95vw;
+				text-shadow: 0 0 6px rgba(22, 199, 154, 0.25);
+			}
+
+			/* 物品列 - 带类型色点 */
+			td.cell-item {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.6vw;
+			}
+
+			.type-dot {
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				flex-shrink: 0;
+				display: inline-block;
+			}
+
+			.type-dot.prime-set { background: #c9a44a; box-shadow: 0 0 6px rgba(201, 164, 74, 0.5); }
+			.type-dot.prime-part { background: #a08030; box-shadow: 0 0 6px rgba(160, 128, 48, 0.4); }
+			.type-dot.mod { background: #00c8ff; box-shadow: 0 0 6px rgba(0, 200, 255, 0.4); }
+			.type-dot.arcane { background: #8b5cf6; box-shadow: 0 0 6px rgba(139, 92, 246, 0.5); }
+			.type-dot.riven { background: #e94560; box-shadow: 0 0 6px rgba(233, 69, 96, 0.5); }
+			.type-dot.misc { background: rgba(150, 180, 200, 0.5); box-shadow: 0 0 6px rgba(150, 180, 200, 0.3); }
+
+			.item-name-text {
+				color: #00c8ff;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.9vw;
+				font-weight: 600;
+				letter-spacing: 0.04em;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.item-name-text:hover {
+				color: #60ddff;
+				text-shadow: 0 0 8px rgba(0, 200, 255, 0.4);
+			}
+
+			/* 价格列 - 突出显示 */
+			td.cell-price {
+				font-family: 'Orbitron', sans-serif;
+				font-weight: 700;
+				font-size: 1.1vw;
+				color: #FF9800;
+				text-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+				letter-spacing: 0.04em;
+			}
+
+			td.cell-price .price-unit {
+				font-size: 0.7vw;
+				font-weight: 500;
+				color: rgba(255, 152, 0, 0.5);
+				margin-left: 2px;
+			}
+
+			/* 操作列 */
+			td.cell-actions {
+				text-align: center;
+			}
+
+			/* WM 风格 PM 按钮 */
+			.pm-btn {
+				display: inline-block;
+				padding: 0.35vw 1vw;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.7vw;
+				font-weight: 600;
+				color: #00c8ff;
+				background: rgba(0, 100, 200, 0.12);
+				border: 1px solid rgba(0, 200, 255, 0.25);
+				border-radius: 2px;
+				cursor: pointer;
+				transition: all 0.25s ease;
+				letter-spacing: 0.04em;
+				white-space: nowrap;
+			}
+
+			.pm-btn:hover {
+				background: rgba(0, 150, 255, 0.25);
+				border-color: rgba(0, 200, 255, 0.5);
+				box-shadow: 0 0 12px rgba(0, 200, 255, 0.2);
+				color: #60ddff;
+			}
+
+			/* 卖家自己的操作按钮 */
+			.own-actions {
+				display: flex;
+				gap: 0.3vw;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.row-action-btn {
+				padding: 0.3vw 0.7vw;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.65vw;
+				font-weight: 600;
+				border-radius: 2px;
+				cursor: pointer;
+				transition: all 0.25s ease;
+				letter-spacing: 0.04em;
+				white-space: nowrap;
+			}
+
+			.row-delete-btn {
+				color: #e94560;
+				background: rgba(233, 69, 96, 0.08);
+				border: 1px solid rgba(233, 69, 96, 0.2);
+			}
+
+			.row-delete-btn:hover {
+				background: rgba(233, 69, 96, 0.2);
+				border-color: rgba(233, 69, 96, 0.4);
+			}
+
+			/* 时间列 */
+			td.cell-time {
+				font-size: 0.75vw;
+				color: rgba(100, 130, 160, 0.45);
+				text-align: center;
+				white-space: nowrap;
+			}
+
+			/* 自己的订单行高亮 */
+			tr.own-row {
+				border-left: 2px solid rgba(22, 199, 154, 0.3);
+			}
+
+			tr.own-row td:first-child {
+				padding-left: calc(1.2vw - 2px);
+			}
+
+			/* ===== 空状态 ===== */
+			.empty-state {
+				text-align: center;
+				padding: 6vw 2vw;
+				position: relative;
+				z-index: 2;
+			}
+
+			.empty-state .empty-icon {
+				font-size: 4vw;
+				margin-bottom: 1.5vw;
+				opacity: 0.4;
+			}
+
+			.empty-state .empty-text {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1.5vw;
+				color: rgba(100, 130, 160, 0.5);
+				letter-spacing: 0.15em;
+			}
+
+			/* ===== 弹窗 ===== */
+			.modal-overlay {
+				position: fixed;
+				top: 0; left: 0; right: 0; bottom: 0;
+				background: rgba(5, 8, 20, 0.85);
+				backdrop-filter: blur(5px);
+				display: none;
+				justify-content: center;
+				align-items: center;
+				z-index: 99999;
+			}
+
+			.modal {
+				background: rgba(5, 10, 25, 0.95);
+				border: 1px solid rgba(0, 200, 255, 0.3);
+				border-radius: 4px;
+				padding: 30px;
+				width: 90%;
+				max-width: 500px;
+				text-align: center;
+				box-shadow: 0 0 60px rgba(0, 150, 255, 0.15), inset 0 0 40px rgba(0, 100, 200, 0.05);
+				clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+			}
+
+			.modal h3 {
+				font-family: 'Orbitron', sans-serif;
+				color: #00c8ff;
+				margin-bottom: 20px;
+				text-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+				font-size: 1.3vw;
+				letter-spacing: 0.1em;
+			}
+
+			.modal p {
+				color: #aaa;
+				margin-bottom: 15px;
+				line-height: 1.6;
+			}
+
+			.modal .form-group {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+				margin-bottom: 15px;
+				text-align: left;
+				position: relative;
+			}
+
+			.modal .form-group label {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.75vw;
+				color: rgba(0, 200, 255, 0.7);
+				letter-spacing: 0.08em;
+			}
+
+			.modal .form-group input,
+			.modal .form-group select,
+			.modal .form-group textarea {
+				width: 100%;
+				padding: 12px;
+				background: rgba(0, 30, 60, 0.6);
+				border: 1px solid rgba(0, 200, 255, 0.2);
+				color: #fff;
+				font-family: 'Rajdhani', 'Microsoft YaHei', sans-serif;
+				font-size: 14px;
+				outline: none;
+				border-radius: 2px;
+				transition: border-color 0.3s;
+			}
+
+			.modal .form-group textarea {
+				resize: vertical;
+				min-height: 60px;
+			}
+
+			.modal .form-group input:focus,
+			.modal .form-group select:focus,
+			.modal .form-group textarea:focus {
+				border-color: rgba(0, 200, 255, 0.5);
+				box-shadow: 0 0 10px rgba(0, 150, 255, 0.15);
+			}
+
+			.modal .form-group select option {
+				background: rgba(5, 10, 25, 0.95);
+				color: #fff;
+			}
+
+			.modal .modal-buttons {
+				display: flex;
+				gap: 10px;
+				justify-content: center;
+				margin-top: 10px;
+			}
+
+			.modal .modal-buttons button {
+				width: auto;
+				padding: 10px 25px;
+				font-size: 0.9vw;
+			}
+
+			.modal .form-error {
+				color: #e94560;
+				text-align: center;
+				margin-bottom: 10px;
+				font-size: 13px;
+				display: none;
+			}
+
+			/* ===== 自动补全下拉 ===== */
+			.autocomplete-wrapper {
+				position: relative;
+			}
+
+			#autocompleteList {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				max-height: 200px;
+				overflow-y: auto;
+				background: rgba(5, 10, 25, 0.98);
+				border: 1px solid rgba(0, 200, 255, 0.25);
+				border-top: none;
+				z-index: 100000;
+				display: none;
+				border-radius: 0 0 4px 4px;
+			}
+
+			#autocompleteList.visible {
+				display: block;
+			}
+
+			.autocomplete-item {
+				padding: 8px 12px;
+				font-family: 'Rajdhani', 'Microsoft YaHei', sans-serif;
+				font-size: 13px;
+				color: #c8d4e0;
+				cursor: pointer;
+				transition: background 0.15s;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 1px solid rgba(0, 200, 255, 0.05);
+			}
+
+			.autocomplete-item:last-child {
+				border-bottom: none;
+			}
+
+			.autocomplete-item:hover,
+			.autocomplete-item.active {
+				background: rgba(0, 100, 200, 0.2);
+				color: #fff;
+			}
+
+			.autocomplete-item .ac-type {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 10px;
+				color: rgba(0, 200, 255, 0.5);
+				letter-spacing: 0.05em;
+			}
+
+			/* ===== 发布弹窗物品预览 ===== */
+			.pub-item-preview {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 1.5vw;
+				margin-bottom: 20px;
+				padding: 1.5vw;
+				background: rgba(0, 20, 45, 0.4);
+				border: 1px solid rgba(0, 200, 255, 0.08);
+				border-radius: 4px;
+				min-height: 80px;
+			}
+
+			.pub-preview-icon {
+				width: 60px;
+				height: 60px;
+				border-radius: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 24px;
+				font-weight: 900;
+				color: rgba(0, 200, 255, 0.6);
+				background: linear-gradient(135deg, rgba(0, 30, 60, 0.6) 0%, rgba(0, 50, 90, 0.3) 50%, rgba(0, 15, 35, 0.7) 100%);
+				border: 1px solid rgba(0, 200, 255, 0.15);
+				transition: all 0.3s ease;
+				flex-shrink: 0;
+			}
+
+			.pub-preview-info {
+				text-align: left;
+			}
+
+			.pub-preview-name {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 1vw;
+				color: #00c8ff;
+				text-shadow: 0 0 8px rgba(0, 200, 255, 0.3);
+				margin-bottom: 4px;
+			}
+
+			.pub-preview-type {
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.7vw;
+				color: rgba(0, 200, 255, 0.45);
+				letter-spacing: 0.06em;
+			}
+
+			/* ===== Toast 提示 ===== */
+			.toast {
+				position: fixed;
+				top: 20px;
+				left: 50%;
+				transform: translateX(-50%) translateY(-20px);
+				background: rgba(22, 199, 154, 0.9);
+				color: #fff;
+				padding: 12px 28px;
+				border-radius: 4px;
+				z-index: 999999;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 0.85vw;
+				letter-spacing: 0.08em;
+				border: 1px solid rgba(22, 199, 154, 0.5);
+				box-shadow: 0 0 20px rgba(22, 199, 154, 0.3);
+				opacity: 0;
+				transition: all 0.3s ease;
+				pointer-events: none;
+			}
+
+			.toast.show {
+				opacity: 1;
+				transform: translateX(-50%) translateY(0);
+			}
+
+			/* ===== 登录面板按钮样式 ===== */
+			.login-pulse {
+				position: relative;
+				background: rgba(0, 60, 120, 0.4);
+				border: 1px solid rgba(0, 200, 255, 0.5);
+				color: #00c8ff;
+				font-family: 'Orbitron', sans-serif;
+				letter-spacing: 0.1em;
+				cursor: pointer;
+				clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+				transition: all 0.3s;
+				text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+				box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05);
+				animation: pulseGlow 2s ease-in-out infinite;
+			}
+
+			@keyframes pulseGlow {
+				0%, 100% { box-shadow: 0 0 20px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05); }
+				50% { box-shadow: 0 0 40px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.1); }
+			}
+
+			.login-pulse:hover {
+				background: rgba(0, 100, 200, 0.5);
+				transform: translateY(-2px);
+			}
+
+			.login-pulse.logged {
+				background: rgba(22, 199, 154, 0.2);
+				border-color: rgba(22, 199, 154, 0.5);
+				color: #16c79a;
+				text-shadow: 0 0 10px rgba(22, 199, 154, 0.5);
+				animation: none;
+				box-shadow: 0 0 20px rgba(22, 199, 154, 0.2);
+			}
+
+			/* ===== 浮动粒子 ===== */
+			.particle {
+				position: fixed;
+				width: 2px;
+				height: 2px;
+				background: rgba(0, 200, 255, 0.6);
+				border-radius: 50%;
+				pointer-events: none;
+				z-index: 1;
+				animation: float 15s infinite linear;
+				box-shadow: 0 0 6px rgba(0, 200, 255, 0.8);
+			}
+
+			@keyframes float {
+				0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+				10% { opacity: 1; }
+				90% { opacity: 1; }
+				100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+			}
+
+			/* ===== 回到顶部按钮 ===== */
+			.back-to-top {
+				position: fixed;
+				bottom: 100px;
+				right: 30px;
+				width: 50px;
+				height: 50px;
+				background: rgba(0, 30, 60, 0.8);
+				border: 1px solid rgba(0, 200, 255, 0.4);
+				border-radius: 2px;
+				color: #00c8ff;
+				font-family: 'Orbitron', sans-serif;
+				font-size: 18px;
+				font-weight: 700;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				backdrop-filter: blur(10px);
+				box-shadow: 0 0 20px rgba(0, 200, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.05);
+				transition: all 0.3s ease;
+				opacity: 0;
+				visibility: hidden;
+				z-index: 999;
+				clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+			}
+
+			.back-to-top:hover {
+				background: rgba(0, 60, 120, 0.9);
+				box-shadow: 0 0 30px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 150, 255, 0.1);
+				transform: translateY(-3px);
+				color: #ffffff;
+			}
+
+			.back-to-top.visible {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			/* ===== 提示动画 ===== */
+			@keyframes tipSlideInLeft {
+				from { transform:translateY(-50%) translateX(-100%); opacity:0; }
+				to   { transform:translateY(-50%) translateX(0); opacity:1; }
+			}
+			@keyframes tipSlideOutRight {
+				from { transform:translateY(-50%) translateX(0); opacity:1; }
+				to   { transform:translateY(-50%) translateX(120%); opacity:0; }
+			}
+			@keyframes tipPulse {
+				from { box-shadow:0 0 20px rgba(0,200,255,0.3),inset 0 0 20px rgba(0,150,255,0.05); }
+				to   { box-shadow:0 0 30px rgba(0,200,255,0.5),inset 0 0 30px rgba(0,150,255,0.1); }
+			}
+
+			/* ===== 响应式 ===== */
+			@media (max-width: 1000px) {
+				body {
+					padding: 3vw;
+				}
+
+				.d2 a img {
+					width: 8vw;
+					height: 8vw;
+				}
+
+				.d2 h2 {
+					font-size: 5vw;
+				}
+
+				.home-title {
+					font-size: 3.5vw;
+				}
+
+				.home-disclaimer {
+					font-size: 1.2vw;
+				}
+
+				.home-section-title {
+					font-size: 1.5vw;
+				}
+
+				.home-step-num {
+					font-size: 1.3vw;
+				}
+
+				.home-step-text {
+					font-size: 1.3vw;
+				}
+
+				.home-enter-btn {
+					font-size: 1.8vw;
+					padding: 1.2vw 3vw;
+				}
+
+				.filter-tab {
+					font-size: 1.3vw;
+					padding: 1vw 1.5vw;
+				}
+
+				.filter-tabs .search-box input {
+					font-size: 1.3vw;
+					width: 30vw;
+				}
+
+				.filter-tab .tab-count {
+					font-size: 1vw;
+				}
+
+				.orders-list-wrapper thead th {
+					font-size: 1vw;
+					padding: 1.2vw 1vw;
+				}
+
+				.orders-list-wrapper tbody td {
+					font-size: 1.2vw;
+					padding: 1vw;
+				}
+
+				td.cell-price {
+					font-size: 1.3vw;
+				}
+
+				.item-name-text {
+					font-size: 1.1vw;
+				}
+
+				.pm-btn {
+					font-size: 1vw;
+					padding: 0.5vw 1.2vw;
+				}
+
+				.row-action-btn {
+					font-size: 0.9vw;
+					padding: 0.4vw 1vw;
+				}
+
+				.showcase-info .sc-name {
+					font-size: 2.5vw;
+				}
+
+				.showcase-info .sc-stat-value {
+					font-size: 1.8vw;
+				}
+
+				.showcase-image {
+					width: 150px;
+					min-height: 130px;
+				}
+
+				.modal h3 {
+					font-size: 2vw;
+				}
+
+				.modal .form-group label {
+					font-size: 1.2vw;
+				}
+
+				.modal .form-group input,
+				.modal .form-group select,
+				.modal .form-group textarea {
+					font-size: 16px;
+				}
+
+				.modal .modal-buttons button {
+					font-size: 1.5vw;
+				}
+
+				.toast {
+					font-size: 1.5vw;
+				}
+
+				.empty-state .empty-text {
+					font-size: 2vw;
+				}
+
+				.empty-state .empty-icon {
+					font-size: 6vw;
+				}
+
+				td.cell-time {
+					font-size: 1vw;
+				}
+
+				.pub-preview-name {
+					font-size: 1.5vw;
+				}
+
+				.pub-preview-type {
+					font-size: 1vw;
+				}
+
+				.autocomplete-item {
+					font-size: 15px;
+					padding: 10px 12px;
+				}
+			}
+
+			@media (max-width: 768px) {
+				body {
+					padding: 16px;
+				}
+
+				#tradeHome {
+					padding: 0;
+				}
+
+				.home-card {
+					padding: 20px 16px;
+					clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+				}
+
+				.home-title {
+					font-size: 22px;
+					margin-bottom: 16px;
+				}
+
+				.home-disclaimer {
+					font-size: 13px;
+					margin-bottom: 16px;
+					padding-bottom: 12px;
+				}
+
+				.home-section-title {
+					font-size: 14px;
+					margin-bottom: 12px;
+				}
+
+				.home-steps {
+					gap: 8px;
+					margin-bottom: 20px;
+				}
+
+				.home-step {
+					padding: 10px 12px;
+				}
+
+				.home-step-num {
+					font-size: 16px;
+					min-width: 28px;
+				}
+
+				.home-step-text {
+					font-size: 14px;
+					line-height: 1.6;
+				}
+
+				.home-enter-btn {
+					font-size: 15px;
+					padding: 12px 32px;
+				}
+
+				/* 手机端 tab 栏改为横滚 */
+				.filter-tabs {
+					overflow-x: auto;
+					-webkit-overflow-scrolling: touch;
+					justify-content: flex-start;
+					padding: 8px;
+				}
+
+				.filter-tab {
+					font-size: 12px;
+					padding: 8px 14px;
+				}
+
+				.filter-tabs .search-box {
+					border-left: none;
+					border-top: 1px solid rgba(0, 200, 255, 0.08);
+					padding: 8px 12px;
+					width: 100%;
+				}
+
+				.filter-tabs .search-box input {
+					font-size: 14px;
+					width: 100%;
+					padding: 8px 12px;
+				}
+
+				.filter-tab .tab-count {
+					font-size: 10px;
+					padding: 1px 5px;
+				}
+
+				/* 发布弹窗宽度适配 */
+				.modal {
+					width: 95%;
+					padding: 20px;
+				}
+
+				.modal h3 {
+					font-size: 18px;
+				}
+
+				.modal .form-group label {
+					font-size: 13px;
+				}
+
+				.modal .form-group input,
+				.modal .form-group select,
+				.modal .form-group textarea {
+					font-size: 16px;
+					padding: 12px;
+				}
+
+				.modal .modal-buttons button {
+					font-size: 14px;
+					padding: 10px 20px;
+				}
+
+				.pub-preview-icon {
+					width: 50px;
+					height: 50px;
+					font-size: 20px;
+				}
+
+				.pub-preview-name {
+					font-size: 14px;
+				}
+
+				.pub-preview-type {
+					font-size: 11px;
+				}
+
+				.pub-item-preview {
+					gap: 12px;
+					padding: 12px;
+				}
+
+				.autocomplete-item {
+					font-size: 14px;
+					padding: 10px 12px;
+				}
+
+				.toast {
+					font-size: 13px;
+					padding: 10px 20px;
+				}
+
+				.showcase-info .sc-name {
+					font-size: 18px;
+				}
+
+				.showcase-info .sc-type {
+					font-size: 11px;
+				}
+
+				.showcase-info .sc-stat-label {
+					font-size: 11px;
+				}
+
+				.showcase-info .sc-stat-value {
+					font-size: 16px;
+				}
+
+				.showcase-info .sc-stats {
+					gap: 16px;
+				}
+
+				.showcase-info .sc-ducat {
+					font-size: 12px;
+				}
+
+				.showcase-image {
+					width: 100%;
+					min-height: 120px;
+					border-right: none;
+					border-bottom: 1px solid rgba(0, 200, 255, 0.08);
+					padding: 10px;
+				}
+
+				.showcase-icon {
+					min-height: 100px;
+				}
+
+				.empty-state .empty-text {
+					font-size: 16px;
+				}
+
+				.empty-state .empty-icon {
+					font-size: 48px;
+				}
+
+				.empty-state {
+					padding: 40px 16px;
+				}
+
+				.sc-subcat-link {
+					font-size: 12px;
+				}
+			}
+
+			@media (max-width: 600px) {
+				.d2 {
+					flex-direction: column;
+					gap: 8px;
+					padding: 12px 0;
+					margin-bottom: 12px;
+				}
+
+				.d2 a {
+					position: relative;
+					left: auto;
+				}
+
+				.d2 a img {
+					width: 40px;
+					height: 40px;
+				}
+
+				.d2 h2 {
+					font-size: 18px;
+					min-width: auto;
+					white-space: normal;
+				}
+
+				.filter-tab {
+					font-size: 11px;
+					padding: 7px 10px;
+				}
+
+				/* 手机端表格变卡片 */
+				.orders-list-wrapper {
+					border: none;
+					background: transparent;
+				}
+
+				.orders-list-wrapper table,
+				.orders-list-wrapper thead,
+				.orders-list-wrapper tbody,
+				.orders-list-wrapper th,
+				.orders-list-wrapper td,
+				.orders-list-wrapper tr {
+					display: block;
+				}
+
+				.orders-list-wrapper thead {
+					display: none;
+				}
+
+				.orders-list-wrapper tbody tr {
+					background: rgba(5, 10, 25, 0.7);
+					border: 1px solid rgba(0, 200, 255, 0.1);
+					border-radius: 4px;
+					margin-bottom: 12px;
+					padding: 14px 12px;
+					position: relative;
+					clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px));
+				}
+
+				.orders-list-wrapper tbody tr:nth-child(even),
+				.orders-list-wrapper tbody tr:nth-child(odd) {
+					background: rgba(5, 10, 25, 0.7);
+				}
+
+				.orders-list-wrapper tbody td {
+					padding: 2px 0;
+					font-size: 14px;
+					text-align: left !important;
+					border-bottom: none;
+				}
+
+				td.cell-seller {
+					display: flex;
+					align-items: center;
+					gap: 6px;
+					margin-bottom: 8px;
+					padding-bottom: 10px;
+					border-bottom: 1px solid rgba(0, 200, 255, 0.06);
+				}
+
+				td.cell-item {
+					font-size: 15px;
+					margin-bottom: 6px;
+				}
+
+				.item-name-text {
+					font-size: 15px;
+				}
+
+				td.cell-price {
+					font-size: 16px;
+					margin-bottom: 6px;
+				}
+
+				td.cell-actions {
+					display: flex;
+					gap: 8px;
+					margin-top: 8px;
+					padding-top: 10px;
+					border-top: 1px solid rgba(0, 200, 255, 0.06);
+				}
+
+				.pm-btn {
+					font-size: 13px;
+					padding: 6px 14px;
+				}
+
+				.row-action-btn {
+					font-size: 12px;
+					padding: 5px 10px;
+				}
+
+				td.cell-time {
+					font-size: 12px;
+					color: rgba(100, 130, 160, 0.35);
+				}
+
+				/* 手机端 showcase 改为上下 */
+				#itemShowcase.visible {
+					flex-direction: column;
+				}
+
+				.fab-btn {
+					bottom: 16px;
+					right: 16px;
+					width: 48px;
+					height: 48px;
+					font-size: 11px;
+				}
+
+				.back-to-top {
+					bottom: 76px;
+					right: 16px;
+					width: 40px;
+					height: 40px;
+					font-size: 14px;
+				}
+			}
+
+			/* ===== 全局 button reset ===== */
+			button {
+				font-family: 'Orbitron', sans-serif;
+				border: none;
+				outline: none;
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="trade_items.js"></script>
+		<base target="_blank">
+	</head>
+	<body>
+		<!-- 浮动粒子 -->
+		<div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 12s;"></div>
+		<div class="particle" style="left: 25%; animation-delay: 3s; animation-duration: 18s;"></div>
+		<div class="particle" style="left: 40%; animation-delay: 7s; animation-duration: 14s;"></div>
+		<div class="particle" style="left: 55%; animation-delay: 2s; animation-duration: 20s;"></div>
+		<div class="particle" style="left: 70%; animation-delay: 5s; animation-duration: 16s;"></div>
+		<div class="particle" style="left: 85%; animation-delay: 9s; animation-duration: 13s;"></div>
+		<div class="particle" style="left: 15%; animation-delay: 11s; animation-duration: 19s;"></div>
+		<div class="particle" style="left: 90%; animation-delay: 1s; animation-duration: 15s;"></div>
+
+		<!-- Logo 区域 -->
+		<div class="d2">
+			<a href="../index.html" id="logoLink" target="_self">
+				<img src="../Logo.jpg" alt="Logo">
+			</a>
+			<h2 id="typing"></h2>
+		</div>
+
+		<hr />
+
+		<!-- ===== 首页 ===== -->
+		<div id="tradeHome">
+			<div class="home-card">
+				<div class="home-title">CLAN TRADE</div>
+				<div class="home-disclaimer">
+					本平台为 REVELATION 天启联盟内部交易工具，仅供联盟成员使用。<br>
+					所有交易信息由玩家自行发布，联盟不对交易结果承担任何责任。<br>
+					请遵守游戏规则，诚信交易。如有纠纷请联系联盟管理。
+				</div>
+				<div class="home-section-title">&#9670; 使用说明 &#9670;</div>
+				<div class="home-steps">
+					<div class="home-step">
+						<span class="home-step-num">01</span>
+						<span class="home-step-text"><strong>登录账号</strong> -- 点击右上角登录按钮，使用游戏ID和密码验证身份。</span>
+					</div>
+					<div class="home-step">
+						<span class="home-step-num">04</span>
+						<span class="home-step-text"><strong>发布订单</strong> -- 点击右下角绿色悬浮按钮(需登录)，填写信息和价格即可发布出售订单。</span>
+					</div>
+					<div class="home-step">
+						<span class="home-step-num">05</span>
+						<span class="home-step-text"><strong>管理订单</strong> -- 自己发布的订单可以随时删除。物品售出后请及时删除对应订单。</span>
+					</div>
+					<div class="home-step">
+						<span class="home-step-num">02</span>
+						<span class="home-step-text"><strong>浏览订单</strong> -- 进入交易市场后，使用分类筛选或搜索框查找心仪物品。</span>
+					</div>
+					<div class="home-step">
+						<span class="home-step-num">03</span>
+						<span class="home-step-text"><strong>购买物品</strong> -- 点击订单旁的"购买"按钮，自动复制联系消息，粘贴到游戏内发送给卖家。</span>
+					</div>	
+				</div>
+				<button class="home-enter-btn" onclick="enterTradeMarket()">&#9654; 进入交易市场</button>
+			</div>
+		</div>
+
+		<!-- ===== 交易市场（默认隐藏） ===== -->
+		<div id="tradeMarket">
+			<!-- WM 风格 Tab 筛选栏 -->
+			<div class="filter-tabs" id="filterTabs">
+			<button class="filter-tab active" data-type="all" onclick="setFilter('all', this)">全部<span class="tab-count" id="countAll">0</span></button>
+			<button class="filter-tab" data-type="Prime战甲" onclick="setFilter('Prime战甲', this)">Prime战甲<span class="tab-count" id="countPrimeWarframe">0</span></button>
+			<button class="filter-tab" data-type="Prime武器" onclick="setFilter('Prime武器', this)">Prime武器<span class="tab-count" id="countPrimeWeapon">0</span></button>
+			<button class="filter-tab" data-type="特殊武器" onclick="setFilter('特殊武器', this)">特殊武器<span class="tab-count" id="countSpecialWeapon">0</span></button>
+			<button class="filter-tab" data-type="MOD" onclick="setFilter('MOD', this)">MOD<span class="tab-count" id="countMod">0</span></button>
+			<button class="filter-tab" data-type="未经分类" onclick="setFilter('未经分类', this)">未经分类<span class="tab-count" id="countMisc">0</span></button>
+			<div class="search-box">
+				<input type="text" id="searchInput" placeholder="搜索物品 / 卖家..." oninput="onSearch()">
+			</div>
+		</div>
+
+		<!-- 物品展示区（点击订单后显示） -->
+		<div id="itemShowcase" style="display:none;">
+			<div class="showcase-image">
+				<div class="showcase-icon" id="showcaseIcon">
+					<img id="showcaseImg" style="display:none; width:100%; height:100%; object-fit:contain; position:relative; z-index:1; border-radius:12px;" onerror="this.style.display='none'; document.getElementById('showcaseLetter').style.display='block';">
+					<span class="icon-letter" id="showcaseLetter">?</span>
+				</div>
+			</div>
+			<div class="showcase-info">
+				<div class="sc-name" id="scName"></div>
+				<div class="sc-type" id="scType"></div>
+				<div class="sc-stats">
+					<div class="sc-stat">
+						<span class="sc-stat-label">上架数量</span>
+						<span class="sc-stat-value cyan" id="scCount">0</span>
+					</div>
+					<div class="sc-stat">
+						<span class="sc-stat-label">最低价</span>
+						<span class="sc-stat-value" id="scMinPrice">--</span>
+					</div>
+					<div class="sc-stat">
+						<span class="sc-stat-label">均价</span>
+						<span class="sc-stat-value" id="scAvgPrice">--</span>
+					</div>
+				</div>
+				<div class="sc-ducat" id="scDucat"></div>
+			</div>
+		</div>
+
+			<!-- 订单列表 -->
+			<div class="orders-list-wrapper" id="ordersListWrapper" style="display:none;">
+				<table>
+					<colgroup>
+						<col class="col-seller">
+						<col class="col-item">
+						<col class="col-price">
+						<col class="col-actions">
+						<col class="col-time">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>卖家</th>
+							<th>物品</th>
+							<th>价格</th>
+							<th>操作</th>
+							<th>时间</th>
+						</tr>
+					</thead>
+					<tbody id="ordersListBody"></tbody>
+				</table>
+			</div>
+
+			<!-- 空状态 -->
+			<div class="empty-state" id="emptyState" style="display:none;">
+				<div class="empty-icon">&#9881;</div>
+				<div class="empty-text">暂无出售订单</div>
+			</div>
+		</div>
+
+		<!-- 悬浮发布按钮 -->
+		<button id="fabPublish" class="fab-btn" onclick="openPublishModal()" style="display:none;">+ 发布</button>
+
+		<!-- 发布订单弹窗 -->
+		<div class="modal-overlay" id="publishModal">
+			<div class="modal">
+				<h3>发布出售订单</h3>
+				<!-- 物品预览 -->
+				<div class="pub-item-preview" id="pubItemPreview">
+					<div class="pub-preview-icon" id="pubPreviewIcon">
+						<img id="pubPreviewImg" style="display:none; width:100%; height:100%; object-fit:contain; border-radius:10px; position:relative; z-index:1;" onerror="this.style.display='none'; document.getElementById('pubPreviewLetter').style.display='block';">
+						<span id="pubPreviewLetter">?</span>
+					</div>
+					<div class="pub-preview-info">
+						<div class="pub-preview-name" id="pubPreviewName">请输入物品名称</div>
+						<div class="pub-preview-type" id="pubPreviewType">--</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>物品名称</label>
+					<div class="autocomplete-wrapper">
+						<input type="text" id="pubItemName" placeholder="输入物品名，从补全列表中选择" autocomplete="off" oninput="onItemNameInput()" onfocus="onItemNameInput()">
+						<div id="autocompleteList"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>物品类型</label>
+					<input type="text" id="pubItemType" value="--" readonly style="cursor:default; color:rgba(0,200,255,0.5);">
+				</div>
+				<div class="form-group">
+					<label>价格（白金）</label>
+					<input type="number" id="pubPrice" placeholder="例：50" min="1">
+				</div>
+				<p class="form-error" id="pubError"></p>
+				<div class="modal-buttons">
+					<button class="btn-cancel" style="background:rgba(100,100,100,0.3);border:1px solid rgba(100,100,100,0.5);color:rgba(180,200,220,0.8);" onclick="closePublishModal()">取消</button>
+					<button style="background:rgba(22,199,154,0.2);border:1px solid rgba(22,199,154,0.5);color:#16c79a;" onclick="submitOrder()">发布</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- 修改密码弹窗 -->
+		<div class="modal-overlay" id="changePassModal" style="display:none;">
+			<div class="modal">
+				<h3>修改密码</h3>
+				<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+					<input type="password" id="oldPass" placeholder="原密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+					<input type="password" id="newPass" placeholder="新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+					<input type="password" id="confirmPass" placeholder="确认新密码" style="width:100%;padding:12px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+				</div>
+				<p id="changePassError" style="color:#e94560;text-align:center;margin-bottom:15px;display:none;font-size:13px;"></p>
+				<div class="modal-buttons">
+					<button class="btn-cancel" style="background:rgba(100,100,100,0.3);border:1px solid rgba(100,100,100,0.5);color:rgba(180,200,220,0.8);" onclick="closeChangePass()">取消</button>
+					<button style="background:rgba(22,199,154,0.2);border:1px solid rgba(22,199,154,0.5);color:#16c79a;" onclick="doChangePass()">确认修改</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Toast -->
+		<div class="toast" id="tradeToast"></div>
+
+		<!-- 右上角登录面板 -->
+		<div id="userCorner" style="position:fixed;top:20px;right:20px;z-index:99999;">
+			<button id="cornerBtn" onclick="toggleCorner()" class="login-pulse" style="width:auto;padding:10px 20px;font-size:13px;">&#128274; 登录</button>
+		</div>
+
+		<div id="cornerPanel" style="display:none;position:fixed;top:70px;right:20px;width:260px;z-index:99998;background:rgba(5,10,25,0.95);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:20px;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);box-shadow:0 0 40px rgba(0,0,0,0.5);">
+			<div id="panelLogin">
+				<h3 style="text-align:center;color:#00c8ff;font-family:'Orbitron';font-size:16px;margin-bottom:15px;text-shadow:0 0 15px rgba(0,200,255,0.3);">&#9670; ID验证 &#9670;</h3>
+				<input type="text" id="cornerUser" placeholder="游戏ID" style="width:100%;padding:12px;margin-bottom:10px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+				<input type="password" id="cornerPass" placeholder="密码" style="width:100%;padding:12px;margin-bottom:15px;background:rgba(0,30,60,0.6);border:1px solid rgba(0,200,255,0.2);color:#fff;font-size:14px;outline:none;">
+				<button onclick="doCornerLogin()" style="width:100%;padding:12px;background:rgba(0,180,255,0.2);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-family:'Orbitron';font-size:14px;cursor:pointer;transition:all 0.3s;">验证</button>
+				<p id="cornerError" style="color:#e94560;text-align:center;margin-top:10px;display:none;font-size:13px;">验证失败</p>
+			</div>
+
+			<div id="panelInfo" style="display:none;">
+				<div style="text-align:center;margin-bottom:15px;">
+					<span style="color:#00c8ff;font-family:'Orbitron';font-size:14px;">&#128100; <span id="cornerName">--</span></span>
+				</div>
+				<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px;">
+					<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.2);border-radius:3px;">
+						<span style="color:#FF9800;">Rout</span>
+						<span style="color:#FF9800;font-weight:bold;" id="cornerRout">0</span>
+					</div>
+					<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);border-radius:3px;">
+						<span style="color:#00c8ff;">Prime</span>
+						<span style="color:#00c8ff;font-weight:bold;" id="cornerPrime">0</span>
+					</div>
+					<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(233,69,96,0.1);border:1px solid rgba(233,69,96,0.2);border-radius:3px;">
+						<span style="color:#e94560;">Prime VIP</span>
+						<span style="color:#e94560;font-weight:bold;" id="cornerVip">0</span>
+					</div>
+				</div>
+				<button id="changePassBtn" style="width:100%;padding:10px;margin-bottom:10px;background:rgba(0,180,255,0.15);border:1px solid rgba(0,200,255,0.4);color:#00c8ff;font-size:12px;cursor:pointer;">&#128273; 修改密码</button>
+				<button onclick="doCornerLogout()" style="width:100%;padding:10px;background:rgba(100,100,100,0.2);border:1px solid rgba(100,100,100,0.4);color:rgba(150,180,200,0.7);font-size:12px;cursor:pointer;">断开连接</button>
+			</div>
+		</div>
+
+		<!-- 回到顶部 -->
+		<button class="back-to-top" id="backToTop">&#9650;</button>
+	</body>
+
+	<script>
+		// ==================== 物品数据库已移至 trade_items.js ====================
+		// ITEM_CATALOG, TYPE_COLORS, SUBCATEGORY_TYPES, SUBCATEGORIES 由外部文件提供
+
+		// ==================== 全局变量 ====================
+		let sb = null;
+		let currentUser = null;
+		let panelOpen = false;
+		let allOrders = [];
+		let currentFilter = 'all';
+		let currentSearch = '';
+		let showcaseActive = false;
+		let selectedCatalogItem = null; // 当前选中的目录物品
+
+		// ==================== Supabase 初始化 ====================
+		function initSupabase() {
+			if (sb) return true;
+			if (typeof supabase === 'undefined') {
+				console.error('Supabase 库没加载，检查网络');
+				return false;
+			}
+			const SUPABASE_URL = 'https://rfmgembzxqbqsegquxmh.supabase.co';
+			const SUPABASE_KEY = 'sb_publishable_9qFlq7jJcXvnkZOIoxinug_RVotHtGw';
+			sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+			return true;
+		}
+
+		// ==================== 打字机效果 ====================
+		const texts = ["REVELATION", "天启 联盟"];
+		let index = 0;
+		let isTyping = true;
+		let cursor = 0;
+		let blinkInterval;
+
+		function initBlink() {
+			blinkInterval = setInterval(function() {
+				var cursorElement = document.getElementById("cursor");
+				if (cursorElement) {
+					cursorElement.style.visibility = cursorElement.style.visibility === "hidden" ? "visible" : "hidden";
+				}
+			}, 500);
+		}
+
+		function stopBlink() {
+			clearInterval(blinkInterval);
+		}
+
+		function addCursor() {
+			var cursorElement = document.createElement("span");
+			cursorElement.id = "cursor";
+			cursorElement.textContent = "|";
+			cursorElement.style.visibility = "visible";
+			document.getElementById("typing").appendChild(cursorElement);
+			initBlink();
+		}
+
+		function removeCursor() {
+			var cursorElement = document.getElementById("cursor");
+			if (cursorElement) {
+				stopBlink();
+				cursorElement.remove();
+			}
+		}
+
+		function typeEffect() {
+			var textElement = document.getElementById("typing");
+			var currentText = texts[index];
+			if (isTyping) {
+				if (cursor < currentText.length) {
+					textElement.textContent += currentText.charAt(cursor);
+					cursor++;
+				} else {
+					addCursor();
+					setTimeout(function() {
+						isTyping = false;
+						cursor = 0;
+						setTimeout(function() {
+							removeCursor();
+							typeEffect();
+						}, 1500);
+						return;
+					}, 300);
+					return;
+				}
+			} else {
+				if (textElement.textContent.length > 1) {
+					textElement.textContent = textElement.textContent.slice(0, -1);
+				} else {
+					textElement.textContent = "\u200b";
+					isTyping = true;
+					index = (index + 1) % texts.length;
+					removeCursor();
+					setTimeout(typeEffect, 400);
+					return;
+				}
+			}
+			setTimeout(typeEffect, 100);
+		}
+
+		typeEffect();
+
+		// ==================== 首页 -> 进入交易市场 ====================
+		function enterTradeMarket() {
+			document.getElementById('tradeHome').style.display = 'none';
+			document.getElementById('tradeMarket').style.display = 'block';
+			// 显示悬浮发布按钮（如果已登录）
+			if (currentUser) {
+				document.getElementById('fabPublish').style.display = 'flex';
+			}
+			loadOrders();
+		}
+
+		// ==================== 回到顶部 ====================
+		var backToTopBtn = document.getElementById('backToTop');
+		window.addEventListener('scroll', function() {
+			if (window.pageYOffset > 300) {
+				backToTopBtn.classList.add('visible');
+			} else {
+				backToTopBtn.classList.remove('visible');
+			}
+		});
+		backToTopBtn.addEventListener('click', function() {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+
+		// ==================== 提示 Toast ====================
+		function showToast(msg) {
+			var toast = document.getElementById('tradeToast');
+			toast.textContent = msg;
+			toast.classList.add('show');
+			setTimeout(function() {
+				toast.classList.remove('show');
+			}, 2500);
+		}
+
+		// ==================== 右上角登录面板 ====================
+		function toggleCorner() {
+			var panel = document.getElementById('cornerPanel');
+			if (panelOpen) {
+				panel.style.display = 'none';
+				panelOpen = false;
+			} else {
+				var savedId = localStorage.getItem('clan_user_id');
+				if (savedId && currentUser) {
+					showPanelInfo();
+					panel.style.display = 'block';
+					panelOpen = true;
+				} else if (savedId && !currentUser) {
+					autoLogin().then(function() {
+						if (currentUser) {
+							showPanelInfo();
+							panel.style.display = 'block';
+							panelOpen = true;
+						} else {
+							showPanelLogin();
+							panel.style.display = 'block';
+							panelOpen = true;
+						}
+					});
+					return;
+				} else {
+					showPanelLogin();
+					panel.style.display = 'block';
+					panelOpen = true;
+				}
+			}
+		}
+
+		function showPanelLogin() {
+			document.getElementById('panelLogin').style.display = 'block';
+			document.getElementById('panelInfo').style.display = 'none';
+		}
+
+		function updateCornerDisplay() {
+			if (!currentUser) return;
+			var btn = document.getElementById('cornerBtn');
+			btn.textContent = '\u2713 ' + currentUser.username;
+			btn.classList.add('logged');
+		}
+
+		function showPanelInfo() {
+			if (!currentUser) return;
+			document.getElementById('panelLogin').style.display = 'none';
+			document.getElementById('panelInfo').style.display = 'block';
+			document.getElementById('cornerName').textContent = currentUser.username;
+			document.getElementById('cornerRout').textContent = currentUser.rout_points || 0;
+			document.getElementById('cornerPrime').textContent = currentUser.prime_points || 0;
+			document.getElementById('cornerVip').textContent = currentUser.vip_points || 0;
+
+			var btn = document.getElementById('cornerBtn');
+			btn.textContent = '\u2713 ' + currentUser.username;
+			btn.classList.add('logged');
+
+			// 登录后显示悬浮发布按钮
+			var fab = document.getElementById('fabPublish');
+			if (fab && document.getElementById('tradeMarket').style.display !== 'none') {
+				fab.style.display = 'flex';
+			}
+		}
+
+		async function autoLogin() {
+			var savedId = localStorage.getItem('clan_user_id');
+			if (!savedId || !sb) return;
+
+			var result = await sb.from('game_users').select('*').eq('id', savedId).single();
+			var data = result.data;
+
+			if (data) {
+				currentUser = data;
+				var btn = document.getElementById('cornerBtn');
+				if (btn) {
+					btn.textContent = '\u2713 ' + data.username;
+					btn.classList.add('logged');
+				}
+				// 自动登录成功后，如果交易市场已显示则显示悬浮按钮
+				var fab = document.getElementById('fabPublish');
+				if (fab && document.getElementById('tradeMarket').style.display !== 'none') {
+					fab.style.display = 'flex';
+				}
+			}
+		}
+
+		async function doCornerLogin() {
+			var user = document.getElementById('cornerUser').value.trim();
+			var pass = document.getElementById('cornerPass').value;
+
+			if (!sb) {
+				alert('系统初始化中');
+				return;
+			}
+
+			var result = await sb.from('game_users').select('*').eq('username', user).eq('password', pass).single();
+			var data = result.data;
+			var error = result.error;
+
+			if (error || !data) {
+				document.getElementById('cornerError').style.display = 'block';
+				return;
+			}
+
+			currentUser = data;
+			localStorage.setItem('clan_user_id', data.id);
+			showPanelInfo();
+			loadOrders();
+		}
+
+		function doCornerLogout() {
+			localStorage.removeItem('clan_user_id');
+			currentUser = null;
+			document.getElementById('cornerPanel').style.display = 'none';
+			panelOpen = false;
+
+			var btn = document.getElementById('cornerBtn');
+			btn.textContent = '\uD83D\uDD10 登录';
+			btn.classList.remove('logged');
+
+			// 登出后隐藏悬浮发布按钮
+			var fab = document.getElementById('fabPublish');
+			if (fab) {
+				fab.style.display = 'none';
+			}
+
+			location.reload();
+		}
+
+		// ==================== 修改密码 ====================
+		function showChangePass() {
+			document.getElementById('changePassModal').style.display = 'flex';
+			document.getElementById('oldPass').value = '';
+			document.getElementById('newPass').value = '';
+			document.getElementById('confirmPass').value = '';
+			document.getElementById('changePassError').style.display = 'none';
+		}
+
+		function closeChangePass() {
+			document.getElementById('changePassModal').style.display = 'none';
+		}
+
+		async function doChangePass() {
+			var oldPass = document.getElementById('oldPass').value;
+			var newPass = document.getElementById('newPass').value;
+			var confirmPass = document.getElementById('confirmPass').value;
+			var errorEl = document.getElementById('changePassError');
+
+			if (!currentUser) {
+				errorEl.textContent = '请先登录！';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (!oldPass || !newPass || !confirmPass) {
+				errorEl.textContent = '请填写所有字段';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (oldPass !== currentUser.password) {
+				errorEl.textContent = '原密码错误';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (newPass === oldPass) {
+				errorEl.textContent = '新密码不能和原密码相同';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (newPass !== confirmPass) {
+				errorEl.textContent = '两次输入的新密码不一致';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (newPass.length < 4) {
+				errorEl.textContent = '新密码至少4位';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			var result = await sb.from('game_users').update({ password: newPass }).eq('id', currentUser.id);
+			var error = result.error;
+
+			if (error) {
+				errorEl.textContent = '修改失败：' + error.message;
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			currentUser.password = newPass;
+			closeChangePass();
+			alert('\u2705 密码修改成功！请重新登录');
+			doCornerLogout();
+		}
+
+		// ==================== 登录检查 ====================
+		async function checkLogin() {
+			if (currentUser) return true;
+
+			var savedId = localStorage.getItem('clan_user_id');
+			if (!savedId) {
+				alert('请先登录！');
+				toggleCorner();
+				return false;
+			}
+
+			var result = await sb.from('game_users').select('*').eq('id', savedId).single();
+			var data = result.data;
+
+			if (!data) {
+				alert('登录已过期，请重新登录！');
+				localStorage.removeItem('clan_user_id');
+				currentUser = null;
+				toggleCorner();
+				return false;
+			}
+			currentUser = data;
+			showPanelInfo();
+			return true;
+		}
+
+		// ==================== 点击外部关闭面板 ====================
+		document.addEventListener('click', function(e) {
+			var panel = document.getElementById('cornerPanel');
+			var btn = document.getElementById('cornerBtn');
+			if (panelOpen && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+				panel.style.display = 'none';
+				panelOpen = false;
+			}
+
+			var passModal = document.getElementById('changePassModal');
+			if (passModal) {
+				var passContent = passModal.querySelector('.modal');
+				if (passModal.style.display === 'flex' && passContent && !passContent.contains(e.target)) {
+					closeChangePass();
+				}
+			}
+
+			// 点击外部关闭自动补全
+			var acList = document.getElementById('autocompleteList');
+			var acInput = document.getElementById('pubItemName');
+			if (acList && acInput && !acList.contains(e.target) && e.target !== acInput) {
+				acList.classList.remove('visible');
+			}
+		});
+
+		// ==================== 自动补全 ====================
+		function onItemNameInput() {
+			var input = document.getElementById('pubItemName');
+			var list = document.getElementById('autocompleteList');
+			var val = input.value.trim();
+
+			// 清除选中状态
+			selectedCatalogItem = null;
+
+			if (!val) {
+				list.classList.remove('visible');
+				list.innerHTML = '';
+				updatePubPreview(null);
+				return;
+			}
+
+			var lowerVal = val.toLowerCase();
+			var matches = ITEM_CATALOG.filter(function(item) {
+				return item.name.toLowerCase().indexOf(lowerVal) !== -1;
+			});
+
+			if (matches.length === 0) {
+				list.classList.remove('visible');
+				list.innerHTML = '';
+				updatePubPreview(null);
+				return;
+			}
+
+			var html = '';
+			for (var i = 0; i < matches.length && i < 20; i++) {
+				var item = matches[i];
+				html += '<div class="autocomplete-item" data-index="' + i + '" ' +
+					'onclick="selectAutocompleteItem(\'' + escapeJs(item.name) + '\')">';
+				html += '<span>' + escapeHtml(item.name) + '</span>';
+				html += '<span class="ac-type">' + escapeHtml(item.type) + (item.subcategory ? ' · ' + item.subcategory : '') + '</span>';
+				html += '</div>';
+			}
+
+			list.innerHTML = html;
+			list.classList.add('visible');
+
+			// 检查是否精确匹配
+			for (var j = 0; j < ITEM_CATALOG.length; j++) {
+				if (ITEM_CATALOG[j].name.toLowerCase() === lowerVal) {
+					selectedCatalogItem = ITEM_CATALOG[j];
+					updatePubPreview(selectedCatalogItem);
+					return;
+				}
+			}
+			updatePubPreview(null);
+		}
+
+		function selectAutocompleteItem(name) {
+			var input = document.getElementById('pubItemName');
+			var list = document.getElementById('autocompleteList');
+			input.value = name;
+			list.classList.remove('visible');
+
+			// 查找目录中的物品
+			for (var i = 0; i < ITEM_CATALOG.length; i++) {
+				if (ITEM_CATALOG[i].name.toLowerCase() === name.toLowerCase()) {
+					selectedCatalogItem = ITEM_CATALOG[i];
+					// 自动设置类型
+					document.getElementById('pubItemType').value = selectedCatalogItem.type;
+					updatePubPreview(selectedCatalogItem);
+					return;
+				}
+			}
+		}
+
+		function updatePubPreview(item) {
+			var iconEl = document.getElementById('pubPreviewIcon');
+			var imgEl = document.getElementById('pubPreviewImg');
+			var letterEl = document.getElementById('pubPreviewLetter');
+			var nameEl = document.getElementById('pubPreviewName');
+			var typeEl = document.getElementById('pubPreviewType');
+
+			if (item) {
+				// 纯净主名称（整套去掉后缀）
+				var displayName = item.name;
+				if (item.subcategory === '整套') {
+					displayName = item.name.replace(' 整套', '');
+				}
+
+				// 设置图片
+				var imgUrl = getItemImageUrl(displayName, item.type);
+				if (imgUrl) {
+					imgEl.src = imgUrl;
+					imgEl.style.display = 'block';
+					letterEl.style.display = 'none';
+				} else {
+					imgEl.style.display = 'none';
+					letterEl.style.display = 'block';
+					letterEl.textContent = displayName.charAt(0).toUpperCase();
+				}
+
+				nameEl.textContent = displayName;
+				typeEl.textContent = item.type + (item.subcategory ? ' · ' + item.subcategory : '');
+
+				var colorInfo = TYPE_COLORS[item.type] || TYPE_COLORS['未经分类'];
+				iconEl.style.background = colorInfo.bg;
+				iconEl.style.color = colorInfo.color;
+				iconEl.style.textShadow = '0 0 15px ' + colorInfo.color;
+			} else {
+				imgEl.style.display = 'none';
+				letterEl.style.display = 'block';
+				letterEl.textContent = '?';
+				nameEl.textContent = '请输入物品名称';
+				typeEl.textContent = '--';
+				iconEl.style.background = 'linear-gradient(135deg, rgba(0,30,60,0.6) 0%, rgba(0,50,90,0.3) 50%, rgba(0,15,35,0.7) 100%)';
+				iconEl.style.color = 'rgba(0,200,255,0.6)';
+				iconEl.style.textShadow = 'none';
+			}
+		}
+
+		// ==================== 发布订单弹窗 ====================
+		function openPublishModal() {
+			if (!sb) {
+				alert('系统初始化中，请稍后再试');
+				return;
+			}
+			checkLogin().then(function(ok) {
+				if (!ok) return;
+				document.getElementById('publishModal').style.display = 'flex';
+				document.getElementById('pubItemName').value = '';
+				document.getElementById('pubItemType').value = '--';
+				document.getElementById('pubPrice').value = '';
+				document.getElementById('pubError').style.display = 'none';
+				selectedCatalogItem = null;
+				updatePubPreview(null);
+				document.getElementById('autocompleteList').classList.remove('visible');
+				document.getElementById('autocompleteList').innerHTML = '';
+			});
+		}
+
+		function closePublishModal() {
+			document.getElementById('publishModal').style.display = 'none';
+			document.getElementById('autocompleteList').classList.remove('visible');
+		}
+
+		async function submitOrder() {
+			var itemName = document.getElementById('pubItemName').value.trim();
+			var price = document.getElementById('pubPrice').value.trim();
+			var errorEl = document.getElementById('pubError');
+
+			if (!itemName) {
+				errorEl.textContent = '请输入物品名称';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			// 检查物品名称是否在 ITEM_CATALOG 中
+			var matchedItem = null;
+			for (var i = 0; i < ITEM_CATALOG.length; i++) {
+				if (ITEM_CATALOG[i].name.toLowerCase() === itemName.toLowerCase()) {
+					matchedItem = ITEM_CATALOG[i];
+					break;
+				}
+			}
+
+			if (!matchedItem) {
+				errorEl.textContent = '物品名称不在预设列表中，请从补全列表中选择';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			if (!price || isNaN(price) || Number(price) <= 0) {
+				errorEl.textContent = '请输入有效的价格';
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			var result = await sb.from('trade_orders').insert({
+				user_id: currentUser.id,
+				username: currentUser.username,
+				item_name: matchedItem.subcategory === '整套' ? matchedItem.name.replace(' 整套', '') : matchedItem.name,
+				item_type: matchedItem.type,
+				subcategory: matchedItem.subcategory || null,
+				price: Number(price),
+				message: '',
+				status: 'active'
+			});
+
+			if (result.error) {
+				errorEl.textContent = '发布失败：' + result.error.message;
+				errorEl.style.display = 'block';
+				return;
+			}
+
+			closePublishModal();
+			showToast('\u2705 订单发布成功！');
+			loadOrders();
+		}
+
+		// ==================== 加载订单 ====================
+		async function loadOrders() {
+			if (!sb) return;
+
+			var result = await sb.from('trade_orders')
+				.select('*')
+				.eq('status', 'active')
+				.order('created_at', { ascending: false });
+
+			allOrders = result.data || [];
+			updateTabCounts();
+			// 初始状态隐藏展示区，恢复订单行可点击
+			showcaseActive = false;
+			document.getElementById('itemShowcase').style.display = 'none';
+			document.getElementById('itemShowcase').classList.remove('visible');
+			renderOrders();
+		}
+
+		// ==================== 更新 Tab 计数 ====================
+		function updateTabCounts() {
+			document.getElementById('countAll').textContent = allOrders.length;
+			document.getElementById('countPrimeWarframe').textContent = allOrders.filter(function(o) { return o.item_type === 'Prime战甲'; }).length;
+			document.getElementById('countPrimeWeapon').textContent = allOrders.filter(function(o) { return o.item_type === 'Prime武器'; }).length;
+			document.getElementById('countSpecialWeapon').textContent = allOrders.filter(function(o) { return o.item_type === '特殊武器'; }).length;
+			document.getElementById('countMod').textContent = allOrders.filter(function(o) { return o.item_type === 'MOD'; }).length;
+			document.getElementById('countMisc').textContent = allOrders.filter(function(o) { return o.item_type === '未经分类'; }).length;
+		}
+
+		// ==================== 渲染订单（WM 风格列表） ====================
+		function renderOrders() {
+			var listBody = document.getElementById('ordersListBody');
+			var listWrapper = document.getElementById('ordersListWrapper');
+			var emptyState = document.getElementById('emptyState');
+
+			// 筛选
+			var filtered = allOrders.filter(function(order) {
+				if (currentFilter !== 'all' && order.item_type !== currentFilter) return false;
+				if (currentSearch) {
+					var keyword = currentSearch.toLowerCase();
+					var matchName = order.item_name.toLowerCase().indexOf(keyword) !== -1;
+					var matchSeller = order.username.toLowerCase().indexOf(keyword) !== -1;
+					if (!matchName && !matchSeller) return false;
+				}
+				return true;
+			});
+
+			// 按发布时间排序（新→旧）
+			filtered.sort(function(a, b) {
+				return new Date(b.created_at) - new Date(a.created_at);
+			});
+
+			if (filtered.length === 0) {
+				listBody.innerHTML = '';
+				listWrapper.style.display = 'none';
+				emptyState.style.display = 'block';
+				return;
+			}
+
+			emptyState.style.display = 'none';
+			listWrapper.style.display = 'block';
+
+			var html = '';
+			for (var i = 0; i < filtered.length; i++) {
+				var order = filtered[i];
+				var isOwner = currentUser && order.user_id === currentUser.id;
+				var timeStr = formatTime(order.created_at);
+
+				var rowClass = '';
+				if (isOwner) rowClass += ' own-row';
+
+				// 点击订单行显示该物品的展示区（展示区显示时不可点击）
+				var clickAttr = showcaseActive ? '' : ' onclick="onOrderClick(\'' + escapeJs(order.item_name) + '\', \'' + escapeJs(order.item_type) + '\', \'' + escapeJs(order.subcategory || '') + '\')"';
+				html += '<tr class="' + rowClass.trim() + '" data-id="' + order.id + '"' + clickAttr + '>';
+
+				// 卖家列
+				html += '<td class="cell-seller"><span class="seller-name">' + escapeHtml(order.username) + '</span></td>';
+
+				// 物品列 - 带类型色点
+				var dotClass = getTypeDotClass(order.item_type);
+				html += '<td class="cell-item">';
+				html += '<span class="type-dot ' + dotClass + '"></span>';
+				html += '<span class="item-name-text">' + escapeHtml(order.item_name) + '</span>';
+				html += '</td>';
+
+				// 价格列
+				html += '<td class="cell-price">' + order.price + '<span class="price-unit">p</span></td>';
+
+				// 操作列（阻止冒泡）
+				html += '<td class="cell-actions" onclick="event.stopPropagation()">';
+				if (isOwner) {
+					html += '<div class="own-actions">';
+					html += '<button class="pm-btn" onclick="copyOrderInfo(\'' + escapeJs(order.username) + '\', \'' + escapeJs(order.item_name) + '\', ' + order.price + ')">购买</button>';
+					html += '<button class="row-action-btn row-delete-btn" onclick="deleteOrder(\'' + order.id + '\')">删除</button>';
+					html += '</div>';
+				} else {
+					html += '<button class="pm-btn" onclick="copyOrderInfo(\'' + escapeJs(order.username) + '\', \'' + escapeJs(order.item_name) + '\', ' + order.price + ')">购买</button>';
+				}
+				html += '</td>';
+
+				// 时间列
+				html += '<td class="cell-time">' + timeStr + '</td>';
+
+				html += '</tr>';
+			}
+
+			listBody.innerHTML = html;
+		}
+
+		// ==================== 点击订单行 ====================
+		function onOrderClick(itemName, itemType, subcategory) {
+			// 提取主名称
+			var mainName = itemName;
+			for (var s = 0; s < SUBCATEGORIES.length; s++) {
+				var suffix = ' ' + SUBCATEGORIES[s];
+				if (itemName.endsWith(suffix)) {
+					mainName = itemName.substring(0, itemName.length - suffix.length);
+					break;
+				}
+			}
+
+			// 收集该主名称的所有订单
+			var itemOrders = allOrders.filter(function(o) {
+				return o.item_name.indexOf(mainName) === 0;
+			});
+
+			// 使用订单的 subcategory 作为当前选中的子分类
+			var clickedSubcat = subcategory || null;
+
+			// 初始点击时高亮对应子分类并筛选列表
+			renderShowcase(mainName, itemType, itemOrders, clickedSubcat);
+		}
+
+		// ==================== 获取类型色点 CSS 类 ====================
+		function getTypeDotClass(itemType) {
+			switch (itemType) {
+				case 'Prime战甲': return 'prime-set';
+				case 'Prime武器': return 'prime-part';
+				case '特殊武器': return 'mod';
+				case 'MOD': return 'arcane';
+				default: return 'misc';
+			}
+		}
+
+		// ==================== 渲染物品展示区 (Showcase) ====================
+		// activeSubcat: 当前高亮/选中的子分类（null 表示整套/无子分类）
+		function renderShowcase(mainName, itemType, itemOrders, activeSubcat) {
+			var showcase = document.getElementById('itemShowcase');
+			if (!itemOrders || itemOrders.length === 0) {
+				showcase.style.display = 'none';
+			showcase.classList.remove('visible');
+				return;
+			}
+
+			// 设置展示区激活状态（订单行不可点击）
+			showcaseActive = true;
+
+			// 收集所有存在的子分类
+			var allSubcats = [];
+			for (var j = 0; j < itemOrders.length; j++) {
+				if (itemOrders[j].subcategory && allSubcats.indexOf(itemOrders[j].subcategory) === -1) {
+					allSubcats.push(itemOrders[j].subcategory);
+				}
+			}
+			var orderedSubs = [];
+			for (var k = 0; k < SUBCATEGORIES.length; k++) {
+				if (allSubcats.indexOf(SUBCATEGORIES[k]) !== -1) {
+					orderedSubs.push(SUBCATEGORIES[k]);
+				}
+			}
+
+			// 确定显示的名称和统计
+			var displayName = mainName;
+			var displayOrders;
+			if (activeSubcat && activeSubcat !== '整套') {
+				displayName = mainName + ' ' + activeSubcat;
+				displayOrders = itemOrders.filter(function(o) { return o.subcategory === activeSubcat; });
+			} else {
+				// 整套或无子分类时显示纯净主名称
+				displayOrders = itemOrders.filter(function(o) {
+					return !o.subcategory || o.subcategory === '整套';
+				});
+			}
+
+			// 统计
+			var prices = displayOrders.map(function(o) { return o.price; });
+			var count = displayOrders.length;
+			var minPrice = count > 0 ? Math.min.apply(null, prices) : 0;
+			var avgPrice = count > 0 ? Math.round(prices.reduce(function(a, b) { return a + b; }, 0) / count) : 0;
+
+			// 设置展示区内容
+			document.getElementById('scName').textContent = displayName;
+			document.getElementById('scType').textContent = itemType || '未经分类';
+			document.getElementById('scCount').textContent = count;
+			document.getElementById('scMinPrice').textContent = minPrice + 'p';
+			document.getElementById('scAvgPrice').textContent = avgPrice + 'p';
+
+			// scDucat 显示可点击的子分类，当前选中的高亮
+			var ducatHtml = '★ ';
+			if (orderedSubs.length > 0) {
+				for (var d = 0; d < orderedSubs.length; d++) {
+					if (d > 0) ducatHtml += ' · ';
+					var isActive = (activeSubcat === orderedSubs[d]);
+					var cls = isActive ? 'sc-subcat-link active' : 'sc-subcat-link';
+					ducatHtml += '<span class="' + cls + '" onclick="filterBySubcat(\'' + escapeJs(mainName) + '\', \'' + escapeJs(orderedSubs[d]) + '\', event)">' + escapeHtml(orderedSubs[d]) + '</span>';
+				}
+			}
+			document.getElementById('scDucat').innerHTML = ducatHtml;
+
+			// 设置图片（warframe.wiki.fandom CDN）
+			var imgEl = document.getElementById('showcaseImg');
+			var letterEl = document.getElementById('showcaseLetter');
+			var imgUrl = getItemImageUrl(mainName, itemType);
+			imgEl.src = imgUrl;
+			imgEl.style.display = 'block';
+			letterEl.style.display = 'none';
+
+			var iconEl = document.getElementById('showcaseIcon');
+			var colorInfo = TYPE_COLORS[itemType] || TYPE_COLORS['未经分类'];
+			iconEl.style.background = colorInfo.bg;
+			iconEl.style.color = colorInfo.color;
+
+			showcase.style.display = '';
+			showcase.classList.add('visible');
+
+			// 渲染对应订单列表
+			var listBody = document.getElementById('ordersListBody');
+			var listWrapper = document.getElementById('ordersListWrapper');
+			var emptyState = document.getElementById('emptyState');
+
+			if (count === 0) {
+				listBody.innerHTML = '';
+				listWrapper.style.display = 'none';
+				emptyState.style.display = 'block';
+				return;
+			}
+
+			emptyState.style.display = 'none';
+			listWrapper.style.display = 'block';
+
+			// 同种物品按价格低→高排序
+			displayOrders.sort(function(a, b) { return a.price - b.price; });
+
+			var html = '';
+			for (var i = 0; i < displayOrders.length; i++) {
+				var order = displayOrders[i];
+				var isOwner = currentUser && order.user_id === currentUser.id;
+				var timeStr = formatTime(order.created_at);
+				var rowClass = isOwner ? ' own-row' : '';
+				// 展示区显示时订单行不可点击
+				html += '<tr class="' + rowClass.trim() + '" data-id="' + order.id + '">';
+				html += '<td class="cell-seller"><span class="seller-name">' + escapeHtml(order.username) + '</span></td>';
+				var dotClass = getTypeDotClass(order.item_type);
+				html += '<td class="cell-item"><span class="type-dot ' + dotClass + '"></span><span class="item-name-text">' + escapeHtml(order.item_name) + '</span></td>';
+				html += '<td class="cell-price">' + order.price + '<span class="price-unit">p</span></td>';
+				html += '<td class="cell-actions">';
+				if (isOwner) {
+					html += '<div class="own-actions">';
+					html += '<button class="pm-btn" onclick="copyOrderInfo(\'' + escapeJs(order.username) + '\', \'' + escapeJs(order.item_name) + '\', ' + order.price + ')">购买</button>';
+					html += '<button class="row-action-btn row-delete-btn" onclick="deleteOrder(\'' + order.id + '\')">删除</button>';
+					html += '</div>';
+				} else {
+					html += '<button class="pm-btn" onclick="copyOrderInfo(\'' + escapeJs(order.username) + '\', \'' + escapeJs(order.item_name) + '\', ' + order.price + ')">购买</button>';
+				}
+				html += '</td>';
+				html += '<td class="cell-time">' + timeStr + '</td>';
+				html += '</tr>';
+			}
+			listBody.innerHTML = html;
+		}
+
+		// ==================== 获取物品图片 URL ====================
+		function getItemImageUrl(mainName, itemType) {
+			if (!mainName || !ITEM_IMAGE_MAP) return '';
+			// 直接从外部 ITEM_IMAGE_MAP 查找（trade_items.js 提供）
+			return ITEM_IMAGE_MAP[mainName] || '';
+		}
+
+		// ==================== 点击展示区子分类筛选 ====================
+		function filterBySubcat(mainName, subcat, event) {
+			event.stopPropagation();
+			var itemOrders = allOrders.filter(function(o) {
+				return o.item_name.indexOf(mainName) === 0;
+			});
+			renderShowcase(mainName, document.getElementById('scType').textContent, itemOrders, subcat);
+		}
+
+		// ==================== 复制订单信息（中文格式） ====================
+		function copyOrderInfo(sellerName, itemName, price) {
+			var text = '/w ' + sellerName + ' 你好! 我想以' + price + '白金购买: "' + itemName + '"。(来自联盟交易行...)';
+
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(text).then(function() {
+					showToast('\u2705 已复制到剪贴板！');
+				}).catch(function() {
+					fallbackCopy(text);
+				});
+			} else {
+				fallbackCopy(text);
+			}
+		}
+
+		function fallbackCopy(text) {
+			var ta = document.createElement('textarea');
+			ta.value = text;
+			ta.style.position = 'fixed';
+			ta.style.left = '-9999px';
+			document.body.appendChild(ta);
+			ta.select();
+			try {
+				document.execCommand('copy');
+				showToast('\u2705 已复制到剪贴板！');
+			} catch (e) {
+				showToast('\u274C 复制失败，请手动复制');
+			}
+			document.body.removeChild(ta);
+		}
+
+		// ==================== 卖家操作 ====================
+		async function deleteOrder(id) {
+			if (!confirm('确定删除此订单吗？')) return;
+
+			var result = await sb.from('trade_orders')
+				.delete()
+				.eq('id', id);
+
+			if (result.error) {
+				alert('删除失败：' + result.error.message);
+				return;
+			}
+
+			showToast('\u2705 订单已删除');
+			loadOrders();
+		}
+
+		// ==================== 筛选与搜索 ====================
+		function setFilter(type, btn) {
+			currentFilter = type;
+			var tabs = document.querySelectorAll('.filter-tab');
+			tabs.forEach(function(t) { t.classList.remove('active'); });
+			btn.classList.add('active');
+			// 回到初始状态：隐藏展示区，恢复订单行可点击
+			showcaseActive = false;
+			document.getElementById('itemShowcase').style.display = 'none';
+			document.getElementById('itemShowcase').classList.remove('visible');
+			renderOrders();
+		}
+
+		function onSearch() {
+			currentSearch = document.getElementById('searchInput').value.trim();
+			renderOrders();
+		}
+
+		// ==================== 工具函数 ====================
+		function escapeHtml(str) {
+			if (!str) return '';
+			return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+		}
+
+		function escapeJs(str) {
+			if (!str) return '';
+			return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+		}
+
+		function formatTime(dateStr) {
+			if (!dateStr) return '';
+			var date = new Date(dateStr);
+			var now = new Date();
+			var diff = Math.floor((now - date) / 1000);
+
+			if (diff < 60) return '刚刚';
+			if (diff < 3600) return Math.floor(diff / 60) + '分钟前';
+			if (diff < 86400) return Math.floor(diff / 3600) + '小时前';
+			if (diff < 604800) return Math.floor(diff / 86400) + '天前';
+
+			var y = date.getFullYear();
+			var m = String(date.getMonth() + 1).padStart(2, '0');
+			var d = String(date.getDate()).padStart(2, '0');
+			var h = String(date.getHours()).padStart(2, '0');
+			var min = String(date.getMinutes()).padStart(2, '0');
+			return y + '-' + m + '-' + d + ' ' + h + ':' + min;
+		}
+
+		// ==================== 页面初始化 ====================
+		window.addEventListener('load', function() {
+			if (initSupabase()) {
+				autoLogin().then(function() {
+					// 首页显示时不自动加载订单，等用户点击进入交易市场
+				});
+			}
+
+			// 绑定修改密码按钮事件
+			var changePassBtn = document.getElementById('changePassBtn');
+			if (changePassBtn) {
+				changePassBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					showChangePass();
+				});
+			}
+		});
+	</script>
+</html>
